@@ -39,6 +39,12 @@
     "singleQuote": true,
     "semi": false
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -52,8 +58,12 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@types/react-router-dom": "^5.1.7",
+    "husky": "^4.3.8",
     "node-sass": "^5.0.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0"
   }
 }
