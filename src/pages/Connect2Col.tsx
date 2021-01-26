@@ -8,7 +8,7 @@ const Connect = () => {
 
   const rightContent = () => {
     return (
-      <Space direction="vertical" style={{ width: '100%' }}>
+      <Space direction="vertical" style={{ width: '100%' }} size="middle">
         <Card title="Issuer">
           <p>Card content</p>
           <p>Card content</p>
@@ -39,7 +39,7 @@ const Connect = () => {
           </Button>
         </Form.Item>
       </Form>
-      <Space direction="vertical" style={{ width: '100%' }}>
+      <Space direction="vertical" style={{ width: '100%' }} size="middle">
         <Card style={{ height: 400 }} loading>
           Card 1
         </Card>

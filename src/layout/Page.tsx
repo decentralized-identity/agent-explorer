@@ -15,11 +15,11 @@ const PageDoubleCol: React.FC<PageProps> = ({
     <Layout>
       {header}
       <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-        <Col xs={24} sm={24} md={rightContent ? 16 : 24}>
+        <Col xs={24} sm={24} md={24} lg={24} xl={rightContent ? 16 : 24}>
           {children}
         </Col>
         {rightContent && (
-          <Col xs={24} sm={24} md={8}>
+          <Col xs={24} sm={24} md={24} lg={24} xl={8}>
             {rightContent}
           </Col>
         )}
