@@ -1,0 +1,31 @@
+@import '~antd/dist/antd.less';
+@import './dark.less';
+@import './light.less';
+@import './variables.less';
+
+// Common styles across themes...
+
+.ant-layout-sider-zero-width-trigger {
+  transition: none;
+  top: 12px;
+  right: -50px;
+}
+
+.ant-input {
+  border-radius: 8px;
+}
+
+.ant-menu-item {
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+@media only screen and (min-width: 576px) {
+  .main-content-container {
+    margin-left: 250px;
+  }
+
+  .mobile-header {
+    display: none;
+  }
+}
