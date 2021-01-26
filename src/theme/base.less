@@ -15,9 +15,33 @@
   border-radius: 8px;
 }
 
+.ant-menu-inline {
+  border-right-width: 0;
+}
+
 .ant-menu-item {
   font-weight: 500;
   font-size: 1.1em;
+}
+
+.ant-menu-inline {
+  & .ant-menu-item {
+    margin: 0;
+  }
+  & .ant-menu-submenu {
+    &.agent-selector {
+      margin-bottom: 20px;
+    }
+
+    & .ant-menu-submenu-title {
+      padding: 15px;
+      height: 70px;
+      color: var(--heading-color);
+      font-weight: 500;
+      font-size: 1.1em;
+      margin: 0;
+    }
+  }
 }
 
 @media only screen and (min-width: 576px) {

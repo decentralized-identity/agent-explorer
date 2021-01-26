@@ -9,11 +9,11 @@ const Connect = () => {
   const rightContent = () => {
     return (
       <Space direction="vertical" style={{ width: '100%' }}>
-        <Card title="Card">
+        <Card title="Issuer">
           <p>Card content</p>
           <p>Card content</p>
         </Card>
-        <Card title="Card">
+        <Card title="Subject">
           <p>Card content</p>
           <p>Card content</p>
         </Card>
@@ -39,7 +39,32 @@ const Connect = () => {
           </Button>
         </Form.Item>
       </Form>
-      <Card>Card 1</Card>
+      <Space direction="vertical" style={{ width: '100%' }}>
+        <Card style={{ height: 400 }} loading>
+          Card 1
+        </Card>
+        <Card style={{ height: 400 }} loading hoverable>
+          Card 1
+        </Card>
+        <Card style={{ height: 400 }} loading>
+          Card 1
+        </Card>
+        <Card style={{ height: 400 }} loading>
+          Card 1
+        </Card>
+        <Card style={{ height: 400 }} loading>
+          Card 1
+        </Card>
+        <Card style={{ height: 400 }} loading>
+          Card 1
+        </Card>
+        <Card style={{ height: 400 }} loading>
+          Card 1
+        </Card>
+        <Card style={{ height: 400 }} loading>
+          Card 1
+        </Card>
+      </Space>
     </Page>
   )
 }

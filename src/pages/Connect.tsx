@@ -7,7 +7,7 @@ const Connect = () => {
   const [form] = Form.useForm()
 
   return (
-    <Page header={<Title>Connect</Title>}>
+    <Page header={<Title style={{ fontWeight: 'bold' }}>Connect</Title>}>
       <Form form={form} layout={'vertical'}>
         <Form.Item label="Agent Schema URL">
           <Input size="large" placeholder="Agent schema" />

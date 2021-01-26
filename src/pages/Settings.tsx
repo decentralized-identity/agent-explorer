@@ -11,7 +11,7 @@ const Settings = () => {
     <Page
       header={
         <Content style={{ marginBottom: 30 }}>
-          <Title>Settings</Title>
+          <Title style={{ fontWeight: 'bold' }}>Settings</Title>
         </Content>
       }
     >

@@ -1,13 +1,48 @@
 .light-theme {
+  // Menus
   --menu-bg: #f8f8f8;
+  --sub-menu-bg: #f8f8f8;
   --menu-item-active-bg: none;
   --menu-item-hover-bg: #e2e2e2;
+
+  // Layout
   --layout-body-background: #ffffff;
   --layout-header-background: #ffffff;
   --layout-trigger-background: #ffffff;
   --layout-trigger-color: #333333;
-}
 
-.ant-menu-item:hover {
-  background-color: var(--menu-item-hover-bg);
+  // Typeography
+  --text-color: #222222;
+  --heading-color: #222222;
+
+  // Components
+  --component-background: #ffffff;
+  --component-border: #d1d1d1;
+
+  --divider-color: #f0f0f0;
+
+  // Override styles
+
+  .ant-menu-submenu > .ant-menu,
+  .ant-menu-submenu-selected,
+  .agent-selector > .ant-menu-submenu-title {
+    background-color: var(--sub-menu-bg);
+  }
+
+  .ant-menu-item {
+    &:hover {
+      background-color: var(--menu-item-hover-bg);
+    }
+    & a:hover {
+      color: var(--text-color);
+    }
+  }
+
+  .ant-menu-item-divider {
+    background-color: var(--divider-color);
+  }
+
+  .ant-card-bordered {
+    border: 1px solid var(--component-border);
+  }
 }
