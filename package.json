@@ -1,5 +1,5 @@
 {
-  "name": "@veramo-community/agent-explore",
+  "name": "agent-explore",
   "version": "0.1.0",
   "publishConfig": {
     "access": "public"
