@@ -16,7 +16,7 @@ import { IDataStoreORM } from '@veramo/data-store'
 import { Resolver } from 'did-resolver'
 import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
-import { useVeramo } from 'veramo-react'
+import { useVeramo } from '@veramo-community/veramo-react'
 
 export type AgentInterfaces = IDataStore &
   IDataStoreORM &
