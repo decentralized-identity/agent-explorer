@@ -1,10 +1,13 @@
 import React from 'react'
 import { Typography, Form, Input, Button } from 'antd'
 import Page from '../layout/Page'
+import { useAgent } from '../agent'
+
 const { Title } = Typography
 
 const Connect = () => {
   const [form] = Form.useForm()
+  const { agent, agents } = useAgent()
 
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Connect</Title>}>

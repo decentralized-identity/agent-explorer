@@ -12,11 +12,16 @@ import {
   CloudServerOutlined,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+import { useAgent } from '../agent'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
 
 const SideMenu = () => {
+  const { agent, agents } = useAgent()
+
+  console.log(agents)
+
   return (
     <Sider
       breakpoint="sm"
@@ -42,28 +47,22 @@ const SideMenu = () => {
             <Avatar
               size="large"
               style={{ marginRight: 15 }}
-              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.hdwallpaper.nu%2Fwp-content%2Fuploads%2F2015%2F02%2Ffunny_cat_face_pictures.jpg&f=1&nofb=1"
+              src={agent.context?.picture}
             />
           }
-          title="My Agent"
+          title={agent.context?.name}
           className="agent-selector"
         >
           <Menu.Item key="1">
             <Link to="/">All</Link>
           </Menu.Item>
-          <Menu.Item key="2">
-            <Link to="/">Agent 1</Link>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Link to="/">Agent 2</Link>
-          </Menu.Item>
-          <Menu.Divider></Menu.Divider>
-          <Menu.Item key="6" icon={<PlusOutlined />}>
-            <Link to="/">Connect Agent</Link>
-          </Menu.Item>
-          <Menu.Item key="7" icon={<CloudServerOutlined />}>
-            <Link to="/">Manage Agent</Link>
-          </Menu.Item>
+          {agents.map((_agent: any, index: number) => {
+            return (
+              <Menu.Item key={index}>
+                <Link to="/">{_agent.context?.name}</Link>
+              </Menu.Item>
+            )
+          })}
         </SubMenu>
         <Menu.Item key="10" icon={<EyeOutlined style={{ fontSize: '17px' }} />}>
           <Link to="/">Overview</Link>
