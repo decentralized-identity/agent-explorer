@@ -1,5 +1,5 @@
 {
-  "name": "agent-explore",
+  "name": "@veramo-community/agent-explore",
   "version": "0.1.0",
   "private": true,
   "bin": {
