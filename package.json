@@ -1,6 +1,13 @@
 {
   "name": "@veramo-community/agent-explore",
   "version": "0.1.0",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "build",
+    "bin"
+  ],
   "bin": {
     "agent-explore": "./bin/bin.js"
   },
