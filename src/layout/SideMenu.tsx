@@ -36,13 +36,13 @@ const SideMenu = () => {
     >
       <div className="logo" />
       <Menu
-        theme={'light'}
+        className="main-menu"
         mode="inline"
         defaultSelectedKeys={['4']}
-        style={{ height: '100%', width: 250 }}
+        style={{ width: 250 }}
       >
         <SubMenu
-          key="sub1"
+          key="connected-agents"
           icon={
             <Avatar
               size="large"
@@ -65,37 +65,55 @@ const SideMenu = () => {
           })}
         </SubMenu>
         <Menu.Item key="10" icon={<EyeOutlined style={{ fontSize: '17px' }} />}>
-          <Link to="/">Overview</Link>
+          <Link to="/overview">Overview</Link>
         </Menu.Item>
         <Menu.Item
           key="11"
           icon={<UserOutlined style={{ fontSize: '17px' }} />}
         >
-          <Link to="/2col">Identifiers</Link>
+          <Link to="/identifiers">Identifiers</Link>
         </Menu.Item>
         <Menu.Item
           key="12"
           icon={<SafetyOutlined style={{ fontSize: '17px' }} />}
         >
-          <Link to="/settings">Credentials</Link>
+          <Link to="/credentials">Credentials</Link>
         </Menu.Item>
         <Menu.Item
           key="13"
           icon={<MessageOutlined style={{ fontSize: '17px' }} />}
         >
-          <Link to="/">Messages</Link>
+          <Link to="/messages">Messages</Link>
         </Menu.Item>
         <Menu.Item
           key="14"
           icon={<DeploymentUnitOutlined style={{ fontSize: '17px' }} />}
         >
-          <Link to="/">Network</Link>
+          <Link to="/network">Network</Link>
         </Menu.Item>
         <Menu.Item
           key="15"
           icon={<SearchOutlined style={{ fontSize: '17px' }} />}
         >
-          <Link to="/">Discover</Link>
+          <Link to="/discover">Discover</Link>
+        </Menu.Item>
+      </Menu>
+      <Menu
+        className="secondary-menu"
+        mode="inline"
+        defaultSelectedKeys={['4']}
+        style={{
+          width: 250,
+          position: 'absolute',
+          bottom: 0,
+          marginBottom: 50,
+        }}
+      >
+        <Menu.Item>
+          <Link to="/settings">Settings</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to="/">Contribute</Link>
         </Menu.Item>
       </Menu>
     </Sider>
