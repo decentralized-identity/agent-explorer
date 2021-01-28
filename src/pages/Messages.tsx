@@ -1,7 +1,6 @@
 import React from 'react'
-import { Typography, Table, Button } from 'antd'
+import { Typography, Table } from 'antd'
 import Page from '../layout/Page'
-import { FundViewOutlined } from '@ant-design/icons'
 import identifiers from '../stubbs/identifiers'
 
 const { Title } = Typography
@@ -25,17 +24,11 @@ const columns = [
     key: 'alias',
     responsive: ['lg'],
   },
-  {
-    title: 'Explore',
-    width: 100,
-    dataIndex: 'did',
-    render: (did: string) => <Button icon={<FundViewOutlined />} />,
-  },
 ]
 
-const Identifiers = () => {
+const Messages = () => {
   return (
-    <Page header={<Title style={{ fontWeight: 'bold' }}>Identifiers</Title>}>
+    <Page header={<Title style={{ fontWeight: 'bold' }}>Messages</Title>}>
       <Table
         rowKey={(record) => record.did}
         dataSource={identifiers}
@@ -47,4 +40,4 @@ const Identifiers = () => {
   )
 }
 
-export default Identifiers
+export default Messages

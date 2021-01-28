@@ -15,6 +15,10 @@
   border-radius: 8px;
 }
 
+.ant-card {
+  margin-bottom: 20px;
+}
+
 .ant-menu-inline {
   border-right-width: 0;
 }
@@ -44,6 +48,11 @@
   }
 }
 
+.main-content-width {
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
 @media only screen and (min-width: 576px) {
   .main-content-container {
     margin-left: 250px;
@@ -51,5 +60,17 @@
 
   .mobile-header {
     display: none;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .main-content-width {
+    max-width: 1200px;
+  }
+}
+
+@media only screen and (min-width: 2300px) {
+  .main-content-width {
+    max-width: 1500px;
   }
 }

@@ -3,15 +3,20 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import Frame from './Frame'
 import { VeramoProvider } from '@veramo-community/veramo-react'
 import { defaultAgent } from '../agent'
+import { ThemeProvider } from '../context/ThemeProvider'
 
 const App = () => {
   return (
-    // @ts-ignore
-    <VeramoProvider agent={defaultAgent}>
-      <BrowserRouter>
-        <Route component={Frame} />
-      </BrowserRouter>
-    </VeramoProvider>
+    <ThemeProvider>
+      {
+        // @ts-ignore
+        <VeramoProvider agent={defaultAgent}>
+          <BrowserRouter>
+            <Route component={Frame} />
+          </BrowserRouter>
+        </VeramoProvider>
+      }
+    </ThemeProvider>
   )
 }
 
