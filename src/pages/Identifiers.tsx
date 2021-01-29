@@ -3,6 +3,7 @@ import { Typography, Table, Button } from 'antd'
 import Page from '../layout/Page'
 import { FundViewOutlined } from '@ant-design/icons'
 import identifiers from '../stubbs/identifiers'
+import { Link } from 'react-router-dom'
 
 const { Title } = Typography
 
@@ -11,7 +12,7 @@ const columns = [
     title: 'DID',
     dataIndex: 'did',
     key: 'did',
-    render: (text: string) => <a>{text}</a>,
+    render: (did: string) => <Link to={'/identifiers/' + did}>{did}</Link>,
   },
   {
     title: 'Provider',

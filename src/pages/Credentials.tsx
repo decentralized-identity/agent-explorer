@@ -4,6 +4,7 @@ import Page from '../layout/Page'
 import credentials from '../stubbs/credentials'
 import { format } from 'date-fns'
 import { FundViewOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 const { Title } = Typography
 
@@ -21,7 +22,9 @@ const columns = [
     dataIndex: 'verifiableCredential',
     render: (verifiableCredential: any) => (
       <Tooltip placement="topLeft" title={verifiableCredential.issuer.id}>
-        <a>{verifiableCredential.issuer.id}</a>
+        <Link to={'/identifiers/' + verifiableCredential.issuer.id}>
+          {verifiableCredential.issuer.id}
+        </Link>
       </Tooltip>
     ),
     ellipsis: {
@@ -36,7 +39,9 @@ const columns = [
         placement="topLeft"
         title={verifiableCredential.credentialSubject.id}
       >
-        <a>{verifiableCredential.credentialSubject.id}</a>
+        <Link to={'/identifiers/' + verifiableCredential.credentialSubject.id}>
+          {verifiableCredential.credentialSubject.id}
+        </Link>
       </Tooltip>
     ),
     ellipsis: {
@@ -62,9 +67,15 @@ const columns = [
   },
   {
     title: 'Explore',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => (
-      <Button icon={<FundViewOutlined />} />
+    dataIndex: 'hash',
+    render: (hash: any) => (
+      <Button
+        icon={
+          <Link to={'/credentials/' + hash}>
+            <FundViewOutlined />
+          </Link>
+        }
+      />
     ),
     width: 100,
   },

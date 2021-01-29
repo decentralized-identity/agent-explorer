@@ -1,13 +1,15 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import { Layout, Row, Col } from 'antd'
+import { Layout } from 'antd'
 import '../theme/base.less'
 
 import Sidemenu from '../layout/SideMenu'
 import Connect from '../pages/Connect'
 import Overview from '../pages/Overview'
 import Identifiers from '../pages/Identifiers'
+import Identifier from '../pages/Identifier'
 import Credentials from '../pages/Credentials'
+import Credential from '../pages/Credential'
 import Messages from '../pages/Messages'
 import Network from '../pages/Network'
 import Discover from '../pages/Discover'
@@ -23,13 +25,15 @@ const Frame = () => {
         <Header style={{ padding: 0 }} className="mobile-header"></Header>
         <Content className="main-content-container">
           <Route path="/" exact component={Connect} />
-          <Route path="/overview" exact component={Overview} />
+          <Route path="/overview" component={Overview} />
           <Route path="/identifiers" exact component={Identifiers} />
+          <Route path="/identifiers/:id" component={Identifier} />
           <Route path="/credentials" exact component={Credentials} />
-          <Route path="/messages" exact component={Messages} />
-          <Route path="/network" exact component={Network} />
-          <Route path="/discover" exact component={Discover} />
-          <Route path="/settings" exact component={Settings} />
+          <Route path="/credentials/:id" component={Credential} />
+          <Route path="/messages" component={Messages} />
+          <Route path="/network" component={Network} />
+          <Route path="/discover" component={Discover} />
+          <Route path="/settings" component={Settings} />
         </Content>
       </Layout>
     </Layout>
