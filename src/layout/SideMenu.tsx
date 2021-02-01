@@ -1,5 +1,5 @@
 import React from 'react'
-import { Layout, Menu, Avatar } from 'antd'
+import { Layout, Menu, Avatar, Typography, Row, Button } from 'antd'
 import {
   EyeOutlined,
   UserOutlined,
@@ -7,7 +7,6 @@ import {
   SafetyOutlined,
   MessageOutlined,
   DeploymentUnitOutlined,
-  AntDesignOutlined,
   PlusOutlined,
   CloudServerOutlined,
 } from '@ant-design/icons'
@@ -16,11 +15,56 @@ import { useAgent } from '../agent'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
+const { Title, Text } = Typography
+
+const mainMenu = [
+  {
+    url: '/overview',
+    label: 'Overview',
+    icon: EyeOutlined,
+  },
+  {
+    url: '/identifiers',
+    label: 'Identifiers',
+    icon: UserOutlined,
+  },
+  {
+    url: '/credentials',
+    label: 'Credentials',
+    icon: SafetyOutlined,
+  },
+  {
+    url: '/messages',
+    label: 'Messages',
+    icon: MessageOutlined,
+  },
+  {
+    url: '/network',
+    label: 'Network',
+    icon: DeploymentUnitOutlined,
+  },
+  {
+    url: '/discover',
+    label: 'Discover',
+    icon: SearchOutlined,
+  },
+]
+
+const subMenu = [
+  {
+    url: '/connect',
+    label: 'Connect Agent',
+    icon: PlusOutlined,
+  },
+  {
+    url: '/agents',
+    label: 'Manage Agents',
+    icon: CloudServerOutlined,
+  },
+]
 
 const SideMenu = () => {
   const { agent, agents } = useAgent()
-
-  console.log(agents)
 
   return (
     <Sider
@@ -34,70 +78,75 @@ const SideMenu = () => {
         zIndex: 100,
       }}
     >
-      <div className="logo" />
-      <Menu
-        className="main-menu"
-        mode="inline"
-        defaultSelectedKeys={['4']}
-        style={{ width: 250 }}
-      >
-        <SubMenu
-          key="connected-agents"
-          icon={
-            <Avatar
-              size="large"
-              style={{ marginRight: 15 }}
-              src={agent.context?.picture}
-            />
-          }
-          title={agent.context?.name}
-          className="agent-selector"
+      {!agent && (
+        <Row style={{ justifyContent: 'center', padding: '30px 5px' }}>
+          <Title
+            style={{
+              textAlign: 'center',
+              margin: '15px 0',
+              fontWeight: 'bold',
+            }}
+            level={3}
+          >
+            Agent Explorer
+          </Title>
+          <Text
+            style={{
+              textAlign: 'center',
+              margin: '15px 5px',
+              fontWeight: 'bold',
+            }}
+          >
+            Connect, manage and explore Veramo agents in one place
+          </Text>
+          <Button type="primary" size="large">
+            <Link to="/connect">Connect Agent</Link>
+          </Button>
+        </Row>
+      )}
+      {agent && (
+        <Menu
+          className="main-menu"
+          mode="inline"
+          defaultSelectedKeys={['4']}
+          style={{ width: 250 }}
         >
-          <Menu.Item key="1">
-            <Link to="/">All</Link>
-          </Menu.Item>
-          {agents.map((_agent: any, index: number) => {
+          <SubMenu
+            key="connected-agents"
+            icon={
+              <Avatar
+                size="large"
+                style={{ marginRight: 15 }}
+                src={agent.context?.picture}
+              />
+            }
+            title={agent.context?.name}
+            className="agent-selector"
+          >
+            {agents.map((_agent: any, index: number) => {
+              return <Menu.Item key={index}>{_agent.context?.name}</Menu.Item>
+            })}
+            <Menu.Divider></Menu.Divider>
+            {subMenu.map((menuItem) => {
+              return (
+                <Menu.Item
+                  icon={<menuItem.icon style={{ fontSize: '17px' }} />}
+                >
+                  <Link to={menuItem.url}>{menuItem.label}</Link>
+                </Menu.Item>
+              )
+            })}
+            <Menu.Divider></Menu.Divider>
+          </SubMenu>
+          {mainMenu.map((menuItem) => {
             return (
-              <Menu.Item key={index}>
-                <Link to="/">{_agent.context?.name}</Link>
+              <Menu.Item icon={<menuItem.icon style={{ fontSize: '17px' }} />}>
+                <Link to={menuItem.url}>{menuItem.label}</Link>
               </Menu.Item>
             )
           })}
-        </SubMenu>
-        <Menu.Item key="10" icon={<EyeOutlined style={{ fontSize: '17px' }} />}>
-          <Link to="/overview">Overview</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="11"
-          icon={<UserOutlined style={{ fontSize: '17px' }} />}
-        >
-          <Link to="/identifiers">Identifiers</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="12"
-          icon={<SafetyOutlined style={{ fontSize: '17px' }} />}
-        >
-          <Link to="/credentials">Credentials</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="13"
-          icon={<MessageOutlined style={{ fontSize: '17px' }} />}
-        >
-          <Link to="/messages">Messages</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="14"
-          icon={<DeploymentUnitOutlined style={{ fontSize: '17px' }} />}
-        >
-          <Link to="/network">Network</Link>
-        </Menu.Item>
-        <Menu.Item
-          key="15"
-          icon={<SearchOutlined style={{ fontSize: '17px' }} />}
-        >
-          <Link to="/discover">Discover</Link>
-        </Menu.Item>
-      </Menu>
+        </Menu>
+      )}
       <Menu
         className="secondary-menu"
         mode="inline"
@@ -113,7 +162,9 @@ const SideMenu = () => {
           <Link to="/settings">Settings</Link>
         </Menu.Item>
         <Menu.Item>
-          <Link to="/">Contribute</Link>
+          <a target="_blank" href="https://github.com/veramolabs">
+            Contribute
+          </a>
         </Menu.Item>
       </Menu>
     </Sider>

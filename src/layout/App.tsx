@@ -10,7 +10,7 @@ const App = () => {
     <ThemeProvider>
       {
         // @ts-ignore
-        <VeramoProvider agent={defaultAgent}>
+        <VeramoProvider>
           <BrowserRouter>
             <Route component={Frame} />
           </BrowserRouter>

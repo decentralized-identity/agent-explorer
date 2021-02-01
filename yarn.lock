@@ -2380,10 +2380,12 @@
     "@typescript-eslint/types" "4.14.1"
     eslint-visitor-keys "^2.0.0"
 
-"@veramo-community/veramo-react@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.npmjs.org/@veramo-community/veramo-react/-/veramo-react-0.1.2.tgz#fbd289bb60f8975327c378d48bbb40b647a3d5d0"
-  integrity sha512-ger5b6R53UKdWG0Un+ZB0ofddpeENgKsWV9q1r0dwodHBk8JT6MTphUp8au9jK33Hg/4wlgjKV49Um6Bc3BpPQ==
+"@veramo-community/veramo-react@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@veramo-community/veramo-react/-/veramo-react-0.2.2.tgz#b5823c06089f3bcd7723e3b53f8f75989bc63b9b"
+  integrity sha512-CFX9k0vv83TUFbu/1G9G2dOmIjOvHnF0GsbgqfXdbyj6gKA40OcVXs8EkqNmwwgnL0NTCFFbpt1ScDrYSUHKTA==
+  dependencies:
+    uuid "^8.3.2"
 
 "@veramo/core@^1.1.1-next.1", "@veramo/core@^1.1.1-next.2+89255b9a":
   version "1.1.1-next.2"
@@ -13119,7 +13121,7 @@ uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
-uuid@^8.3.0:
+uuid@^8.3.0, uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
