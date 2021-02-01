@@ -99,7 +99,7 @@ const SideMenu = () => {
           >
             Connect, manage and explore Veramo agents in one place
           </Text>
-          <Button type="primary" size="large">
+          <Button type="primary" size="large" shape="round">
             <Link to="/connect">Connect Agent</Link>
           </Button>
         </Row>
@@ -130,6 +130,7 @@ const SideMenu = () => {
             {subMenu.map((menuItem) => {
               return (
                 <Menu.Item
+                  key={menuItem.label}
                   icon={<menuItem.icon style={{ fontSize: '17px' }} />}
                 >
                   <Link to={menuItem.url}>{menuItem.label}</Link>
@@ -140,7 +141,10 @@ const SideMenu = () => {
           </SubMenu>
           {mainMenu.map((menuItem) => {
             return (
-              <Menu.Item icon={<menuItem.icon style={{ fontSize: '17px' }} />}>
+              <Menu.Item
+                key={menuItem.label}
+                icon={<menuItem.icon style={{ fontSize: '17px' }} />}
+              >
                 <Link to={menuItem.url}>{menuItem.label}</Link>
               </Menu.Item>
             )
