@@ -8,6 +8,7 @@ import {
   MessageOutlined,
   DeploymentUnitOutlined,
   PlusOutlined,
+  CheckCircleOutlined,
   CloudServerOutlined,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
@@ -64,7 +65,7 @@ const subMenu = [
 ]
 
 const SideMenu = () => {
-  const { agent, agents } = useAgent()
+  const { agent, agents, setActiveAgentId, activeAgentId } = useAgent()
 
   return (
     <Sider
@@ -124,15 +125,27 @@ const SideMenu = () => {
             className="agent-selector"
           >
             {agents.map((_agent: any, index: number) => {
-              return <Menu.Item key={index}>{_agent.context?.name}</Menu.Item>
+              return (
+                <Menu.Item
+                  key={index}
+                  onClick={() => setActiveAgentId(_agent.context?.id)}
+                  icon={
+                    <CheckCircleOutlined
+                      style={{
+                        fontSize: '17px',
+                        opacity: _agent.context?.id === activeAgentId ? 1 : 0.1,
+                      }}
+                    />
+                  }
+                >
+                  {_agent.context?.name}
+                </Menu.Item>
+              )
             })}
             <Menu.Divider></Menu.Divider>
             {subMenu.map((menuItem) => {
               return (
-                <Menu.Item
-                  key={menuItem.label}
-                  icon={<menuItem.icon style={{ fontSize: '17px' }} />}
-                >
+                <Menu.Item key={menuItem.label}>
                   <Link to={menuItem.url}>{menuItem.label}</Link>
                 </Menu.Item>
               )
