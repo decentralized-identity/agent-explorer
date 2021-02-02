@@ -2380,10 +2380,10 @@
     "@typescript-eslint/types" "4.14.1"
     eslint-visitor-keys "^2.0.0"
 
-"@veramo-community/veramo-react@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/@veramo-community/veramo-react/-/veramo-react-0.2.2.tgz#b5823c06089f3bcd7723e3b53f8f75989bc63b9b"
-  integrity sha512-CFX9k0vv83TUFbu/1G9G2dOmIjOvHnF0GsbgqfXdbyj6gKA40OcVXs8EkqNmwwgnL0NTCFFbpt1ScDrYSUHKTA==
+"@veramo-community/veramo-react@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/@veramo-community/veramo-react/-/veramo-react-0.3.0.tgz#2230848f5dc83c11c9efd3505817c89a05e47c36"
+  integrity sha512-2EBepF8xYo2jptNYdZOJu9wbKnaMN06l8uZkAlxJScGN4Vh67nHIYnc3UnTqVteN9TJ/Fhq1cEPn9pVoNaLaoA==
   dependencies:
     uuid "^8.3.2"
 

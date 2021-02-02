@@ -1,36 +1,47 @@
-import React from 'react'
-import { Typography, Card } from 'antd'
+import React, { useState } from 'react'
+import { Typography, Card, Button, Row, Space, Input } from 'antd'
 import Page from '../layout/Page'
-
-const { Title } = Typography
+import { useVeramo } from '@veramo-community/veramo-react'
+import { DeleteOutlined } from '@ant-design/icons'
+const { Title, Text } = Typography
 
 const Agents = () => {
+  const { agents, removeAgent } = useVeramo()
+
+  const [names, setNames] = useState({})
+
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Agents</Title>}>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
+      {agents.map((agent) => {
+        return (
+          <Card key={agent.context.id}>
+            <Title>{agent.context.name}</Title>
+            <Row style={{ marginBottom: 20 }}>
+              <code>Schema: {agent.context.schema}</code>
+            </Row>
+
+            <Space>
+              <Button
+                icon={<DeleteOutlined />}
+                danger
+                onClick={() =>
+                  agent.context.id && removeAgent(agent.context.id)
+                }
+              >
+                Delete Agent
+              </Button>
+              <Button
+                icon={<DeleteOutlined />}
+                onClick={() =>
+                  agent.context.id && removeAgent(agent.context.id)
+                }
+              >
+                Save
+              </Button>
+            </Space>
+          </Card>
+        )
+      })}
     </Page>
   )
 }

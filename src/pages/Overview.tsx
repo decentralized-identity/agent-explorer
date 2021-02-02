@@ -1,10 +1,16 @@
 import React from 'react'
 import { Typography, Card, Layout } from 'antd'
 import Page from '../layout/Page'
-
+import { useVeramo } from '@veramo-community/veramo-react'
 const { Title } = Typography
 
 const Overview = () => {
+  const { agent } = useVeramo()
+
+  if (agent) {
+    console.log(agent)
+  }
+
   const rightContent = () => {
     return (
       <Layout>

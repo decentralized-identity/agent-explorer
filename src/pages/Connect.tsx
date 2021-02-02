@@ -3,11 +3,13 @@ import { Typography, Form, Input, Button, List, Row, Col } from 'antd'
 import Page from '../layout/Page'
 import { useAgent } from '../agent'
 import { useQuery } from 'react-query'
+import { useHistory } from 'react-router-dom'
 
 const { Title } = Typography
 
 const Connect = () => {
-  const { agent, agents, addAgentConfig } = useAgent()
+  const history = useHistory()
+  const { addAgentConfig } = useAgent()
   const [name, setName] = useState<string>()
   const [schemaUrl, setSchemaUrl] = useState<string>()
   const [agentUrl, setAgentUrl] = useState<string>('')
@@ -15,7 +17,7 @@ const Connect = () => {
 
   const newAgentConfig = () => {
     addAgentConfig({
-      context: { name },
+      context: { name, schema: schemaUrl },
       remoteAgents: [
         {
           url: agentUrl,
@@ -24,6 +26,8 @@ const Connect = () => {
         },
       ],
     })
+
+    history.push('/agents')
   }
 
   const {
@@ -31,7 +35,7 @@ const Connect = () => {
     isLoading: schemaLoading,
     isError: schemaError,
   } = useQuery(
-    ['schema'],
+    ['schema', { endpoint: schemaUrl }],
     async () => {
       if (schemaUrl) {
         const response = await fetch(schemaUrl)
@@ -64,7 +68,7 @@ const Connect = () => {
             dataSource={Object.keys(schema['x-methods'])}
             renderItem={(item) => (
               <List.Item>
-                <Typography.Text></Typography.Text> {item}
+                <Typography.Text>{item}</Typography.Text>
               </List.Item>
             )}
           />
@@ -76,22 +80,6 @@ const Connect = () => {
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Connect</Title>}>
       <Form layout={'vertical'}>
-        <Form.Item label="Agent name">
-          <Input
-            size="large"
-            placeholder="Remote Agent"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </Form.Item>
-        <Form.Item label="Agent Url">
-          <Input
-            size="large"
-            placeholder="Agent Url"
-            value={agentUrl}
-            onChange={(e) => setAgentUrl(e.target.value)}
-          />
-        </Form.Item>
         <Form.Item
           hasFeedback
           validateStatus={
@@ -114,27 +102,47 @@ const Connect = () => {
           />
         </Form.Item>
         {methods()}
-        <Form.Item label="API Key">
-          <Input
-            size="large"
-            placeholder="API Key"
-            value={apiKey}
-            type="password"
-            onChange={(e) => setApiKey(e.target.value)}
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button
-            size="large"
-            type="primary"
-            block
-            shape="round"
-            disabled={!name || !schemaUrl || !apiKey || !agentUrl}
-            onClick={() => newAgentConfig()}
-          >
-            Submit
-          </Button>
-        </Form.Item>
+        {schema && (
+          <>
+            <Form.Item label="Agent name">
+              <Input
+                size="large"
+                placeholder="Remote Agent"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </Form.Item>
+            <Form.Item label="Agent Url">
+              <Input
+                size="large"
+                placeholder="Agent Url"
+                value={agentUrl}
+                onChange={(e) => setAgentUrl(e.target.value)}
+              />
+            </Form.Item>
+            <Form.Item label="API Key">
+              <Input
+                size="large"
+                placeholder="API Key"
+                value={apiKey}
+                type="password"
+                onChange={(e) => setApiKey(e.target.value)}
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                size="large"
+                type="primary"
+                block
+                shape="round"
+                disabled={!name || !schemaUrl || !apiKey || !agentUrl}
+                onClick={() => newAgentConfig()}
+              >
+                Submit
+              </Button>
+            </Form.Item>
+          </>
+        )}
       </Form>
     </Page>
   )
