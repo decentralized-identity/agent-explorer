@@ -19,7 +19,7 @@ import { FundViewOutlined } from '@ant-design/icons'
 
 import JsonBlock from '../components/blocks/Json'
 
-import IDModule from '../modules/Identifier'
+import IDModule from '../components/modules/Identifier'
 
 const { Title, Text } = Typography
 
