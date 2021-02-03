@@ -1,30 +1,13 @@
 import React from 'react'
-import { Typography, Form, Radio, Card } from 'antd'
+import { Typography, Card, Layout, Space } from 'antd'
 import Page from '../layout/Page'
-import { Content } from 'antd/lib/layout/layout'
-import { useTheme } from '../context/ThemeProvider'
+import ThemeModule from '../components/modules/ThemeSwitch'
+import Version from '../components/widgets/Version'
 
-const { Title, Text } = Typography
+const { Title } = Typography
+const { Content } = Layout
 
 const Settings = () => {
-  const [form] = Form.useForm()
-  const { theme, switchTheme } = useTheme()
-
-  const themes = [
-    {
-      name: 'light-theme',
-      label: 'Light',
-    },
-    {
-      name: 'dark-theme',
-      label: 'Dark',
-    },
-    // {
-    //   name: 'system-theme',
-    //   label: 'System',
-    // },
-  ]
-
   return (
     <Page
       header={
@@ -34,23 +17,12 @@ const Settings = () => {
       }
     >
       <Content style={{ marginBottom: 30 }}>
-        <Title level={5}>Viewing Mode</Title>
+        <Title level={5}>Version Info</Title>
         <Card>
-          <Radio.Group
-            value={theme}
-            onChange={(e) => switchTheme(e.target.value)}
-          >
-            {themes.map((themeOptions) => {
-              console.log(themeOptions, theme)
-
-              return (
-                <Radio key={themeOptions.name} value={themeOptions.name}>
-                  {themeOptions.label}
-                </Radio>
-              )
-            })}
-          </Radio.Group>
+          <Version />
         </Card>
+        <Title level={5}>Viewing Mode</Title>
+        <ThemeModule />
       </Content>
     </Page>
   )

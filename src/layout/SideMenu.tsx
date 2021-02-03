@@ -1,5 +1,6 @@
 import React from 'react'
 import { Layout, Menu, Avatar, Typography, Row, Button } from 'antd'
+import Version from '../components/widgets/Version'
 import {
   EyeOutlined,
   UserOutlined,
@@ -12,9 +13,8 @@ import {
   CloudServerOutlined,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-import { useAgent } from '../agent'
-import md5 from 'md5'
 import { useVeramo } from '@veramo-community/veramo-react'
+import md5 from 'md5'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
@@ -176,8 +176,10 @@ const SideMenu = () => {
           marginBottom: 50,
         }}
       >
+        <Menu.Item></Menu.Item>
         <Menu.Item>
           <Link to="/settings">Settings</Link>
+          (<Version versionOnly />)
         </Menu.Item>
         <Menu.Item>
           <a target="_blank" href="https://github.com/veramolabs">
