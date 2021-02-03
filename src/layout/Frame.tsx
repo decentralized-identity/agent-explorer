@@ -23,8 +23,6 @@ const { Header, Content } = Layout
 const Frame = () => {
   const { agent } = useVeramo()
 
-  console.log('CURRENT_AGENT', agent && agent.context.id)
-
   return (
     <Layout style={{ height: '100%' }}>
       <Sidemenu />

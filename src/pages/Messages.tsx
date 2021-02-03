@@ -1,9 +1,10 @@
 import React from 'react'
-import { Typography, Table, Row, Tooltip, Tag } from 'antd'
+import { Typography, Table, Tooltip, Tag } from 'antd'
 import Page from '../layout/Page'
-import messages from '../stubbs/messages'
 import { format } from 'date-fns'
 import { Link } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useVeramo } from '@veramo-community/veramo-react'
 
 const { Title } = Typography
 
@@ -98,6 +99,11 @@ const columns = [
 ]
 
 const Messages = () => {
+  const { agent } = useVeramo()
+  const { data: messages } = useQuery(
+    ['messages', { agentId: agent?.context.name }],
+    () => agent?.dataStoreORMGetMessages(),
+  )
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Messages</Title>}>
       <Table

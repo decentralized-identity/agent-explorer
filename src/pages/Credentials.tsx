@@ -1,21 +1,28 @@
 import React from 'react'
 import { Typography, Table, Tag, Button, Tooltip } from 'antd'
 import Page from '../layout/Page'
-import credentials from '../stubbs/credentials'
 import { format } from 'date-fns'
 import { FundViewOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useVeramo } from '@veramo-community/veramo-react'
 
 const { Title } = Typography
 
 const columns = [
   {
-    title: 'Issuance Date',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) =>
-      format(new Date(verifiableCredential.issuanceDate), 'PPP'),
-    responsive: ['lg'],
-    width: 200,
+    title: 'Explore',
+    dataIndex: 'hash',
+    render: (hash: any) => (
+      <Button
+        icon={
+          <Link to={'/credentials/' + hash}>
+            <FundViewOutlined />
+          </Link>
+        }
+      />
+    ),
+    width: 100,
   },
   {
     title: 'Issuer',
@@ -53,7 +60,9 @@ const columns = [
     dataIndex: 'verifiableCredential',
     render: (verifiableCredential: any) =>
       verifiableCredential.type.map((type: string, i: number) => (
-        <Tag key={i}>{type}</Tag>
+        <Tag color="geekblue" key={i}>
+          {type}
+        </Tag>
       )),
     responsive: ['lg'],
     width: 200,
@@ -61,27 +70,29 @@ const columns = [
   {
     title: 'Proof Type',
     dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => verifiableCredential.proof.type,
+    render: (verifiableCredential: any) => (
+      <Tag color="success">{verifiableCredential.proof.type}</Tag>
+    ),
     responsive: ['xl'],
     width: 200,
   },
   {
-    title: 'Explore',
-    dataIndex: 'hash',
-    render: (hash: any) => (
-      <Button
-        icon={
-          <Link to={'/credentials/' + hash}>
-            <FundViewOutlined />
-          </Link>
-        }
-      />
-    ),
-    width: 100,
+    title: 'Issuance Date',
+    dataIndex: 'verifiableCredential',
+    render: (verifiableCredential: any) =>
+      format(new Date(verifiableCredential.issuanceDate), 'PPP'),
+    responsive: ['lg'],
+    width: 200,
   },
 ]
 
 const Credentials = () => {
+  const { agent } = useVeramo()
+  const { data: credentials } = useQuery(
+    ['credentials', { agentId: agent?.context.name }],
+    () => agent?.dataStoreORMGetVerifiableCredentials(),
+  )
+
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Credentials</Title>}>
       <Table

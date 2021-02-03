@@ -13,10 +13,14 @@ import {
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useAgent } from '../agent'
+import md5 from 'md5'
+import { useVeramo } from '@veramo-community/veramo-react'
 
 const { Sider } = Layout
 const { SubMenu } = Menu
 const { Title, Text } = Typography
+
+const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 const mainMenu = [
   {
@@ -65,7 +69,10 @@ const subMenu = [
 ]
 
 const SideMenu = () => {
-  const { agent, agents, setActiveAgentId, activeAgentId } = useAgent()
+  const { agent, agents, setActiveAgentId, activeAgentId } = useVeramo()
+  const uri =
+    agent?.context.name &&
+    GRAVATAR_URI + md5(agent?.context.schema) + '?s=200' + '&d=retro'
 
   return (
     <Sider
@@ -114,13 +121,7 @@ const SideMenu = () => {
         >
           <SubMenu
             key="connected-agents"
-            icon={
-              <Avatar
-                size="large"
-                style={{ marginRight: 15 }}
-                src={agent.context?.picture}
-              />
-            }
+            icon={<Avatar size="large" style={{ marginRight: 15 }} src={uri} />}
             title={agent.context?.name}
             className="agent-selector"
           >

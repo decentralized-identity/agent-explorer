@@ -1,23 +1,113 @@
 import React from 'react'
-import { Typography, Card, Layout } from 'antd'
+import {
+  Typography,
+  Card,
+  Layout,
+  List,
+  Tag,
+  Row,
+  Col,
+  Table,
+  Button,
+} from 'antd'
+import { format } from 'date-fns'
 import Page from '../layout/Page'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useVeramo } from '@veramo-community/veramo-react'
+import { FundViewOutlined } from '@ant-design/icons'
 
-const { Title } = Typography
+import IDModule from '../modules/Identifier'
+
+const { Title, Text } = Typography
 
 const Credential = () => {
   const { id } = useParams<{ id: string }>()
+  const { agent } = useVeramo()
+  const { data: credential, isLoading: credentialLoading } = useQuery(
+    ['credential', { id }],
+    () => agent?.dataStoreGetVerifiableCredential({ hash: id }),
+  )
+  const historyQuery: any = {
+    where: [
+      {
+        column: 'issuer',
+        value: [credential?.issuer.id as string],
+      },
+      {
+        column: 'subject',
+        value: [credential?.credentialSubject.id as string],
+      },
+    ],
+  }
+  const { data: credentials } = useQuery(
+    ['credentials', historyQuery],
+    () => agent?.dataStoreORMGetVerifiableCredentials(historyQuery),
+    { enabled: !!credential },
+  )
+
+  const historyColumns = [
+    {
+      title: 'Explore',
+      dataIndex: 'hash',
+      render: (hash: any) => (
+        <Button
+          icon={
+            <Link to={'/credentials/' + hash}>
+              <FundViewOutlined />
+            </Link>
+          }
+        />
+      ),
+      width: 100,
+    },
+    {
+      title: 'Issuance Date',
+      dataIndex: 'verifiableCredential',
+      render: (verifiableCredential: any) =>
+        format(new Date(verifiableCredential.issuanceDate), 'PPP'),
+      width: 200,
+    },
+    {
+      title: 'Type',
+      dataIndex: 'verifiableCredential',
+      render: (verifiableCredential: any) =>
+        verifiableCredential.type.map((type: string, i: number) => (
+          <Tag color="geekblue" key={i}>
+            {type}
+          </Tag>
+        )),
+      width: 200,
+    },
+  ]
 
   const rightContent = () => {
     return (
       <Layout>
-        <Card title="Issuer">
-          <p>Card content</p>
-          <p>Card content</p>
+        <Card title="Context">
+          {credential?.['@context'].map((ctx: string) => {
+            return (
+              <Text>
+                <a href={ctx}>{ctx}</a>
+              </Text>
+            )
+          })}
         </Card>
-        <Card title="Subject">
-          <p>Card content</p>
-          <p>Card content</p>
+        <IDModule
+          cacheKey="issuer"
+          title="Issuer"
+          identifier={credential?.issuer.id as string}
+        />
+        <IDModule
+          cacheKey="subject"
+          title="Subject"
+          identifier={credential?.credentialSubject.id as string}
+        />
+        <Card title="Query Composer">
+          Options with current view populated to save for future queries
+        </Card>
+        <Card title="Agent Module">
+          Show some meta data about current agent
         </Card>
       </Layout>
     )
@@ -27,32 +117,34 @@ const Credential = () => {
     <Page
       header={
         <Layout>
-          <Title style={{ fontWeight: 'bold' }}>Credential</Title>
-          {/* <code>{id}</code> */}
+          <Title style={{ fontWeight: 'bold' }}>Verifiable Credential</Title>
+          <Row>
+            <Col>
+              {credential?.type.map((type: string) => {
+                return <Tag color="geekblue">{type}</Tag>
+              })}
+            </Col>
+          </Row>
         </Layout>
       }
       rightContent={rightContent()}
     >
-      <Card style={{ height: 400 }} loading>
-        Card 1
+      <Card title="Credential Subject" loading={credentialLoading}>
+        <code>
+          <pre>{JSON.stringify(credential?.credentialSubject, null, 2)}</pre>
+        </code>
       </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
+      <Card bodyStyle={{ padding: 0 }} title="Activity">
+        <Table
+          columns={historyColumns}
+          dataSource={credentials}
+          pagination={false}
+        />
       </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
+      <Card title="Raw JSON" loading={credentialLoading}>
+        <code>
+          <pre>{JSON.stringify(credential, null, 2)}</pre>
+        </code>
       </Card>
       <Card style={{ height: 400 }} loading>
         Card 1
