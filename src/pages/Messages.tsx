@@ -1,38 +1,115 @@
 import React from 'react'
-import { Typography, Table } from 'antd'
+import { Typography, Table, Tooltip, Tag } from 'antd'
 import Page from '../layout/Page'
-import identifiers from '../stubbs/identifiers'
+import { format } from 'date-fns'
+import { Link } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useVeramo } from '@veramo-community/veramo-react'
 
 const { Title } = Typography
 
+const expandedRowRender = (message: any) => {
+  const columns = [
+    {
+      title: 'Credentials',
+      dataIndex: 'credentialSubject',
+      key: 'credentialSubject',
+      render: (credentialSubject: any) => (
+        <pre>{JSON.stringify(credentialSubject, null, 2)}</pre>
+      ),
+    },
+    {
+      title: 'Issuance Date',
+      dataIndex: 'issuanceDate',
+      key: 'issuanceDate',
+      width: 150,
+      render: (issuanceDate: string) =>
+        format(new Date(issuanceDate), 'do MMM yyyy'),
+    },
+    {
+      title: 'Type',
+      dataIndex: 'type',
+      key: 'type',
+      width: 100,
+      render: (type: any) =>
+        type.map((type: string, i: number) => <Tag key={i}>{type}</Tag>),
+    },
+  ]
+
+  // return (
+  //   message.credentials.length > 0 && (
+  //     <>
+  //       {message.credentials.map((credential: any) => {
+  //         return (
+  //           <Row>
+  //             <pre>{JSON.stringify(credential.credentialSubject, null, 2)}</pre>
+  //           </Row>
+  //         )
+  //       })}
+  //     </>
+  //   )
+  // )
+
+  return (
+    <Table
+      columns={columns}
+      dataSource={message.credentials}
+      pagination={false}
+    />
+  )
+}
+
 const columns = [
   {
-    title: 'DID',
-    dataIndex: 'did',
-    key: 'did',
-    render: (text: string) => <a>{text}</a>,
+    title: 'Created At',
+    dataIndex: 'createdAt',
+    width: 150,
+    render: (createdAt: string) => format(new Date(createdAt), 'do MMM yyyy'),
   },
   {
-    title: 'Provider',
-    dataIndex: 'provider',
-    key: 'provider',
-    responsive: ['md'],
+    title: 'Type',
+    dataIndex: 'type',
+    width: 100,
   },
   {
-    title: 'Alias',
-    dataIndex: 'alias',
-    key: 'alias',
+    title: 'From',
+    dataIndex: 'from',
+    ellipsis: {
+      showTitle: false,
+    },
+    render: (from: any) => (
+      <Tooltip placement="topLeft" title={from}>
+        <Link to={'/identifiers/' + from}>{from}</Link>
+      </Tooltip>
+    ),
+  },
+  {
+    title: 'To',
+    dataIndex: 'to',
+    ellipsis: {
+      showTitle: false,
+    },
     responsive: ['lg'],
+    render: (to: any) => (
+      <Tooltip placement="topLeft" title={to}>
+        <Link to={'/identifiers/' + to}>{to}</Link>
+      </Tooltip>
+    ),
   },
 ]
 
 const Messages = () => {
+  const { agent } = useVeramo()
+  const { data: messages } = useQuery(
+    ['messages', { agentId: agent?.context.name }],
+    () => agent?.dataStoreORMGetMessages(),
+  )
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Messages</Title>}>
       <Table
-        rowKey={(record) => record.did}
-        dataSource={identifiers}
-        // bordered
+        rowKey={(record) => record.id}
+        dataSource={messages}
+        expandable={{ expandedRowRender }}
         // @ts-ignore
         columns={columns}
       />

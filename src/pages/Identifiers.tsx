@@ -2,7 +2,9 @@ import React from 'react'
 import { Typography, Table, Button } from 'antd'
 import Page from '../layout/Page'
 import { FundViewOutlined } from '@ant-design/icons'
-import identifiers from '../stubbs/identifiers'
+import { Link } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useVeramo } from '@veramo-community/veramo-react'
 
 const { Title } = Typography
 
@@ -11,7 +13,7 @@ const columns = [
     title: 'DID',
     dataIndex: 'did',
     key: 'did',
-    render: (text: string) => <a>{text}</a>,
+    render: (did: string) => <Link to={'/identifiers/' + did}>{did}</Link>,
   },
   {
     title: 'Provider',
@@ -34,12 +36,16 @@ const columns = [
 ]
 
 const Identifiers = () => {
+  const { agent } = useVeramo()
+  const { data: identifiers } = useQuery(
+    ['identifiers', { agentId: agent?.context.name }],
+    () => agent?.dataStoreORMGetIdentifiers(),
+  )
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Identifiers</Title>}>
       <Table
-        rowKey={(record) => record.did}
+        rowKey={(record) => record.did as string}
         dataSource={identifiers}
-        // bordered
         // @ts-ignore
         columns={columns}
       />

@@ -38,7 +38,7 @@ export const infuraProjectId = '5ffc47f65c4042ce847ef66a3fa70d4c'
 
 export const defaultAgent = createAgent<AgentInterfaces>({
   context: {
-    name: 'Default',
+    name: 'Local',
   },
   plugins: [
     new DIDResolverPlugin({

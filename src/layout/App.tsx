@@ -4,19 +4,24 @@ import Frame from './Frame'
 import { VeramoProvider } from '@veramo-community/veramo-react'
 import { defaultAgent } from '../agent'
 import { ThemeProvider } from '../context/ThemeProvider'
+import { QueryClientProvider, QueryClient } from 'react-query'
 
 const App = () => {
+  const queryClient = new QueryClient()
+
   return (
-    <ThemeProvider>
-      {
-        // @ts-ignore
-        <VeramoProvider agent={defaultAgent}>
-          <BrowserRouter>
-            <Route component={Frame} />
-          </BrowserRouter>
-        </VeramoProvider>
-      }
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        {
+          // @ts-ignore
+          <VeramoProvider>
+            <BrowserRouter>
+              <Route component={Frame} />
+            </BrowserRouter>
+          </VeramoProvider>
+        }
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }
 

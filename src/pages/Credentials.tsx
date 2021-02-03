@@ -1,27 +1,37 @@
 import React from 'react'
 import { Typography, Table, Tag, Button, Tooltip } from 'antd'
 import Page from '../layout/Page'
-import credentials from '../stubbs/credentials'
 import { format } from 'date-fns'
 import { FundViewOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useVeramo } from '@veramo-community/veramo-react'
 
 const { Title } = Typography
 
 const columns = [
   {
-    title: 'Issuance Date',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) =>
-      format(new Date(verifiableCredential.issuanceDate), 'PPP'),
-    responsive: ['lg'],
-    width: 200,
+    title: 'Explore',
+    dataIndex: 'hash',
+    render: (hash: any) => (
+      <Button
+        icon={
+          <Link to={'/credentials/' + hash}>
+            <FundViewOutlined />
+          </Link>
+        }
+      />
+    ),
+    width: 100,
   },
   {
     title: 'Issuer',
     dataIndex: 'verifiableCredential',
     render: (verifiableCredential: any) => (
       <Tooltip placement="topLeft" title={verifiableCredential.issuer.id}>
-        <a>{verifiableCredential.issuer.id}</a>
+        <Link to={'/identifiers/' + verifiableCredential.issuer.id}>
+          {verifiableCredential.issuer.id}
+        </Link>
       </Tooltip>
     ),
     ellipsis: {
@@ -36,7 +46,9 @@ const columns = [
         placement="topLeft"
         title={verifiableCredential.credentialSubject.id}
       >
-        <a>{verifiableCredential.credentialSubject.id}</a>
+        <Link to={'/identifiers/' + verifiableCredential.credentialSubject.id}>
+          {verifiableCredential.credentialSubject.id}
+        </Link>
       </Tooltip>
     ),
     ellipsis: {
@@ -48,7 +60,9 @@ const columns = [
     dataIndex: 'verifiableCredential',
     render: (verifiableCredential: any) =>
       verifiableCredential.type.map((type: string, i: number) => (
-        <Tag key={i}>{type}</Tag>
+        <Tag color="geekblue" key={i}>
+          {type}
+        </Tag>
       )),
     responsive: ['lg'],
     width: 200,
@@ -56,21 +70,29 @@ const columns = [
   {
     title: 'Proof Type',
     dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => verifiableCredential.proof.type,
+    render: (verifiableCredential: any) => (
+      <Tag color="success">{verifiableCredential.proof.type}</Tag>
+    ),
     responsive: ['xl'],
     width: 200,
   },
   {
-    title: 'Explore',
+    title: 'Issuance Date',
     dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => (
-      <Button icon={<FundViewOutlined />} />
-    ),
-    width: 100,
+    render: (verifiableCredential: any) =>
+      format(new Date(verifiableCredential.issuanceDate), 'PPP'),
+    responsive: ['lg'],
+    width: 200,
   },
 ]
 
 const Credentials = () => {
+  const { agent } = useVeramo()
+  const { data: credentials } = useQuery(
+    ['credentials', { agentId: agent?.context.name }],
+    () => agent?.dataStoreORMGetVerifiableCredentials(),
+  )
+
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Credentials</Title>}>
       <Table
