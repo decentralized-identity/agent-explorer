@@ -17,6 +17,8 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { FundViewOutlined } from '@ant-design/icons'
 
+import JsonBlock from '../components/blocks/Json'
+
 import IDModule from '../modules/Identifier'
 
 const { Title, Text } = Typography
@@ -129,11 +131,12 @@ const Credential = () => {
       }
       rightContent={rightContent()}
     >
-      <Card title="Credential Subject" loading={credentialLoading}>
-        <code>
-          <pre>{JSON.stringify(credential?.credentialSubject, null, 2)}</pre>
-        </code>
-      </Card>
+      <JsonBlock
+        title="Credential Subject"
+        data={credential?.credentialSubject}
+        isLoading={credentialLoading}
+      />
+
       <Card bodyStyle={{ padding: 0 }} title="Activity">
         <Table
           columns={historyColumns}
@@ -141,11 +144,11 @@ const Credential = () => {
           pagination={false}
         />
       </Card>
-      <Card title="Raw JSON" loading={credentialLoading}>
-        <code>
-          <pre>{JSON.stringify(credential, null, 2)}</pre>
-        </code>
-      </Card>
+      <JsonBlock
+        title="Raw JSON"
+        data={credential}
+        isLoading={credentialLoading}
+      />
       <Card style={{ height: 400 }} loading>
         Card 1
       </Card>
