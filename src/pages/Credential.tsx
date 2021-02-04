@@ -83,7 +83,7 @@ const Credential = () => {
       render: (hash: any) => (
         <Button
           icon={
-            <Link to={'/credentials/' + hash}>
+            <Link to={'/credential/' + hash}>
               <FundViewOutlined />
             </Link>
           }
