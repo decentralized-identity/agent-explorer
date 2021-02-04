@@ -16,12 +16,40 @@ import { useParams, Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { FundViewOutlined } from '@ant-design/icons'
-
 import JsonBlock from '../components/blocks/Json'
-
 import IDModule from '../components/modules/Identifier'
+import Chart from '../components/simple/Chart'
 
 const { Title, Text } = Typography
+const data1 = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  fill: false,
+  datasets: [
+    {
+      label: 'Activity',
+      data: [500, 897, 234, 564, 765, 432],
+      borderColor: 'rgb(47 89 138 / 80%)',
+      fill: false,
+      lineTension: 0,
+      backgroundColor: 'rgb(47 89 138 / 20%)',
+      borderWidth: 1,
+    },
+  ],
+  options: {
+    scales: {
+      xAxes: [
+        {
+          display: false,
+        },
+      ],
+      yAxes: [
+        {
+          display: false,
+        },
+      ],
+    },
+  },
+}
 
 const Credential = () => {
   const { id } = useParams<{ id: string }>()
@@ -110,6 +138,9 @@ const Credential = () => {
         </Card>
         <Card title="Agent Module">
           Show some meta data about current agent
+        </Card>
+        <Card>
+          <Chart type="line" data={data1}></Chart>
         </Card>
       </Layout>
     )
