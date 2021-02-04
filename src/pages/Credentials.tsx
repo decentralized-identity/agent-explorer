@@ -29,7 +29,7 @@ const columns = [
     dataIndex: 'verifiableCredential',
     render: (verifiableCredential: any) => (
       <Tooltip placement="topLeft" title={verifiableCredential.issuer.id}>
-        <Link to={'/identifiers/' + verifiableCredential.issuer.id}>
+        <Link to={'/identifier/' + verifiableCredential.issuer.id}>
           {verifiableCredential.issuer.id}
         </Link>
       </Tooltip>
@@ -46,7 +46,7 @@ const columns = [
         placement="topLeft"
         title={verifiableCredential.credentialSubject.id}
       >
-        <Link to={'/identifiers/' + verifiableCredential.credentialSubject.id}>
+        <Link to={'/identifier/' + verifiableCredential.credentialSubject.id}>
           {verifiableCredential.credentialSubject.id}
         </Link>
       </Tooltip>
@@ -54,6 +54,15 @@ const columns = [
     ellipsis: {
       showTitle: false,
     },
+  },
+  {
+    title: 'Proof Type',
+    dataIndex: 'verifiableCredential',
+    render: (verifiableCredential: any) => (
+      <Tag>{verifiableCredential.proof.type}</Tag>
+    ),
+    responsive: ['xl'],
+    width: 200,
   },
   {
     title: 'Type',
@@ -65,15 +74,6 @@ const columns = [
         </Tag>
       )),
     responsive: ['lg'],
-    width: 200,
-  },
-  {
-    title: 'Proof Type',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => (
-      <Tag color="success">{verifiableCredential.proof.type}</Tag>
-    ),
-    responsive: ['xl'],
     width: 200,
   },
   {

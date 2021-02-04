@@ -2,7 +2,13 @@ import React, { useState } from 'react'
 import { Typography, Card, Button, Row, Space, Tag } from 'antd'
 import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { DeleteOutlined } from '@ant-design/icons'
+import {
+  DeleteOutlined,
+  PushpinOutlined,
+  EditOutlined,
+} from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+
 const { Title, Text } = Typography
 
 const Agents = () => {
@@ -37,16 +43,19 @@ const Agents = () => {
                   agent.context.id && removeAgent(agent.context.id)
                 }
               >
-                Delete Agent
+                Delete Agent Config
               </Button>
               <Button
-                icon={<DeleteOutlined />}
+                icon={<PushpinOutlined />}
                 disabled={activeAgentId === agent.context.id}
                 onClick={() =>
                   agent.context.id && setActiveAgentId(agent.context.id)
                 }
               >
                 Make Default
+              </Button>
+              <Button icon={<EditOutlined />}>
+                <Link to={'/agent/' + agent.context.id}>Manage</Link>
               </Button>
             </Space>
           </Card>

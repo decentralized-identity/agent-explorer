@@ -24,7 +24,7 @@ const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 const mainMenu = [
   {
-    url: '/overview',
+    url: '/',
     label: 'Overview',
     icon: EyeOutlined,
   },
