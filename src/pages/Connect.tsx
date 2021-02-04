@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Typography, Form, Input, Button, List, Row, Col } from 'antd'
+import { Typography, Form, Input, Button, List, Row, Col, Card } from 'antd'
 import Page from '../layout/Page'
 import { useAgent } from '../agent'
 import { useQuery } from 'react-query'
@@ -144,6 +144,7 @@ const Connect = () => {
           </>
         )}
       </Form>
+      <Card title="Deploy agent">Deploy an agent to heroku</Card>
     </Page>
   )
 }
