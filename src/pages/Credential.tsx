@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Typography,
   Card,
@@ -9,6 +9,7 @@ import {
   Col,
   Table,
   Button,
+  Input,
 } from 'antd'
 import { format } from 'date-fns'
 import Page from '../layout/Page'
@@ -19,6 +20,7 @@ import { FundViewOutlined } from '@ant-design/icons'
 import JsonBlock from '../components/blocks/Json'
 import IDModule from '../components/modules/Identifier'
 import Chart from '../components/simple/Chart'
+import SubjectKey from '../components/widgets/SubjectKey'
 
 const { Title, Text } = Typography
 const data1 = {
@@ -70,11 +72,13 @@ const Credential = () => {
       },
     ],
   }
-  const { data: credentials } = useQuery(
+  const { data: credentials, isLoading: credentialHistoryLoading } = useQuery(
     ['credentials', historyQuery],
     () => agent?.dataStoreORMGetVerifiableCredentials(historyQuery),
     { enabled: !!credential },
   )
+
+  const [queryWidgetKey, setQueryWidgetKey] = useState<string>('')
 
   const historyColumns = [
     {
@@ -133,6 +137,46 @@ const Credential = () => {
           title="Subject"
           identifier={credential?.credentialSubject.id as string}
         />
+        <Card title="Subject Key Widget">
+          <Text>
+            This widget is for extracting specific credential claims where the
+            current identifier is the subject. It can be used to build more
+            dynamic modules. This could be configurable from the front end and
+            saved.
+          </Text>
+          <Input
+            style={{ margin: '15px 0' }}
+            type="text"
+            defaultValue="Enter claim type"
+            onChange={(e) => setQueryWidgetKey(e.target.value)}
+          />
+          <SubjectKey
+            did={credential?.credentialSubject.id as string}
+            vcKey={queryWidgetKey}
+            renderKey={(hash, data) => {
+              return (
+                <Row>
+                  <Col>
+                    {hash ? (
+                      <>
+                        <Text>
+                          Found most recent <b>{queryWidgetKey}</b> claim:
+                        </Text>
+                        <pre>
+                          <code>{JSON.stringify(data, null, 2)}</code>
+                        </pre>
+                      </>
+                    ) : (
+                      <Text>
+                        No credentials for <b>{queryWidgetKey}</b>
+                      </Text>
+                    )}
+                  </Col>
+                </Row>
+              )
+            }}
+          />
+        </Card>
         <Card title="Query Composer">
           Options with current view populated to save for future queries
         </Card>
@@ -174,6 +218,7 @@ const Credential = () => {
 
       <Card bodyStyle={{ padding: 0 }} title="Activity">
         <Table
+          loading={credentialHistoryLoading}
           rowKey={(record) => record.hash}
           columns={historyColumns}
           dataSource={credentials}

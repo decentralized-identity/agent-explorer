@@ -37,13 +37,14 @@ const columns = [
 
 const Identifiers = () => {
   const { agent } = useVeramo()
-  const { data: identifiers } = useQuery(
+  const { data: identifiers, isLoading } = useQuery(
     ['identifiers', { agentId: agent?.context.name }],
     () => agent?.dataStoreORMGetIdentifiers(),
   )
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Identifiers</Title>}>
       <Table
+        loading={isLoading}
         rowKey={(record) => record.did as string}
         dataSource={identifiers}
         // @ts-ignore

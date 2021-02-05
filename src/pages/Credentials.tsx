@@ -88,7 +88,7 @@ const columns = [
 
 const Credentials = () => {
   const { agent } = useVeramo()
-  const { data: credentials } = useQuery(
+  const { data: credentials, isLoading } = useQuery(
     ['credentials', { agentId: agent?.context.name }],
     () => agent?.dataStoreORMGetVerifiableCredentials(),
   )
@@ -96,6 +96,7 @@ const Credentials = () => {
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Credentials</Title>}>
       <Table
+        loading={isLoading}
         rowKey={(record) => record.hash}
         dataSource={credentials}
         // bordered
