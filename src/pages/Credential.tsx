@@ -222,6 +222,9 @@ const Credential = () => {
 
         <Card title="Subject Key Widget">
           <Text>
+            <b>Precursor to stateful query module above.</b>
+          </Text>
+          <Text>
             This widget is for extracting specific credential claims where the
             current identifier is the subject. It can be used to build more
             dynamic modules. This could be configurable from the front end and
