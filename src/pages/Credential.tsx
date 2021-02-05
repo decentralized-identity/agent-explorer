@@ -117,7 +117,7 @@ const Credential = () => {
         <Card title="Context">
           {credential?.['@context'].map((ctx: string) => {
             return (
-              <Text>
+              <Text key={ctx}>
                 <a href={ctx}>{ctx}</a>
               </Text>
             )
@@ -154,7 +154,11 @@ const Credential = () => {
           <Row>
             <Col>
               {credential?.type.map((type: string) => {
-                return <Tag color="geekblue">{type}</Tag>
+                return (
+                  <Tag color="geekblue" key={type}>
+                    {type}
+                  </Tag>
+                )
               })}
             </Col>
           </Row>
@@ -170,6 +174,7 @@ const Credential = () => {
 
       <Card bodyStyle={{ padding: 0 }} title="Activity">
         <Table
+          rowKey={(record) => record.hash}
           columns={historyColumns}
           dataSource={credentials}
           pagination={false}
