@@ -79,7 +79,7 @@ const columns = [
     },
     render: (from: any) => (
       <Tooltip placement="topLeft" title={from}>
-        <Link to={'/identifiers/' + from}>{from}</Link>
+        <Link to={'/identifier/' + from}>{from}</Link>
       </Tooltip>
     ),
   },
@@ -92,7 +92,7 @@ const columns = [
     responsive: ['lg'],
     render: (to: any) => (
       <Tooltip placement="topLeft" title={to}>
-        <Link to={'/identifiers/' + to}>{to}</Link>
+        <Link to={'/identifier/' + to}>{to}</Link>
       </Tooltip>
     ),
   },
