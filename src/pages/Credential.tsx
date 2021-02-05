@@ -12,6 +12,7 @@ import {
   Input,
   Select,
   Space,
+  Modal,
 } from 'antd'
 import { format } from 'date-fns'
 import Page from '../layout/Page'
@@ -60,6 +61,21 @@ const data1 = {
 const Credential = () => {
   const { id } = useParams<{ id: string }>()
   const { agent } = useVeramo()
+
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const showModal = () => {
+    setIsModalVisible(true)
+  }
+
+  const handleOk = () => {
+    setIsModalVisible(false)
+  }
+
+  const handleCancel = () => {
+    setIsModalVisible(false)
+  }
+
   const { data: credential, isLoading: credentialLoading } = useQuery(
     ['credential', { id }],
     () => agent?.dataStoreGetVerifiableCredential({ hash: id }),
@@ -128,7 +144,12 @@ const Credential = () => {
   const rightContent = () => {
     return (
       <Layout>
-        <Card title="Add query module">
+        <Modal
+          title="Add Query Module"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
           <Space>
             <Input
               placeholder="claim"
@@ -160,10 +181,11 @@ const Credential = () => {
               Add
             </Button>
           </Space>
-        </Card>
+        </Modal>
+
         {userModules?.map(({ vcKey, id, subject }) => {
           return (
-            <Card key={id} title={vcKey}>
+            <Card key={id} title={vcKey} draggable="true">
               <SubjectKey
                 did={subject}
                 vcKey={vcKey}
@@ -282,7 +304,7 @@ const Credential = () => {
       header={
         <Layout>
           <Title style={{ fontWeight: 'bold' }}>Verifiable Credential</Title>
-          <Row>
+          <Row style={{}} justify="space-between">
             <Col>
               {credential?.type.map((type: string) => {
                 return (
@@ -291,6 +313,11 @@ const Credential = () => {
                   </Tag>
                 )
               })}
+            </Col>
+            <Col>
+              <Button type="primary" shape="round" onClick={showModal}>
+                Add Query
+              </Button>
             </Col>
           </Row>
         </Layout>
