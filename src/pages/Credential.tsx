@@ -16,7 +16,7 @@ import {
 } from 'antd'
 import { format } from 'date-fns'
 import Page from '../layout/Page'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { FundViewOutlined } from '@ant-design/icons'
@@ -59,6 +59,7 @@ const data1 = {
 }
 
 const Credential = () => {
+  const history = useHistory()
   const { id } = useParams<{ id: string }>()
   const { agent } = useVeramo()
 
@@ -107,20 +108,6 @@ const Credential = () => {
   const [userModules, setUserModules] = useState<any[]>([])
 
   const historyColumns = [
-    {
-      title: 'Explore',
-      dataIndex: 'hash',
-      render: (hash: any) => (
-        <Button
-          icon={
-            <Link to={'/credential/' + hash}>
-              <FundViewOutlined />
-            </Link>
-          }
-        />
-      ),
-      width: 100,
-    },
     {
       title: 'Issuance Date',
       dataIndex: 'verifiableCredential',
@@ -333,6 +320,11 @@ const Credential = () => {
       <Card bodyStyle={{ padding: 0 }} title="Activity">
         <Table
           loading={credentialHistoryLoading}
+          onRow={(record) => {
+            return {
+              onClick: (e) => history.push('/credential/' + record.hash),
+            }
+          }}
           rowKey={(record) => record.hash}
           columns={historyColumns}
           dataSource={credentials}
