@@ -43,7 +43,7 @@ const Agents = () => {
                   agent.context.id && removeAgent(agent.context.id)
                 }
               >
-                Delete Agent Config
+                Remove Agent
               </Button>
               <Button
                 icon={<PushpinOutlined />}

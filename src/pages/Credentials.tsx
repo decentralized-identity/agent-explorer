@@ -3,37 +3,31 @@ import { Typography, Table, Tag, Button, Tooltip } from 'antd'
 import Page from '../layout/Page'
 import { format } from 'date-fns'
 import { FundViewOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 
 const { Title } = Typography
 
 const columns = [
-  {
-    title: 'Explore',
-    dataIndex: 'hash',
-    render: (hash: any) => (
-      <Button
-        icon={
-          <Link to={'/credential/' + hash}>
-            <FundViewOutlined />
-          </Link>
-        }
-      />
-    ),
-    width: 100,
-  },
+  // {
+  //   title: 'Explore',
+  //   dataIndex: 'hash',
+  //   render: (hash: any) => (
+  //     <Button
+  //       icon={
+  //         <Link to={'/credential/' + hash}>
+  //           <FundViewOutlined />
+  //         </Link>
+  //       }
+  //     />
+  //   ),
+  //   width: 100,
+  // },
   {
     title: 'Issuer',
     dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => (
-      <Tooltip placement="topLeft" title={verifiableCredential.issuer.id}>
-        <Link to={'/identifier/' + verifiableCredential.issuer.id}>
-          {verifiableCredential.issuer.id}
-        </Link>
-      </Tooltip>
-    ),
+    render: (verifiableCredential: any) => verifiableCredential.issuer.id,
     ellipsis: {
       showTitle: false,
     },
@@ -41,16 +35,8 @@ const columns = [
   {
     title: 'Subject',
     dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => (
-      <Tooltip
-        placement="topLeft"
-        title={verifiableCredential.credentialSubject.id}
-      >
-        <Link to={'/identifier/' + verifiableCredential.credentialSubject.id}>
-          {verifiableCredential.credentialSubject.id}
-        </Link>
-      </Tooltip>
-    ),
+    render: (verifiableCredential: any) =>
+      verifiableCredential.credentialSubject.id,
     ellipsis: {
       showTitle: false,
     },
@@ -87,8 +73,9 @@ const columns = [
 ]
 
 const Credentials = () => {
+  const history = useHistory()
   const { agent } = useVeramo()
-  const { data: credentials } = useQuery(
+  const { data: credentials, isLoading } = useQuery(
     ['credentials', { agentId: agent?.context.name }],
     () => agent?.dataStoreORMGetVerifiableCredentials(),
   )
@@ -96,7 +83,13 @@ const Credentials = () => {
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Credentials</Title>}>
       <Table
+        loading={isLoading}
         rowKey={(record) => record.hash}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (e) => history.push('/credential/' + record.hash),
+          }
+        }}
         dataSource={credentials}
         // bordered
         // @ts-ignore
