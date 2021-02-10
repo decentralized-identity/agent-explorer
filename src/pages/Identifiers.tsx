@@ -38,7 +38,7 @@ const columns = [
 const Identifiers = () => {
   const { agent } = useVeramo()
   const { data: identifiers, isLoading } = useQuery(
-    ['identifiers', { agentId: agent?.context.name }],
+    ['identifiers', { agentId: agent?.context.id }],
     () => agent?.dataStoreORMGetIdentifiers(),
   )
   return (

@@ -20,6 +20,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { PushpinOutlined, DatabaseOutlined } from '@ant-design/icons'
 import { useParams } from 'react-router-dom'
 import Chart from '../components/simple/Chart'
+import { useQuery, useQueryClient } from 'react-query'
 
 const { Title, Text } = Typography
 const { Panel } = Collapse
@@ -56,7 +57,7 @@ const data1 = {
 
 const Agents = () => {
   const { id } = useParams<{ id: string }>()
-  const { activeAgentId, setActiveAgentId, getAgent, agents } = useVeramo()
+  const { activeAgentId, setActiveAgentId, getAgent } = useVeramo()
   const agent = getAgent(id)
   const [agentNameConfirm, setAgentNameConfirm] = useState<string>()
   const [identifierType, setIdentifierType] = useState<string>()
@@ -64,6 +65,61 @@ const Agents = () => {
   const [identifiersGenerating, setIdentifiersGenerating] = useState<boolean>(
     false,
   )
+  const [credentialsGenerating, setCredentialsGenerating] = useState<boolean>(
+    false,
+  )
+  const queryClient = useQueryClient()
+
+  const { data: identifiers } = useQuery(
+    ['identifiers', { agentId: agent?.context.id }],
+    () => agent?.dataStoreORMGetIdentifiers(),
+  )
+
+  const getRandomProfiles = async (count: number) => {
+    const url = `https://randomuser.me/api/?results=${count}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        'Cache-Control': 'no-cache',
+      },
+    })
+    return await response.json()
+  }
+
+  const createProfileCredentials = async () => {
+    if (!identifiers) return
+
+    setCredentialsGenerating(true)
+
+    const { results } = await getRandomProfiles(identifiers?.length as number)
+
+    await Promise.all(
+      results.map(async (profile: any, key: number) => {
+        await agent.createVerifiableCredential({
+          save: true,
+          proofFormat: 'jwt',
+          credential: {
+            '@context': ['https://www.w3.org/2018/credentials/v1'],
+            type: ['VerifiableCredential', 'Profile'],
+            issuer: { id: identifiers[key].did as string },
+            issuanceDate: new Date().toISOString(),
+            credentialSubject: {
+              id: identifiers[key].did,
+              name: profile.name.first + ' ' + profile.name.last,
+              firstName: profile.name.first,
+              lastName: profile.name.last,
+              nickname: profile.username,
+              email: profile.email,
+              profileImage: profile.picture.large,
+            },
+          },
+        })
+      }),
+    )
+
+    setCredentialsGenerating(false)
+  }
 
   const createIdentifer = () => {
     return agent.didManagerCreate({ provider: identifierType })
@@ -74,11 +130,12 @@ const Agents = () => {
 
     if (identifierCount) {
       let i
-      for (i = 0; i <= identifierCount; i++) {
+      for (i = 0; i < identifierCount; i++) {
         await createIdentifer()
       }
 
       setIdentifiersGenerating(false)
+      queryClient.invalidateQueries('agentIdentifiers')
     }
   }
 
@@ -137,7 +194,7 @@ const Agents = () => {
                   onChange={(e) => setIdentifierCount(parseInt(e.target.value))}
                 />
               </Form.Item>
-              <Form.Item label="Select">
+              <Form.Item label="Provider">
                 <Select onSelect={(value: string) => setIdentifierType(value)}>
                   <Select.Option value="did:ethr">did:ethr</Select.Option>
                   <Select.Option value="did:ethr:rinkeby">
@@ -156,12 +213,12 @@ const Agents = () => {
                 </Select>
               </Form.Item>
 
-              <Form.Item label="Button">
+              <Form.Item>
                 <Button
                   onClick={() => generateIdentifiers()}
                   disabled={identifiersGenerating}
                 >
-                  Button
+                  Generate
                 </Button>
               </Form.Item>
               {identifiersGenerating && (
@@ -169,7 +226,47 @@ const Agents = () => {
               )}
             </Form>
           </Panel>
-          <Panel header="Credentials" key="2"></Panel>
+          <Panel header="Credentials" key="2">
+            <Form
+              labelCol={{ span: 4 }}
+              wrapperCol={{ span: 14 }}
+              layout="vertical"
+            >
+              <Text>
+                Generate self-signed profile credentials for{' '}
+                <b>{identifiers?.length}</b> identifiers
+              </Text>
+
+              <Row style={{ padding: '20px 0' }}>
+                <pre>
+                  <code>
+                    {JSON.stringify(
+                      {
+                        name: 'string',
+                        nickname: 'string',
+                        email: 'string',
+                        profileImage: 'string',
+                      },
+                      null,
+                      2,
+                    )}
+                  </code>
+                </pre>
+              </Row>
+
+              <Form.Item>
+                <Button
+                  onClick={() => createProfileCredentials()}
+                  disabled={credentialsGenerating}
+                >
+                  Generate
+                </Button>
+              </Form.Item>
+              {credentialsGenerating && (
+                <Text>Generating {identifierCount} credentials..</Text>
+              )}
+            </Form>
+          </Panel>
           <Panel header="Requests" key="3"></Panel>
         </Collapse>
       </Card>

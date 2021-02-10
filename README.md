@@ -12,11 +12,7 @@ Pages use templates, currently single and double column. These templates are res
 
 ### Modules
 
-Modules are Blocks (Card) that are responsible for fetching their own data. They use `useVeramo` and `useQuery`. Modules may live on multiple pages and may take their query as a prop so it can be cached.
-
-### Blocks
-
-Blocks are dumb Modules. They are always cards but just take data and show it.
+Modules are (Card) that are responsible for fetching their own data. They use `useVeramo` and `useQuery`. Modules may live on multiple pages and may take their query as a prop so it can be cached.
 
 ### Widgets
 
@@ -28,9 +24,7 @@ Simple Components are the lowest piece and are usually everyting else that lives
 
 ## Hierarchy
 
-The top level is the page followed by either a `Block` OR a `Module`. A `Block` could contain multiple `Widgets`. A `Module` can also contain multiple `Widgets` but maybe needs to fetch data to feed those `Widgets`.
-
-> `Page > Block > Widget > Simple`
+The top level is the page followed by a `Module`. A `Module` can also contain multiple `Widgets` but maybe needs to fetch data to feed those `Widgets` like passing in an `id` for example.
 
 > `Page > Module > Widget > Simple`
 
