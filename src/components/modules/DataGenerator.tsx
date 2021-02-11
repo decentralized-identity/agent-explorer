@@ -24,9 +24,9 @@ const { Panel } = Collapse
 
 const DataGenerator: React.FC<{}> = () => {
   const queryClient = useQueryClient()
+  const { agent: selectedAgent, getAgent } = useVeramo()
   const { id } = useParams<{ id: string }>()
-  const { getAgent } = useVeramo()
-  const agent = getAgent(id)
+  const agent = id ? getAgent(id) : selectedAgent
 
   const { data: identifiers } = useQuery(
     ['identifiers', { agentId: agent?.context.id }],
@@ -54,7 +54,7 @@ const DataGenerator: React.FC<{}> = () => {
     setIdentifiersGenerating(true)
 
     await generatorUtils.createIdentifiers(
-      agent.didManagerCreate,
+      agent?.didManagerCreate,
       identifierProvider,
       identifierCount,
     )
@@ -67,7 +67,8 @@ const DataGenerator: React.FC<{}> = () => {
       setCredentialProfilesGenerating(true)
 
       await generatorUtils.createProfileCredentials(
-        agent.createVerifiableCredential,
+        // @ts-ignore
+        agent?.createVerifiableCredential,
         // @ts-ignore
         identifiers,
       )
@@ -94,7 +95,7 @@ const DataGenerator: React.FC<{}> = () => {
       await generatorUtils.createP2PCredentials(
         // @ts-ignore
         identifiers,
-        agent.createVerifiableCredential,
+        agent?.createVerifiableCredential,
         'Kudos',
         { kudos: 1 },
         { from: fromCount, to: toCount },

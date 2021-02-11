@@ -19,44 +19,14 @@ import Page from '../layout/Page'
 import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { FundViewOutlined } from '@ant-design/icons'
-import JsonBlock from '../components/blocks/Json'
+import JsonBlock from '../components/modules/Json'
 import IDModule from '../components/modules/Identifier'
 import Chart from '../components/simple/Chart'
 import SubjectKey from '../components/widgets/SubjectKey'
+import { chart1 } from '../stubbs/chart'
 
 const { Title, Text } = Typography
 const { Option } = Select
-
-const data1 = {
-  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-  fill: false,
-  datasets: [
-    {
-      label: 'Activity',
-      data: [500, 897, 234, 564, 765, 432],
-      borderColor: 'rgb(47 89 138 / 80%)',
-      fill: false,
-      lineTension: 0,
-      backgroundColor: 'rgb(47 89 138 / 20%)',
-      borderWidth: 1,
-    },
-  ],
-  options: {
-    scales: {
-      xAxes: [
-        {
-          display: false,
-        },
-      ],
-      yAxes: [
-        {
-          display: false,
-        },
-      ],
-    },
-  },
-}
 
 const Credential = () => {
   const history = useHistory()
@@ -280,7 +250,7 @@ const Credential = () => {
           Show some meta data about current agent
         </Card>
         <Card>
-          <Chart type="line" data={data1}></Chart>
+          <Chart type="line" data={chart1}></Chart>
         </Card>
       </Layout>
     )
@@ -288,6 +258,7 @@ const Credential = () => {
 
   return (
     <Page
+      name="credential"
       header={
         <Layout>
           <Title style={{ fontWeight: 'bold' }}>Verifiable Credential</Title>
@@ -336,9 +307,6 @@ const Credential = () => {
         data={credential}
         isLoading={credentialLoading}
       />
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
     </Page>
   )
 }
