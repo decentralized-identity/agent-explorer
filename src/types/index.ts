@@ -16,3 +16,11 @@ export interface PageModuleConfig {
    */
   pages?: string[]
 }
+
+export interface DynamicModuleProps {
+  title: string
+  isLoading?: boolean
+  remove: () => void
+  config?: any
+  noPadding?: boolean
+}

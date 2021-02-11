@@ -86,7 +86,7 @@ const Page: React.FC<PageProps> = ({
         visible={visible}
         onVisibleChange={() => toggleVisible((s) => !s)}
       >
-        <Button icon={<FundViewOutlined />} />
+        <Button style={{ marginBottom: 20 }} icon={<FundViewOutlined />} />
       </Popover>
     )
   }

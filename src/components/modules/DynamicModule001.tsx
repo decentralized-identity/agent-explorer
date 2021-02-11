@@ -1,22 +1,20 @@
 import React from 'react'
 import { Card, Typography } from 'antd'
+import DynamicModule from '../../layout/DynamicModule'
+import { DynamicModuleProps } from '../../types'
 
-interface DynamicModuleProps {
-  title: string
-  isLoading?: boolean
-  remove?: () => void
-}
-
-const DynamicModule: React.FC<DynamicModuleProps> = ({
+const DynamicModule001: React.FC<DynamicModuleProps> = ({
   title,
   isLoading,
   remove,
 }) => {
   return (
-    <Card title={title} loading={isLoading} draggable onClick={remove}>
-      <Typography.Text>Hi I'm a dynamic module</Typography.Text>
-    </Card>
+    <DynamicModule title={title} remove={remove} isLoading={isLoading}>
+      <Typography.Text>
+        Hi I'm a dynamic module <b>{title}</b>
+      </Typography.Text>
+    </DynamicModule>
   )
 }
 
-export default DynamicModule
+export default DynamicModule001

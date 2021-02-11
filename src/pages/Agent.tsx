@@ -11,7 +11,6 @@ import {
   Input,
 } from 'antd'
 import Page from '../layout/Page'
-import DataGenerator from '../components/modules/DataGenerator'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PushpinOutlined, DatabaseOutlined } from '@ant-design/icons'
 import { useParams } from 'react-router-dom'
@@ -28,6 +27,7 @@ const Agents = () => {
 
   return (
     <Page
+      name="agent"
       rightContent={
         <Layout>
           <Card>
@@ -66,8 +66,6 @@ const Agents = () => {
           </Space>
         </Row>
       </Card>
-
-      <DataGenerator />
 
       <Card title="Wipe Agent Data">
         <Row>

@@ -5,11 +5,12 @@ import SubjectKey from '../widgets/SubjectKey'
 import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
+import { DynamicModuleProps } from '../../types'
 
 const { Text } = Typography
 const { Option } = Select
 
-interface QueryIdentifierProps {
+interface QueryIdentifierProps extends DynamicModuleProps {
   title: string
   remove: () => void
 }
@@ -27,11 +28,7 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({ title, remove }) => {
   )
 
   return (
-    <DynamicModule
-      title={title}
-      isLoading={credentialLoading}
-      remove={() => {}}
-    >
+    <DynamicModule title={title} isLoading={credentialLoading} remove={remove}>
       <Row>
         <Select
           defaultValue={queryModuleIdentifier}

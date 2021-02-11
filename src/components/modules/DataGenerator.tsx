@@ -18,11 +18,19 @@ import { useQuery, useQueryClient } from 'react-query'
 
 import * as generatorUtils from '../../utils/dataGenerator'
 import { useGenerator } from '../../hooks/useGenerator'
+import DynamicModule from '../../layout/DynamicModule'
+import { DynamicModuleProps } from '../../types'
 
 const { Title, Text } = Typography
 const { Panel } = Collapse
 
-const DataGenerator: React.FC<{}> = () => {
+interface DataGenerator extends DynamicModuleProps {}
+
+const DataGenerator: React.FC<DataGenerator> = ({
+  title,
+  remove,
+  isLoading,
+}) => {
   const queryClient = useQueryClient()
   const { agent: selectedAgent, getAgent } = useVeramo()
   const { id } = useParams<{ id: string }>()
@@ -111,7 +119,12 @@ const DataGenerator: React.FC<{}> = () => {
   }, [])
 
   return (
-    <Card title="Data Generator" bodyStyle={{ padding: 0 }}>
+    <DynamicModule
+      title={title}
+      remove={remove}
+      isLoading={isLoading}
+      noPadding
+    >
       <Collapse bordered={false}>
         <Panel header={`Identifiers (${identifiers?.length})`} key="1">
           <Form
@@ -279,7 +292,7 @@ const DataGenerator: React.FC<{}> = () => {
           <Text>Generate presentations between identifiers</Text>
         </Panel>
       </Collapse>
-    </Card>
+    </DynamicModule>
   )
 }
 
