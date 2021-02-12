@@ -1,9 +1,9 @@
 import React from 'react'
 import { Card, Typography } from 'antd'
-import DynamicModule from '../../layout/DynamicModule'
-import { DynamicModuleProps } from '../../types'
+import DynamicModule from '../../layout/PageModule'
+import { PageModuleProps } from '../../types'
 
-const DynamicModule001: React.FC<DynamicModuleProps> = ({
+const DynamicModule001: React.FC<PageModuleProps> = ({
   title,
   isLoading,
   remove,

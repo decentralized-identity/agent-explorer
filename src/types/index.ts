@@ -17,10 +17,33 @@ export interface PageModuleConfig {
   pages?: string[]
 }
 
-export interface DynamicModuleProps {
+export interface PageModulesDefaults {
+  [index: string]: PageModuleConfig[]
+}
+
+export interface PageModuleProps {
+  /**
+   * Label that gets shown on the module
+   */
   title: string
+  /**
+   * Show the loading state of the card
+   */
   isLoading?: boolean
+  /**
+   * Function to remove the module
+   */
   remove: () => void
+  /**
+   * Disable remove button (for hardcoding modules)
+   */
+  removeDisabled?: boolean
+  /**
+   * Custom config for each module. Should be serializable values
+   */
   config?: any
+  /**
+   * Remove padding and borders from module card
+   */
   noPadding?: boolean
 }

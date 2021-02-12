@@ -18,17 +18,18 @@ import { useQuery, useQueryClient } from 'react-query'
 
 import * as generatorUtils from '../../utils/dataGenerator'
 import { useGenerator } from '../../hooks/useGenerator'
-import DynamicModule from '../../layout/DynamicModule'
-import { DynamicModuleProps } from '../../types'
+import DynamicModule from '../../layout/PageModule'
+import { PageModuleProps } from '../../types'
 
 const { Title, Text } = Typography
 const { Panel } = Collapse
 
-interface DataGenerator extends DynamicModuleProps {}
+interface DataGenerator extends PageModuleProps {}
 
 const DataGenerator: React.FC<DataGenerator> = ({
   title,
   remove,
+  removeDisabled,
   isLoading,
 }) => {
   const queryClient = useQueryClient()
@@ -122,6 +123,7 @@ const DataGenerator: React.FC<DataGenerator> = ({
     <DynamicModule
       title={title}
       remove={remove}
+      removeDisabled={removeDisabled}
       isLoading={isLoading}
       noPadding
     >

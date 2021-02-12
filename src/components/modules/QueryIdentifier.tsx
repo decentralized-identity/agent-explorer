@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
 import { Input, Row, Col, Typography, Select } from 'antd'
-import DynamicModule from '../../layout/DynamicModule'
+import DynamicModule from '../../layout/PageModule'
 import SubjectKey from '../widgets/SubjectKey'
 import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { DynamicModuleProps } from '../../types'
+import { PageModuleProps } from '../../types'
 
 const { Text } = Typography
 const { Option } = Select
 
-interface QueryIdentifierProps extends DynamicModuleProps {
-  title: string
-  remove: () => void
-}
+interface QueryIdentifierProps extends PageModuleProps {}
 
 const QueryIdentifier: React.FC<QueryIdentifierProps> = ({ title, remove }) => {
   const { id } = useParams<{ id: string }>()

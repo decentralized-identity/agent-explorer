@@ -36,6 +36,8 @@ const Page: React.FC<PageProps> = ({
 
   const renderPageModules = () => {
     return modules.map((m: PageModuleConfig, i: number) => {
+      console.log(modules, modules.length)
+
       // @ts-ignore
       const DynamicModule = DYNAMIC_MODULES[m.moduleName]
       return (
@@ -43,6 +45,7 @@ const Page: React.FC<PageProps> = ({
           title={m.moduleLabel}
           key={i}
           remove={() => removeModule(name, i)}
+          removeDisabled={modules.length === 1}
         />
       )
     })

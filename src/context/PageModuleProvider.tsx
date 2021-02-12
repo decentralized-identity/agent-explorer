@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { DYNAMIC_MODULES, MODULE_MAP } from '../components/modules'
+import { PAGE_DEFAULT_MODULES, MODULE_MAP } from '../components/modules'
 import { PageModuleConfig } from '../types'
 
 const PageModuleContext = createContext<any>({})
@@ -25,7 +25,15 @@ const PageModuleProvider = (props: any) => {
 
   const loadPageModules = (pageName: string) => {
     const localModuleStore = localStorage.getItem(`${pageName}:modules`)
-    localModuleStore && setModules(JSON.parse(localModuleStore))
+
+    if (!localModuleStore && PAGE_DEFAULT_MODULES[pageName]) {
+      localStorage.setItem(
+        `${pageName}:modules`,
+        JSON.stringify(PAGE_DEFAULT_MODULES[pageName]),
+      )
+    } else {
+      localModuleStore && setModules(JSON.parse(localModuleStore))
+    }
   }
 
   return (
