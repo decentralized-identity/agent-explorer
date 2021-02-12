@@ -27,18 +27,49 @@ const PageModuleProvider = (props: any) => {
     const localModuleStore = localStorage.getItem(`${pageName}:modules`)
 
     if (!localModuleStore && PAGE_DEFAULT_MODULES[pageName]) {
+      const defaultModuleStore = PAGE_DEFAULT_MODULES[pageName]
+
       localStorage.setItem(
         `${pageName}:modules`,
-        JSON.stringify(PAGE_DEFAULT_MODULES[pageName]),
+        JSON.stringify(defaultModuleStore),
       )
+      setModules(defaultModuleStore)
     } else {
       localModuleStore && setModules(JSON.parse(localModuleStore))
     }
   }
 
+  const saveConfig = (
+    pageName: string,
+    index: number,
+    config: any,
+    moduleLabel: string,
+  ) => {
+    const moduleToUpdate = modules.find((item, i) => index === i)
+
+    const updatedModuleConfig: PageModuleConfig = {
+      ...moduleToUpdate,
+      moduleName: moduleToUpdate?.moduleName as string,
+      moduleLabel: moduleLabel || (moduleToUpdate?.moduleLabel as string),
+      config,
+    }
+
+    setModules((s) => {
+      const newState = s.slice()
+      newState[index] = {
+        ...updatedModuleConfig,
+      }
+
+      console.log('UPDATED', newState)
+
+      localStorage.setItem(`${pageName}:modules`, JSON.stringify(newState))
+      return newState
+    })
+  }
+
   return (
     <PageModuleContext.Provider
-      value={{ modules, loadPageModules, addModule, removeModule }}
+      value={{ modules, loadPageModules, addModule, removeModule, saveConfig }}
     >
       {props.children}
     </PageModuleContext.Provider>

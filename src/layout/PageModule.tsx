@@ -1,9 +1,9 @@
 import React from 'react'
 import { Card, Button } from 'antd'
-import { CloseSquareOutlined } from '@ant-design/icons'
+import { CloseCircleOutlined } from '@ant-design/icons'
 import { PageModuleProps } from '../types'
 
-const DynamicModule: React.FC<PageModuleProps> = ({
+const PageModule: React.FC<PageModuleProps> = ({
   title,
   isLoading,
   children,
@@ -26,14 +26,16 @@ const DynamicModule: React.FC<PageModuleProps> = ({
     >
       {!removeDisabled && (
         <Button
-          icon={<CloseSquareOutlined />}
+          shape="round"
+          icon={<CloseCircleOutlined size={40} />}
           onClick={remove}
-          style={{ position: 'absolute', top: 15, right: 15 }}
+          style={{ position: 'absolute', top: 15, right: 15, border: 0 }}
         />
       )}
+
       {children}
     </Card>
   )
 }
 
-export default DynamicModule
+export default PageModule

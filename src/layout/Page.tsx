@@ -19,7 +19,13 @@ const Page: React.FC<PageProps> = ({
   rightContent,
   fullWidth,
 }) => {
-  const { modules, loadPageModules, addModule, removeModule } = usePageModules()
+  const {
+    modules,
+    loadPageModules,
+    addModule,
+    removeModule,
+    saveConfig,
+  } = usePageModules()
   const [visible, toggleVisible] = useState(false)
 
   const base = { padding: 20 }
@@ -36,16 +42,19 @@ const Page: React.FC<PageProps> = ({
 
   const renderPageModules = () => {
     return modules.map((m: PageModuleConfig, i: number) => {
-      console.log(modules, modules.length)
-
       // @ts-ignore
       const DynamicModule = DYNAMIC_MODULES[m.moduleName]
       return (
         <DynamicModule
+          id={i}
           title={m.moduleLabel}
           key={i}
           remove={() => removeModule(name, i)}
           removeDisabled={modules.length === 1}
+          config={m.config}
+          saveConfig={(config: any, label?: string) =>
+            saveConfig(name, i, config, label)
+          }
         />
       )
     })
