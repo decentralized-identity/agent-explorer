@@ -2,7 +2,7 @@ export interface PageModuleConfig {
   /**
    * This is the function name
    */
-  moduleKey: string
+  moduleName: string
   /**
    * Label to show in UI
    */
