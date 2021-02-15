@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Input, Row, Col, Typography, Select, Button } from 'antd'
+import { Input, Row, Col, Typography, Select, Button, Form } from 'antd'
 import PageModule from '../../layout/PageModule'
 import SubjectKey from '../widgets/SubjectKey'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PageModuleProps } from '../../types'
@@ -10,7 +10,14 @@ import { PageModuleProps } from '../../types'
 const { Text } = Typography
 const { Option } = Select
 
-interface QueryIdentifierProps extends PageModuleProps {}
+interface QueryIdentifierConfig {
+  queryWidgetKey: string
+  identifierType: string
+}
+
+interface QueryIdentifierProps extends PageModuleProps {
+  config: QueryIdentifierConfig
+}
 
 const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
   title,
@@ -20,9 +27,17 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
 }) => {
   const { id } = useParams<{ id: string }>()
   const { agent } = useVeramo()
+  const [saved, setSaved] = useState(true)
+
+  const [_title, setTitle] = useState(title)
+
   const [queryWidgetKey, setQueryWidgetKey] = useState<string>(
     config.queryWidgetKey,
   )
+  const [identifierType, setIdentifierType] = useState<string>(
+    config.identifierType || 'subject',
+  )
+
   const { data: credential, isLoading: credentialLoading } = useQuery(
     ['credential', { id }],
     () => agent?.dataStoreGetVerifiableCredential({ hash: id }),
@@ -31,52 +46,106 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
     credential?.issuer.id,
   )
 
-  const updateQueryIdentifier = (identifierType: string) => {
-    if (identifierType === 'Subject') {
-      setQueryModuleIdentifier(credential?.credentialSubject.id)
-    } else {
-      setQueryModuleIdentifier(credential?.issuer.id)
-    }
-  }
-
+  /**
+   * Function to save local configs
+   */
   const saveModuleSettings = () => {
     const config = {
       queryWidgetKey,
+      identifierType,
     }
+    saveConfig && saveConfig(config, _title)
+  }
 
-    saveConfig && saveConfig(config, 'Moondust')
+  /**
+   * Update the DID when the identifierType changes
+   */
+  useEffect(() => {
+    setQueryModuleIdentifier(
+      config.identifierType === 'subject'
+        ? credential?.credentialSubject.id
+        : credential?.issuer.id,
+    )
+  }, [identifierType])
+
+  /**
+   * Check if the state has been persisted and show in UI
+   */
+  useEffect(() => {
+    if (
+      queryWidgetKey !== config.queryWidgetKey ||
+      _title !== title ||
+      config.identifierType !== identifierType
+    ) {
+      setSaved(false)
+    }
+  }, [queryWidgetKey, _title])
+
+  const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 4 },
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 8 },
+    },
+  }
+  const tailFormItemLayout = {
+    wrapperCol: {
+      xs: {
+        span: 24,
+        offset: 0,
+      },
+      sm: {
+        span: 16,
+        offset: 4,
+      },
+    },
   }
 
   return (
     <PageModule
-      title={title}
+      title={_title}
       isLoading={credentialLoading}
       remove={remove}
       renderSettings={() => (
         <>
-          <Row>
-            <Select
-              defaultValue={'Issuer'}
-              style={{ width: 120 }}
-              onChange={(identifierType) =>
-                updateQueryIdentifier(identifierType)
-              }
-            >
-              <Option key="0" value="Issuer">
-                Subject
-              </Option>
-              <Option key="1" value="Subject">
-                Issuer
-              </Option>
-            </Select>
-            <Input
-              style={{ margin: '15px 0' }}
-              type="text"
-              defaultValue={config.queryWidgetKey || 'Enter claim value'}
-              onChange={(e) => setQueryWidgetKey(e.target.value)}
-            />
-          </Row>
-          <Button onClick={() => saveModuleSettings()}>Save settings</Button>
+          <Form {...formItemLayout}>
+            <Form.Item label="Module label">
+              <Input
+                type="text"
+                defaultValue={_title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </Form.Item>
+            <Form.Item label="Identifier Type">
+              <Select
+                defaultValue={config.identifierType || 'subject'}
+                style={{ width: 120 }}
+                onChange={(identifierType) => setIdentifierType(identifierType)}
+              >
+                <Option key="0" value="issuer">
+                  Subject
+                </Option>
+                <Option key="1" value="subject">
+                  Issuer
+                </Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="Claim Query">
+              <Input
+                type="text"
+                defaultValue={config.queryWidgetKey || 'Enter claim value'}
+                onChange={(e) => setQueryWidgetKey(e.target.value)}
+              />
+            </Form.Item>
+            <Form.Item {...tailFormItemLayout}>
+              <Button onClick={() => saveModuleSettings()} disabled={saved}>
+                Save settings
+              </Button>
+            </Form.Item>
+          </Form>
         </>
       )}
     >
@@ -90,8 +159,10 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
                 {hash ? (
                   <>
                     <Text>
-                      Found most recent <b>{queryWidgetKey}</b> claim:
+                      Most recent <b>{queryWidgetKey}</b> claim:
                     </Text>
+                    <br />
+                    <br />
                     <pre>
                       <code>{JSON.stringify(data, null, 2)}</code>
                     </pre>

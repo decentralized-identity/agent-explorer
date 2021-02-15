@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Button, Collapse } from 'antd'
+import { Card, Button, Collapse, Row } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { PageModuleProps } from '../types'
 
@@ -16,14 +16,14 @@ const PageModule: React.FC<PageModuleProps> = ({
     ? {
         padding: 0,
       }
-    : {}
+    : { padding: 20 }
 
   return (
     <Card
       title={title}
       loading={isLoading}
       bordered={noPadding}
-      bodyStyle={{ padding: 0 }}
+      bodyStyle={{ padding: 0, margin: 1 }}
     >
       {!removeDisabled && (
         <Button
@@ -33,11 +33,9 @@ const PageModule: React.FC<PageModuleProps> = ({
           style={{ position: 'absolute', top: 15, right: 15, border: 0 }}
         />
       )}
-      <Card type="inner" bodyStyle={bodyStyle} bordered={false}>
-        {children}
-      </Card>
+      <Row style={bodyStyle}>{children}</Row>
       {renderSettings && (
-        <Collapse bordered={false}>
+        <Collapse bordered={false} style={{ background: 'none' }}>
           <Collapse.Panel key="0" header="Settings">
             {renderSettings()}
           </Collapse.Panel>
