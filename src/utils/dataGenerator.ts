@@ -1,6 +1,6 @@
 import { ICreateVerifiableCredentialArgs } from '@veramo/credential-w3c'
 import { VerifiableCredential, IIdentifier } from '@veramo/core'
-// import { Identifier } from '@veramo/data-store'
+import randomWords from 'random-words'
 
 export function getRandomDate(from: Date, to: Date) {
   const fromTime = from.getTime()
@@ -34,7 +34,12 @@ export async function createIdentifiers(
     }
     return Promise.all(
       promises.map(async () => {
-        return await createIdentifer({ provider })
+        const alias = randomWords({
+          exactly: 1,
+          wordsPerString: 3,
+          separator: '-',
+        })
+        return await createIdentifer({ provider, alias })
       }),
     )
   }

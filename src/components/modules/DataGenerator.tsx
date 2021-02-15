@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   Typography,
   Card,
@@ -12,10 +12,7 @@ import {
   Space,
 } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { useParams } from 'react-router-dom'
-
 import { useQuery, useQueryClient } from 'react-query'
-
 import * as generatorUtils from '../../utils/dataGenerator'
 import { useGenerator } from '../../hooks/useGenerator'
 import DynamicModule from '../../layout/PageModule'
@@ -33,13 +30,14 @@ const DataGenerator: React.FC<DataGenerator> = ({
   isLoading,
 }) => {
   const queryClient = useQueryClient()
-  const { agent: selectedAgent, getAgent } = useVeramo()
-  const { id } = useParams<{ id: string }>()
-  const agent = id ? getAgent(id) : selectedAgent
-
+  const { agent } = useVeramo()
   const { data: identifiers } = useQuery(
     ['identifiers', { agentId: agent?.context.id }],
     () => agent?.dataStoreORMGetIdentifiers(),
+  )
+  const { data: providers } = useQuery(
+    ['providers', { agentId: agent?.context.id }],
+    () => agent?.didManagerGetProviders(),
   )
 
   const {
@@ -106,8 +104,10 @@ const DataGenerator: React.FC<DataGenerator> = ({
         identifiers,
         agent?.createVerifiableCredential,
         'Kudos',
+        // @todo allow custom credential
         { kudos: 1 },
         { from: fromCount, to: toCount },
+        // @todo allow date to be user selectable
         { from: '2019-01-01T00:00:00.271Z', to: '2021-02-01T01:00:00.271Z' },
       )
 
@@ -146,20 +146,11 @@ const DataGenerator: React.FC<DataGenerator> = ({
                 onSelect={(value: string) => setIdentifierProvider(value)}
                 defaultValue="did:ethr:rinkeby"
               >
-                <Select.Option value="did:ethr:rinkeby">
-                  did:ethr:rinkeby
-                </Select.Option>
-                <Select.Option value="did:ethr">did:ethr</Select.Option>
-                <Select.Option value="did:ethr:ropsten">
-                  did:ethr:ropsten
-                </Select.Option>
-                <Select.Option value="did:ethr:kovan">
-                  did:ethr:kovan
-                </Select.Option>
-                <Select.Option value="did:ethr:goerli">
-                  did:ethr:goerli
-                </Select.Option>
-                <Select.Option value="did:web">did:web</Select.Option>
+                {providers?.map((provider) => {
+                  return (
+                    <Select.Option value={provider}>{provider}</Select.Option>
+                  )
+                })}
               </Select>
             </Form.Item>
 
