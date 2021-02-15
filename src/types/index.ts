@@ -43,13 +43,13 @@ export interface PageModuleProps {
    */
   config?: any
   /**
-   * Render configs in your module and access saveConfig
-   */
-  // renderConfigs:() => React.ReactNode
-  /**
    * Save the config for this module
    */
   saveConfig?: (config: any, label?: string) => void
+  /**
+   * Remove padding and borders from module card
+   */
+  renderSettings?: () => React.ReactNode
   /**
    * Remove padding and borders from module card
    */

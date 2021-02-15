@@ -47,35 +47,39 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
     saveConfig && saveConfig(config, 'Moondust')
   }
 
-  // useEffect(() => {
-  //   saveModuleSettings()
-  // }, [queryWidgetKey])
-
   return (
-    <PageModule title={title} isLoading={credentialLoading} remove={remove}>
-      <Row>
-        <Select
-          defaultValue={'Issuer'}
-          style={{ width: 120 }}
-          onChange={(identifierType) => updateQueryIdentifier(identifierType)}
-        >
-          <Option key="0" value="Issuer">
-            Subject
-          </Option>
-          <Option key="1" value="Subject">
-            Issuer
-          </Option>
-        </Select>
-        <Input
-          style={{ margin: '15px 0' }}
-          type="text"
-          defaultValue={config.queryWidgetKey || 'Enter claim value'}
-          onChange={(e) => setQueryWidgetKey(e.target.value)}
-        />
-      </Row>
-
-      <Button onClick={() => saveModuleSettings()}>Save settings</Button>
-
+    <PageModule
+      title={title}
+      isLoading={credentialLoading}
+      remove={remove}
+      renderSettings={() => (
+        <>
+          <Row>
+            <Select
+              defaultValue={'Issuer'}
+              style={{ width: 120 }}
+              onChange={(identifierType) =>
+                updateQueryIdentifier(identifierType)
+              }
+            >
+              <Option key="0" value="Issuer">
+                Subject
+              </Option>
+              <Option key="1" value="Subject">
+                Issuer
+              </Option>
+            </Select>
+            <Input
+              style={{ margin: '15px 0' }}
+              type="text"
+              defaultValue={config.queryWidgetKey || 'Enter claim value'}
+              onChange={(e) => setQueryWidgetKey(e.target.value)}
+            />
+          </Row>
+          <Button onClick={() => saveModuleSettings()}>Save settings</Button>
+        </>
+      )}
+    >
       <SubjectKey
         did={queryModuleIdentifier as string}
         vcKey={queryWidgetKey}
