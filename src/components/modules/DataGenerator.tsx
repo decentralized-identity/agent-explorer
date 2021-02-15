@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import {
   Typography,
   Card,
@@ -12,25 +12,32 @@ import {
   Space,
 } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { useParams } from 'react-router-dom'
-
 import { useQuery, useQueryClient } from 'react-query'
-
 import * as generatorUtils from '../../utils/dataGenerator'
 import { useGenerator } from '../../hooks/useGenerator'
+import DynamicModule from '../../layout/PageModule'
+import { PageModuleProps } from '../../types'
 
 const { Title, Text } = Typography
 const { Panel } = Collapse
 
-const DataGenerator: React.FC<{}> = () => {
-  const queryClient = useQueryClient()
-  const { id } = useParams<{ id: string }>()
-  const { getAgent } = useVeramo()
-  const agent = getAgent(id)
+interface DataGenerator extends PageModuleProps {}
 
+const DataGenerator: React.FC<DataGenerator> = ({
+  title,
+  remove,
+  removeDisabled,
+  isLoading,
+}) => {
+  const queryClient = useQueryClient()
+  const { agent } = useVeramo()
   const { data: identifiers } = useQuery(
     ['identifiers', { agentId: agent?.context.id }],
     () => agent?.dataStoreORMGetIdentifiers(),
+  )
+  const { data: providers } = useQuery(
+    ['providers', { agentId: agent?.context.id }],
+    () => agent?.didManagerGetProviders(),
   )
 
   const {
@@ -54,7 +61,7 @@ const DataGenerator: React.FC<{}> = () => {
     setIdentifiersGenerating(true)
 
     await generatorUtils.createIdentifiers(
-      agent.didManagerCreate,
+      agent?.didManagerCreate,
       identifierProvider,
       identifierCount,
     )
@@ -67,7 +74,8 @@ const DataGenerator: React.FC<{}> = () => {
       setCredentialProfilesGenerating(true)
 
       await generatorUtils.createProfileCredentials(
-        agent.createVerifiableCredential,
+        // @ts-ignore
+        agent?.createVerifiableCredential,
         // @ts-ignore
         identifiers,
       )
@@ -94,10 +102,12 @@ const DataGenerator: React.FC<{}> = () => {
       await generatorUtils.createP2PCredentials(
         // @ts-ignore
         identifiers,
-        agent.createVerifiableCredential,
+        agent?.createVerifiableCredential,
         'Kudos',
+        // @todo allow custom credential
         { kudos: 1 },
         { from: fromCount, to: toCount },
+        // @todo allow date to be user selectable
         { from: '2019-01-01T00:00:00.271Z', to: '2021-02-01T01:00:00.271Z' },
       )
 
@@ -110,7 +120,13 @@ const DataGenerator: React.FC<{}> = () => {
   }, [])
 
   return (
-    <Card title="Data Generator" bodyStyle={{ padding: 0 }}>
+    <DynamicModule
+      title={title}
+      remove={remove}
+      removeDisabled={removeDisabled}
+      isLoading={isLoading}
+      noPadding
+    >
       <Collapse bordered={false}>
         <Panel header={`Identifiers (${identifiers?.length})`} key="1">
           <Form
@@ -130,20 +146,11 @@ const DataGenerator: React.FC<{}> = () => {
                 onSelect={(value: string) => setIdentifierProvider(value)}
                 defaultValue="did:ethr:rinkeby"
               >
-                <Select.Option value="did:ethr:rinkeby">
-                  did:ethr:rinkeby
-                </Select.Option>
-                <Select.Option value="did:ethr">did:ethr</Select.Option>
-                <Select.Option value="did:ethr:ropsten">
-                  did:ethr:ropsten
-                </Select.Option>
-                <Select.Option value="did:ethr:kovan">
-                  did:ethr:kovan
-                </Select.Option>
-                <Select.Option value="did:ethr:goerli">
-                  did:ethr:goerli
-                </Select.Option>
-                <Select.Option value="did:web">did:web</Select.Option>
+                {providers?.map((provider) => {
+                  return (
+                    <Select.Option value={provider}>{provider}</Select.Option>
+                  )
+                })}
               </Select>
             </Form.Item>
 
@@ -278,7 +285,7 @@ const DataGenerator: React.FC<{}> = () => {
           <Text>Generate presentations between identifiers</Text>
         </Panel>
       </Collapse>
-    </Card>
+    </DynamicModule>
   )
 }
 

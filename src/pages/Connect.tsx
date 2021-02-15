@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Typography, Form, Input, Button, List, Row, Col, Card } from 'antd'
+import { Typography, Form, Input, Button, List } from 'antd'
 import Page from '../layout/Page'
-import { useAgent } from '../agent'
+import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { useHistory } from 'react-router-dom'
 
@@ -9,7 +9,7 @@ const { Title } = Typography
 
 const Connect = () => {
   const history = useHistory()
-  const { addAgentConfig } = useAgent()
+  const { addAgentConfig } = useVeramo()
   const [name, setName] = useState<string>()
   const [schemaUrl, setSchemaUrl] = useState<string>()
   const [agentUrl, setAgentUrl] = useState<string>('')
@@ -26,7 +26,6 @@ const Connect = () => {
         },
       ],
     })
-
     history.push('/agents')
   }
 
@@ -144,7 +143,7 @@ const Connect = () => {
           </>
         )}
       </Form>
-      <Card title="Deploy agent">Deploy an agent to heroku</Card>
+      {/* <Card title="Deploy agent">Deploy an agent to heroku</Card> */}
     </Page>
   )
 }

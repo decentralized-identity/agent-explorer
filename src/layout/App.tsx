@@ -5,6 +5,7 @@ import { VeramoProvider } from '@veramo-community/veramo-react'
 import { defaultAgent } from '../agent'
 import { ThemeProvider } from '../context/ThemeProvider'
 import { QueryClientProvider, QueryClient } from 'react-query'
+import { PageModuleProvider } from '../context/PageModuleProvider'
 
 const App = () => {
   const queryClient = new QueryClient()
@@ -15,9 +16,11 @@ const App = () => {
         {
           // @ts-ignore
           <VeramoProvider>
-            <BrowserRouter>
-              <Route component={Frame} />
-            </BrowserRouter>
+            <PageModuleProvider>
+              <BrowserRouter>
+                <Route component={Frame} />
+              </BrowserRouter>
+            </PageModuleProvider>
           </VeramoProvider>
         }
       </ThemeProvider>

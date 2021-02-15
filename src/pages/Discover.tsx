@@ -8,11 +8,19 @@ const Discover = () => {
   const rightContent = () => {
     return (
       <Layout>
-        <Card title="Issuer">
+        <Card title="Page Module" loading>
           <p>Card content</p>
           <p>Card content</p>
         </Card>
-        <Card title="Subject">
+        <Card title="Page Module" loading>
+          <p>Card content</p>
+          <p>Card content</p>
+        </Card>
+        <Card title="Page Module" loading>
+          <p>Card content</p>
+          <p>Card content</p>
+        </Card>
+        <Card title="Page Module" loading>
           <p>Card content</p>
           <p>Card content</p>
         </Card>
