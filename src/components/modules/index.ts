@@ -35,9 +35,17 @@ export const PAGE_DEFAULT_MODULES: PageModulesDefaults = {
 }
 
 export const DYNAMIC_MODULES = {
-  DynamicModule001: React.lazy(() => import('./DynamicModule001')),
-  DynamicModule002: React.lazy(() => import('./DynamicModule002')),
-  BarChart: React.lazy(() => import('./BarChart')),
-  DataGenerator: React.lazy(() => import('./DataGenerator')),
-  QueryIdentifier: React.lazy(() => import('./QueryIdentifier')),
+  [MODULE_MAP.DYNAMIC_MODULE_01.moduleName]: React.lazy(
+    () => import('./DynamicModule001'),
+  ),
+  [MODULE_MAP.DYNAMIC_MODULE_02.moduleName]: React.lazy(
+    () => import('./DynamicModule002'),
+  ),
+  [MODULE_MAP.BAR_CHART.moduleName]: React.lazy(() => import('./BarChart')),
+  [MODULE_MAP.DATA_GENERATOR.moduleName]: React.lazy(
+    () => import('./DataGenerator'),
+  ),
+  [MODULE_MAP.QUERY_IDENTIFIER.moduleName]: React.lazy(
+    () => import('./QueryIdentifier'),
+  ),
 }

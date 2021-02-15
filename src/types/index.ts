@@ -23,6 +23,10 @@ export interface PageModulesDefaults {
 
 export interface PageModuleProps {
   /**
+   * A unique identifier for this module
+   */
+  id?: string | number
+  /**
    * Label that gets shown on the module
    */
   title: string
