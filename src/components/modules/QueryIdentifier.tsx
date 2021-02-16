@@ -62,11 +62,11 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
    */
   useEffect(() => {
     setQueryModuleIdentifier(
-      config.identifierType === 'subject'
+      identifierType === 'subject'
         ? credential?.credentialSubject.id
         : credential?.issuer.id,
     )
-  }, [identifierType])
+  }, [identifierType, credential])
 
   /**
    * Check if the state has been persisted and show in UI
@@ -79,7 +79,7 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
     ) {
       setSaved(false)
     }
-  }, [queryWidgetKey, _title])
+  }, [queryWidgetKey, _title, config, title, identifierType])
 
   const formItemLayout = {
     labelCol: {
