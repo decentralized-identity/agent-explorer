@@ -6,10 +6,17 @@ import { VeramoProvider } from '@veramo-community/veramo-react'
 import { ThemeProvider } from '../context/ThemeProvider'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { PageModuleProvider } from '../context/WidgetProvider'
+import { Web3ReactProvider } from '@web3-react/core'
+import { Web3Provider } from '@ethersproject/providers'
 declare global {
   interface Window {
     BASE_URL: string
   }
+}
+function getLibrary(provider: any): Web3Provider {
+  const library = new Web3Provider(provider)
+  library.pollingInterval = 12000
+  return library
 }
 
 const App = () => {
@@ -19,13 +26,16 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         {
-          <VeramoProvider>
-            <PageModuleProvider>
-              <BrowserRouter>
-                <Route component={Frame} />
-              </BrowserRouter>
-            </PageModuleProvider>
-          </VeramoProvider>
+          // @ts-ignore
+          <Web3ReactProvider getLibrary={getLibrary}>
+            <VeramoProvider>
+              <PageModuleProvider>
+                <BrowserRouter>
+                  <Route component={Frame} />
+                </BrowserRouter>
+              </PageModuleProvider>
+            </VeramoProvider>
+          </Web3ReactProvider>
         }
       </ThemeProvider>
     </QueryClientProvider>
