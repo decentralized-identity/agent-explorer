@@ -4,16 +4,55 @@ import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { useHistory } from 'react-router-dom'
+import { useWeb3React } from '@web3-react/core'
+import { Web3Provider } from '@ethersproject/providers'
+import { InjectedConnector } from '@web3-react/injected-connector'
+import { createAgent } from '@veramo/core'
 
 const { Title } = Typography
+const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] })
 
 const Connect = () => {
   const history = useHistory()
-  const { addAgentConfig } = useVeramo()
+  const { addAgentConfig, addAgent, getAgent } = useVeramo()
   const [name, setName] = useState<string>()
   const [schemaUrl, setSchemaUrl] = useState<string>()
   const [agentUrl, setAgentUrl] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>()
+
+  const {
+    connector,
+    chainId,
+    account,
+    activate,
+    deactivate,
+    active,
+  } = useWeb3React<Web3Provider>()
+  const [activatingConnector, setActivatingConnector] = React.useState<any>()
+
+  React.useEffect(() => {
+    if (activatingConnector && activatingConnector === connector) {
+      setActivatingConnector(undefined)
+    }
+  }, [activatingConnector, connector])
+
+  React.useEffect(() => {
+    if (chainId && account && active) {
+      const id = `${chainId}:${account}`
+      try {
+        getAgent(id)
+      } catch (e) {
+        const agent = createAgent({
+          context: {
+            id,
+            name: `Web3 injected ${chainId}`,
+          },
+          plugins: [],
+        })
+        addAgent(agent as any)
+      }
+    }
+  }, [account, chainId, addAgent, active, getAgent])
 
   const newAgentConfig = () => {
     addAgentConfig({
@@ -144,6 +183,21 @@ const Connect = () => {
         )}
       </Form>
       {/* <Card title="Deploy agent">Deploy an agent to heroku</Card> */}
+      {!active && (
+        <Button
+          disabled={activatingConnector}
+          onClick={() => {
+            setActivatingConnector(injected)
+            activate(injected)
+          }}
+        >
+          {activatingConnector ? 'Waiting...' : 'Login'}
+        </Button>
+      )}
+      {active && <Button onClick={() => deactivate()}>Logout</Button>}
+      Account: {account}
+      <br />
+      chainId: {chainId}
     </Page>
   )
 }
