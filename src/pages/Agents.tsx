@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Typography, Card, Button, Row, Space, Tag } from 'antd'
 import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -9,12 +9,10 @@ import {
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 const Agents = () => {
   const { agents, removeAgent, activeAgentId, setActiveAgentId } = useVeramo()
-
-  const [names, setNames] = useState({})
 
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Agents</Title>}>

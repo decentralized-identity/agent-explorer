@@ -1,9 +1,8 @@
 import React from 'react'
-import { Typography, Table, Tag, Button, Tooltip } from 'antd'
+import { Typography, Table, Tag } from 'antd'
 import Page from '../layout/Page'
 import { format } from 'date-fns'
-import { FundViewOutlined } from '@ant-design/icons'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 
