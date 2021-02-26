@@ -2617,10 +2617,10 @@
     "@veramo/remote-client" "^1.1.1-next.4"
     uuid "^8.3.2"
 
-"@veramo/core@^1.1.1-next.1", "@veramo/core@^1.1.1-next.2+89255b9a":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/core/-/core-1.1.1-next.2.tgz#22c388e7d0a665910d5bec21fe428bc0a0d6e444"
-  integrity sha512-u8x4Mdg55+XDVjMyptYUW6fXeuyb0IzS2wI/NWPai8HTfoc1xDb1LCvXm8g5W3yfyKZePuE8t2974grACPtcqg==
+"@veramo/core@^1.1.1-next.11", "@veramo/core@^1.1.1-next.11+16e9339a":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/core/-/core-1.1.1-next.11.tgz#84b70d0a1a45c1fed32de719959b82df195931c6"
+  integrity sha512-HcuSy44WaEX81l7EAL1jsR8na3QuZZ1Lz0zt+75Xv2GJkC/BUU6+c+ciPxMR5rE+z9oLPFyCQfrapeS1PFmZKQ==
   dependencies:
     debug "^4.1.1"
     did-jwt-vc "^1.0.3"
@@ -2637,89 +2637,101 @@
     events "^3.0.0"
     z-schema "^5.0.0"
 
-"@veramo/credential-w3c@^1.1.1-next.1", "@veramo/credential-w3c@^1.1.1-next.2+89255b9a":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/credential-w3c/-/credential-w3c-1.1.1-next.2.tgz#aabcaab1b95cc91d750ce4f271ecb12e31de9b3c"
-  integrity sha512-VL+Hs8UbHSSypAaQaxxcTxgWFkBxBXIzn1ZkwaJJHrglf2Xi13m5EIDUD9ZJvb6uSG+pHK8GKAFvmERy9BOhjw==
+"@veramo/credential-w3c@^1.1.1-next.11", "@veramo/credential-w3c@^1.1.1-next.11+16e9339a":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/credential-w3c/-/credential-w3c-1.1.1-next.11.tgz#a1846054e21dd3ac2cca1aa3519993f5d6722518"
+  integrity sha512-cyYhZ75jUf+SvPfkQJhbwoitEJQ5qnMfnH6GzBkafrZaIAXYZaOdp5E5aJ2ADdOLr0/lMC4aRLfRdGsoXVk0Jw==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
-    "@veramo/did-jwt" "^1.1.1-next.2+89255b9a"
-    "@veramo/did-resolver" "^1.1.1-next.2+89255b9a"
-    "@veramo/message-handler" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
+    "@veramo/did-jwt" "^1.1.1-next.11+16e9339a"
+    "@veramo/did-resolver" "^1.1.1-next.11+16e9339a"
+    "@veramo/message-handler" "^1.1.1-next.11+16e9339a"
     blakejs "^1.1.0"
     debug "^4.1.1"
     did-jwt-vc "^1.0.3"
     did-resolver "2.1.2"
 
-"@veramo/data-store@^1.1.1-next.1", "@veramo/data-store@^1.1.1-next.2+89255b9a":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/data-store/-/data-store-1.1.1-next.2.tgz#dc50bac471173bc72b88b960cf9885d95246b45b"
-  integrity sha512-rgPtl0EXQvCKp8YopSfspL30CiospqDW1NRQOzCS1JNWdEiELa/JWoxRrIoGVAmN5RMeD7omGXFxEEH/2lGFXw==
+"@veramo/data-store@^1.1.1-next.11", "@veramo/data-store@^1.1.1-next.11+16e9339a":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/data-store/-/data-store-1.1.1-next.11.tgz#b906621e5e78c72c8e699132c4edc86e0344891d"
+  integrity sha512-AMGFz2zP2HWLu8to3IDCJYlzVKIsbt0x5EIyNwd+kwwes2U+JPByi0kVwkhQh0B4rIgaNLkoF1ALCSbUgMfBfA==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
-    "@veramo/did-manager" "^1.1.1-next.2+89255b9a"
-    "@veramo/key-manager" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
+    "@veramo/did-manager" "^1.1.1-next.11+16e9339a"
+    "@veramo/key-manager" "^1.1.1-next.11+16e9339a"
     debug "^4.1.1"
     typeorm "0.2.30"
 
-"@veramo/did-comm@^1.1.1-next.1":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/did-comm/-/did-comm-1.1.1-next.2.tgz#9cc1832438ca2c22ed547da27688e982a35b97cc"
-  integrity sha512-ixJ4QZmgUKvQq/F3I9vSvRoFZEaRAAX5VldhKJlpPmUjK+vOhKEO33XHOCPHpjGfuest3i6fvZ7Dy0+L1Nx+Mw==
+"@veramo/did-comm@^1.1.1-next.11":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/did-comm/-/did-comm-1.1.1-next.11.tgz#1f51c5968fb6dcd61f694b7c07d2c5124476154e"
+  integrity sha512-A/ArI0hQadNxE2crWZ1W1AeqhGMPV/YoYiyCxU57OYR9/PUaxoz4PYtcrxZGEb3oN4d3VYtFTqy4lqEjHrq68A==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
-    "@veramo/message-handler" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
+    "@veramo/message-handler" "^1.1.1-next.11+16e9339a"
     cross-fetch "^3.0.5"
     debug "^4.1.1"
     uuid "^8.3.0"
 
-"@veramo/did-jwt@^1.1.1-next.1", "@veramo/did-jwt@^1.1.1-next.2+89255b9a":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/did-jwt/-/did-jwt-1.1.1-next.2.tgz#81e200599b9d999d00a069504a644381f9659cc4"
-  integrity sha512-OGLIpC8gkTCLdbK2kcVGuiROULNgPTYimO4R5lw0yFAtSlTb2rqcbgtpvaOIvNpSuTYnenGni0xqBAnN5zxSsQ==
+"@veramo/did-jwt@^1.1.1-next.11", "@veramo/did-jwt@^1.1.1-next.11+16e9339a":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/did-jwt/-/did-jwt-1.1.1-next.11.tgz#44586e8702d8137521f8f7e9cc12b31459c2e322"
+  integrity sha512-BwoGgDF+/dElgEf2+82B6PPRXgHPVHpu8k6nqE/MxmGoZJRRUEyl6tb1FPWpO3vR0AZtd9j0pdJnjDF9/svO0Q==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
-    "@veramo/message-handler" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
+    "@veramo/message-handler" "^1.1.1-next.11+16e9339a"
     debug "^4.1.1"
     did-jwt "4.8.1"
     did-resolver "2.1.2"
 
-"@veramo/did-manager@^1.1.1-next.2+89255b9a":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/did-manager/-/did-manager-1.1.1-next.2.tgz#04847e59585573dc28d2e6551da4258cab90392b"
-  integrity sha512-nGmura1ZN0PoTkQ8XMj2nqyUUjn4DW85XAHnkqeuTo98WndquLpBCr/4BHk3+8maGx9CB1OWwVl2HXNUid6cmA==
+"@veramo/did-manager@^1.1.1-next.11", "@veramo/did-manager@^1.1.1-next.11+16e9339a":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/did-manager/-/did-manager-1.1.1-next.11.tgz#4235684fc352fffd12a59c39ef7b2c01e9ff603c"
+  integrity sha512-vTn9GRleGZnTHQZvZ/wVVVy3KqHrDQvptVjfOWO62Qg89q9G2dr/i0LqdfmuB3M5dMc6sm0hVFhAPr09EY3adw==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
 
-"@veramo/did-resolver@^1.1.1-next.1", "@veramo/did-resolver@^1.1.1-next.2+89255b9a":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/did-resolver/-/did-resolver-1.1.1-next.2.tgz#b42eeec947869c4b8e3c7f2fbc8c4a19c8573cab"
-  integrity sha512-w6wK72YqmzoMcAx6Gwbx2/v9r0Trsy5PFK+GF6MZsrr4ujy/KfiGnHwFhJNua2AofwwUbfC7hcK/qShnMNaVFQ==
+"@veramo/did-provider-ethr@^1.1.1-next.11":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/did-provider-ethr/-/did-provider-ethr-1.1.1-next.11.tgz#af0987196852dc68d4191aaa46712e6694747ac6"
+  integrity sha512-5Ki6th6JN5CLsHklOtXp5d8DIOaNCYcASM691IJVOSMR3wD+MwDqxpeKlfHttJ6L+HmwnG7KevSm/jSzbJ8whw==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
+    "@veramo/did-manager" "^1.1.1-next.11+16e9339a"
+    debug "^4.1.1"
+    ethjs-provider-signer "^0.1.4"
+    ethr-did "^1.3.0"
+    js-sha3 "^0.8.0"
+
+"@veramo/did-resolver@^1.1.1-next.11", "@veramo/did-resolver@^1.1.1-next.11+16e9339a":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/did-resolver/-/did-resolver-1.1.1-next.11.tgz#e4c792e07223ef2da27517f3422a6bcf18d4f55a"
+  integrity sha512-2fZAyS1v0lQWQR4qB/1yYbmoJ1FGUVo9jHkxTadGl6AlEcs+PFSvRZroetow7T7AEx1NEVDwCGTBEkiIiijOHg==
+  dependencies:
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
     cross-fetch "^3.0.6"
     debug "^4.1.1"
 
-"@veramo/key-manager@^1.1.1-next.2+89255b9a":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/key-manager/-/key-manager-1.1.1-next.2.tgz#505085031b39ef9af03e398d99a6dc0891bf5662"
-  integrity sha512-8ADIuBBsWKzIw3kMH1yoXBvTP0F/uMvN7NCcXTV7QHF0sKVEvShjftpREk0lMZNfQRhrhVKeyL3dXYzZkPWXbQ==
+"@veramo/key-manager@^1.1.1-next.11", "@veramo/key-manager@^1.1.1-next.11+16e9339a":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/key-manager/-/key-manager-1.1.1-next.11.tgz#f78aadb3bbcb0b3f5ce08ba386037cdd958a8ba1"
+  integrity sha512-GXQjAp4gcfLkX/GStrHk4Fx5LzsMYfhK9aaNEd8nysZE4SfqILpGCt/KyrkJ/JxFTaUf+1Se1q4oIZBtkMHLCA==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
 
-"@veramo/message-handler@^1.1.1-next.1", "@veramo/message-handler@^1.1.1-next.2+89255b9a":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/message-handler/-/message-handler-1.1.1-next.2.tgz#00462b04a60508650817ae59a49cc80f49ae3b05"
-  integrity sha512-aF0w9WGFiomLgcamANJEbwV/hTx6vGLEUr2SvrLnz2x00y2QfMO2mH4DOFVGDAOD9ZeQcZ05nrukIhp3N3vUXg==
+"@veramo/message-handler@^1.1.1-next.11", "@veramo/message-handler@^1.1.1-next.11+16e9339a":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/message-handler/-/message-handler-1.1.1-next.11.tgz#8ee585154d319389719d42d973f4c08c6216fd70"
+  integrity sha512-UbpYHhnZBurQS2mmAyrWT1AsqYO4oyU62hN5wgzrGnWkTiNhzKw8Vy8yBLW1oask7vjx6Ixmyv9xFYnMrXBeuA==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
 
-"@veramo/remote-client@^1.1.1-next.1":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/remote-client/-/remote-client-1.1.1-next.2.tgz#a742cc992beb60ba6d6f2c92a8e825ec2f9c1771"
-  integrity sha512-t7GwlowOO/IUVx13/6oTMpNoEr5c+LgibkXk0E9Rh1K+663+b4s1BUHYmaB+na/MraL7wVwNY/qKlh9zxOtgmA==
+"@veramo/remote-client@^1.1.1-next.11":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/remote-client/-/remote-client-1.1.1-next.11.tgz#e0a94c5d21e3b3e0b32f08124e31b8422a583ac7"
+  integrity sha512-LJWTjeSZArdo4tlfygL5gHT0bAYuujJqJ3K0Z1DWoRhGer+P6vTWLBKnIoqZEDZM4tcCk6v7TRN6Qnn1Qucjmg==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
     cross-fetch "^3.0.5"
     debug "^4.1.1"
     openapi-types "^7.0.0"
@@ -2734,16 +2746,16 @@
     debug "^4.1.1"
     openapi-types "^7.0.0"
 
-"@veramo/selective-disclosure@^1.1.1-next.1":
-  version "1.1.1-next.2"
-  resolved "https://registry.npmjs.org/@veramo/selective-disclosure/-/selective-disclosure-1.1.1-next.2.tgz#20c4da988b409dccd4e8badddd5ca3c908c3b145"
-  integrity sha512-HtQGCd4dYuSMvdTILzzM205pAL3oCTklSftV8MEthCcJsUvgeXJ/BwW1cHeE+gdI+++CiwU5EtJJEKeb7wlM9Q==
+"@veramo/selective-disclosure@^1.1.1-next.11":
+  version "1.1.1-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/selective-disclosure/-/selective-disclosure-1.1.1-next.11.tgz#87dfbddbf131ad55fc99276b2d3d0afd6a7cdf84"
+  integrity sha512-Dy9Q/avE7oHygnVkOXz7ylr1WSHUB1HsTP0O0ebtrK8P6gTwKXEFMbAwD3TPOQQ4BB+sD5A+hOoHQ5DKsFAaJA==
   dependencies:
-    "@veramo/core" "^1.1.1-next.2+89255b9a"
-    "@veramo/credential-w3c" "^1.1.1-next.2+89255b9a"
-    "@veramo/data-store" "^1.1.1-next.2+89255b9a"
-    "@veramo/did-jwt" "^1.1.1-next.2+89255b9a"
-    "@veramo/message-handler" "^1.1.1-next.2+89255b9a"
+    "@veramo/core" "^1.1.1-next.11+16e9339a"
+    "@veramo/credential-w3c" "^1.1.1-next.11+16e9339a"
+    "@veramo/data-store" "^1.1.1-next.11+16e9339a"
+    "@veramo/did-jwt" "^1.1.1-next.11+16e9339a"
+    "@veramo/message-handler" "^1.1.1-next.11+16e9339a"
     blakejs "^1.1.0"
     debug "^4.1.1"
     did-jwt "4.8.1"
@@ -3921,7 +3933,7 @@ buffer@^5.5.0:
     base64-js "^1.3.1"
     ieee754 "^1.1.13"
 
-buffer@^6.0.0:
+buffer@^6.0.0, buffer@^6.0.3:
   version "6.0.3"
   resolved "https://registry.npmjs.org/buffer/-/buffer-6.0.3.tgz#2ace578459cc8fbe2a70aaa8f52ee63b6a74c6c6"
   integrity sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==
@@ -5280,6 +5292,22 @@ did-jwt@4.8.1, did-jwt@^4.8.1:
     js-sha3 "^0.8.0"
     uint8arrays "^2.0.0"
 
+did-jwt@^4.8.0:
+  version "4.9.0"
+  resolved "https://registry.yarnpkg.com/did-jwt/-/did-jwt-4.9.0.tgz#d8751c331b3124f281b93970bef119eb4da9569a"
+  integrity sha512-WoImHCycUiUd5Bft/GWg/aI+3mpk/M/PY9XZYr1o+XEPj4yNJFGO/op26KV5ZVmL3xnPWG7YnnMZeo3+JoEVXw==
+  dependencies:
+    "@babel/runtime" "^7.11.2"
+    "@stablelib/ed25519" "^1.0.1"
+    "@stablelib/random" "^1.0.0"
+    "@stablelib/sha256" "^1.0.0"
+    "@stablelib/x25519" "^1.0.0"
+    "@stablelib/xchacha20poly1305" "^1.0.0"
+    did-resolver "^2.1.2"
+    elliptic "^6.5.3"
+    js-sha3 "^0.8.0"
+    uint8arrays "^2.0.0"
+
 did-resolver@2.1.1:
   version "2.1.1"
   resolved "https://registry.npmjs.org/did-resolver/-/did-resolver-2.1.1.tgz#43796f8a3e921644e5fb15a8147684ca87019cfd"
@@ -5973,7 +6001,7 @@ ethjs-abi@^0.2.1:
     js-sha3 "0.5.5"
     number-to-bn "1.7.0"
 
-ethjs-contract@^0.2.0:
+ethjs-contract@^0.2.0, ethjs-contract@^0.2.3:
   version "0.2.3"
   resolved "https://registry.npmjs.org/ethjs-contract/-/ethjs-contract-0.2.3.tgz#f113ced8ed1c9c635b0b7ec71901340b64e8cded"
   integrity sha512-fKsHm57wxwHrZhVlD8AHU2lC2G3c1fmvoEz15BpqIkuGWiTbjuvrQo2Avc+3EQpSsTFWNdyxC0h1WKRcn5kkyQ==
@@ -5989,6 +6017,18 @@ ethjs-filter@0.1.8:
   resolved "https://registry.npmjs.org/ethjs-filter/-/ethjs-filter-0.1.8.tgz#2b02726b820ed4dd3860614d185c0c0f7ed1747f"
   integrity sha512-qTDPskDL2UadHwjvM8A+WG9HwM4/FoSY3p3rMJORkHltYcAuiQZd2otzOYKcL5w2Q3sbAkW/E3yt/FPFL/AVXA==
 
+ethjs-format@0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/ethjs-format/-/ethjs-format-0.1.8.tgz#925ecdd965ea72a2a2daf2a122e5bf80b5ad522a"
+  integrity sha1-kl7N2WXqcqKi2vKhIuW/gLWtUio=
+  dependencies:
+    bn.js "4.11.6"
+    ethjs-schema "0.1.4"
+    ethjs-util "0.1.3"
+    is-hex-prefixed "1.0.0"
+    number-to-bn "1.7.0"
+    strip-hex-prefix "1.0.0"
+
 ethjs-format@0.2.7:
   version "0.2.7"
   resolved "https://registry.npmjs.org/ethjs-format/-/ethjs-format-0.2.7.tgz#20c92f31c259a381588d069830d838b489774b86"
@@ -6001,14 +6041,22 @@ ethjs-format@0.2.7:
     number-to-bn "1.7.0"
     strip-hex-prefix "1.0.0"
 
-ethjs-provider-http@^0.1.6:
+ethjs-provider-http@0.1.6, ethjs-provider-http@^0.1.6:
   version "0.1.6"
   resolved "https://registry.npmjs.org/ethjs-provider-http/-/ethjs-provider-http-0.1.6.tgz#1ec5d9b4be257ef1d56a500b22a741985e889420"
   integrity sha1-HsXZtL4lfvHValALIqdBmF6IlCA=
   dependencies:
     xhr2 "0.1.3"
 
-ethjs-query@^0.3.5:
+ethjs-provider-signer@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/ethjs-provider-signer/-/ethjs-provider-signer-0.1.4.tgz#6bd5cb38a8d5b0ddf46ac1e23a60eea1716171ae"
+  integrity sha1-a9XLOKjVsN30asHiOmDuoXFhca4=
+  dependencies:
+    ethjs-provider-http "0.1.6"
+    ethjs-rpc "0.1.2"
+
+ethjs-query@^0.3.5, ethjs-query@^0.3.8:
   version "0.3.8"
   resolved "https://registry.npmjs.org/ethjs-query/-/ethjs-query-0.3.8.tgz#aa5af02887bdd5f3c78b3256d0f22ffd5d357490"
   integrity sha512-/J5JydqrOzU8O7VBOwZKUWXxHDGr46VqNjBCJgBVNNda+tv7Xc8Y2uJc6aMHHVbeN3YOQ7YRElgIc0q1CI02lQ==
@@ -6018,12 +6066,24 @@ ethjs-query@^0.3.5:
     ethjs-rpc "0.2.0"
     promise-to-callback "^1.0.0"
 
+ethjs-rpc@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/ethjs-rpc/-/ethjs-rpc-0.1.2.tgz#39a3456b51c59aeeafb5ba556589a59f2da88d26"
+  integrity sha1-OaNFa1HFmu6vtbpVZYmlny2ojSY=
+  dependencies:
+    ethjs-format "0.1.8"
+
 ethjs-rpc@0.2.0:
   version "0.2.0"
   resolved "https://registry.npmjs.org/ethjs-rpc/-/ethjs-rpc-0.2.0.tgz#3d0011e32cfff156ed6147818c6fb8f801701b4c"
   integrity sha512-RINulkNZTKnj4R/cjYYtYMnFFaBcVALzbtEJEONrrka8IeoarNB9Jbzn+2rT00Cv8y/CxAI+GgY1d0/i2iQeOg==
   dependencies:
     promise-to-callback "^1.0.0"
+
+ethjs-schema@0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/ethjs-schema/-/ethjs-schema-0.1.4.tgz#0323a16333b1ace9a8f1d696a6ee63448fdd455f"
+  integrity sha1-AyOhYzOxrOmo8daWpu5jRI/dRV8=
 
 ethjs-schema@0.2.1:
   version "0.2.1"
@@ -6038,7 +6098,7 @@ ethjs-util@0.1.3:
     is-hex-prefixed "1.0.0"
     strip-hex-prefix "1.0.0"
 
-ethr-did-registry@^0.0.3:
+ethr-did-registry@0.0.3, ethr-did-registry@^0.0.3:
   version "0.0.3"
   resolved "https://registry.npmjs.org/ethr-did-registry/-/ethr-did-registry-0.0.3.tgz#f363d2c73cb9572b57bd7a5c9c90c88485feceb5"
   integrity sha512-4BPvMGkxAK9vTduCq6D5b8ZqjteD2cvDIPPriXP6nnmPhWKFSxypo+AFvyQ0omJGa0cGTR+dkdI/8jiF7U/qaw==
@@ -6057,6 +6117,20 @@ ethr-did-resolver@^3.0.3:
     ethjs-query "^0.3.5"
     ethr-did-registry "^0.0.3"
     js-sha3 "^0.8.0"
+
+ethr-did@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/ethr-did/-/ethr-did-1.3.0.tgz#84d3c7c9551d7fb8fa3c966ac7bc5dd40cb255e8"
+  integrity sha512-/NOCbaqvYEQViqicsVIwqlu9Zhz8Bmtueu0lal/LvKYNSV6sLqSKasQPAUARomfLuO4a0NDqcV0/gXaTQaYDfQ==
+  dependencies:
+    buffer "^6.0.3"
+    did-jwt "^4.8.0"
+    did-resolver "^2.1.2"
+    ethjs-contract "^0.2.3"
+    ethjs-provider-http "^0.1.6"
+    ethjs-query "^0.3.8"
+    ethr-did-registry "0.0.3"
+    ethr-did-resolver "^3.0.3"
 
 eventemitter3@^4.0.0:
   version "4.0.7"
