@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'
+import React, { createContext, useState, useContext } from 'react'
 import { PAGE_DEFAULT_MODULES, MODULE_MAP } from '../components/modules'
 import { PageModuleConfig } from '../types'
 

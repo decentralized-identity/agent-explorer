@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Typography } from 'antd'
+import { Typography } from 'antd'
 import DynamicModule from '../../layout/PageModule'
 import { PageModuleProps } from '../../types'
 

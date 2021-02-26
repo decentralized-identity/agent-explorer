@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import {
   Typography,
-  Card,
   Button,
   Row,
   Input,
@@ -21,9 +20,9 @@ import { PageModuleProps } from '../../types'
 const { Title, Text } = Typography
 const { Panel } = Collapse
 
-interface DataGenerator extends PageModuleProps {}
+interface IDataGenerator extends PageModuleProps {}
 
-const DataGenerator: React.FC<DataGenerator> = ({
+const DataGenerator: React.FC<IDataGenerator> = ({
   title,
   remove,
   removeDisabled,
@@ -117,7 +116,7 @@ const DataGenerator: React.FC<DataGenerator> = ({
 
   useEffect(() => {
     setIdentifierProvider('did:ethr:rinkeby')
-  }, [])
+  }, [setIdentifierProvider])
 
   return (
     <DynamicModule

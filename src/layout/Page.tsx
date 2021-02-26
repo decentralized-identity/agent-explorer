@@ -33,7 +33,7 @@ const Page: React.FC<PageProps> = ({
 
   useEffect(() => {
     loadPageModules(name)
-  }, [])
+  }, [loadPageModules, name])
 
   const addPageModule = (pageName: string, moduleKeyName: string) => {
     addModule(pageName, moduleKeyName)
@@ -69,7 +69,7 @@ const Page: React.FC<PageProps> = ({
             {Object.keys(MODULE_MAP).map((key, i) => {
               const conditions =
                 MODULE_MAP[key].pages === undefined ||
-                MODULE_MAP[key].pages?.indexOf(name) != -1
+                MODULE_MAP[key].pages?.indexOf(name) !== -1
 
               return (
                 conditions && (

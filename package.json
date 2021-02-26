@@ -18,6 +18,7 @@
     "test": "craco test",
     "agent-explore": "./bin/bin.js"
   },
+  "homepage": ".",
   "eslintConfig": {
     "extends": [
       "react-app",

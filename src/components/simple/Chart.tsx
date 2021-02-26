@@ -19,7 +19,7 @@ const LineChart: React.FC<ChartProps> = ({ type, data }) => {
       aspectRatio: 3,
       data,
     })
-  }, [])
+  }, [data, type])
 
   // @ts-ignore
   return <canvas ref={canvasRef}></canvas>

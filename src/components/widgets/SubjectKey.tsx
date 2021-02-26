@@ -1,15 +1,14 @@
 import React from 'react'
-import { Typography } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 
-interface SubjectKey {
+interface ISubjectKey {
   vcKey: string
   did: string
   renderKey: (hash: string | null, vcKey: any | null) => any
 }
 
-const SubjectKey: React.FC<SubjectKey> = ({ vcKey, did, renderKey }) => {
+const SubjectKey: React.FC<ISubjectKey> = ({ vcKey, did, renderKey }) => {
   const { agent } = useVeramo()
   const { data } = useQuery(
     ['credentials', vcKey, did],

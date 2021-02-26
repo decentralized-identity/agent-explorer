@@ -72,7 +72,7 @@ const SideMenu = () => {
   const { agent, agents, setActiveAgentId, activeAgentId } = useVeramo()
   const uri =
     agent?.context.name &&
-    GRAVATAR_URI + md5(agent?.context.schema) + '?s=200' + '&d=retro'
+    GRAVATAR_URI + md5(agent?.context.schema) + '?s=200&d=retro'
 
   return (
     <Sider
@@ -182,7 +182,11 @@ const SideMenu = () => {
           (<Version versionOnly />)
         </Menu.Item>
         <Menu.Item>
-          <a target="_blank" href="https://github.com/veramolabs">
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/veramolabs"
+          >
             Contribute
           </a>
         </Menu.Item>

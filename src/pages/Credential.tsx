@@ -3,7 +3,6 @@ import {
   Typography,
   Card,
   Layout,
-  List,
   Tag,
   Row,
   Col,

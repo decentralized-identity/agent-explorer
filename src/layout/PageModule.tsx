@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Button, Collapse, Row, Col } from 'antd'
+import { Card, Button, Collapse } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import { PageModuleProps } from '../types'
 

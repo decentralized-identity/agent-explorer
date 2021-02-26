@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Card, Layout, Space } from 'antd'
+import { Typography, Card, Layout } from 'antd'
 import Page from '../layout/Page'
 import ThemeModule from '../components/modules/ThemeSwitch'
 import Version from '../components/widgets/Version'
