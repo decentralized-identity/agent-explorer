@@ -7,7 +7,13 @@ import { useHistory } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
-import { createAgent } from '@veramo/core'
+import { createAgent, IKeyManager, IDIDManager } from '@veramo/core'
+import { DIDManager } from '@veramo/did-manager'
+import { KeyManager } from '@veramo/key-manager'
+import { MemoryDIDStore } from '../web3/DIDStore'
+import { MemoryKeyStore } from '../web3/KeyStore'
+import { EthrDIDProvider } from '@veramo/did-provider-ethr'
+import { Web3KeyManagementSystem } from '../web3/KeyManagementSystem'
 
 const { Title } = Typography
 const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] })
@@ -37,22 +43,61 @@ const Connect = () => {
   }, [activatingConnector, connector])
 
   React.useEffect(() => {
-    if (chainId && account && active) {
+    if (connector && chainId && account && active) {
       const id = `${chainId}:${account}`
       try {
         getAgent(id)
       } catch (e) {
-        const agent = createAgent({
-          context: {
-            id,
-            name: `Web3 injected ${chainId}`,
-          },
-          plugins: [],
-        })
-        addAgent(agent as any)
+        const init = async () => {
+          const web3Provider = await connector.getProvider()
+          const agent = createAgent<IDIDManager & IKeyManager>({
+            context: {
+              id,
+              name: `Web3 injected ${chainId}`,
+            },
+            plugins: [
+              new KeyManager({
+                store: new MemoryKeyStore(),
+                kms: {
+                  web3: new Web3KeyManagementSystem(web3Provider),
+                },
+              }),
+              new DIDManager({
+                store: new MemoryDIDStore(),
+                defaultProvider: 'did:ethr',
+                providers: {
+                  'did:ethr': new EthrDIDProvider({
+                    defaultKms: 'web3',
+                    network: 'mainnet',
+                    web3Provider: web3Provider,
+                  }),
+                },
+              }),
+            ],
+          })
+
+          await agent.didManagerImport({
+            did: `did:ethr:0x${chainId}:${account}`,
+            provider: 'did:ethr',
+            controllerKeyId: `${chainId}:${account}`,
+            keys: [
+              {
+                kid: `${chainId}:${account}`,
+                publicKeyHex: `${chainId}:${account}`,
+                type: 'Secp256k1',
+                kms: 'web3',
+              },
+            ],
+            services: [],
+          })
+
+          addAgent(agent as any)
+        }
+
+        init()
       }
     }
-  }, [account, chainId, addAgent, active, getAgent])
+  }, [connector, account, chainId, addAgent, active, getAgent])
 
   const newAgentConfig = () => {
     addAgentConfig({
@@ -197,13 +242,10 @@ const Connect = () => {
             activate(injected)
           }}
         >
-          {activatingConnector ? 'Waiting...' : 'Login'}
+          {activatingConnector ? 'Waiting...' : 'Add web3 agent'}
         </Button>
       )}
       {active && <Button onClick={() => deactivate()}>Logout</Button>}
-      Account: {account}
-      <br />
-      chainId: {chainId}
     </Page>
   )
 }
