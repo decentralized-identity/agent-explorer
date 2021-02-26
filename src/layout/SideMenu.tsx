@@ -29,6 +29,11 @@ const mainMenu = [
     icon: EyeOutlined,
   },
   {
+    url: '/managed-identifiers',
+    label: 'Managed identifiers',
+    icon: UserOutlined,
+  },
+  {
     url: '/identifiers',
     label: 'Identifiers',
     icon: UserOutlined,

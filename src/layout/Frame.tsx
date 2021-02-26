@@ -8,6 +8,7 @@ import Sidemenu from '../layout/SideMenu'
 import Connect from '../pages/Connect'
 import Overview from '../pages/Overview'
 import Identifiers from '../pages/Identifiers'
+import ManagedIdentifiers from '../pages/ManagedIdentifiers'
 import Identifier from '../pages/Identifier'
 import Credentials from '../pages/Credentials'
 import Credential from '../pages/Credential'
@@ -35,6 +36,11 @@ const Frame = () => {
               <Route path="/connect" component={Connect} />
               <Route path="/agents" exact component={Agents} />
               <Route path="/agent/:id" component={Agent} />
+              <Route
+                path="/managed-identifiers"
+                exact
+                component={ManagedIdentifiers}
+              />
               <Route path="/identifiers" exact component={Identifiers} />
               <Route path="/identifier/:id" component={Identifier} />
               <Route path="/credentials" exact component={Credentials} />
