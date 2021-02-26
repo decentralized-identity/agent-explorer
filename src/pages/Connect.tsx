@@ -7,12 +7,23 @@ import { useHistory } from 'react-router-dom'
 import { useWeb3React } from '@web3-react/core'
 import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
-import { createAgent, IKeyManager, IDIDManager } from '@veramo/core'
+import {
+  createAgent,
+  IKeyManager,
+  IDIDManager,
+  IResolver,
+  IKey,
+} from '@veramo/core'
 import { DIDManager } from '@veramo/did-manager'
 import { KeyManager } from '@veramo/key-manager'
+import { EthrDIDProvider } from '@veramo/did-provider-ethr'
+import { DIDResolverPlugin } from '@veramo/did-resolver'
+import { Resolver } from 'did-resolver'
+import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
+import { getResolver as webDidResolver } from 'web-did-resolver'
+
 import { MemoryDIDStore } from '../web3/DIDStore'
 import { MemoryKeyStore } from '../web3/KeyStore'
-import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { Web3KeyManagementSystem } from '../web3/KeyManagementSystem'
 
 const { Title } = Typography
@@ -50,12 +61,20 @@ const Connect = () => {
       } catch (e) {
         const init = async () => {
           const web3Provider = await connector.getProvider()
-          const agent = createAgent<IDIDManager & IKeyManager>({
+          const agent = createAgent<IDIDManager & IKeyManager & IResolver>({
             context: {
               id,
               name: `Web3 injected ${chainId}`,
             },
             plugins: [
+              new DIDResolverPlugin({
+                resolver: new Resolver({
+                  ethr: ethrDidResolver({
+                    provider: web3Provider,
+                  }).ethr,
+                  web: webDidResolver().web,
+                }),
+              }),
               new KeyManager({
                 store: new MemoryKeyStore(),
                 kms: {
@@ -76,19 +95,24 @@ const Connect = () => {
             ],
           })
 
+          const didDoc = await agent.resolveDid({
+            didUrl: `did:ethr:${account}`,
+          })
+
           await agent.didManagerImport({
-            did: `did:ethr:0x${chainId}:${account}`,
+            did: `did:ethr:${account}`,
             provider: 'did:ethr',
-            controllerKeyId: `${chainId}:${account}`,
-            keys: [
-              {
-                kid: `${chainId}:${account}`,
-                publicKeyHex: `${chainId}:${account}`,
-                type: 'Secp256k1',
-                kms: 'web3',
-              },
-            ],
-            services: [],
+            controllerKeyId: didDoc.id + '#controller',
+            keys: didDoc.publicKey.map(
+              (pub) =>
+                ({
+                  kid: pub.id,
+                  type: 'Secp256k1',
+                  kms: 'web3',
+                  publicKeyHex: pub.publicKeyHex,
+                } as IKey),
+            ),
+            services: didDoc.service || [],
           })
 
           addAgent(agent as any)

@@ -31,7 +31,6 @@ const Identifier = () => {
           <code>{id}</code>
         </Layout>
       }
-      rightContent={rightContent()}
     >
       <Card loading={isLoading} title={'DID Document'}>
         <pre>{JSON.stringify(identifer, null, 2)}</pre>

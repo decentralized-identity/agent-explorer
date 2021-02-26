@@ -1,14 +1,22 @@
-import React from 'react'
-import { Card, List } from 'antd'
+import React, { useState } from 'react'
+import { Button, Card, Input, List } from 'antd'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { LockOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
+import shortId from 'shortid'
 
 interface IdentifierModuleProps {
   title: string
   identifier: string
   cacheKey: any
+}
+
+interface ServiceEndpoint {
+  id: string
+  type: string
+  serviceEndpoint: string
+  description?: string
 }
 
 const Module: React.FC<IdentifierModuleProps> = ({
@@ -17,6 +25,13 @@ const Module: React.FC<IdentifierModuleProps> = ({
   cacheKey,
 }) => {
   const { agent } = useVeramo()
+  const [serviceId] = useState(shortId.generate())
+  const [serviceType, setServiceType] = useState('Messaging')
+  const [serviceEndpoint, setServiceEndpoint] = useState(
+    'https://example.com/messaging',
+  )
+  const [serviceDescription, setServiceDescription] = useState('')
+
   const { data, isLoading } = useQuery(
     [cacheKey],
     () => agent?.resolveDid({ didUrl: identifier }),
