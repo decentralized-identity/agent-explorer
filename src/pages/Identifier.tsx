@@ -2,26 +2,12 @@ import React from 'react'
 import { Typography, Card, Layout } from 'antd'
 import Page from '../layout/Page'
 import { useParams } from 'react-router-dom'
+import DidDoc from '../components/modules/Identifier'
 
 const { Title } = Typography
 
 const Identifier = () => {
   const { id } = useParams<{ id: string }>()
-
-  const rightContent = () => {
-    return (
-      <Layout>
-        <Card title="Issuer">
-          <p>Card content</p>
-          <p>Card content</p>
-        </Card>
-        <Card title="Subject">
-          <p>Card content</p>
-          <p>Card content</p>
-        </Card>
-      </Layout>
-    )
-  }
 
   return (
     <Page
@@ -31,8 +17,8 @@ const Identifier = () => {
           <code>{id}</code>
         </Layout>
       }
-      rightContent={rightContent()}
     >
+      <DidDoc identifier={id} cacheKey="aaa" title="DID Document" />
       <Card style={{ height: 400 }} loading>
         Card 1
       </Card>
