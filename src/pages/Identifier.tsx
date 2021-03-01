@@ -6,7 +6,7 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import IdentifierKeys from '../components/standard/Identifier'
 import DidData from '../components/modules/Identifier'
-import Collectibles from '../components/modules/Collectibles'
+// import Collectibles from '../components/modules/Collectibles'
 import Nft from '../components/modules/Nft'
 import PostForm from '../components/modules/PostForm'
 
