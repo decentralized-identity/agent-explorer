@@ -3,7 +3,7 @@ import { Typography, Card, Layout } from 'antd'
 import Page from '../layout/Page'
 import { useParams } from 'react-router-dom'
 import DidData from '../components/modules/Identifier'
-import Collectibles from '../components/modules/Collectibles'
+// import Collectibles from '../components/modules/Collectibles'
 import Nft from '../components/modules/Nft'
 import PostForm from '../components/modules/PostForm'
 

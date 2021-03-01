@@ -12,12 +12,8 @@ const Module: React.FC = () => {
   const [address, setAddress] = useState('0xd07dc4262bcdbf85190c01c996b4c06a461d2430')
   const [id, setId] = useState('110820')
   const {
-    connector,
     chainId,
     account,
-    activate,
-    deactivate,
-    active,
   } = useWeb3React<Web3Provider>()
 
   const importDid = async () => {

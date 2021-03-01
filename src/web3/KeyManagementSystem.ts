@@ -58,7 +58,6 @@ export class Web3KeyManagementSystem extends AbstractKeyManagementSystem {
     data: string
   }): Promise<EcdsaSignature | string> {
     const domain = {}
-    const primaryType = 'CustomType'
     const types = {
       CustomType: [
         { name: 'post', type: 'string' },
