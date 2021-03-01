@@ -1,7 +1,7 @@
 import { Web3Provider } from '@ethersproject/providers'
 import { TKeyType, IKey, EcdsaSignature } from '@veramo/core'
 import { AbstractKeyManagementSystem } from '@veramo/key-manager'
-
+import { providers } from 'ethers'
 export class Web3KeyManagementSystem extends AbstractKeyManagementSystem {
   constructor(private provider: Promise<Web3Provider>) {
     super()
@@ -57,6 +57,21 @@ export class Web3KeyManagementSystem extends AbstractKeyManagementSystem {
     key: IKey
     data: string
   }): Promise<EcdsaSignature | string> {
-    throw Error('Not implemented')
+    const domain = {}
+    const primaryType = 'CustomType'
+    const types = {
+      CustomType: [
+        { name: 'post', type: 'string' },
+      ],
+    }
+    const value = {
+      post: 'hello world',
+    }
+
+    const p = await this.provider as any
+    const web3Provider = new providers.Web3Provider(p)
+    await web3Provider.getSigner()._signTypedData(domain, types, value)
+
+    return 'aaa'
   }
 }
