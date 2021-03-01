@@ -16,6 +16,7 @@ import {
 } from '@veramo/core'
 import { DIDManager } from '@veramo/did-manager'
 import { KeyManager } from '@veramo/key-manager'
+import { CredentialIssuer } from '@veramo/credential-w3c'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { DIDResolverPlugin } from '@veramo/did-resolver'
 import { Resolver } from 'did-resolver'
@@ -25,6 +26,7 @@ import { getResolver as webDidResolver } from 'web-did-resolver'
 import { MemoryDIDStore } from '../web3/DIDStore'
 import { MemoryKeyStore } from '../web3/KeyStore'
 import { Web3KeyManagementSystem } from '../web3/KeyManagementSystem'
+import { NFTResolver } from '../web3/NFTResolver'
 
 const { Title } = Typography
 const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] })
@@ -73,6 +75,7 @@ const Connect = () => {
                     provider: web3Provider,
                   }).ethr,
                   web: webDidResolver().web,
+                  nft: NFTResolver(web3Provider)
                 }),
               }),
               new KeyManager({
@@ -92,6 +95,7 @@ const Connect = () => {
                   }),
                 },
               }),
+              new CredentialIssuer()
             ],
           })
 
@@ -114,6 +118,26 @@ const Connect = () => {
             ),
             services: didDoc.service || [],
           })
+
+          const { assets } = await (await fetch(`https://api.opensea.io/api/v1/assets?owner=${account}&order_direction=desc&offset=0&limit=20`)).json()
+          
+          for (const asset of assets) {
+            await agent.didManagerImport({
+              did: `did:nft:0x${chainId}:${asset.asset_contract.address}:${asset.token_id}`,
+              provider: 'did:nft',
+              controllerKeyId: didDoc.id + '#controller',
+              keys: didDoc.publicKey.map(
+                (pub) =>
+                  ({
+                    kid: pub.id,
+                    type: 'Secp256k1',
+                    kms: 'web3',
+                    publicKeyHex: pub.publicKeyHex,
+                  } as IKey),
+              ),
+              services: didDoc.service || [],
+            })
+          }
 
           addAgent(agent as any)
         }

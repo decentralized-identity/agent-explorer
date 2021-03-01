@@ -5,6 +5,10 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import IdentifierKeys from '../components/standard/Identifier'
+import DidData from '../components/modules/Identifier'
+import Collectibles from '../components/modules/Collectibles'
+import Nft from '../components/modules/Nft'
+import PostForm from '../components/modules/PostForm'
 
 const { Title } = Typography
 
@@ -32,8 +36,35 @@ const Identifier = () => {
         </Layout>
       }
     >
-      <Card loading={isLoading} title={'DID Document'}>
-        <pre>{JSON.stringify(identifer, null, 2)}</pre>
+      {/* <Collectibles account={id.split(':').pop() || ''} /> */}
+      <PostForm id={id} />
+      {id.substr(0,7)==='did:nft' && <Nft address={id.split(':')[3]} tokenId={id.split(':')[4]} />}
+      
+      <DidData identifier={id} cacheKey={id} title="Data" />
+      
+      <Card style={{ height: 400 }} loading>
+        Card 1
+      </Card>
+      <Card style={{ height: 400 }} loading>
+        Card 1
+      </Card>
+      <Card style={{ height: 400 }} loading>
+        Card 1
+      </Card>
+      <Card style={{ height: 400 }} loading>
+        Card 1
+      </Card>
+      <Card style={{ height: 400 }} loading>
+        Card 1
+      </Card>
+      <Card style={{ height: 400 }} loading>
+        Card 1
+      </Card>
+      <Card style={{ height: 400 }} loading>
+        Card 1
+      </Card>
+      <Card style={{ height: 400 }} loading>
+        Card 1
       </Card>
     </Page>
   )

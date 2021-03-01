@@ -5,6 +5,7 @@ import { FundViewOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
+import ImportNft from '../components/modules/ImportNft'
 
 const { Title } = Typography
 
@@ -52,6 +53,7 @@ const Identifiers = () => {
         // @ts-ignore
         columns={columns}
       />
+      <ImportNft />
     </Page>
   )
 }
