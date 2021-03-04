@@ -1,8 +1,8 @@
 import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { Layout } from 'antd'
 import '../theme/base.less'
-import { useVeramo } from '@veramo-community/veramo-react'
+// import { useVeramo } from '@veramo-community/veramo-react'
 
 import Sidemenu from '../layout/SideMenu'
 import Connect from '../pages/Connect'
@@ -24,7 +24,7 @@ import Agent from '../pages/Agent'
 const { Header, Content } = Layout
 
 const Frame = () => {
-  const { agent } = useVeramo()
+  // const { agent } = useVeramo()
 
   return (
     <Layout style={{ height: '100%' }}>
@@ -32,8 +32,8 @@ const Frame = () => {
       <Layout>
         <Header style={{ padding: 0 }} className="mobile-header"></Header>
         <Content className="main-content-container">
-          {agent ? (
-            <>
+          {/* {agent ? (
+            <> */}
               <Route path="/" exact component={Overview} />
               <Route path="/connect" component={Connect} />
               <Route path="/agents" exact component={Agents} />
@@ -52,13 +52,13 @@ const Frame = () => {
               <Route path="/inbox" component={Inbox} />
               <Route path="/network" component={Network} />
               <Route path="/discover" component={Discover} />
-            </>
+            {/* </>
           ) : (
             <>
               <Redirect from="/" to="/connect" />
               <Route path="/connect" exact component={Connect} />
             </>
-          )}
+          )} */}
 
           <Route path="/settings" component={Settings} />
         </Content>
