@@ -4,6 +4,7 @@ import Page from '../layout/Page'
 import ThemeModule from '../components/modules/ThemeSwitch'
 import DebugSettings from '../components/modules/DebugSettings'
 import Version from '../components/widgets/Version'
+import { Web3 } from '../web3/Web3'
 
 const { Title } = Typography
 const { Content } = Layout
@@ -26,6 +27,11 @@ const Settings = () => {
         <ThemeModule />
         <Title level={5}>Debug</Title>
         <DebugSettings />
+
+        <Title level={5}>Web3</Title>
+        <Card>
+          <Web3 />
+        </Card>
       </Content>
     </Page>
   )

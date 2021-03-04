@@ -4,148 +4,18 @@ import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { useHistory } from 'react-router-dom'
-import { useWeb3React } from '@web3-react/core'
-import { Web3Provider } from '@ethersproject/providers'
-import { InjectedConnector } from '@web3-react/injected-connector'
-import {
-  createAgent,
-  IKeyManager,
-  IDIDManager,
-  IResolver,
-  IKey,
-} from '@veramo/core'
-import { DIDManager } from '@veramo/did-manager'
-import { KeyManager } from '@veramo/key-manager'
-import { CredentialIssuer } from '@veramo/credential-w3c'
-import { EthrDIDProvider } from '@veramo/did-provider-ethr'
-import { DIDResolverPlugin } from '@veramo/did-resolver'
-import { Resolver } from 'did-resolver'
-import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
-import { getResolver as webDidResolver } from 'web-did-resolver'
-
-import { MemoryDIDStore } from '../web3/DIDStore'
-import { MemoryKeyStore } from '../web3/KeyStore'
-import { Web3KeyManagementSystem } from '../web3/KeyManagementSystem'
-import { NFTResolver } from '../web3/NFTResolver'
 
 const { Title } = Typography
-const injected = new InjectedConnector({ supportedChainIds: [1, 3, 4, 5, 42] })
 
 const Connect = () => {
   const history = useHistory()
-  const { addAgentConfig, addAgent, getAgent } = useVeramo()
+  const { addAgentConfig } = useVeramo()
   const [name, setName] = useState<string>()
   const [schemaUrl, setSchemaUrl] = useState<string>()
   const [agentUrl, setAgentUrl] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>()
 
-  const {
-    connector,
-    chainId,
-    account,
-    activate,
-    deactivate,
-    active,
-  } = useWeb3React<Web3Provider>()
-  const [activatingConnector, setActivatingConnector] = React.useState<any>()
 
-  React.useEffect(() => {
-    if (activatingConnector && activatingConnector === connector) {
-      setActivatingConnector(undefined)
-    }
-  }, [activatingConnector, connector])
-
-  React.useEffect(() => {
-    if (connector && chainId && account && active) {
-      const id = `${chainId}:${account}`
-      try {
-        getAgent(id)
-      } catch (e) {
-        const init = async () => {
-          const web3Provider = await connector.getProvider()
-          const agent = createAgent<IDIDManager & IKeyManager & IResolver>({
-            context: {
-              id,
-              name: `Web3 injected ${chainId}`,
-            },
-            plugins: [
-              new DIDResolverPlugin({
-                resolver: new Resolver({
-                  ethr: ethrDidResolver({
-                    provider: web3Provider,
-                  }).ethr,
-                  web: webDidResolver().web,
-                  nft: NFTResolver(web3Provider)
-                }),
-              }),
-              new KeyManager({
-                store: new MemoryKeyStore(),
-                kms: {
-                  web3: new Web3KeyManagementSystem(web3Provider),
-                },
-              }),
-              new DIDManager({
-                store: new MemoryDIDStore(),
-                defaultProvider: 'did:ethr',
-                providers: {
-                  'did:ethr': new EthrDIDProvider({
-                    defaultKms: 'web3',
-                    network: 'mainnet',
-                    web3Provider: web3Provider,
-                  }),
-                },
-              }),
-              new CredentialIssuer()
-            ],
-          })
-
-          const didDoc = await agent.resolveDid({
-            didUrl: `did:ethr:${account}`,
-          })
-
-          await agent.didManagerImport({
-            did: `did:ethr:${account}`,
-            provider: 'did:ethr',
-            controllerKeyId: didDoc.id + '#controller',
-            keys: didDoc.publicKey.map(
-              (pub) =>
-                ({
-                  kid: pub.id,
-                  type: 'Secp256k1',
-                  kms: 'web3',
-                  publicKeyHex: pub.publicKeyHex,
-                } as IKey),
-            ),
-            services: didDoc.service || [],
-          })
-
-          const { assets } = await (await fetch(`https://api.opensea.io/api/v1/assets?owner=${account}&order_direction=desc&offset=0&limit=20`)).json()
-          
-          for (const asset of assets) {
-            await agent.didManagerImport({
-              did: `did:nft:0x${chainId}:${asset.asset_contract.address}:${asset.token_id}`,
-              provider: 'did:nft',
-              controllerKeyId: didDoc.id + '#controller',
-              keys: didDoc.publicKey.map(
-                (pub) =>
-                  ({
-                    kid: pub.id,
-                    type: 'Secp256k1',
-                    kms: 'web3',
-                    publicKeyHex: pub.publicKeyHex,
-                  } as IKey),
-              ),
-              services: didDoc.service || [],
-            })
-          }
-
-          addAgent(agent as any)
-        }
-
-        init()
-      }
-    }
-  }, [connector, account, chainId, addAgent, active, getAgent])
 
   const newAgentConfig = () => {
     addAgentConfig({
@@ -276,18 +146,7 @@ const Connect = () => {
         )}
       </Form>
       {/* <Card title="Deploy agent">Deploy an agent to heroku</Card> */}
-      {!active && (
-        <Button
-          disabled={activatingConnector}
-          onClick={() => {
-            setActivatingConnector(injected)
-            activate(injected)
-          }}
-        >
-          {activatingConnector ? 'Waiting...' : 'Add web3 agent'}
-        </Button>
-      )}
-      {active && <Button onClick={() => deactivate()}>Logout</Button>}
+
     </Page>
   )
 }

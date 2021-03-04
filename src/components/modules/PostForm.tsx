@@ -9,6 +9,7 @@ interface Props {
 }
 
 interface FormValues {
+  to: string
   headline: string
   subject: string
   articleBody: string
@@ -22,6 +23,7 @@ const Module: React.FC<Props> = (props: Props) => {
   const filteredAgents = agents.filter(a => a.availableMethods().includes('dataStoreSaveVerifiableCredential'))
 
   const initialValues: FormValues = {
+    to: 'did:web:onlynfts.com',
     headline: 'Title',
     subject: 'https://example.org/posts/' + shortId(),
     articleBody: 'Body',
@@ -135,6 +137,13 @@ const Module: React.FC<Props> = (props: Props) => {
           label="Article body"
           name="articleBody"
           rules={[{ required: true, message: 'Please input Article body!' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Send to"
+          name="to"
         >
           <Input />
         </Form.Item>
