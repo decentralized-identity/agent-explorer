@@ -71,3 +71,9 @@ export interface PageWidgetProps {
   noPadding?: boolean
 }
 
+export interface IProfile {
+  did: string
+  name?: string
+  nickname?: string
+  picture?: string
+}

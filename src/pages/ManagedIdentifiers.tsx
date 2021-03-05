@@ -2,10 +2,10 @@ import React from 'react'
 import { Typography, Table, Button } from 'antd'
 import Page from '../layout/Page'
 import { FundViewOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import ImportNft from '../components/modules/ImportNft'
+import IdentifierProfileLink from '../components/modules/IdentifierProfileLink'
 
 const { Title } = Typography
 
@@ -14,7 +14,7 @@ const columns = [
     title: 'DID',
     dataIndex: 'did',
     key: 'did',
-    render: (did: string) => <Link to={'/identifier/' + did}>{did}</Link>,
+    render: (did: string) => <IdentifierProfileLink did={did} />,
   },
   {
     title: 'Provider',

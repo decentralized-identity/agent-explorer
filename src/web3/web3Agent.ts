@@ -18,6 +18,7 @@ import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { AbstractConnector } from '@web3-react/abstract-connector';
+import { ProfileManager } from '../agent/ProfileManager'
 export async function createWeb3Agent({
   connector,
   chainId,
@@ -62,6 +63,7 @@ export async function createWeb3Agent({
         },
       }),
       new CredentialIssuer(),
+      new ProfileManager(),
     ],
   })
 
