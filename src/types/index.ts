@@ -59,3 +59,10 @@ export interface PageModuleProps {
    */
   noPadding?: boolean
 }
+
+export interface IProfile {
+  did: string
+  name?: string
+  nickname?: string
+  picture?: string
+}
