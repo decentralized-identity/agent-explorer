@@ -5,10 +5,15 @@ import {
   IResolver,
   IKey,
 } from '@veramo/core'
-import { CredentialIssuer } from '@veramo/credential-w3c'
+import { CredentialIssuer, W3cMessageHandler } from '@veramo/credential-w3c'
 import { DIDManager } from '@veramo/did-manager'
 import { DIDResolverPlugin } from '@veramo/did-resolver'
+import { DIDComm } from '@veramo/did-comm'
 import { KeyManager } from '@veramo/key-manager'
+import { SdrMessageHandler } from '@veramo/selective-disclosure'
+import { JwtMessageHandler } from '@veramo/did-jwt'
+import { DIDCommMessageHandler } from '@veramo/did-comm'
+import { MessageHandler } from '@veramo/message-handler'
 import { MemoryDIDStore } from './DIDStore'
 import { Web3KeyManagementSystem } from './KeyManagementSystem'
 import { MemoryKeyStore } from './KeyStore'
@@ -64,6 +69,15 @@ export async function createWeb3Agent({
       }),
       new CredentialIssuer(),
       new ProfileManager(),
+      new DIDComm(),
+      new MessageHandler({
+        messageHandlers: [
+          new DIDCommMessageHandler(),
+          new JwtMessageHandler(),
+          new W3cMessageHandler(),
+          new SdrMessageHandler(),
+        ],
+      }),
     ],
   })
 

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Button, Card, Form, Input, Select, Tag } from 'antd'
+import { Button, Card, Form, Input, Select, Tag, notification, Progress } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDManager, IDataStore } from '@veramo/core'
 import shortId from 'shortid'
+import { IProfileManager } from '../../agent/ProfileManager'
 
 interface Props {
   id: string
@@ -17,8 +18,10 @@ interface FormValues {
 }
 
 const Module: React.FC<Props> = (props: Props) => {
-  const { agent, agents, getAgent } = useVeramo<IDIDManager & IDataStore>()
+  const { agent, agents, getAgent } = useVeramo<IDIDManager & IDataStore & IProfileManager>()
   const [vc, setVc] = useState()
+  const [progressStatus, setProgressStatus] = useState<'active'|'exception' | undefined>(undefined)
+  const [progress, setProgress] = useState<number | undefined>(undefined)
 
   const filteredAgents = agents.filter(a => a.availableMethods().includes('dataStoreSaveVerifiableCredential'))
 
@@ -31,8 +34,11 @@ const Module: React.FC<Props> = (props: Props) => {
   }
 
   const createPost = async (values: FormValues) => {
+    setProgressStatus('active')
+    setProgress(20)
     try {
 
+      const profile = await agent?.getProfile({ did: props.id })
 
       const verifiableCredential = await agent?.createVerifiableCredential({
         credential: {
@@ -52,10 +58,8 @@ const Module: React.FC<Props> = (props: Props) => {
             type: 'SocialMediaPosting',
             author: {
               id: props.id,
-              type: 'Person',
-              thumbnail: 'https://google.com',
-              image: 'https://google.com',
-              name: 'cryptopunk'
+              image: profile?.picture,
+              name: profile?.name
             },
             headline: values.headline,
             articleBody: values.articleBody
@@ -63,20 +67,58 @@ const Module: React.FC<Props> = (props: Props) => {
         },
         proofFormat: 'jwt',
       })
+      setProgress(40)
 
       for (const agentId of values.agents) {
         try {
-          const result = await getAgent(agentId).dataStoreSaveVerifiableCredential({ verifiableCredential })
-          console.log({ result })
+          await getAgent(agentId).dataStoreSaveVerifiableCredential({ verifiableCredential })
+          notification.success({
+            message: 'Credential saved in: ' + getAgent(agentId).context.name
+          })
         } catch (e) {
-          console.log(e)
+          notification.error({
+            message: e.message
+          })
+          setProgressStatus('exception')
+        }
+      }
+      setProgress(80)
+
+      if (values.to) {
+        try {
+          await agent?.sendMessageDIDCommAlpha1({
+            data: {
+              from: props.id,
+              to: values.to,
+              body: verifiableCredential.proof.jwt,
+              type: 'jwt'
+            }
+          })
+          notification.success({
+            message: 'Message sent to: ' + values.to
+          })
+        } catch (e) {
+          notification.error({
+            message: e.message
+          })
+          setProgressStatus('exception')
+
         }
       }
 
       setVc(verifiableCredential)
-    } catch (error) {
-      console.log(error)
+    } catch (e) {
+      notification.error({
+        message: e.message
+      })
+      setProgressStatus('exception')
+
     }
+    setProgress(100)
+
+    setTimeout(() => {
+      setProgress(undefined)
+    }, 1000)
   }
 
 
@@ -162,9 +204,10 @@ const Module: React.FC<Props> = (props: Props) => {
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          {progress === undefined && <Button type="primary" htmlType="submit">
             Submit
-        </Button>
+          </Button>}
+          {progress && <Progress type="circle" percent={progress} status={progressStatus}/>}
         </Form.Item>
       </Form>
 
