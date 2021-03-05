@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, Form, Input, Button, List } from 'antd'
+import { Typography, Form, Input, Button, List, notification } from 'antd'
 import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
@@ -14,6 +14,7 @@ const Connect = () => {
   const [schemaUrl, setSchemaUrl] = useState<string>()
   const [agentUrl, setAgentUrl] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>()
+  const [jsonError, setJsonError] = useState(false)
 
 
 
@@ -28,6 +29,9 @@ const Connect = () => {
         },
       ],
     })
+    notification.success({
+      message: 'Added ' + name
+    })
     history.push('/agents')
   }
 
@@ -39,14 +43,32 @@ const Connect = () => {
     ['schema', { endpoint: schemaUrl }],
     async () => {
       if (schemaUrl) {
-        const response = await fetch(schemaUrl)
-        return await response.json()
+        try {
+
+          const response = await fetch(schemaUrl)
+          const json = await response.json()
+          setJsonError(false)
+          return json
+        }catch (e) {
+          //nothing
+          setJsonError(true)
+        }
       }
     },
     {
       enabled: !!schemaUrl,
     },
   )
+
+  useEffect(()=>{
+    setAgentUrl(schema?.servers[0]?.url)
+    setName(schema?.info?.title)
+
+    return () => {
+      setAgentUrl('')
+      setName('')
+    }
+  }, [schema])
 
   const methods = () => {
     return (
@@ -86,7 +108,7 @@ const Connect = () => {
               ? ''
               : schemaLoading
               ? 'validating'
-              : schemaError
+              : (schemaError || jsonError)
               ? 'error'
               : 'success'
           }
