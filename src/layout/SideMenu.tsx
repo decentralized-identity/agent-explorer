@@ -10,6 +10,9 @@ import {
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,
+  MessageOutlined,
+  DeploymentUnitOutlined,
+  SearchOutlined,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -52,17 +55,26 @@ const mainMenu = [
     label: 'Credentials',
     icon: SafetyOutlined,
   },
-
-  // {
-  //   url: '/network',
-  //   label: 'Network',
-  //   icon: DeploymentUnitOutlined,
-  // },
-  // {
-  //   url: '/discover',
-  //   label: 'Discover',
-  //   icon: SearchOutlined,
-  // },
+  {
+    url: '/messages',
+    label: 'Messages',
+    icon: MessageOutlined,
+  },
+  {
+    url: '/network',
+    label: 'Network',
+    icon: DeploymentUnitOutlined,
+  },
+  {
+    url: '/discover',
+    label: 'Discover',
+    icon: SearchOutlined,
+  },
+  {
+    url: '/posts',
+    label: 'Social Posts',
+    icon: MessageOutlined,
+  },
 ]
 
 const subMenu = [

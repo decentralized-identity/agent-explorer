@@ -76,7 +76,11 @@ const Credentials = () => {
   const { agent } = useVeramo()
   const { data: credentials, isLoading } = useQuery(
     ['credentials', { agentId: agent?.context.name }],
-    () => agent?.dataStoreORMGetVerifiableCredentials(),
+    () => agent?.dataStoreORMGetVerifiableCredentials({
+      order: [
+        { column: 'issuanceDate', direction: 'DESC' }
+      ]
+    }),
   )
 
   return (
