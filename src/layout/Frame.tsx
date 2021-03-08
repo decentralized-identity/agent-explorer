@@ -18,6 +18,7 @@ import Discover from '../pages/Discover'
 import Settings from '../pages/Settings'
 import Agents from '../pages/Agents'
 import Agent from '../pages/Agent'
+import SocialPosts from '../pages/SocialPosts'
 
 const { Header, Content } = Layout
 
@@ -48,6 +49,7 @@ const Frame = () => {
               <Route path="/messages" component={Messages} />
               <Route path="/network" component={Network} />
               <Route path="/discover" component={Discover} />
+              <Route path="/posts" component={SocialPosts} />
             {/* </>
           ) : (
             <>

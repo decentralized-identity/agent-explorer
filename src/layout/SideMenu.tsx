@@ -58,6 +58,11 @@ const mainMenu = [
     label: 'Discover',
     icon: SearchOutlined,
   },
+  {
+    url: '/posts',
+    label: 'Social Posts',
+    icon: MessageOutlined,
+  },
 ]
 
 const subMenu = [
