@@ -22,7 +22,7 @@ import { Resolver } from 'did-resolver'
 import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
-import { AbstractConnector } from '@web3-react/abstract-connector';
+import { AbstractConnector } from '@web3-react/abstract-connector'
 import { ProfileManager } from '../agent/ProfileManager'
 export async function createWeb3Agent({
   connector,
@@ -101,28 +101,32 @@ export async function createWeb3Agent({
     services: didDoc.service || [],
   })
 
-  const { assets } = await (
-    await fetch(
-      `https://api.opensea.io/api/v1/assets?owner=${account}&order_direction=desc&offset=0&limit=20`,
-    )
-  ).json()
+  try {
+    const { assets } = await (
+      await fetch(
+        `https://api.opensea.io/api/v1/assets?owner=${account}&order_direction=desc&offset=0&limit=20`,
+      )
+    ).json()
 
-  for (const asset of assets) {
-    await agent.didManagerImport({
-      did: `did:nft:0x${chainId}:${asset.asset_contract.address}:${asset.token_id}`,
-      provider: 'did:nft',
-      controllerKeyId: didDoc.id + '#controller',
-      keys: didDoc.publicKey.map(
-        (pub) =>
-          ({
-            kid: pub.id,
-            type: 'Secp256k1',
-            kms: 'web3',
-            publicKeyHex: pub.publicKeyHex,
-          } as IKey),
-      ),
-      services: didDoc.service || [],
-    })
+    for (const asset of assets) {
+      await agent.didManagerImport({
+        did: `did:nft:0x${chainId}:${asset.asset_contract.address}:${asset.token_id}`,
+        provider: 'did:nft',
+        controllerKeyId: didDoc.id + '#controller',
+        keys: didDoc.publicKey.map(
+          (pub) =>
+            ({
+              kid: pub.id,
+              type: 'Secp256k1',
+              kms: 'web3',
+              publicKeyHex: pub.publicKeyHex,
+            } as IKey),
+        ),
+        services: didDoc.service || [],
+      })
+    }
+  } catch (e) {
+    console.log(e.message)
   }
 
   return agent
