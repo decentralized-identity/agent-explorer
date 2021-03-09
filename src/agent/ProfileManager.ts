@@ -2,8 +2,10 @@ import { IAgentPlugin, IPluginMethodMap, IAgentContext } from '@veramo/core'
 import { IDataStoreORM } from '@veramo/data-store'
 import { IProfile } from '../types'
 import parse from 'url-parse'
+import md5 from 'md5'
 
 type IContext = IAgentContext<IDataStoreORM>
+const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 export interface IGetProfileArgs {
   /**
@@ -27,12 +29,15 @@ export class ProfileManager implements IAgentPlugin {
   ): Promise<IProfile> {
     if (!args.did) return Promise.reject('DID Required')
 
+    const defaultPictureUrl = GRAVATAR_URI + md5(args.did) + '?s=200&d=retro'
+
     if (args.did.substr(0, 3) !== 'did') {
       const parsed = parse(args.did)
       return {
         did: args.did,
         name: parsed.hostname,
-        nickname: parsed.pathname
+        nickname: parsed.pathname,
+        picture: defaultPictureUrl
       }
     }
 
@@ -49,7 +54,7 @@ export class ProfileManager implements IAgentPlugin {
     }
 
     if (!context.agent.availableMethods().includes('dataStoreORMGetVerifiableCredentials')) {
-      return { did: args.did, name: args.did }
+      return { did: args.did, name: args.did, picture: defaultPictureUrl }
     }
     const result = await context.agent.dataStoreORMGetVerifiableCredentials({
       where: [
@@ -62,7 +67,7 @@ export class ProfileManager implements IAgentPlugin {
       const { name, nickname, picture } = result[0].verifiableCredential.credentialSubject
       return { did: args.did, name, nickname, picture }
     } else {
-      return { did: args.did, name: args.did }
+      return { did: args.did, name: args.did, picture: defaultPictureUrl }
     }
   }
 }
