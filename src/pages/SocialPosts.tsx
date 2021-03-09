@@ -3,6 +3,7 @@ import { Typography, Avatar, List } from 'antd'
 import Page from '../layout/Page'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
+import PostButton from '../components/modules/PostButton'
 
 const { Title } = Typography
 
@@ -23,7 +24,7 @@ const Credentials = () => {
 
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Social posts</Title>}>
-
+      <PostButton />
 
       <List
         itemLayout="horizontal"

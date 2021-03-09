@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 import DidData from '../components/modules/Identifier'
 // import Collectibles from '../components/modules/Collectibles'
 import Nft from '../components/modules/Nft'
-import PostForm from '../components/modules/PostForm'
 
 const { Title } = Typography
 
@@ -22,7 +21,7 @@ const Identifier = () => {
       }
     >
       {/* <Collectibles account={id.split(':').pop() || ''} /> */}
-      <PostForm id={id} />
+
       {id.substr(0,7)==='did:nft' && <Nft address={id.split(':')[3]} tokenId={id.split(':')[4]} />}
       
       <DidData identifier={id} cacheKey={id} title="Data" />

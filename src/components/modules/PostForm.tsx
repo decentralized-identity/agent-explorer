@@ -4,12 +4,16 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDManager, IDataStore } from '@veramo/core'
 import shortId from 'shortid'
 import { IProfileManager } from '../../agent/ProfileManager'
+import { useQuery } from 'react-query'
+import IdentifierProfileSelectOption from './IdentifierProfileSelectOption'
 
 interface Props {
-  id: string
+  id?: string
+  onFinish?: () => void
 }
 
 interface FormValues {
+  from: string
   to: string
   headline: string
   subject: string
@@ -19,13 +23,20 @@ interface FormValues {
 
 const Module: React.FC<Props> = (props: Props) => {
   const { agent, agents, getAgent } = useVeramo<IDIDManager & IDataStore & IProfileManager>()
-  const [vc, setVc] = useState()
-  const [progressStatus, setProgressStatus] = useState<'active'|'exception' | undefined>(undefined)
+
+  const [progressStatus, setProgressStatus] = useState<'active' | 'exception' | undefined>(undefined)
   const [progress, setProgress] = useState<number | undefined>(undefined)
 
   const filteredAgents = agents.filter(a => a.availableMethods().includes('dataStoreSaveVerifiableCredential'))
 
+  const { data: identifiers, isLoading: isLoadingIdentifiers } = useQuery(
+    ['managedIdentifiers', { agentId: agent?.context.id }],
+    () => agent?.didManagerFind(),
+  )
+
+
   const initialValues: FormValues = {
+    from: '',
     to: 'did:web:onlynfts.com',
     headline: 'Title',
     subject: 'https://example.org/posts/' + shortId(),
@@ -34,15 +45,16 @@ const Module: React.FC<Props> = (props: Props) => {
   }
 
   const createPost = async (values: FormValues) => {
+
     setProgressStatus('active')
     setProgress(20)
     try {
 
-      const profile = await agent?.getProfile({ did: props.id })
+      const profile = await agent?.getProfile({ did: values.from })
 
       const verifiableCredential = await agent?.createVerifiableCredential({
         credential: {
-          issuer: { id: props.id },
+          issuer: { id: values.from },
           '@context': [
             'https://www.w3.org/2018/credentials/v1',
             'https://www.w3id.org/veramolabs/socialmedia/context/v1'
@@ -57,7 +69,7 @@ const Module: React.FC<Props> = (props: Props) => {
             id: values.subject,
             type: 'SocialMediaPosting',
             author: {
-              id: props.id,
+              id: values.from,
               image: profile?.picture,
               name: profile?.name
             },
@@ -88,7 +100,7 @@ const Module: React.FC<Props> = (props: Props) => {
         try {
           await agent?.sendMessageDIDCommAlpha1({
             data: {
-              from: props.id,
+              from: values.from,
               to: values.to,
               body: verifiableCredential.proof.jwt,
               type: 'jwt'
@@ -106,7 +118,6 @@ const Module: React.FC<Props> = (props: Props) => {
         }
       }
 
-      setVc(verifiableCredential)
     } catch (e) {
       notification.error({
         message: e.message
@@ -118,6 +129,9 @@ const Module: React.FC<Props> = (props: Props) => {
 
     setTimeout(() => {
       setProgress(undefined)
+      if (props.onFinish) {
+        props.onFinish()
+      }
     }, 1000)
   }
 
@@ -150,7 +164,7 @@ const Module: React.FC<Props> = (props: Props) => {
 
 
   return (
-    <Card title='Create post'>
+    
 
       <Form
         {...layout}
@@ -159,6 +173,20 @@ const Module: React.FC<Props> = (props: Props) => {
         onFinish={createPost}
         onFinishFailed={onFinishFailed}
       >
+        <Form.Item
+          label="From"
+          name="from"
+          rules={[{ required: true, message: 'Please select From!' }]}
+        >
+          <Select loading={isLoadingIdentifiers}>
+            {identifiers?.map(i => (
+              <Select.Option value={i.did} key={i.did}>
+                <IdentifierProfileSelectOption did={i.did} />
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
         <Form.Item
           label="Subject"
           name="subject"
@@ -207,12 +235,9 @@ const Module: React.FC<Props> = (props: Props) => {
           {progress === undefined && <Button type="primary" htmlType="submit">
             Submit
           </Button>}
-          {progress && <Progress type="circle" percent={progress} status={progressStatus}/>}
+          {progress && <Progress type="circle" percent={progress} status={progressStatus} />}
         </Form.Item>
       </Form>
-
-      {vc && (<pre>{JSON.stringify(vc, null, 2)}</pre>)}
-    </Card>
 
   )
 }
