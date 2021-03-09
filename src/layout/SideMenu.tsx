@@ -82,7 +82,7 @@ const SideMenu = () => {
   const { agent, agents, setActiveAgentId, activeAgentId } = useVeramo()
   const uri =
     agent?.context?.name &&
-    GRAVATAR_URI + md5(agent?.context?.schema || ' ') + '?s=200&d=retro'
+    GRAVATAR_URI + md5(agent?.context?.id || ' ') + '?s=200&d=retro'
 
   return (
     <Sider

@@ -30,7 +30,7 @@ const Module: React.FC<Props> = ({
   return (
     <Link to={'/identifier/' + did}>
       <Avatar src={data?.picture} />
-      {data?.name} - {data?.nickname}
+      {data?.name}
     </Link>
   )
 }
