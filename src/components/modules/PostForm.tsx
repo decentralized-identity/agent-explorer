@@ -37,9 +37,9 @@ const Module: React.FC<Props> = (props: Props) => {
 
   const initialValues: FormValues = {
     from: '',
-    to: 'did:web:onlynfts.com',
+    to: 'did:web:pulsar.veramo.io',
     headline: 'Title',
-    subject: 'https://example.org/posts/' + shortId(),
+    subject: 'https://pulsar.veramo.io/posts/' + shortId(),
     articleBody: 'Body',
     agents: []
   }
