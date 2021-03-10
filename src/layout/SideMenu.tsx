@@ -44,36 +44,42 @@ const mainMenu = [
     url: '/managed-identifiers',
     label: 'Managed identifiers',
     icon: UserOutlined,
+    requiredMethod: 'didManagerFind'
   },
   {
     url: '/identifiers',
     label: 'Identifiers',
     icon: UserOutlined,
+    requiredMethod: 'dataStoreORMGetIdentifiers'
   },
   {
     url: '/credentials',
     label: 'Credentials',
     icon: SafetyOutlined,
+    requiredMethod: 'dataStoreORMGetVerifiableCredentials'
   },
   {
     url: '/messages',
     label: 'Messages',
     icon: MessageOutlined,
+    requiredMethod: 'dataStoreORMGetMessages'
   },
-  {
-    url: '/network',
-    label: 'Network',
-    icon: DeploymentUnitOutlined,
-  },
-  {
-    url: '/discover',
-    label: 'Discover',
-    icon: SearchOutlined,
+  // {
+    //   url: '/network',
+    //   label: 'Network',
+    //   icon: DeploymentUnitOutlined,
+    // },
+    {
+      url: '/discover',
+      label: 'Discover',
+      icon: SearchOutlined,
+      requiredMethod: 'resolveDid'
   },
   {
     url: '/posts',
     label: 'Social Posts',
     icon: MessageOutlined,
+    requiredMethod: 'dataStoreORMGetVerifiableCredentials'
   },
 ]
 
@@ -168,7 +174,9 @@ const SideMenu = () => {
             <Menu.Divider></Menu.Divider>
             {subMenu.map((menuItem) => {
               return (
-                <Menu.Item key={menuItem.label}>
+                <Menu.Item
+                  key={menuItem.label}
+                  >
                   <Link to={menuItem.url}>{menuItem.label}</Link>
                 </Menu.Item>
               )
@@ -179,6 +187,7 @@ const SideMenu = () => {
             return (
               <Menu.Item
                 key={menuItem.label}
+                disabled={!!(menuItem.requiredMethod && !agent.availableMethods().includes(menuItem.requiredMethod))}
                 icon={<menuItem.icon style={{ fontSize: '17px' }} />}
               >
                 <Link to={menuItem.url}>{menuItem.label}</Link>
