@@ -7,7 +7,7 @@ import {
   SearchOutlined,
   SafetyOutlined,
   MessageOutlined,
-  DeploymentUnitOutlined,
+  // DeploymentUnitOutlined,
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,
