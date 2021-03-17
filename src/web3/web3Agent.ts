@@ -24,6 +24,7 @@ import { getResolver as webDidResolver } from 'web-did-resolver'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { ProfileManager } from '../agent/ProfileManager'
+import { Web3JwtMessageHandler } from './Web3JWTMessageHandler'
 export async function createWeb3Agent({
   connector,
   chainId,
@@ -47,7 +48,7 @@ export async function createWeb3Agent({
             provider: web3Provider,
           }).ethr,
           web: webDidResolver().web,
-          nft: NFTResolver(web3Provider),
+          nft: NFTResolver({ provider: web3Provider }),
         }),
       }),
       new KeyManager({
@@ -74,6 +75,7 @@ export async function createWeb3Agent({
         messageHandlers: [
           new DIDCommMessageHandler(),
           new JwtMessageHandler(),
+          new Web3JwtMessageHandler(),
           new W3cMessageHandler(),
           new SdrMessageHandler(),
         ],

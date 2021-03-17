@@ -7,11 +7,11 @@ import {
   SafetyOutlined,
   BarsOutlined,
   InteractionOutlined,
+  // DeploymentUnitOutlined,
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,
   MessageOutlined,
-  DeploymentUnitOutlined,
   SearchOutlined,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
