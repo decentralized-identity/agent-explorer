@@ -12,3 +12,10 @@ code {
     monospace;
   overflow-wrap: break-word;
 }
+
+html,
+body,
+#app {
+  height: 100%;
+  overflow-x: hidden;
+}

@@ -7,11 +7,12 @@ import {
   PushpinOutlined,
   EditOutlined,
 } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const { Title } = Typography
 
 const Agents = () => {
+  const history = useHistory()
   const { agents, removeAgent, activeAgentId, setActiveAgentId } = useVeramo()
 
   return (
@@ -52,8 +53,11 @@ const Agents = () => {
               >
                 Make Default
               </Button>
-              <Button icon={<EditOutlined />}>
-                <Link to={'/agent/' + agent.context.id}>Manage</Link>
+              <Button
+                onClick={() => history.push('/agent/' + agent.context.id)}
+                icon={<EditOutlined />}
+              >
+                Manage
               </Button>
             </Space>
           </Card>
