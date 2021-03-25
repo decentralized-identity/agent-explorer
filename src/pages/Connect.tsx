@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Typography, Form, Input, Button, List } from 'antd'
 import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -11,7 +11,9 @@ const Connect = () => {
   const history = useHistory()
   const { addAgentConfig } = useVeramo()
   const [name, setName] = useState<string>()
-  const [schemaUrl, setSchemaUrl] = useState<string>()
+  const [schemaUrl, setSchemaUrl] = useState<string>(
+    'http://localhost:3332/open-api.json',
+  )
   const [agentUrl, setAgentUrl] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>()
 
@@ -50,16 +52,7 @@ const Connect = () => {
     return (
       schema &&
       schema['x-methods'] && (
-        <div
-          style={{
-            height: 300,
-            margin: '20px 0',
-            overflow: 'scroll',
-            border: '1px solid #e8e8e8',
-            borderRadius: 4,
-            padding: '8px 24px',
-          }}
-        >
+        <div className={'option-list'}>
           <List
             header={
               <Typography.Title level={5}>Available methods</Typography.Title>
@@ -75,6 +68,13 @@ const Connect = () => {
       )
     )
   }
+
+  useEffect(() => {
+    if (schema) {
+      setAgentUrl(schema.servers[0].url)
+      setName(schema.info.title)
+    }
+  }, [schema])
 
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Connect</Title>}>
@@ -115,10 +115,18 @@ const Connect = () => {
               <Input
                 size="large"
                 placeholder="Agent Url"
+                defaultValue={schema.servers[0].url}
                 value={agentUrl}
                 onChange={(e) => setAgentUrl(e.target.value)}
               />
             </Form.Item>
+            {/* <Form.Item label="Agent Url">
+              <Select>
+                {schema && schema.servers.map((server: {url: string}) => {
+                    <Select.Option key={server.url} value={server.url}>{server.url}</Select.Option>
+                })}
+              </Select>
+            </Form.Item> */}
             <Form.Item label="API Key">
               <Input
                 size="large"

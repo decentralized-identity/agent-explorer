@@ -22,12 +22,40 @@
 
   --divider-color: #424242;
 
+  --button-off-background: #464646;
+  --button-off-background-border: #464646;
+  --button-off-text: #969696;
+
   // Override styles
 
   .ant-menu-submenu > .ant-menu,
   .ant-menu-submenu-selected,
   .agent-selector > .ant-menu-submenu-title {
     background-color: var(--sub-menu-bg);
+  }
+
+  .ant-input {
+    border: 1px solid var(--component-border);
+  }
+
+  .option-list {
+    border: 1px solid var(--component-border);
+  }
+
+  .ant-list-item,
+  .ant-list-header {
+    border-bottom: 1px solid var(--component-border);
+  }
+
+  .ant-btn-primary[disabled],
+  .ant-btn-primary[disabled]:hover,
+  .ant-btn-primary[disabled]:focus,
+  .ant-btn-primary[disabled]:active {
+    color: var(--button-off-text);
+    background: var(--button-off-background);
+    border-color: var(--button-off-background-border);
+    text-shadow: none;
+    box-shadow: none;
   }
 
   .ant-menu-item {
