@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Typography, Form, Input, Button, List } from 'antd'
 import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -76,6 +76,13 @@ const Connect = () => {
     )
   }
 
+  useEffect(() => {
+    if (schema) {
+      setAgentUrl(schema.servers[0].url)
+      setName(schema.info.title)
+    }
+  }, [schema])
+
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Connect</Title>}>
       <Form layout={'vertical'}>
@@ -115,10 +122,18 @@ const Connect = () => {
               <Input
                 size="large"
                 placeholder="Agent Url"
+                defaultValue={schema.servers[0].url}
                 value={agentUrl}
                 onChange={(e) => setAgentUrl(e.target.value)}
               />
             </Form.Item>
+            {/* <Form.Item label="Agent Url">
+              <Select>
+                {schema && schema.servers.map((server: {url: string}) => {
+                    <Select.Option key={server.url} value={server.url}>{server.url}</Select.Option>
+                })}
+              </Select>
+            </Form.Item> */}
             <Form.Item label="API Key">
               <Input
                 size="large"
