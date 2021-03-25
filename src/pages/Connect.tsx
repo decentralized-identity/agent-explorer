@@ -11,7 +11,9 @@ const Connect = () => {
   const history = useHistory()
   const { addAgentConfig } = useVeramo()
   const [name, setName] = useState<string>()
-  const [schemaUrl, setSchemaUrl] = useState<string>()
+  const [schemaUrl, setSchemaUrl] = useState<string>(
+    'http://localhost:3332/open-api.json',
+  )
   const [agentUrl, setAgentUrl] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>()
 
@@ -50,16 +52,7 @@ const Connect = () => {
     return (
       schema &&
       schema['x-methods'] && (
-        <div
-          style={{
-            height: 300,
-            margin: '20px 0',
-            overflow: 'scroll',
-            border: '1px solid #e8e8e8',
-            borderRadius: 4,
-            padding: '8px 24px',
-          }}
-        >
+        <div className={'option-list'}>
           <List
             header={
               <Typography.Title level={5}>Available methods</Typography.Title>
