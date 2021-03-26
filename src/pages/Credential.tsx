@@ -1,18 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Typography,
-  Card,
-  Layout,
-  Tag,
-  Row,
-  Col,
-  Table,
-  Button,
-  Input,
-  Select,
-  Space,
-  Modal,
-} from 'antd'
+import { Typography, Card, Layout, Tag, Row, Col, Table, Button } from 'antd'
 import { format } from 'date-fns'
 import Page from '../layout/Page'
 import { useParams, useHistory } from 'react-router-dom'
@@ -20,31 +7,13 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import JsonBlock from '../components/modules/Json'
 import IDModule from '../components/modules/Identifier'
-import Chart from '../components/simple/Chart'
-import SubjectKey from '../components/widgets/SubjectKey'
-import { chart1 } from '../stubbs/chart'
 
 const { Title, Text } = Typography
-const { Option } = Select
 
 const Credential = () => {
   const history = useHistory()
   const { id } = useParams<{ id: string }>()
   const { agent } = useVeramo()
-
-  const [isModalVisible, setIsModalVisible] = useState(false)
-
-  const showModal = () => {
-    setIsModalVisible(true)
-  }
-
-  const handleOk = () => {
-    setIsModalVisible(false)
-  }
-
-  const handleCancel = () => {
-    setIsModalVisible(false)
-  }
 
   const { data: credential, isLoading: credentialLoading } = useQuery(
     ['credential', { id }],
@@ -67,14 +36,6 @@ const Credential = () => {
     () => agent?.dataStoreORMGetVerifiableCredentials(historyQuery),
     { enabled: !!credential },
   )
-
-  const [queryWidgetKey, setQueryWidgetKey] = useState<string>('')
-  const [queryModuleKey, setQueryModuleKey] = useState<string>('')
-  const [queryModuleIdentifier, setQueryModuleIdentifier] = useState(
-    credential?.credentialSubject.id,
-  )
-
-  const [userModules, setUserModules] = useState<any[]>([])
 
   const historyColumns = [
     {
@@ -138,11 +99,6 @@ const Credential = () => {
                   </Tag>
                 )
               })}
-            </Col>
-            <Col>
-              <Button type="primary" shape="round" onClick={showModal}>
-                Add Query
-              </Button>
             </Col>
           </Row>
         </Layout>
