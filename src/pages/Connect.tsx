@@ -11,9 +11,7 @@ const Connect = () => {
   const history = useHistory()
   const { addAgentConfig } = useVeramo()
   const [name, setName] = useState<string>()
-  const [schemaUrl, setSchemaUrl] = useState<string>(
-    'http://localhost:3332/open-api.json',
-  )
+  const [schemaUrl, setSchemaUrl] = useState<string>()
   const [agentUrl, setAgentUrl] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>()
 
