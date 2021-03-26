@@ -4,10 +4,8 @@ import Version from '../components/widgets/Version'
 import {
   EyeOutlined,
   UserOutlined,
-  SearchOutlined,
   SafetyOutlined,
   MessageOutlined,
-  DeploymentUnitOutlined,
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,

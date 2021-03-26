@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react'
+import React, { createContext, useState, useContext, useCallback } from 'react'
 import { PAGE_DEFAULT_MODULES, MODULE_MAP } from '../components/modules'
 import { PageModuleConfig } from '../types'
 
@@ -23,7 +23,7 @@ const PageModuleProvider = (props: any) => {
     })
   }
 
-  const loadPageModules = (pageName: string) => {
+  const loadPageModules = useCallback((pageName: string) => {
     const localModuleStore = localStorage.getItem(`${pageName}:modules`)
 
     if (!localModuleStore && PAGE_DEFAULT_MODULES[pageName]) {
@@ -37,7 +37,7 @@ const PageModuleProvider = (props: any) => {
     } else {
       localModuleStore && setModules(JSON.parse(localModuleStore))
     }
-  }
+  }, [])
 
   const saveConfig = (
     pageName: string,
