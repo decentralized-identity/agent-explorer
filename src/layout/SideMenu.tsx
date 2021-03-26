@@ -43,16 +43,16 @@ const mainMenu = [
     label: 'Messages',
     icon: MessageOutlined,
   },
-  {
-    url: '/network',
-    label: 'Network',
-    icon: DeploymentUnitOutlined,
-  },
-  {
-    url: '/discover',
-    label: 'Discover',
-    icon: SearchOutlined,
-  },
+  // {
+  //   url: '/network',
+  //   label: 'Network',
+  //   icon: DeploymentUnitOutlined,
+  // },
+  // {
+  //   url: '/discover',
+  //   label: 'Discover',
+  //   icon: SearchOutlined,
+  // },
 ]
 
 const subMenu = [
