@@ -147,7 +147,9 @@ const DataGenerator: React.FC<IDataGenerator> = ({
               >
                 {providers?.map((provider) => {
                   return (
-                    <Select.Option value={provider}>{provider}</Select.Option>
+                    <Select.Option key={provider} value={provider}>
+                      {provider}
+                    </Select.Option>
                   )
                 })}
               </Select>

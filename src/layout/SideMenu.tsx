@@ -4,10 +4,8 @@ import Version from '../components/widgets/Version'
 import {
   EyeOutlined,
   UserOutlined,
-  SearchOutlined,
   SafetyOutlined,
   MessageOutlined,
-  DeploymentUnitOutlined,
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,
@@ -43,16 +41,16 @@ const mainMenu = [
     label: 'Messages',
     icon: MessageOutlined,
   },
-  {
-    url: '/network',
-    label: 'Network',
-    icon: DeploymentUnitOutlined,
-  },
-  {
-    url: '/discover',
-    label: 'Discover',
-    icon: SearchOutlined,
-  },
+  // {
+  //   url: '/network',
+  //   label: 'Network',
+  //   icon: DeploymentUnitOutlined,
+  // },
+  // {
+  //   url: '/discover',
+  //   label: 'Discover',
+  //   icon: SearchOutlined,
+  // },
 ]
 
 const subMenu = [
