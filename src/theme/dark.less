@@ -1,4 +1,4 @@
-.dark-theme {
+body.dark-theme {
   // Menus
   --menu-bg: #1b1d1e;
   --sub-menu-bg: #1f2122;
@@ -28,13 +28,13 @@
   --button-off-border: #464646;
   --button-off-text: #969696;
 
-  // Override styles
+  --table-row-hover-background: #292929;
 
-  html,
-  body,
-  #app {
-    background-color: var(--layout-body-background);
-  }
+  --tag-background: #2f2f2f;
+  --tag-border: #525252;
+
+  // Override styles
+  background-color: var(--layout-body-background);
 
   .ant-menu-submenu > .ant-menu,
   .ant-menu-submenu-selected,
@@ -57,6 +57,24 @@
 
   .ant-card-head {
     border-bottom: 1px solid var(--component-border);
+  }
+
+  .ant-tag {
+    background-color: var(--tag-background);
+    border: 1px solid var(--tag-background);
+  }
+
+  .ant-table-thead > tr > th {
+    background-color: var(--component-background);
+    border-bottom: 1px solid var(--component-border);
+  }
+
+  .ant-table-tbody > tr > td {
+    border-bottom: 1px solid var(--component-border);
+  }
+
+  .ant-table-tbody > tr.ant-table-row:hover > td {
+    background-color: var(--table-row-hover-background);
   }
 
   .ant-btn {
