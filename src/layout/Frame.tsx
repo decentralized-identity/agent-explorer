@@ -12,6 +12,7 @@ import Identifier from '../pages/Identifier'
 import Credentials from '../pages/Credentials'
 import Credential from '../pages/Credential'
 import Messages from '../pages/Messages'
+import Inbox from '../pages/Inbox'
 import Network from '../pages/Network'
 import Discover from '../pages/Discover'
 import Settings from '../pages/Settings'
@@ -40,6 +41,7 @@ const Frame = () => {
               <Route path="/credentials" exact component={Credentials} />
               <Route path="/credential/:id" component={Credential} />
               <Route path="/messages" component={Messages} />
+              <Route path="/inbox" component={Inbox} />
               <Route path="/network" component={Network} />
               <Route path="/discover" component={Discover} />
             </>

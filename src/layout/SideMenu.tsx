@@ -6,6 +6,7 @@ import {
   UserOutlined,
   SafetyOutlined,
   MessageOutlined,
+  MailOutlined,
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,
@@ -37,8 +38,13 @@ const mainMenu = [
     icon: SafetyOutlined,
   },
   {
+    url: '/inbox',
+    label: 'Inbox',
+    icon: MailOutlined,
+  },
+  {
     url: '/messages',
-    label: 'Messages',
+    label: 'Activity',
     icon: MessageOutlined,
   },
   // {

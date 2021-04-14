@@ -22,6 +22,11 @@ export const MODULE_MAP: { [index: string]: PageModuleConfig } = {
     moduleLabel: 'Data Generator',
     config: {},
   },
+  ISSUE_CREDENTIAL: {
+    moduleName: 'IssueCredential',
+    moduleLabel: 'Issue Credential',
+    config: {},
+  },
   QUERY_IDENTIFIER: {
     moduleName: 'QueryIdentifier',
     moduleLabel: 'Query Identifer',
@@ -31,7 +36,11 @@ export const MODULE_MAP: { [index: string]: PageModuleConfig } = {
 }
 
 export const PAGE_DEFAULT_MODULES: PageModulesDefaults = {
-  overview: [MODULE_MAP.BAR_CHART, MODULE_MAP.DATA_GENERATOR],
+  overview: [
+    MODULE_MAP.ISSUE_CREDENTIAL,
+    MODULE_MAP.BAR_CHART,
+    MODULE_MAP.DATA_GENERATOR,
+  ],
 }
 
 export const DYNAMIC_MODULES = {
@@ -47,5 +56,8 @@ export const DYNAMIC_MODULES = {
   ),
   [MODULE_MAP.QUERY_IDENTIFIER.moduleName]: React.lazy(
     () => import('./QueryIdentifier'),
+  ),
+  [MODULE_MAP.ISSUE_CREDENTIAL.moduleName]: React.lazy(
+    () => import('./IssueCredential'),
   ),
 }
