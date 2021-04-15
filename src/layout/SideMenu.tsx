@@ -28,6 +28,11 @@ const mainMenu = [
     icon: EyeOutlined,
   },
   {
+    url: '/messages',
+    label: 'Messages',
+    icon: MessageOutlined,
+  },
+  {
     url: '/identifiers',
     label: 'Identifiers',
     icon: UserOutlined,
@@ -37,16 +42,12 @@ const mainMenu = [
     label: 'Credentials',
     icon: SafetyOutlined,
   },
-  {
-    url: '/inbox',
-    label: 'Inbox',
-    icon: MailOutlined,
-  },
-  {
-    url: '/messages',
-    label: 'Activity',
-    icon: MessageOutlined,
-  },
+  // {
+  //   url: '/inbox',
+  //   label: 'Inbox',
+  //   icon: MailOutlined,
+  // },
+
   // {
   //   url: '/network',
   //   label: 'Network',
