@@ -33,6 +33,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
   const { agent } = useVeramo()
   const [claimType, setClaimType] = useState<string>('')
   const [claimValue, setClaimValue] = useState<string>('')
+  const [credentialType, setCredentialType] = useState<string>('')
   const [errorMessage, setErrorMessage] = useState<null | string>()
   const [sending, setSending] = useState(false)
   const [issuer, setIssuer] = useState<string>()
@@ -70,10 +71,17 @@ const IssueCredential: React.FC<BarChartProps> = ({
   }
 
   const signVc = async (send?: boolean) => {
-    const credential = await issueCredential(agent, issuer, subject, fields)
+    const credential = await issueCredential(
+      agent,
+      issuer,
+      subject,
+      fields,
+      credentialType,
+    )
 
     setIssuer('')
     setSubject('')
+    updateFields([])
 
     if (send) {
       sendVC(credential)
@@ -123,6 +131,15 @@ const IssueCredential: React.FC<BarChartProps> = ({
             placeholder="issuer DID"
             style={{ width: '60%', marginBottom: 15 }}
             onChange={(e) => setIssuer(e.target.value)}
+          />
+        </Form.Item>
+
+        <Form.Item noStyle>
+          <Input
+            value={credentialType}
+            placeholder="credential type e.g Profile"
+            style={{ width: '60%', marginBottom: 15 }}
+            onChange={(e) => setCredentialType(e.target.value)}
           />
         </Form.Item>
 

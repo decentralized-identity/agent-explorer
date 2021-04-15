@@ -41,6 +41,12 @@ const historyColumns = [
   {
     title: 'Issuance Date',
     dataIndex: 'verifiableCredential',
+    sorter: {
+      compare: (a: any, b: any) =>
+        new Date(a.verifiableCredential.issuanceDate).getTime() -
+        new Date(b.verifiableCredential.issuanceDate).getTime(),
+      multiple: 1,
+    },
     render: (verifiableCredential: any) =>
       format(new Date(verifiableCredential.issuanceDate), 'PPP'),
   },
