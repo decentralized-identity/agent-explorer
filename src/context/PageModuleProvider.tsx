@@ -31,7 +31,7 @@ const PageModuleProvider = (props: any) => {
   }
 
   const loadPageModules = () => {
-    const localModuleStore = localStorage.getItem(`agent:modules`)
+    const localModuleStore = localStorage.getItem(`${pageName}:modules`)
     if (!localModuleStore && PAGE_DEFAULT_MODULES[pageName]) {
       const defaultModuleStore = PAGE_DEFAULT_MODULES[pageName]
 
