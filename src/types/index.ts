@@ -15,6 +15,11 @@ export interface PageModuleConfig {
    * A list of pages to allow this module to run on. Omit to allow all pages
    */
   pages?: string[]
+
+  /**
+   * Hide the module from the module picker
+   */
+  unlisted?: boolean
 }
 
 export interface PageModulesDefaults {

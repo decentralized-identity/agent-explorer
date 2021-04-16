@@ -21,10 +21,10 @@ const Page: React.FC<PageProps> = ({
 }) => {
   const {
     modules,
-    loadPageModules,
     addModule,
     removeModule,
     saveConfig,
+    setPageName,
   } = usePageModules()
   const [visible, toggleVisible] = useState(false)
 
@@ -32,8 +32,8 @@ const Page: React.FC<PageProps> = ({
   const style = fullWidth ? { ...base } : { ...base, margin: '0 auto' }
 
   useEffect(() => {
-    loadPageModules(name)
-  }, [loadPageModules, name])
+    setPageName(name)
+  }, [name])
 
   const addPageModule = (pageName: string, moduleKeyName: string) => {
     addModule(pageName, moduleKeyName)
@@ -68,8 +68,9 @@ const Page: React.FC<PageProps> = ({
           <List>
             {Object.keys(MODULE_MAP).map((key, i) => {
               const conditions =
-                MODULE_MAP[key].pages === undefined ||
-                MODULE_MAP[key].pages?.indexOf(name) !== -1
+                !MODULE_MAP[key].unlisted &&
+                (MODULE_MAP[key].pages === undefined ||
+                  MODULE_MAP[key].pages?.indexOf(name) !== -1)
 
               return (
                 conditions && (

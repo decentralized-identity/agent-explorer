@@ -23,6 +23,7 @@ export function selectRandomIndexes(total: number, count: number) {
 
 export async function createIdentifiers(
   createIdentifer: any,
+  domain: string,
   provider: string,
   count: number,
 ) {
@@ -34,11 +35,12 @@ export async function createIdentifiers(
     }
     return Promise.all(
       promises.map(async () => {
-        const alias = randomWords({
+        const _alias = randomWords({
           exactly: 1,
-          wordsPerString: 3,
+          wordsPerString: 2,
           separator: '-',
         })
+        const alias = provider === 'did:web' ? domain + ':' + _alias : _alias
         return await createIdentifer({ provider, alias })
       }),
     )

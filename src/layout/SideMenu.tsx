@@ -6,6 +6,7 @@ import {
   UserOutlined,
   SafetyOutlined,
   MessageOutlined,
+  MailOutlined,
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,
@@ -23,8 +24,13 @@ const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 const mainMenu = [
   {
     url: '/',
-    label: 'Overview',
+    label: 'Dashboard',
     icon: EyeOutlined,
+  },
+  {
+    url: '/messages',
+    label: 'Messages',
+    icon: MessageOutlined,
   },
   {
     url: '/identifiers',
@@ -36,11 +42,12 @@ const mainMenu = [
     label: 'Credentials',
     icon: SafetyOutlined,
   },
-  {
-    url: '/messages',
-    label: 'Messages',
-    icon: MessageOutlined,
-  },
+  // {
+  //   url: '/inbox',
+  //   label: 'Inbox',
+  //   icon: MailOutlined,
+  // },
+
   // {
   //   url: '/network',
   //   label: 'Network',

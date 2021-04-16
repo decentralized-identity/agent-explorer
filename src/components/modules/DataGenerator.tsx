@@ -40,6 +40,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
   )
 
   const {
+    domain,
     identifierProvider,
     identifierCount,
     identifiersGenerating,
@@ -47,6 +48,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
     credentialIssueFromCount,
     credentialIssueToCount,
     credentialsP2PGenerating,
+    setDomain,
     setCredentialsP2PGenerating,
     setCredentialIssueToCount,
     setCredentialIssueFromCount,
@@ -61,6 +63,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
 
     await generatorUtils.createIdentifiers(
       agent?.didManagerCreate,
+      domain,
       identifierProvider,
       identifierCount,
     )
@@ -140,6 +143,14 @@ const DataGenerator: React.FC<IDataGenerator> = ({
                 onChange={(e) => setIdentifierCount(parseInt(e.target.value))}
               />
             </Form.Item>
+            {identifierProvider === 'did:web' && (
+              <Form.Item label="Domain">
+                <Input
+                  defaultValue={domain}
+                  onChange={(e) => setDomain(e.target.value)}
+                />
+              </Form.Item>
+            )}
             <Form.Item label="Provider">
               <Select
                 onSelect={(value: string) => setIdentifierProvider(value)}
@@ -159,6 +170,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
               <Button
                 onClick={() => generateIdentifiers()}
                 disabled={
+                  (identifierProvider === 'did:web' && !domain) ||
                   identifiersGenerating ||
                   !identifierCount ||
                   !identifierProvider
