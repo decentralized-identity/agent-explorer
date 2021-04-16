@@ -21,10 +21,10 @@ const Page: React.FC<PageProps> = ({
 }) => {
   const {
     modules,
-    loadPageModules,
     addModule,
     removeModule,
     saveConfig,
+    setPageName,
   } = usePageModules()
   const [visible, toggleVisible] = useState(false)
 
@@ -32,8 +32,8 @@ const Page: React.FC<PageProps> = ({
   const style = fullWidth ? { ...base } : { ...base, margin: '0 auto' }
 
   useEffect(() => {
-    loadPageModules(name)
-  }, [loadPageModules, name])
+    setPageName(name)
+  }, [name])
 
   const addPageModule = (pageName: string, moduleKeyName: string) => {
     addModule(pageName, moduleKeyName)

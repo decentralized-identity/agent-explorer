@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, useCallback } from 'react'
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useCallback,
+  useEffect,
+} from 'react'
 import { PAGE_DEFAULT_MODULES, MODULE_MAP } from '../components/modules'
 import { PageModuleConfig } from '../types'
 
@@ -6,6 +12,7 @@ const PageModuleContext = createContext<any>({})
 
 const PageModuleProvider = (props: any) => {
   const [modules, setModules] = useState<PageModuleConfig[]>([])
+  const [pageName, setPageName] = useState('')
 
   const addModule = (pageName: string, moduleKey: string) => {
     setModules((s) => {
@@ -23,9 +30,8 @@ const PageModuleProvider = (props: any) => {
     })
   }
 
-  const loadPageModules = useCallback((pageName: string) => {
-    const localModuleStore = localStorage.getItem(`${pageName}:modules`)
-
+  const loadPageModules = () => {
+    const localModuleStore = localStorage.getItem(`agent:modules`)
     if (!localModuleStore && PAGE_DEFAULT_MODULES[pageName]) {
       const defaultModuleStore = PAGE_DEFAULT_MODULES[pageName]
 
@@ -35,12 +41,18 @@ const PageModuleProvider = (props: any) => {
       )
       setModules(defaultModuleStore)
     } else {
-      localModuleStore && setModules(JSON.parse(localModuleStore))
+      setModules(localModuleStore ? JSON.parse(localModuleStore) : [])
     }
-  }, [])
+  }
+
+  useEffect(() => {
+    if (pageName) {
+      loadPageModules()
+    }
+  }, [pageName])
 
   const saveConfig = (
-    pageName: string,
+    _pageName: string,
     index: number,
     config: any,
     moduleLabel: string,
@@ -62,14 +74,21 @@ const PageModuleProvider = (props: any) => {
 
       console.log('UPDATED', newState)
 
-      localStorage.setItem(`${pageName}:modules`, JSON.stringify(newState))
+      localStorage.setItem(`${_pageName}:modules`, JSON.stringify(newState))
       return newState
     })
   }
 
   return (
     <PageModuleContext.Provider
-      value={{ modules, loadPageModules, addModule, removeModule, saveConfig }}
+      value={{
+        modules,
+        loadPageModules,
+        addModule,
+        removeModule,
+        saveConfig,
+        setPageName,
+      }}
     >
       {props.children}
     </PageModuleContext.Provider>
