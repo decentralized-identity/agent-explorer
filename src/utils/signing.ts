@@ -36,15 +36,15 @@ const signVerifiablePresentation = async (
   verifier: string[],
   selected: any,
 ) => {
-  const selectedCredentials = Object.keys(selected)
-    .map((key) => selected[key].jwt)
-    .filter((item) => item)
+  // const selectedCredentials = Object.keys(selected)
+  //   .map((key) => selected[key].jwt)
+  //   .filter((item) => item)
 
   return await agent?.createVerifiablePresentation({
     presentation: {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
       type: ['VerifiablePresentation'],
-      verifiableCredential: selectedCredentials,
+      verifiableCredential: selected,
       issuanceDate: new Date().toISOString(),
       holder: did,
       verifier,

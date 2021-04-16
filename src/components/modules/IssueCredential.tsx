@@ -96,6 +96,8 @@ const IssueCredential: React.FC<BarChartProps> = ({
       })
     } catch (err) {
       console.log(err)
+
+      agent?.handleMessage({ raw: body.proof.jwt, save: true })
     }
   }
 

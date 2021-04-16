@@ -12,7 +12,7 @@ import {
 } from 'antd'
 import DynamicModule from '../../layout/PageModule'
 import { PageModuleProps } from '../../types'
-import { issueCredential, claimToObject } from '../../utils/signing'
+import { signVerifiablePresentation } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
 import { useQuery } from 'react-query'
@@ -85,6 +85,38 @@ const CreatePresentation: React.FC<BarChartProps> = ({
     },
   }
 
+  const signVP = async (send?: boolean) => {
+    const vp = await signVerifiablePresentation(
+      agent,
+      issuer,
+      [subject],
+      selectedCredentials,
+    )
+
+    setIssuer('')
+    setSubject('')
+    setSelectedCredentials([])
+
+    if (send) {
+      await sendVP(vp)
+    }
+  }
+
+  const sendVP = async (body: any) => {
+    console.log(body)
+
+    try {
+      await agent?.sendMessageDIDCommAlpha1({
+        data: { to: subject as string, from: issuer as string, type: '', body },
+        save: true,
+      })
+    } catch (err) {
+      console.log(err)
+
+      agent?.handleMessage({ raw: body.proof.jwt, save: true })
+    }
+  }
+
   return (
     <DynamicModule
       noPadding
@@ -99,10 +131,26 @@ const CreatePresentation: React.FC<BarChartProps> = ({
         </Typography.Text>
         <br />
         <br />
+        <Form.Item noStyle>
+          <Input
+            value={subject}
+            placeholder="verifier DID"
+            style={{ width: '60%', marginBottom: 15 }}
+            onChange={(e) => setSubject(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item noStyle>
+          <Input
+            value={issuer}
+            placeholder="holder DID"
+            style={{ width: '60%', marginBottom: 15 }}
+            onChange={(e) => setIssuer(e.target.value)}
+          />
+        </Form.Item>
         <Row>
           <Button
             type="primary"
-            // onClick={() => signVc()}
+            onClick={() => signVP()}
             style={{ marginRight: 5 }}
             disabled={
               sending || selectedCredentials.length === 0 || !subject || !issuer
@@ -111,7 +159,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
             Create Presentation
           </Button>
           <Button
-            // onClick={() => signVc(true)}
+            onClick={() => signVP(true)}
             type="primary"
             disabled={
               sending || selectedCredentials.length === 0 || !subject || !issuer

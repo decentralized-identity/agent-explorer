@@ -6,6 +6,7 @@ export function useGenerator() {
   const [identifiersGenerating, setIdentifiersGenerating] = useState<boolean>(
     false,
   )
+  const [domain, setDomain] = useState<string>('')
   const [
     credentialProfilesGenerating,
     setCredentialProfilesGenerating,
@@ -26,6 +27,7 @@ export function useGenerator() {
   ] = useState<boolean>(false)
 
   return {
+    domain,
     identifierProvider,
     identifierCount,
     identifiersGenerating,
@@ -33,6 +35,7 @@ export function useGenerator() {
     credentialIssueFromCount,
     credentialIssueToCount,
     credentialsP2PGenerating,
+    setDomain,
     setCredentialsP2PGenerating,
     setCredentialIssueToCount,
     setCredentialIssueFromCount,
