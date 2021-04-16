@@ -103,16 +103,18 @@ const CreatePresentation: React.FC<BarChartProps> = ({
   }
 
   const sendVP = async (body: any) => {
-    console.log(body)
-
     try {
       await agent?.sendMessageDIDCommAlpha1({
-        data: { to: subject as string, from: issuer as string, type: '', body },
+        data: {
+          to: subject as string,
+          from: issuer as string,
+          type: 'jwt',
+          body: body.proof.jwt,
+        },
         save: true,
       })
     } catch (err) {
       console.log(err)
-
       agent?.handleMessage({ raw: body.proof.jwt, save: true })
     }
   }

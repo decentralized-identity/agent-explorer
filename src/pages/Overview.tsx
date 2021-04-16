@@ -22,8 +22,8 @@ const Overview = () => {
 
   return (
     <Page
-      name="overview"
-      header={<Title style={{ fontWeight: 'bold' }}>Overview</Title>}
+      name="dashboard"
+      header={<Title style={{ fontWeight: 'bold' }}>Dashboard</Title>}
       rightContent={rightContent()}
     ></Page>
   )

@@ -38,10 +38,16 @@ export const MODULE_MAP: { [index: string]: PageModuleConfig } = {
     config: {},
     pages: ['credential'],
   },
+  WELCOME: {
+    moduleName: 'Welcome',
+    moduleLabel: 'Welcome',
+    config: {},
+    unlisted: true,
+  },
 }
 
 export const PAGE_DEFAULT_MODULES: PageModulesDefaults = {
-  overview: [MODULE_MAP.ISSUE_CREDENTIAL, MODULE_MAP.CREATE_PRESENTATION],
+  dashboard: [MODULE_MAP.WELCOME],
 }
 
 export const DYNAMIC_MODULES = {
@@ -64,4 +70,5 @@ export const DYNAMIC_MODULES = {
   [MODULE_MAP.CREATE_PRESENTATION.moduleName]: React.lazy(
     () => import('./CreatePresentation'),
   ),
+  [MODULE_MAP.WELCOME.moduleName]: React.lazy(() => import('./Welcome')),
 }
