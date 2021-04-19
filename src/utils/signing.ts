@@ -15,6 +15,7 @@ const issueCredential = async (
   iss: string | undefined,
   sub: string | undefined,
   claims: any[],
+  proofFormat: string,
   type?: string,
 ) => {
   return await agent?.createVerifiableCredential({
@@ -25,7 +26,7 @@ const issueCredential = async (
       type: type ? ['VerifiableCredential', type] : ['VerifiableCredential'],
       credentialSubject: { id: sub, ...claimToObject(claims) },
     },
-    proofFormat: 'jwt',
+    proofFormat,
     save: true,
   })
 }
@@ -35,6 +36,7 @@ const signVerifiablePresentation = async (
   did: string,
   verifier: string[],
   selected: any,
+  proofFormat: string,
 ) => {
   return await agent?.createVerifiablePresentation({
     presentation: {
@@ -43,7 +45,7 @@ const signVerifiablePresentation = async (
       '@context': ['https://www.w3.org/2018/credentials/v1'],
       verifiableCredential: selected,
     },
-    proofFormat: 'jwt',
+    proofFormat,
     save: true,
   })
 }

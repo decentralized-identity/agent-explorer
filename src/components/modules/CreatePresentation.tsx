@@ -73,6 +73,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
   const [sending, setSending] = useState<boolean>(false)
   const [issuer, setIssuer] = useState<string>('')
   const [subject, setSubject] = useState<string>('')
+  const [proofFormat, setProofFormat] = useState('jwt')
   const { data: credentials, isLoading: credentialHistoryLoading } = useQuery(
     ['credentials'],
     () => agent?.dataStoreORMGetVerifiableCredentials(),
@@ -91,6 +92,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
       issuer,
       [subject],
       selectedCredentials,
+      proofFormat,
     )
 
     setIssuer('')
@@ -108,8 +110,8 @@ const CreatePresentation: React.FC<BarChartProps> = ({
         data: {
           to: subject as string,
           from: issuer as string,
-          type: 'jwt',
-          body: body.proof.jwt,
+          type: proofFormat,
+          body: proofFormat === 'jwt' ? body.proof.jwt : body,
         },
         save: true,
       })
@@ -147,6 +149,14 @@ const CreatePresentation: React.FC<BarChartProps> = ({
             placeholder="holder DID"
             style={{ width: '60%', marginBottom: 15 }}
             onChange={(e) => setIssuer(e.target.value)}
+          />
+        </Form.Item>
+        <Form.Item noStyle>
+          <Input
+            value={proofFormat}
+            placeholder="jwt or lds"
+            style={{ width: '60%', marginBottom: 15 }}
+            onChange={(e) => setProofFormat(e.target.value)}
           />
         </Form.Item>
         <Row>

@@ -39,6 +39,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
   const [issuer, setIssuer] = useState<string>()
   const [subject, setSubject] = useState<string>()
   const [fields, updateFields] = useState<Field[]>([])
+  const [proofFormat, setProofFormat] = useState('jwt')
 
   const updateClaimFields = (field: Field) => {
     const claimTypes = fields.map((field: Field) => field.type)
@@ -65,10 +66,10 @@ const IssueCredential: React.FC<BarChartProps> = ({
     setClaimType('')
   }
 
-  const removeClaimField = (index: number) => {
-    const updatedClaims = fields.filter((item: any, i: number) => i !== index)
-    updateFields(updatedClaims)
-  }
+  // const removeClaimField = (index: number) => {
+  //   const updatedClaims = fields.filter((item: any, i: number) => i !== index)
+  //   updateFields(updatedClaims)
+  // }
 
   const signVc = async (send?: boolean) => {
     const credential = await issueCredential(
@@ -76,6 +77,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
       issuer,
       subject,
       fields,
+      proofFormat,
       credentialType,
     )
 
@@ -91,7 +93,12 @@ const IssueCredential: React.FC<BarChartProps> = ({
   const sendVC = async (body: any) => {
     try {
       await agent?.sendMessageDIDCommAlpha1({
-        data: { to: subject as string, from: issuer as string, type: '', body },
+        data: {
+          to: subject as string,
+          from: issuer as string,
+          type: proofFormat,
+          body: proofFormat === 'jwt' ? body.proof.jwt : body,
+        },
         save: true,
       })
     } catch (err) {
@@ -142,6 +149,15 @@ const IssueCredential: React.FC<BarChartProps> = ({
             placeholder="credential type e.g Profile"
             style={{ width: '60%', marginBottom: 15 }}
             onChange={(e) => setCredentialType(e.target.value)}
+          />
+        </Form.Item>
+
+        <Form.Item noStyle>
+          <Input
+            value={proofFormat}
+            placeholder="jwt or lds"
+            style={{ width: '60%', marginBottom: 15 }}
+            onChange={(e) => setProofFormat(e.target.value)}
           />
         </Form.Item>
 
