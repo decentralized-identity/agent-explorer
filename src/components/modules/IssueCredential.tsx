@@ -91,7 +91,12 @@ const IssueCredential: React.FC<BarChartProps> = ({
   const sendVC = async (body: any) => {
     try {
       await agent?.sendMessageDIDCommAlpha1({
-        data: { to: subject as string, from: issuer as string, type: '', body },
+        data: {
+          to: subject as string,
+          from: issuer as string,
+          type: 'jwt',
+          body,
+        },
         save: true,
       })
     } catch (err) {
