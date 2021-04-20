@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import { Typography, Form, Input, Button, Checkbox, Row } from 'antd'
+import { Typography, Form, Input, Button, Select, Row } from 'antd'
 import DynamicModule from '../../layout/PageModule'
 import { PageModuleProps } from '../../types'
 import { issueCredential, claimToObject } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
+import { useQuery } from 'react-query'
+import identifiers from '../../stubbs/identifiers'
+
+const { Option } = Select
 
 const formItemLayout = {
   labelCol: {
@@ -37,10 +40,15 @@ const IssueCredential: React.FC<BarChartProps> = ({
   const [customContext, setCustomContext] = useState<string>('')
   const [errorMessage, setErrorMessage] = useState<null | string>()
   const [sending, setSending] = useState(false)
-  const [issuer, setIssuer] = useState<string>()
+  const [issuer, setIssuer] = useState<string>('')
   const [subject, setSubject] = useState<string>()
   const [fields, updateFields] = useState<Field[]>([])
   const [proofFormat, setProofFormat] = useState('jwt')
+
+  const { data: identifiers, isLoading: identifiersLoading } = useQuery(
+    ['identifiers', { agentId: agent?.context.id }],
+    () => agent?.dataStoreORMGetIdentifiers(),
+  )
 
   const updateClaimFields = (field: Field) => {
     const claimTypes = fields.map((field: Field) => field.type)
@@ -121,71 +129,91 @@ const IssueCredential: React.FC<BarChartProps> = ({
       <br />
       <br />
       <Form {...formItemLayout}>
-        <Form.Item noStyle>
+        <Form.Item>
           <Row>
             <code>
               <pre>{JSON.stringify(claimToObject(fields), null, 2)}</pre>
             </code>
           </Row>
         </Form.Item>
-        <Form.Item noStyle>
+        <Form.Item>
           <Input
             value={subject}
             placeholder="subject DID"
-            style={{ width: '60%', marginBottom: 15 }}
+            style={{ width: '60%' }}
             onChange={(e) => setSubject(e.target.value)}
           />
         </Form.Item>
-        <Form.Item noStyle>
-          <Input
-            value={issuer}
+        <Form.Item>
+          <Select
+            style={{ width: '60%' }}
+            loading={identifiersLoading}
+            onChange={(e) => setIssuer(e as string)}
             placeholder="issuer DID"
-            style={{ width: '60%', marginBottom: 15 }}
-            onChange={(e) => setIssuer(e.target.value)}
-          />
+            defaultActiveFirstOption={true}
+          >
+            {identifiers &&
+              identifiers.map((id) => (
+                <Option key={id.did} value={id.did as string}>
+                  {id.did}
+                </Option>
+              ))}
+          </Select>
         </Form.Item>
-
-        <Form.Item noStyle>
+        <Form.Item>
           <Input
             value={credentialType}
             placeholder="credential type e.g Profile"
-            style={{ width: '60%', marginBottom: 15 }}
+            style={{ width: '60%' }}
             onChange={(e) => setCredentialType(e.target.value)}
           />
         </Form.Item>
-
-        <Form.Item noStyle>
+        <Form.Item>
           <Input
             value={customContext}
             placeholder="custom context url"
-            style={{ width: '60%', marginBottom: 15 }}
+            style={{ width: '60%' }}
             onChange={(e) => setCustomContext(e.target.value)}
           />
         </Form.Item>
-
-        <Form.Item noStyle>
+        <Form.Item>
+          <Select
+            style={{ width: '60%' }}
+            onChange={(e) => setProofFormat(e as string)}
+            placeholder="jwt or lds"
+            defaultActiveFirstOption={true}
+          >
+            <Option key={'jwt'} value="jwt">
+              jwt
+            </Option>
+            <Option key="lds" value="lds">
+              lds
+            </Option>
+          </Select>
+        </Form.Item>
+        <Form.Item>
           <Input
             value={proofFormat}
             placeholder="jwt or lds"
-            style={{ width: '60%', marginBottom: 15 }}
+            style={{ width: '60%' }}
             onChange={(e) => setProofFormat(e.target.value)}
           />
         </Form.Item>
 
         <Form.Item style={{ backgroundColor: '#eaeaea', padding: 15 }}>
-          <Form.Item noStyle>
+          <Form.Item>
             <Input
               placeholder="claim type e.g. 'name'"
               value={claimType}
-              style={{ width: '60%', marginBottom: 15 }}
+              style={{ width: '60%' }}
               onChange={(e) => setClaimType(e.target.value)}
             />
           </Form.Item>
-          <Form.Item noStyle>
+          <Form.Item>
             <Input
               placeholder="claim value e.g. Alice"
               value={claimValue}
-              style={{ width: '60%', marginBottom: 15 }}
+              style={{ width: '60%' }}
               onChange={(e) => setClaimValue(e.target.value)}
             />
           </Form.Item>
