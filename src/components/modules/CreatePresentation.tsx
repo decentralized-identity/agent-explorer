@@ -14,10 +14,9 @@ import DynamicModule from '../../layout/PageModule'
 import { PageModuleProps } from '../../types'
 import { signVerifiablePresentation } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
+
 import { useQuery } from 'react-query'
 import { format } from 'date-fns'
-import { useParams, useHistory } from 'react-router-dom'
 
 const formItemLayout = {
   labelCol: {

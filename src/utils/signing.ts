@@ -16,13 +16,16 @@ const issueCredential = async (
   sub: string | undefined,
   claims: any[],
   proofFormat: string,
+  customContext?: string,
   type?: string,
 ) => {
   return await agent?.createVerifiableCredential({
     credential: {
       issuer: { id: iss },
       issuanceDate: new Date().toISOString(),
-      '@context': ['https://www.w3.org/2018/credentials/v1'],
+      '@context': customContext
+        ? ['https://www.w3.org/2018/credentials/v1', customContext]
+        : ['https://www.w3.org/2018/credentials/v1'],
       type: type ? ['VerifiableCredential', type] : ['VerifiableCredential'],
       credentialSubject: { id: sub, ...claimToObject(claims) },
     },
