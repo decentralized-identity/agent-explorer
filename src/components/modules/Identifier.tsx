@@ -23,10 +23,13 @@ const Module: React.FC<IdentifierModuleProps> = ({
     { enabled: !!identifier },
   )
 
+  console.log(data)
+
   return (
     <Card title={title} style={{ flexWrap: 'wrap' }} loading={isLoading}>
       <List
-        dataSource={data?.publicKey}
+        //@ts-ignore
+        dataSource={data?.didDocument.verificationMethod}
         renderItem={(item: any, i: number) => {
           return (
             <List.Item key={i}>

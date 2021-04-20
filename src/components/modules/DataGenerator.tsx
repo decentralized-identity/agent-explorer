@@ -291,12 +291,12 @@ const DataGenerator: React.FC<IDataGenerator> = ({
             </Space>
           </Form>
         </Panel>
-        <Panel header="Requests" key="3">
+        {/* <Panel header="Requests" key="3">
           <Text>Generate requests between identifiers</Text>
         </Panel>
         <Panel header="Presentations" key="4">
           <Text>Generate presentations between identifiers</Text>
-        </Panel>
+        </Panel> */}
       </Collapse>
     </DynamicModule>
   )
