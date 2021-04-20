@@ -34,6 +34,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
   const [claimType, setClaimType] = useState<string>('')
   const [claimValue, setClaimValue] = useState<string>('')
   const [credentialType, setCredentialType] = useState<string>('')
+  const [customContext, setCustomContext] = useState<string>('')
   const [errorMessage, setErrorMessage] = useState<null | string>()
   const [sending, setSending] = useState(false)
   const [issuer, setIssuer] = useState<string>()
@@ -78,6 +79,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
       subject,
       fields,
       proofFormat,
+      customContext,
       credentialType,
     )
 
@@ -149,6 +151,15 @@ const IssueCredential: React.FC<BarChartProps> = ({
             placeholder="credential type e.g Profile"
             style={{ width: '60%', marginBottom: 15 }}
             onChange={(e) => setCredentialType(e.target.value)}
+          />
+        </Form.Item>
+
+        <Form.Item noStyle>
+          <Input
+            value={customContext}
+            placeholder="custom context url"
+            style={{ width: '60%', marginBottom: 15 }}
+            onChange={(e) => setCustomContext(e.target.value)}
           />
         </Form.Item>
 
