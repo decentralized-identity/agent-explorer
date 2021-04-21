@@ -47,7 +47,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
 
   const { data: identifiers, isLoading: identifiersLoading } = useQuery(
     ['identifiers', { agentId: agent?.context.id }],
-    () => agent?.dataStoreORMGetIdentifiers(),
+    () => agent?.didManagerFind(),
   )
 
   const updateClaimFields = (field: Field) => {
@@ -190,14 +190,6 @@ const IssueCredential: React.FC<BarChartProps> = ({
               lds
             </Option>
           </Select>
-        </Form.Item>
-        <Form.Item>
-          <Input
-            value={proofFormat}
-            placeholder="jwt or lds"
-            style={{ width: '60%' }}
-            onChange={(e) => setProofFormat(e.target.value)}
-          />
         </Form.Item>
 
         <Form.Item style={{ backgroundColor: '#eaeaea', padding: 15 }}>
