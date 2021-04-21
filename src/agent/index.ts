@@ -67,6 +67,7 @@ export const defaultAgent = createAgent<AgentInterfaces>({
             },
           ],
         }).ethr,
+        //@ts-ignore
         web: webDidResolver().web,
       }),
     }),
