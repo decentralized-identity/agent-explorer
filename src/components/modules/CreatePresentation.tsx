@@ -4,7 +4,7 @@ import {
   Form,
   Input,
   Button,
-  Checkbox,
+  Select,
   Row,
   Card,
   Table,
@@ -17,6 +17,8 @@ import { useVeramo } from '@veramo-community/veramo-react'
 
 import { useQuery } from 'react-query'
 import { format } from 'date-fns'
+
+const { Option } = Select
 
 const formItemLayout = {
   labelCol: {
@@ -76,6 +78,10 @@ const CreatePresentation: React.FC<BarChartProps> = ({
   const { data: credentials, isLoading: credentialHistoryLoading } = useQuery(
     ['credentials'],
     () => agent?.dataStoreORMGetVerifiableCredentials(),
+  )
+  const { data: identifiers, isLoading: identifiersLoading } = useQuery(
+    ['identifiers', { agentId: agent?.context.id }],
+    () => agent?.didManagerFind(),
   )
   const rowSelection = {
     onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
@@ -142,21 +148,36 @@ const CreatePresentation: React.FC<BarChartProps> = ({
             onChange={(e) => setSubject(e.target.value)}
           />
         </Form.Item>
-        <Form.Item noStyle>
-          <Input
-            value={issuer}
-            placeholder="holder DID"
-            style={{ width: '60%', marginBottom: 15 }}
-            onChange={(e) => setIssuer(e.target.value)}
-          />
+        <Form.Item>
+          <Select
+            style={{ width: '60%' }}
+            loading={identifiersLoading}
+            onChange={(e) => setIssuer(e as string)}
+            placeholder="issuer DID"
+            defaultActiveFirstOption={true}
+          >
+            {identifiers &&
+              identifiers.map((id) => (
+                <Option key={id.did} value={id.did as string}>
+                  {id.did}
+                </Option>
+              ))}
+          </Select>
         </Form.Item>
-        <Form.Item noStyle>
-          <Input
-            value={proofFormat}
+        <Form.Item>
+          <Select
+            style={{ width: '60%' }}
+            onChange={(e) => setProofFormat(e as string)}
             placeholder="jwt or lds"
-            style={{ width: '60%', marginBottom: 15 }}
-            onChange={(e) => setProofFormat(e.target.value)}
-          />
+            defaultActiveFirstOption={true}
+          >
+            <Option key="jwt" value="jwt">
+              jwt
+            </Option>
+            <Option key="lds" value="lds">
+              lds
+            </Option>
+          </Select>
         </Form.Item>
         <Row>
           <Button

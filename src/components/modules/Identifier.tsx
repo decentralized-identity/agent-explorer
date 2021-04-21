@@ -28,8 +28,9 @@ const Module: React.FC<IdentifierModuleProps> = ({
   return (
     <Card title={title} style={{ flexWrap: 'wrap' }} loading={isLoading}>
       <List
-        //@ts-ignore
-        dataSource={data?.didDocument.verificationMethod}
+        dataSource={
+          data?.didDocument?.verificationMethod || data?.didDocument?.publicKey
+        }
         renderItem={(item: any, i: number) => {
           return (
             <List.Item key={i}>

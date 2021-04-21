@@ -14,16 +14,14 @@ declare global {
 
 const App = () => {
   const queryClient = new QueryClient()
-  const baseUrl = window.BASE_URL || '/'
 
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         {
-          // @ts-ignore
           <VeramoProvider>
             <PageModuleProvider>
-              <BrowserRouter basename={baseUrl}>
+              <BrowserRouter>
                 <Route component={Frame} />
               </BrowserRouter>
             </PageModuleProvider>
