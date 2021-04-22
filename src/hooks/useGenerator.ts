@@ -1,11 +1,14 @@
 import { useState } from 'react'
 
 export function useGenerator() {
-  const [identifierProvider, setIdentifierProvider] = useState<string>('')
+  const [identifierProvider, setIdentifierProvider] = useState<string>(
+    'did:ethr:rinkeby',
+  )
   const [identifierCount, setIdentifierCount] = useState<number>(50)
   const [identifiersGenerating, setIdentifiersGenerating] = useState<boolean>(
     false,
   )
+  const [alias, setAlias] = useState<string>('')
   const [domain, setDomain] = useState<string>('')
   const [
     credentialProfilesGenerating,
@@ -35,6 +38,7 @@ export function useGenerator() {
     credentialIssueFromCount,
     credentialIssueToCount,
     credentialsP2PGenerating,
+    alias,
     setDomain,
     setCredentialsP2PGenerating,
     setCredentialIssueToCount,
@@ -43,5 +47,6 @@ export function useGenerator() {
     setIdentifierProvider,
     setIdentifierCount,
     setIdentifiersGenerating,
+    setAlias,
   }
 }

@@ -2,30 +2,12 @@
 
 ## Basic architecture
 
-Agent Explorer is designed to be extended as easily as possible.
-
-**The guiding principle is providing the most flexibility for developers working with Veramo without having to dive into the source of this project.**
+Agent Explorer is provides a quick and easy UI framwork to get started building and testing features in Veramo. If you have an idea to build someting you can create a Widget for it and pin it to your dashboard for ease of access. As we use it internally for building new features, POCs and demos we designed it to be as flexible as possible with the most common use cases surfaced.
 
 ### Pages
 
-Pages use templates, currently single and double column. These templates are responsive. Pages can query for page data.
+Pages use templates, currently single and double column. These templates are responsive.
 
-### Modules
+## Components
 
-Modules are (Card) that are responsible for fetching their own data. They use `useVeramo` and `useQuery`. Modules may live on multiple pages and may take their query as a prop so it can be cached.
-
-### Widgets
-
-Widgets are components except they can fetch their own data. There are no styling restrictions with widgets unlike Blocks that are always Cards.
-
-### Simple Components
-
-Simple Components are the lowest piece and are usually everyting else that lives on a page or within a block, widget or module.
-
-## Hierarchy
-
-The top level is the page followed by a `Module`. A `Module` can also contain multiple `Widgets` but maybe needs to fetch data to feed those `Widgets` like passing in an `id` for example.
-
-> `Page > Module > Widget > Simple`
-
-> `Page > Module > Simple`
+There are 2 types of components. **Standard components** that we all know and love. Functional, can fetch data if needed or not and we have **Widgets** which are React Lazy components. This components can be loaded at runtime and their configuration are saved locally to your browser. This is ideal for developing features in Veramo.

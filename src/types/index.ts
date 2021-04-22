@@ -1,12 +1,12 @@
-export interface PageModuleConfig {
+export interface PageWidgetConfig {
   /**
    * This is the function name
    */
-  moduleName: string
+  widgetName: string
   /**
    * Label to show in UI
    */
-  moduleLabel: string
+  widgetLabel: string
   /**
    * Config to be passed to the module. Each module can specify their own configs and save them back to storage.
    */
@@ -22,11 +22,11 @@ export interface PageModuleConfig {
   unlisted?: boolean
 }
 
-export interface PageModulesDefaults {
-  [index: string]: PageModuleConfig[]
+export interface PageWidgetDefaults {
+  [index: string]: PageWidgetConfig[]
 }
 
-export interface PageModuleProps {
+export interface PageWidgetProps {
   /**
    * A unique identifier for this module
    */

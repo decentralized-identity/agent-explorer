@@ -1,11 +1,11 @@
 import React from 'react'
 import { Typography } from 'antd'
-import Chart from '../../components/simple/Chart'
+import Chart from '../standard/Chart'
 import { chart2 } from '../../stubbs/chart'
-import DynamicModule from '../../layout/PageModule'
-import { PageModuleProps } from '../../types'
+import PageWidget from '../../layout/PageWidget'
+import { PageWidgetProps } from '../../types'
 
-interface BarChartProps extends PageModuleProps {}
+interface BarChartProps extends PageWidgetProps {}
 
 const BarChart: React.FC<BarChartProps> = ({
   title,
@@ -14,7 +14,7 @@ const BarChart: React.FC<BarChartProps> = ({
   removeDisabled,
 }) => {
   return (
-    <DynamicModule
+    <PageWidget
       title={title}
       isLoading={isLoading}
       remove={remove}
@@ -22,7 +22,7 @@ const BarChart: React.FC<BarChartProps> = ({
     >
       <Typography.Text>Configure data using query module</Typography.Text>
       <Chart type="bar" data={chart2} />
-    </DynamicModule>
+    </PageWidget>
   )
 }
 

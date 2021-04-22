@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Menu, Avatar, Typography, Row, Button } from 'antd'
-import Version from '../components/widgets/Version'
+import Version from '../components/standard/Version'
 import {
   EyeOutlined,
   UserOutlined,

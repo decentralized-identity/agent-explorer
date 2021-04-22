@@ -1,12 +1,14 @@
 import React from 'react'
-import { Typography, Card, Layout, Tag, Row, Col, Table } from 'antd'
+import { Typography, Card, Layout, Tag, Row, Col, Table, List } from 'antd'
 import { format } from 'date-fns'
 import Page from '../layout/Page'
 import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import JsonBlock from '../components/modules/Json'
-import IDModule from '../components/modules/Identifier'
+import JsonBlock from '../components/standard/Json'
+import IDModule from '../components/standard/Identifier'
+import { BlockOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 const { Title, Text } = Typography
 
@@ -62,13 +64,24 @@ const Credential = () => {
     return (
       <Layout>
         <Card title="Context">
-          {credential?.['@context'].map((ctx: string) => {
-            return (
-              <Text key={ctx}>
-                <a href={ctx}>{ctx}</a>
-              </Text>
-            )
-          })}
+          <List
+            dataSource={credential?.['@context']}
+            renderItem={(item: any, i: number) => {
+              return (
+                <List.Item key={i}>
+                  <List.Item.Meta
+                    avatar={<BlockOutlined />}
+                    title={
+                      <Link to={item}>
+                        <code>{item}</code>
+                      </Link>
+                    }
+                    description={item.type}
+                  />
+                </List.Item>
+              )
+            }}
+          ></List>
         </Card>
         <IDModule
           cacheKey="issuer"

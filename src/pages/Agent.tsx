@@ -14,7 +14,7 @@ import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PushpinOutlined, DatabaseOutlined } from '@ant-design/icons'
 import { useParams } from 'react-router-dom'
-import Chart from '../components/simple/Chart'
+import Chart from '../components/standard/Chart'
 import { chart1 } from '../stubbs/chart'
 
 const { Title, Text } = Typography
@@ -30,24 +30,21 @@ const Agents = () => {
       name="agent"
       rightContent={
         <Layout>
-          <Card>
+          <Card title="Example chart">
             <Chart type="line" data={chart1}></Chart>
-          </Card>
-          <Card title="Query Composer">
-            Options with current view populated to save for future queries
           </Card>
         </Layout>
       }
       header={
         <Layout>
           <Title style={{ fontWeight: 'bold' }}>{agent.context.name}</Title>
-          <Row>
+          {/* <Row>
             {activeAgentId === agent.context.id && (
               <Tag color="geekblue">Default Agent</Tag>
             )}
             <Tag color="">Schema</Tag>
             <Tag color="">W3C</Tag>
-          </Row>
+          </Row> */}
         </Layout>
       }
     >
@@ -67,7 +64,7 @@ const Agents = () => {
         </Row>
       </Card>
 
-      <Card title="Wipe Agent Data">
+      {/* <Card title="Wipe Agent Data">
         <Row>
           <Col>
             <Space direction="vertical" size={20} style={{ width: '100%' }}>
@@ -90,7 +87,7 @@ const Agents = () => {
             </Space>
           </Col>
         </Row>
-      </Card>
+      </Card> */}
     </Page>
   )
 }

@@ -14,13 +14,13 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery, useQueryClient } from 'react-query'
 import * as generatorUtils from '../../utils/dataGenerator'
 import { useGenerator } from '../../hooks/useGenerator'
-import DynamicModule from '../../layout/PageModule'
-import { PageModuleProps } from '../../types'
+import PageWidget from '../../layout/PageWidget'
+import { PageWidgetProps } from '../../types'
 
 const { Title, Text } = Typography
 const { Panel } = Collapse
 
-interface IDataGenerator extends PageModuleProps {}
+interface IDataGenerator extends PageWidgetProps {}
 
 const DataGenerator: React.FC<IDataGenerator> = ({
   title,
@@ -122,7 +122,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
   }, [setIdentifierProvider])
 
   return (
-    <DynamicModule
+    <PageWidget
       title={title}
       remove={remove}
       removeDisabled={removeDisabled}
@@ -298,7 +298,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
           <Text>Generate presentations between identifiers</Text>
         </Panel> */}
       </Collapse>
-    </DynamicModule>
+    </PageWidget>
   )
 }
 

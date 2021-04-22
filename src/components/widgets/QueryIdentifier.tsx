@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Input, Row, Col, Typography, Select, Button, Form } from 'antd'
-import PageModule from '../../layout/PageModule'
-import SubjectKey from '../widgets/SubjectKey'
+import PageWidget from '../../layout/PageWidget'
+import SubjectKey from '../standard/SubjectKey'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { PageModuleProps } from '../../types'
+import { PageWidgetProps } from '../../types'
 
 const { Text } = Typography
 const { Option } = Select
@@ -15,7 +15,7 @@ interface QueryIdentifierConfig {
   identifierType: string
 }
 
-interface QueryIdentifierProps extends PageModuleProps {
+interface QueryIdentifierProps extends PageWidgetProps {
   config: QueryIdentifierConfig
 }
 
@@ -105,7 +105,7 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
   }
 
   return (
-    <PageModule
+    <PageWidget
       title={_title}
       isLoading={credentialLoading}
       remove={remove}
@@ -177,7 +177,7 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
           )
         }}
       />
-    </PageModule>
+    </PageWidget>
   )
 }
 

@@ -1,15 +1,16 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { Layout, Button, Popover, List, Col, Row } from 'antd'
 import { FundViewOutlined } from '@ant-design/icons'
-import { DYNAMIC_MODULES, MODULE_MAP } from '../components/modules'
-import { usePageModules } from '../context/PageModuleProvider'
-import { PageModuleConfig } from '../types'
+import { DYNAMIC_COMPONENTS, WIDGET_MAP } from '../components/widgets'
+import { usePageModules } from '../context/WidgetProvider'
+import { PageWidgetConfig, PageWidgetProps } from '../types'
 
 interface PageProps {
   name?: string
   header: any
   rightContent?: any
   fullWidth?: boolean
+  renderModulesBefore?: boolean
 }
 
 const Page: React.FC<PageProps> = ({
@@ -18,6 +19,7 @@ const Page: React.FC<PageProps> = ({
   header,
   rightContent,
   fullWidth,
+  renderModulesBefore,
 }) => {
   const {
     modules,
@@ -35,19 +37,20 @@ const Page: React.FC<PageProps> = ({
     setPageName(name)
   }, [name])
 
-  const addPageModule = (pageName: string, moduleKeyName: string) => {
-    addModule(pageName, moduleKeyName)
+  const addPageModule = (pageName: string, widgetKeyName: string) => {
+    addModule(pageName, widgetKeyName)
     toggleVisible((s) => !s)
   }
 
-  const renderPageModules = () => {
-    return modules.map((m: PageModuleConfig, i: number) => {
-      // @ts-ignore
-      const DynamicModule = DYNAMIC_MODULES[m.moduleName]
+  const renderPageWidget = () => {
+    return modules.map((m: PageWidgetConfig, i: number) => {
+      const DynamicWidgetComponent: React.LazyExoticComponent<
+        React.FC<PageWidgetProps>
+      > = DYNAMIC_COMPONENTS[m.widgetName]
       return (
-        <DynamicModule
+        <DynamicWidgetComponent
           id={i}
-          title={m.moduleLabel}
+          title={m.widgetLabel}
           key={i}
           remove={() => removeModule(name, i)}
           removeDisabled={modules.length === 1}
@@ -66,16 +69,16 @@ const Page: React.FC<PageProps> = ({
         style={{ padding: 0 }}
         content={
           <List>
-            {Object.keys(MODULE_MAP).map((key, i) => {
+            {Object.keys(WIDGET_MAP).map((key, i) => {
               const conditions =
-                !MODULE_MAP[key].unlisted &&
-                (MODULE_MAP[key].pages === undefined ||
-                  MODULE_MAP[key].pages?.indexOf(name) !== -1)
+                !WIDGET_MAP[key].unlisted &&
+                (WIDGET_MAP[key].pages === undefined ||
+                  WIDGET_MAP[key].pages?.indexOf(name) !== -1)
 
               return (
                 conditions && (
                   <List.Item onClick={() => addPageModule(name, key)} key={i}>
-                    {MODULE_MAP[key].moduleLabel}
+                    {WIDGET_MAP[key].widgetLabel}
                   </List.Item>
                 )
               )
@@ -101,15 +104,16 @@ const Page: React.FC<PageProps> = ({
           style={{ paddingTop: 30 }}
         >
           <Col xs={24} sm={24} md={24} lg={24} xl={rightContent ? 16 : 24}>
-            {children}
+            {!renderModulesBefore && children}
             {name && (
               <>
                 <Suspense fallback={<div>Loading</div>}>
-                  {renderPageModules()}
+                  {renderPageWidget()}
                 </Suspense>
                 {renderPopOver(name)}
               </>
             )}
+            {renderModulesBefore && children}
           </Col>
           {rightContent && (
             <Col xs={24} sm={24} md={24} lg={24} xl={8}>
