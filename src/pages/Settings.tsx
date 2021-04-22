@@ -1,8 +1,8 @@
 import React from 'react'
 import { Typography, Card, Layout } from 'antd'
 import Page from '../layout/Page'
-import ThemeModule from '../components/modules/ThemeSwitch'
-import Version from '../components/widgets/Version'
+import ThemeModule from '../components/standard/ThemeSwitch'
+import Version from '../components/standard/Version'
 
 const { Title } = Typography
 const { Content } = Layout

@@ -10,8 +10,8 @@ import {
   Table,
   Tag,
 } from 'antd'
-import DynamicModule from '../../layout/PageModule'
-import { PageModuleProps } from '../../types'
+import PageWidget from '../../layout/PageWidget'
+import { PageWidgetProps } from '../../types'
 import { signVerifiablePresentation } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 
@@ -36,7 +36,7 @@ interface DataType {
   verifiableCredential: any
 }
 
-interface BarChartProps extends PageModuleProps {}
+interface BarChartProps extends PageWidgetProps {}
 
 const historyColumns = [
   {
@@ -127,7 +127,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
   }
 
   return (
-    <DynamicModule
+    <PageWidget
       noPadding
       title={title}
       isLoading={isLoading}
@@ -226,7 +226,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
           </div>
         </Form.Item>
       </Form>
-    </DynamicModule>
+    </PageWidget>
   )
 }
 

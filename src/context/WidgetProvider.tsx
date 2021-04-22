@@ -5,18 +5,18 @@ import React, {
   useCallback,
   useEffect,
 } from 'react'
-import { PAGE_DEFAULT_MODULES, MODULE_MAP } from '../components/modules'
-import { PageModuleConfig } from '../types'
+import { PAGE_DEFAULT_WIDGETS, WIDGET_MAP } from '../components/widgets'
+import { PageWidgetConfig } from '../types'
 
 const PageModuleContext = createContext<any>({})
 
 const PageModuleProvider = (props: any) => {
-  const [modules, setModules] = useState<PageModuleConfig[]>([])
+  const [modules, setModules] = useState<PageWidgetConfig[]>([])
   const [pageName, setPageName] = useState('')
 
-  const addModule = (pageName: string, moduleKey: string) => {
+  const addModule = (pageName: string, widgetKey: string) => {
     setModules((s) => {
-      const updated = s.concat([MODULE_MAP[moduleKey]])
+      const updated = s.concat([WIDGET_MAP[widgetKey]])
       localStorage.setItem(`${pageName}:modules`, JSON.stringify(updated))
       return updated
     })
@@ -32,8 +32,8 @@ const PageModuleProvider = (props: any) => {
 
   const loadPageModules = () => {
     const localModuleStore = localStorage.getItem(`${pageName}:modules`)
-    if (!localModuleStore && PAGE_DEFAULT_MODULES[pageName]) {
-      const defaultModuleStore = PAGE_DEFAULT_MODULES[pageName]
+    if (!localModuleStore && PAGE_DEFAULT_WIDGETS[pageName]) {
+      const defaultModuleStore = PAGE_DEFAULT_WIDGETS[pageName]
 
       localStorage.setItem(
         `${pageName}:modules`,
@@ -59,10 +59,10 @@ const PageModuleProvider = (props: any) => {
   ) => {
     const moduleToUpdate = modules.find((item, i) => index === i)
 
-    const updatedModuleConfig: PageModuleConfig = {
+    const updatedModuleConfig: PageWidgetConfig = {
       ...moduleToUpdate,
-      moduleName: moduleToUpdate?.moduleName as string,
-      moduleLabel: moduleLabel || (moduleToUpdate?.moduleLabel as string),
+      widgetName: moduleToUpdate?.widgetName as string,
+      widgetLabel: moduleLabel || (moduleToUpdate?.widgetLabel as string),
       config,
     }
 

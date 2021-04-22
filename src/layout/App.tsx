@@ -5,7 +5,7 @@ import { VeramoProvider } from '@veramo-community/veramo-react'
 
 import { ThemeProvider } from '../context/ThemeProvider'
 import { QueryClientProvider, QueryClient } from 'react-query'
-import { PageModuleProvider } from '../context/PageModuleProvider'
+import { PageModuleProvider } from '../context/WidgetProvider'
 declare global {
   interface Window {
     BASE_URL: string

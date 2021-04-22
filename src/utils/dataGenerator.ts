@@ -26,6 +26,7 @@ export async function createIdentifiers(
   domain: string,
   provider: string,
   count: number,
+  alias?: string,
 ) {
   let promises = []
   if (count) {
@@ -33,6 +34,7 @@ export async function createIdentifiers(
     for (i = 0; i < count; i++) {
       promises.push(i)
     }
+
     return Promise.all(
       promises.map(async () => {
         const _alias = randomWords({
@@ -40,8 +42,14 @@ export async function createIdentifiers(
           wordsPerString: 2,
           separator: '-',
         })
-        const alias = provider === 'did:web' ? domain + ':' + _alias : _alias
-        return await createIdentifer({ provider, alias })
+
+        const generatedAlias =
+          provider === 'did:web' ? domain + ':' + _alias : _alias
+
+        return await createIdentifer({
+          provider,
+          alias: count === 1 && alias ? domain + ':' + alias : generatedAlias,
+        })
       }),
     )
   }

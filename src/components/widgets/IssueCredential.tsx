@@ -1,11 +1,10 @@
 import React, { useState } from 'react'
 import { Typography, Form, Input, Button, Select, Row } from 'antd'
-import DynamicModule from '../../layout/PageModule'
-import { PageModuleProps } from '../../types'
+import PageWidget from '../../layout/PageWidget'
+import { PageWidgetProps } from '../../types'
 import { issueCredential, claimToObject } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
-import identifiers from '../../stubbs/identifiers'
 
 const { Option } = Select
 
@@ -25,7 +24,7 @@ interface Field {
   value: any
 }
 
-interface BarChartProps extends PageModuleProps {}
+interface BarChartProps extends PageWidgetProps {}
 
 const IssueCredential: React.FC<BarChartProps> = ({
   title,
@@ -119,7 +118,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
   }
 
   return (
-    <DynamicModule
+    <PageWidget
       title={title}
       isLoading={isLoading}
       remove={remove}
@@ -249,7 +248,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
           </Row>
         </Form.Item>
       </Form>
-    </DynamicModule>
+    </PageWidget>
   )
 }
 
