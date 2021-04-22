@@ -85,7 +85,7 @@ const Page: React.FC<PageProps> = ({
             })}
           </List>
         }
-        title="Modules"
+        title="Widgets"
         trigger="click"
         visible={visible}
         onVisibleChange={() => toggleVisible((s) => !s)}
