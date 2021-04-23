@@ -24,7 +24,10 @@ const Messages = () => {
   const { agent } = useVeramo()
   const { data: messages } = useQuery(
     ['messages', { agentId: agent?.context.name }],
-    () => agent?.dataStoreORMGetMessages(),
+    () =>
+      agent?.dataStoreORMGetMessages({
+        order: [{ column: 'createdAt', direction: 'DESC' }],
+      }),
   )
 
   const uri = (did: string) => {

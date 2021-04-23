@@ -12,7 +12,7 @@ import {
 } from 'antd'
 
 import { useVeramo } from '@veramo-community/veramo-react'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { ICredentialRequestInput, Issuer } from '@veramo/selective-disclosure'
 
 interface CreateRequestProps {}
@@ -34,6 +34,7 @@ interface AddClaimArgs {
 
 const CreateRequest: React.FC<CreateRequestProps> = ({}) => {
   const { agent } = useVeramo()
+  const query = useQueryClient()
   const [subject, setSubject] = useState<string>('')
   const [issuer, setIssuer] = useState<string>('')
   const [claimType, setClaimType] = useState<string>('')
@@ -85,7 +86,15 @@ const CreateRequest: React.FC<CreateRequestProps> = ({}) => {
       },
     })
 
-    console.log(request)
+    if (request) {
+      await agent?.handleMessage({ raw: request, save: true })
+      query.invalidateQueries(['requests'])
+    }
+
+    setIssuer('')
+    setSubject('')
+    setReplyUrl('')
+    setClaims([])
   }
 
   return (

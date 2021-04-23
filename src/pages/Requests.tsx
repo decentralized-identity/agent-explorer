@@ -13,10 +13,11 @@ const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 const Requests = () => {
   const { agent } = useVeramo()
   const { data: messages } = useQuery(
-    ['messages', { agentId: agent?.context.name }],
+    ['requests', { agentId: agent?.context.name }],
     () =>
       agent?.dataStoreORMGetMessages({
         where: [{ column: 'type', value: ['sdr'] }],
+        order: [{ column: 'createdAt', direction: 'DESC' }],
       }),
   )
 
@@ -25,7 +26,10 @@ const Requests = () => {
   }
 
   return (
-    <Page header={<Title style={{ fontWeight: 'bold' }}>Requests</Title>}>
+    <Page
+      header={<Title style={{ fontWeight: 'bold' }}>Requests</Title>}
+      rightContent={<Card></Card>}
+    >
       <CreateRequest />
 
       <List
