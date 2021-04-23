@@ -28,7 +28,7 @@ const mainMenu = [
     icon: EyeOutlined,
   },
   {
-    url: '/messages',
+    url: '/activity',
     label: 'Activity',
     icon: BarsOutlined,
   },

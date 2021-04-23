@@ -11,7 +11,8 @@ import Identifiers from '../pages/Identifiers'
 import Identifier from '../pages/Identifier'
 import Credentials from '../pages/Credentials'
 import Credential from '../pages/Credential'
-import Messages from '../pages/Messages'
+import Activity from '../pages/Messages'
+import Requests from '../pages/Requests'
 import Inbox from '../pages/Inbox'
 import Network from '../pages/Network'
 import Discover from '../pages/Discover'
@@ -40,7 +41,8 @@ const Frame = () => {
               <Route path="/identifier/:id" component={Identifier} />
               <Route path="/credentials" exact component={Credentials} />
               <Route path="/credential/:id" component={Credential} />
-              <Route path="/messages" component={Messages} />
+              <Route path="/activity" component={Activity} />
+              <Route path="/requests" component={Requests} />
               <Route path="/inbox" component={Inbox} />
               <Route path="/network" component={Network} />
               <Route path="/discover" component={Discover} />
