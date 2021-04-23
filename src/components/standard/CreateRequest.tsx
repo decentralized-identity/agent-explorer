@@ -4,7 +4,7 @@ import {
   Form,
   Input,
   Button,
-  Select,
+  Col,
   Row,
   Card,
   Space,
@@ -14,6 +14,8 @@ import {
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery, useQueryClient } from 'react-query'
 import { ICredentialRequestInput, Issuer } from '@veramo/selective-disclosure'
+
+import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons'
 
 interface CreateRequestProps {}
 
@@ -50,6 +52,7 @@ const CreateRequest: React.FC<CreateRequestProps> = ({}) => {
     ['identifiers', { agentId: agent?.context.id }],
     () => agent?.didManagerFind(),
   )
+  const [panelOpen, setPanelOpen] = useState(false)
 
   const addRequiredIssuer = (did: string, url?: string) => {
     setRequiredIssuers((s) => s?.concat([{ did, url: url || '' }]))
@@ -98,137 +101,153 @@ const CreateRequest: React.FC<CreateRequestProps> = ({}) => {
   }
 
   return (
-    <Card title="Create Selective Disclosure Request">
-      <Form layout="vertical">
-        <pre>
-          <code>{JSON.stringify(claims, null, 2)}</code>
-        </pre>
-        <Row>
-          <Form.Item label="Issuer">
-            <Input
-              type="text"
-              style={{ width: 250, marginRight: 15 }}
-              onChange={(e) => setIssuer(e.target.value)}
+    <Card
+      title={
+        <Row gutter={10} align="middle">
+          <Col>
+            <Button
+              size="small"
+              icon={panelOpen ? <CaretDownOutlined /> : <CaretRightOutlined />}
+              type="primary"
+              onClick={() => setPanelOpen((s) => !s)}
             />
-          </Form.Item>
-          <Form.Item label="Subject">
-            <Input
-              type="text"
-              style={{ width: 250 }}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-          </Form.Item>
+          </Col>
+          <Col flex={1}>Create Selective Disclosure Request</Col>
         </Row>
-        <Row>
-          <Form.Item label="Reply url">
-            <Input
-              type="text"
-              style={{ width: 250 }}
-              onChange={(e) => setReplyUrl(e.target.value)}
-            />
-          </Form.Item>
-        </Row>
-
-        <Card>
+      }
+    >
+      {panelOpen && (
+        <Form layout="vertical">
+          <pre>
+            <code>{JSON.stringify(claims, null, 2)}</code>
+          </pre>
           <Row>
-            <Form.Item label="Claim type">
+            <Form.Item label="Issuer">
               <Input
-                value={claimType}
                 type="text"
                 style={{ width: 250, marginRight: 15 }}
-                onChange={(e) => setClaimType(e.target.value)}
+                onChange={(e) => setIssuer(e.target.value)}
               />
             </Form.Item>
-            <Form.Item label="Claim value">
+            <Form.Item label="Subject">
               <Input
-                value={claimValue}
                 type="text"
                 style={{ width: 250 }}
-                onChange={(e) => setClaimValue(e.target.value)}
+                onChange={(e) => setSubject(e.target.value)}
+              />
+            </Form.Item>
+          </Row>
+          <Row>
+            <Form.Item label="Reply url">
+              <Input
+                type="text"
+                style={{ width: 250 }}
+                onChange={(e) => setReplyUrl(e.target.value)}
               />
             </Form.Item>
           </Row>
 
-          <Row>
-            <Form.Item label="Reason">
-              <Input
-                value={reason}
-                type="text"
-                style={{ width: 500 }}
-                onChange={(e) => setReason(e.target.value)}
-              />
-            </Form.Item>
-          </Row>
-          <pre>
-            <code>{JSON.stringify(requiredIssuers, null, 2)}</code>
-          </pre>
           <Card>
             <Row>
-              <Form.Item label="Issuer">
+              <Form.Item label="Claim type">
                 <Input
-                  value={requiredIssuer}
+                  value={claimType}
                   type="text"
                   style={{ width: 250, marginRight: 15 }}
-                  onChange={(e) => setRequiredIssuer(e.target.value)}
+                  onChange={(e) => setClaimType(e.target.value)}
                 />
               </Form.Item>
-              <Form.Item label="Issuer Url">
+              <Form.Item label="Claim value">
                 <Input
-                  value={requiredIssuerUrl}
+                  value={claimValue}
                   type="text"
                   style={{ width: 250 }}
-                  onChange={(e) => setRequiredIssuerUrl(e.target.value)}
+                  onChange={(e) => setClaimValue(e.target.value)}
                 />
               </Form.Item>
             </Row>
+
+            <Row>
+              <Form.Item label="Reason">
+                <Input
+                  value={reason}
+                  type="text"
+                  style={{ width: 500 }}
+                  onChange={(e) => setReason(e.target.value)}
+                />
+              </Form.Item>
+            </Row>
+            <pre>
+              <code>{JSON.stringify(requiredIssuers, null, 2)}</code>
+            </pre>
+            <Card>
+              <Row>
+                <Form.Item label="Issuer">
+                  <Input
+                    value={requiredIssuer}
+                    type="text"
+                    style={{ width: 250, marginRight: 15 }}
+                    onChange={(e) => setRequiredIssuer(e.target.value)}
+                  />
+                </Form.Item>
+                <Form.Item label="Issuer Url">
+                  <Input
+                    value={requiredIssuerUrl}
+                    type="text"
+                    style={{ width: 250 }}
+                    onChange={(e) => setRequiredIssuerUrl(e.target.value)}
+                  />
+                </Form.Item>
+              </Row>
+              <Button
+                type="ghost"
+                disabled={!requiredIssuer}
+                onClick={() =>
+                  addRequiredIssuer(requiredIssuer, requiredIssuerUrl)
+                }
+              >
+                Add issuer
+              </Button>
+            </Card>
             <Button
               type="ghost"
-              disabled={!requiredIssuer}
+              disabled={!claimType}
               onClick={() =>
-                addRequiredIssuer(requiredIssuer, requiredIssuerUrl)
+                addClaim({
+                  claimType,
+                  claimValue,
+                  issuers: requiredIssuers,
+                  essential: claimRequired,
+                  reason,
+                })
               }
             >
-              Add issuer
+              Add claim
             </Button>
+            <Checkbox
+              value={claimRequired}
+              style={{ marginLeft: 15 }}
+              onChange={(e) => setClaimRequired(e.target.checked)}
+            >
+              Required claim
+            </Checkbox>
           </Card>
           <Button
-            type="ghost"
-            disabled={!claimType}
+            type="primary"
+            disabled={claims.length === 0 || !issuer}
             onClick={() =>
-              addClaim({
-                claimType,
-                claimValue,
-                issuers: requiredIssuers,
-                essential: claimRequired,
-                reason,
+              createSDR({
+                issuer,
+                subject,
+                claims: claims || [],
+                replyUrl: '',
               })
             }
           >
-            Add claim
+            Create request
           </Button>
-          <Checkbox
-            value={claimRequired}
-            style={{ marginLeft: 15 }}
-            onChange={(e) => setClaimRequired(e.target.checked)}
-          >
-            Required claim
-          </Checkbox>
-        </Card>
-        <Button
-          type="primary"
-          disabled={claims.length === 0 || !issuer}
-          onClick={() =>
-            createSDR({
-              issuer,
-              subject,
-              claims: claims || [],
-              replyUrl: '',
-            })
-          }
-        >
-          Create request
-        </Button>
-      </Form>
+        </Form>
+      )}
     </Card>
   )
 }
