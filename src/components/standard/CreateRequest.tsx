@@ -98,6 +98,21 @@ const CreateRequest: React.FC<CreateRequestProps> = ({}) => {
     setSubject('')
     setReplyUrl('')
     setClaims([])
+
+    if (subject && request) {
+      try {
+        await agent?.sendMessageDIDCommAlpha1({
+          data: {
+            to: subject as string,
+            from: issuer as string,
+            type: 'jwt',
+            body: request,
+          },
+        })
+      } catch (err) {
+        console.log(err)
+      }
+    }
   }
 
   return (

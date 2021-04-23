@@ -16,12 +16,15 @@ const messageType = (type: string) => {
     case 'w3c.vp':
       return 'verifiable presentation'
     case 'sdr':
-      return 'selective disclosure request'
+      return 'SDR'
   }
 }
 
 const Messages = () => {
   const { agent } = useVeramo()
+  const uri = (did: string) => {
+    return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
+  }
   const { data: messages } = useQuery(
     ['messages', { agentId: agent?.context.name }],
     () =>
@@ -29,9 +32,12 @@ const Messages = () => {
         order: [{ column: 'createdAt', direction: 'DESC' }],
       }),
   )
-
-  const uri = (did: string) => {
-    return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
+  const { data: managedIdentifiers } = useQuery(
+    ['managed-identifiers', { agentId: agent?.context.id }],
+    () => agent?.didManagerFind(),
+  )
+  const isManaged = (did: string) => {
+    return managedIdentifiers?.find((i) => i.did === did)
   }
 
   return (
@@ -44,7 +50,7 @@ const Messages = () => {
               avatar={<Avatar size="large" src={uri(item.from || '')} />}
               title={item.from}
               description={
-                'Received a ' +
+                (isManaged(item.from || '') ? 'Created a ' : 'Received a ') +
                 messageType(item.type) +
                 ' message • ' +
                 formatDistanceToNow(new Date(item.createdAt as string)) +

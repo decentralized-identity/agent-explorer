@@ -11,6 +11,9 @@ const { Title } = Typography
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 const Requests = () => {
+  const uri = (did: string) => {
+    return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
+  }
   const { agent } = useVeramo()
   const { data: messages } = useQuery(
     ['requests', { agentId: agent?.context.name }],
@@ -20,9 +23,13 @@ const Requests = () => {
         order: [{ column: 'createdAt', direction: 'DESC' }],
       }),
   )
+  const { data: managedIdentifiers } = useQuery(
+    ['managed-identifiers', { agentId: agent?.context.id }],
+    () => agent?.didManagerFind(),
+  )
 
-  const uri = (did: string) => {
-    return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
+  const isManaged = (did: string) => {
+    return managedIdentifiers?.find((i) => i.did === did)
   }
 
   return (
@@ -40,9 +47,11 @@ const Requests = () => {
               avatar={<Avatar size="large" src={uri(item.from || '')} />}
               title={item.from}
               description={
-                'Received an SDR request ' +
-                formatDistanceToNow(new Date(item.createdAt as string)) +
-                ' ago'
+                isManaged(item.from || '')
+                  ? 'Created an SDR request '
+                  : 'Received an SDR request ' +
+                    formatDistanceToNow(new Date(item.createdAt as string)) +
+                    ' ago'
               }
             ></Card.Meta>
             {item?.credentials &&
