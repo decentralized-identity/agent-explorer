@@ -33,9 +33,9 @@ const useSelectedCredentials = (sdr: any) => {
     setValid(valid)
   }
 
-  // useEffect(() => {
-  //   // checkValidity()
-  // }, [selected])
+  useEffect(() => {
+    checkValidity()
+  }, [selected])
 
   useEffect(() => {
     if (sdr) {
