@@ -5,15 +5,20 @@ import { formatDistanceToNow, format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
+import { Route, Link, useParams, useHistory } from 'react-router-dom'
 import CreateRequest from '../components/standard/CreateRequest'
+import CreateResponse from '../components/standard/CreateResponse'
 
 const { Title } = Typography
+
+// Move
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
+const uri = (did: string) => {
+  return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
+}
 
 const Requests = () => {
-  const uri = (did: string) => {
-    return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
-  }
+  const history = useHistory()
   const { agent } = useVeramo()
   const { data: messages } = useQuery(
     ['requests', { agentId: agent?.context.name }],
@@ -24,34 +29,38 @@ const Requests = () => {
       }),
   )
   const { data: managedIdentifiers } = useQuery(
-    ['managed-identifiers', { agentId: agent?.context.id }],
+    ['managedIdentifiers', { agentId: agent?.context.id }],
     () => agent?.didManagerFind(),
   )
 
-  const isManaged = (did: string) => {
-    return managedIdentifiers?.find((i) => i.did === did)
+  const RightContent = () => {
+    return (
+      <Route path="/requests/sdr/:messageId" exact component={CreateResponse} />
+    )
   }
 
   return (
     <Page
       header={<Title style={{ fontWeight: 'bold' }}>Requests</Title>}
-      rightContent={<Card></Card>}
+      rightContent={<RightContent />}
     >
       <CreateRequest />
 
       <List
         dataSource={messages}
         renderItem={(item, index) => (
-          <Card key={index}>
+          <Card
+            key={index}
+            style={{ cursor: 'pointer' }}
+            onClick={() => history.push('/requests/sdr/' + item.id)}
+          >
             <Card.Meta
               avatar={<Avatar size="large" src={uri(item.from || '')} />}
               title={item.from}
               description={
-                isManaged(item.from || '')
-                  ? 'Created an SDR request '
-                  : 'Received an SDR request ' +
-                    formatDistanceToNow(new Date(item.createdAt as string)) +
-                    ' ago'
+                'Request to share data ' +
+                formatDistanceToNow(new Date(item.createdAt as string)) +
+                ' ago'
               }
             ></Card.Meta>
             {item?.credentials &&

@@ -33,7 +33,7 @@ const Messages = () => {
       }),
   )
   const { data: managedIdentifiers } = useQuery(
-    ['managed-identifiers', { agentId: agent?.context.id }],
+    ['managedIdentifiers', { agentId: agent?.context.id }],
     () => agent?.didManagerFind(),
   )
   const isManaged = (did: string) => {

@@ -66,7 +66,7 @@ const CreateRequest: React.FC<CreateRequestProps> = ({}) => {
       s?.concat([
         {
           claimType: addClaimArgs.claimType,
-          claimValue: addClaimArgs.claimValue,
+          // claimValue: addClaimArgs.claimValue,
           issuers: addClaimArgs.issuers,
           essential: addClaimArgs.essential,
           reason: addClaimArgs.reason,
