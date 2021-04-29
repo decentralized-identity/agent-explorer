@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 
 interface ValidationState {
   [index: string]: {
@@ -20,18 +20,15 @@ const useSelectedCredentials = (sdr: any) => {
     setSelected(newState)
   }
 
-  const checkValidity = () => {
+  const checkValidity = useCallback(() => {
     let valid = true
     Object.keys(selected).map((key) => {
       if (selected[key].required && !selected[key].vc) {
         valid = false
       }
     })
-
-    console.log(valid)
-
     setValid(valid)
-  }
+  }, [selected])
 
   useEffect(() => {
     checkValidity()

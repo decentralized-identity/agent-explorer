@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Card, List, Avatar, Radio, Space, Button, Row, Select } from 'antd'
+import { Card, Avatar, Radio, Space, Button, Row, Select } from 'antd'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { format } from 'date-fns'
+import { format, fromUnixTime } from 'date-fns'
 import md5 from 'md5'
 import useSelectedCredentials from '../../hooks/useSelectCredentials'
 import { signVerifiablePresentation } from '../../utils/signing'
@@ -18,7 +18,7 @@ interface CreateResponseProps {}
 
 const CreateResponse: React.FC<CreateResponseProps> = ({}) => {
   const { agent } = useVeramo()
-  const [presenter, setPresenter] = useState<string>()
+  const [presenter, setPresenter] = useState<string>('')
   const { messageId } = useParams<{ messageId: string }>()
   const { data: message, isLoading } = useQuery(
     ['message', { agentId: agent?.context.name }],
@@ -37,12 +37,13 @@ const CreateResponse: React.FC<CreateResponseProps> = ({}) => {
     },
     { enabled: !!message },
   )
+
+  const { selected, onSelect, valid } = useSelectedCredentials(sdr)
+
   const { data: managedIdentifiers, isLoading: identifiersLoading } = useQuery(
     ['managed-identifiers', { agentId: agent?.context.id }],
     () => agent?.didManagerFind(),
   )
-
-  const { selected, onSelect, valid } = useSelectedCredentials(sdr)
 
   const shareVCPresentation = async () => {
     const presentation = await signVerifiablePresentation(
@@ -53,12 +54,19 @@ const CreateResponse: React.FC<CreateResponseProps> = ({}) => {
       'jwt',
     )
 
-    console.log(presentation)
-  }
+    await agent?.sendMessageDIDCommAlpha1({
+      save: true,
+      ...(message?.replyUrl ? { url: message.replyUrl } : {}),
+      data: {
+        from: presenter as string,
+        to: message?.from as string,
+        type: 'jwt',
+        body: presentation.proof.jwt,
+      },
+    })
 
-  // console.log('sdr', sdr)
-  // console.log('selected', selected)
-  // console.log('managedIdentifiers', managedIdentifiers)
+    setPresenter('')
+  }
 
   return (
     <Card loading={isLoading} title="Request Message">
@@ -83,8 +91,9 @@ const CreateResponse: React.FC<CreateResponseProps> = ({}) => {
             title={'Presenter'}
             description={
               <Select
-                style={{ width: '60%' }}
+                style={{ width: '80%' }}
                 loading={identifiersLoading}
+                value={presenter}
                 onChange={(val) => setPresenter(val as string)}
               >
                 {managedIdentifiers &&
@@ -114,32 +123,36 @@ const CreateResponse: React.FC<CreateResponseProps> = ({}) => {
         // @ts-ignore
         sdr.map((claim, i) => {
           return (
-            <Radio.Group
-              key={i}
-              onChange={(e) => onSelect(e.target.value, claim.claimType)}
-              value={selected[claim.claimType]?.vc}
-            >
+            <div key={i}>
               <Card.Meta
                 style={{ marginTop: 20, marginBottom: 10 }}
                 title={claim.claimType.toUpperCase()}
               ></Card.Meta>
-              <Space direction="vertical">
-                {claim.credentials.map((vc, i) => {
-                  return (
-                    <Radio key={i} value={vc} style={{ display: 'flex' }}>
-                      {vc.credentialSubject[claim.claimType]}
-                    </Radio>
-                  )
-                })}
-              </Space>
-            </Radio.Group>
+              {claim.credentials.length === 0 && (
+                <Card.Meta description="You do not have credentials that match this requirement"></Card.Meta>
+              )}
+              <Radio.Group
+                onChange={(e) => onSelect(e.target.value, claim.claimType)}
+                value={selected[claim.claimType]?.vc}
+              >
+                <Space direction="vertical">
+                  {claim.credentials.map((vc, i) => {
+                    return (
+                      <Radio key={i} value={vc} style={{ display: 'flex' }}>
+                        {vc.credentialSubject[claim.claimType]}
+                      </Radio>
+                    )
+                  })}
+                </Space>
+              </Radio.Group>
+            </div>
           )
         })}
 
       <Row style={{ marginTop: 20 }}>
         <Button
           type="primary"
-          disabled={!valid}
+          disabled={!valid || !presenter}
           onClick={() => shareVCPresentation()}
         >
           Share Credentials
