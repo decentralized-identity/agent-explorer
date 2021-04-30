@@ -5,8 +5,8 @@ import {
   EyeOutlined,
   UserOutlined,
   SafetyOutlined,
-  MessageOutlined,
-  MailOutlined,
+  BarsOutlined,
+  InteractionOutlined,
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,
@@ -28,9 +28,14 @@ const mainMenu = [
     icon: EyeOutlined,
   },
   {
-    url: '/messages',
-    label: 'Messages',
-    icon: MessageOutlined,
+    url: '/activity',
+    label: 'Activity',
+    icon: BarsOutlined,
+  },
+  {
+    url: '/requests',
+    label: 'Requests',
+    icon: InteractionOutlined,
   },
   {
     url: '/identifiers',
@@ -42,11 +47,6 @@ const mainMenu = [
     label: 'Credentials',
     icon: SafetyOutlined,
   },
-  // {
-  //   url: '/inbox',
-  //   label: 'Inbox',
-  //   icon: MailOutlined,
-  // },
 
   // {
   //   url: '/network',

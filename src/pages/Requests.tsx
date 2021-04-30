@@ -5,30 +5,26 @@ import { formatDistanceToNow, format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
+import { Route, Link, useParams, useHistory } from 'react-router-dom'
+import CreateRequest from '../components/standard/CreateRequest'
+import CreateResponse from '../components/standard/CreateResponse'
 
 const { Title } = Typography
-const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
-const messageType = (type: string) => {
-  switch (type) {
-    case 'w3c.vc':
-      return 'verifiable credential'
-    case 'w3c.vp':
-      return 'verifiable presentation'
-    case 'sdr':
-      return 'SDR'
-  }
+// Move
+const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
+const uri = (did: string) => {
+  return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
 }
 
-const Messages = () => {
+const Requests = () => {
+  const history = useHistory()
   const { agent } = useVeramo()
-  const uri = (did: string) => {
-    return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
-  }
   const { data: messages } = useQuery(
-    ['messages', { agentId: agent?.context.name }],
+    ['requests', { agentId: agent?.context.name }],
     () =>
       agent?.dataStoreORMGetMessages({
+        where: [{ column: 'type', value: ['sdr'] }],
         order: [{ column: 'createdAt', direction: 'DESC' }],
       }),
   )
@@ -36,23 +32,33 @@ const Messages = () => {
     ['managedIdentifiers', { agentId: agent?.context.id }],
     () => agent?.didManagerFind(),
   )
-  const isManaged = (did: string) => {
-    return managedIdentifiers?.find((i) => i.did === did)
+
+  const RightContent = () => {
+    return (
+      <Route path="/requests/sdr/:messageId" exact component={CreateResponse} />
+    )
   }
 
   return (
-    <Page header={<Title style={{ fontWeight: 'bold' }}>Activity</Title>}>
+    <Page
+      header={<Title style={{ fontWeight: 'bold' }}>Requests</Title>}
+      rightContent={<RightContent />}
+    >
+      <CreateRequest />
+
       <List
         dataSource={messages}
         renderItem={(item, index) => (
-          <Card key={index}>
+          <Card
+            key={index}
+            style={{ cursor: 'pointer' }}
+            onClick={() => history.push('/requests/sdr/' + item.id)}
+          >
             <Card.Meta
               avatar={<Avatar size="large" src={uri(item.from || '')} />}
               title={item.from}
               description={
-                (isManaged(item.from || '') ? 'Created a ' : 'Received a ') +
-                messageType(item.type) +
-                ' message • ' +
+                'Request to share data ' +
                 formatDistanceToNow(new Date(item.createdAt as string)) +
                 ' ago'
               }
@@ -112,4 +118,4 @@ const Messages = () => {
   )
 }
 
-export default Messages
+export default Requests

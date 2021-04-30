@@ -9,6 +9,7 @@ import {
   Layout,
   Col,
   Input,
+  Form,
 } from 'antd'
 import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -20,10 +21,26 @@ import { chart1 } from '../stubbs/chart'
 const { Title, Text } = Typography
 
 const Agents = () => {
+  const {
+    activeAgentId,
+    setActiveAgentId,
+    getAgent,
+    updateAgentConfig,
+    getAgentConfig,
+  } = useVeramo()
   const { id } = useParams<{ id: string }>()
-  const { activeAgentId, setActiveAgentId, getAgent } = useVeramo()
   const agent = getAgent(id)
-  const [agentNameConfirm, setAgentNameConfirm] = useState<string>()
+  const config = getAgentConfig(id)
+  const [agentName, setAgentName] = useState<string>(agent?.context.name || '')
+
+  const updateAgentName = (name: string) => {
+    updateAgentConfig(agent.context.id as string, {
+      ...config,
+      context: { ...config.context, name },
+    })
+
+    setAgentName('')
+  }
 
   return (
     <Page
@@ -38,56 +55,34 @@ const Agents = () => {
       header={
         <Layout>
           <Title style={{ fontWeight: 'bold' }}>{agent.context.name}</Title>
-          {/* <Row>
-            {activeAgentId === agent.context.id && (
-              <Tag color="geekblue">Default Agent</Tag>
-            )}
-            <Tag color="">Schema</Tag>
-            <Tag color="">W3C</Tag>
-          </Row> */}
         </Layout>
       }
     >
-      <Card title="Agent info">
-        <Row>
-          <Space>
-            <Button
-              icon={<PushpinOutlined />}
-              disabled={activeAgentId === agent.context.id}
-              onClick={() =>
-                agent.context.id && setActiveAgentId(agent.context.id)
-              }
-            >
-              Make Default
-            </Button>
-          </Space>
-        </Row>
+      <Card
+        title="Agent info"
+        actions={[
+          <Button
+            icon={<PushpinOutlined />}
+            disabled={activeAgentId === agent.context.id}
+            onClick={() =>
+              agent.context.id && setActiveAgentId(agent.context.id)
+            }
+          >
+            Make Default
+          </Button>,
+        ]}
+      >
+        <Form labelCol={{ span: 10 }} wrapperCol={{ span: 30 }} layout="inline">
+          <Form.Item label="Agent name">
+            <Input
+              type="text"
+              onChange={(e) => setAgentName(e.target.value)}
+              value={agentName}
+            />
+          </Form.Item>
+          <Button onClick={() => updateAgentName(agentName)}>Update</Button>
+        </Form>
       </Card>
-
-      {/* <Card title="Wipe Agent Data">
-        <Row>
-          <Col>
-            <Space direction="vertical" size={20} style={{ width: '100%' }}>
-              <Text>
-                To erase all data from this agent please enter the name of the
-                agent below:
-              </Text>
-              <Input
-                placeholder="Enter agent name"
-                style={{ width: 300 }}
-                onChange={(e) => setAgentNameConfirm(e.target.value)}
-              />
-              <Button
-                danger
-                icon={<DatabaseOutlined />}
-                disabled={agentNameConfirm !== agent.context.name}
-              >
-                Yes, I'm sure
-              </Button>
-            </Space>
-          </Col>
-        </Row>
-      </Card> */}
     </Page>
   )
 }

@@ -2,23 +2,24 @@ import React from 'react'
 import { Typography, Card, Layout } from 'antd'
 import Page from '../layout/Page'
 import { useParams } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useVeramo } from '@veramo-community/veramo-react'
+import IdentifierKeys from '../components/standard/Identifier'
 
 const { Title } = Typography
 
 const Identifier = () => {
   const { id } = useParams<{ id: string }>()
+  const { agent } = useVeramo()
+  const { data: identifer, isLoading, error } = useQuery(
+    ['identifier', id],
+    () => agent?.resolveDid({ didUrl: id }),
+  )
 
   const rightContent = () => {
     return (
       <Layout>
-        <Card title="Issuer">
-          <p>Card content</p>
-          <p>Card content</p>
-        </Card>
-        <Card title="Subject">
-          <p>Card content</p>
-          <p>Card content</p>
-        </Card>
+        <IdentifierKeys title="Keys" identifier={id} cacheKey="identifier" />
       </Layout>
     )
   }
@@ -33,29 +34,8 @@ const Identifier = () => {
       }
       rightContent={rightContent()}
     >
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
-      </Card>
-      <Card style={{ height: 400 }} loading>
-        Card 1
+      <Card loading={isLoading} title={'DID Document'}>
+        <pre>{JSON.stringify(identifer, null, 2)}</pre>
       </Card>
     </Page>
   )
