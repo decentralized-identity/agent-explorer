@@ -15,7 +15,7 @@
   "scripts": {
     "dev": "craco start",
     "build": "craco build",
-    "test": "craco test",
+    "test": "craco test --watchAll=false",
     "agent-explore": "./bin/bin.js",
     "upgrade:next": "yarn add @veramo/core@next @veramo/credential-w3c@next @veramo/data-store@next @veramo/did-comm@next @veramo/did-jwt@next @veramo/did-resolver@next @veramo/message-handler@next @veramo/remote-client@next @veramo/selective-disclosure@next"
   },
