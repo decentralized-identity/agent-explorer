@@ -25,15 +25,15 @@ const useSelectedCredentials = (sdr: any) => {
     Object.keys(selected).map((key) => {
       if (selected[key].required && !selected[key].vc) {
         valid = false
-        return
       }
+      return key
     })
     setValid(valid)
   }, [selected])
 
   useEffect(() => {
     checkValidity()
-  }, [selected])
+  }, [selected, checkValidity])
 
   useEffect(() => {
     if (sdr) {
@@ -53,6 +53,7 @@ const useSelectedCredentials = (sdr: any) => {
             setValid(false)
           }
         }
+        return sdr
       })
       setSelected(defaultSelected)
     }

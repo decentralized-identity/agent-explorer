@@ -35,7 +35,7 @@ const Page: React.FC<PageProps> = ({
 
   useEffect(() => {
     setPageName(name)
-  }, [name])
+  }, [name, setPageName])
 
   const addPageModule = (pageName: string, widgetKeyName: string) => {
     addModule(pageName, widgetKeyName)
