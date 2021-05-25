@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useCallback,
-  useEffect,
-} from 'react'
+import React, { createContext, useState, useContext, useEffect } from 'react'
 import { PAGE_DEFAULT_WIDGETS, WIDGET_MAP } from '../components/widgets'
 import { PageWidgetConfig } from '../types'
 

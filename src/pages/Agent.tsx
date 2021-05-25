@@ -1,24 +1,13 @@
 import React, { useState } from 'react'
-import {
-  Typography,
-  Card,
-  Button,
-  Row,
-  Space,
-  Tag,
-  Layout,
-  Col,
-  Input,
-  Form,
-} from 'antd'
+import { Typography, Card, Button, Layout, Input, Form } from 'antd'
 import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { PushpinOutlined, DatabaseOutlined } from '@ant-design/icons'
+import { PushpinOutlined } from '@ant-design/icons'
 import { useParams } from 'react-router-dom'
 import Chart from '../components/standard/Chart'
 import { chart1 } from '../stubbs/chart'
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 const Agents = () => {
   const {

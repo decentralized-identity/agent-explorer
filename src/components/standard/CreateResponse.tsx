@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Card, Avatar, Radio, Space, Button, Row, Select } from 'antd'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { format, fromUnixTime } from 'date-fns'
+import { format } from 'date-fns'
 import md5 from 'md5'
 import useSelectedCredentials from '../../hooks/useSelectCredentials'
 import { signVerifiablePresentation } from '../../utils/signing'
@@ -16,7 +16,7 @@ const uri = (did: string) => {
 
 interface CreateResponseProps {}
 
-const CreateResponse: React.FC<CreateResponseProps> = ({}) => {
+const CreateResponse: React.FC<CreateResponseProps> = () => {
   const { agent } = useVeramo()
   const [presenter, setPresenter] = useState<string>('')
   const { messageId } = useParams<{ messageId: string }>()

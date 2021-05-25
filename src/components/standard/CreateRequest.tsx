@@ -1,20 +1,8 @@
 import React, { useState } from 'react'
-import {
-  Typography,
-  Form,
-  Input,
-  Button,
-  Col,
-  Row,
-  Card,
-  Space,
-  Checkbox,
-} from 'antd'
-
+import { Form, Input, Button, Col, Row, Card, Checkbox } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { ICredentialRequestInput, Issuer } from '@veramo/selective-disclosure'
-
 import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons'
 
 interface CreateRequestProps {}
@@ -34,7 +22,7 @@ interface AddClaimArgs {
   reason?: string
 }
 
-const CreateRequest: React.FC<CreateRequestProps> = ({}) => {
+const CreateRequest: React.FC<CreateRequestProps> = () => {
   const { agent } = useVeramo()
   const query = useQueryClient()
   const [subject, setSubject] = useState<string>('')
@@ -48,10 +36,6 @@ const CreateRequest: React.FC<CreateRequestProps> = ({}) => {
   const [requiredIssuer, setRequiredIssuer] = useState<string>('')
   const [requiredIssuerUrl, setRequiredIssuerUrl] = useState<string>('')
   const [claims, setClaims] = useState<ICredentialRequestInput[]>([])
-  const { data: identifiers, isLoading: identifiersLoading } = useQuery(
-    ['identifiers', { agentId: agent?.context.id }],
-    () => agent?.didManagerFind(),
-  )
   const [panelOpen, setPanelOpen] = useState(false)
 
   const addRequiredIssuer = (did: string, url?: string) => {

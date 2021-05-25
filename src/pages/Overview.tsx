@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Card, Layout } from 'antd'
+import { Typography } from 'antd'
 import Page from '../layout/Page'
 
 const { Title } = Typography

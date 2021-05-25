@@ -5,7 +5,7 @@ import { formatDistanceToNow, format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
-import { Route, Link, useParams, useHistory } from 'react-router-dom'
+import { Route, useHistory } from 'react-router-dom'
 import CreateRequest from '../components/standard/CreateRequest'
 import CreateResponse from '../components/standard/CreateResponse'
 
@@ -27,10 +27,6 @@ const Requests = () => {
         where: [{ column: 'type', value: ['sdr'] }],
         order: [{ column: 'createdAt', direction: 'DESC' }],
       }),
-  )
-  const { data: managedIdentifiers } = useQuery(
-    ['managedIdentifiers', { agentId: agent?.context.id }],
-    () => agent?.didManagerFind(),
   )
 
   const RightContent = () => {

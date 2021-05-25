@@ -1,6 +1,3 @@
-import { TAgent } from '@veramo/core'
-import { ICredentialIssuer } from '@veramo/credential-w3c'
-
 const shortId = (did: string) => `${did.slice(0, 15)}...${did.slice(-4)}`
 
 const claimToObject = (arr: any[]) => {

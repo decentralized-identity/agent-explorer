@@ -11,9 +11,8 @@ const { Title } = Typography
 const Identifier = () => {
   const { id } = useParams<{ id: string }>()
   const { agent } = useVeramo()
-  const { data: identifer, isLoading, error } = useQuery(
-    ['identifier', id],
-    () => agent?.resolveDid({ didUrl: id }),
+  const { data: identifer, isLoading } = useQuery(['identifier', id], () =>
+    agent?.resolveDid({ didUrl: id }),
   )
 
   const rightContent = () => {
