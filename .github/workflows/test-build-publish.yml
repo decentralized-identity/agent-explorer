@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'next'
+      - 'main'
 jobs:
   build-test-publish:
     env:
@@ -45,5 +45,5 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
           npm whoami
       - name: publish
-        # if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         run: yarn release
