@@ -25,6 +25,7 @@ const useSelectedCredentials = (sdr: any) => {
     Object.keys(selected).map((key) => {
       if (selected[key].required && !selected[key].vc) {
         valid = false
+        return
       }
     })
     setValid(valid)

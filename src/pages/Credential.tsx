@@ -10,7 +10,7 @@ import IDModule from '../components/standard/Identifier'
 import { BlockOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 const Credential = () => {
   const history = useHistory()
