@@ -38,6 +38,8 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
   const [claims, setClaims] = useState<ICredentialRequestInput[]>([])
   const [panelOpen, setPanelOpen] = useState(false)
 
+  console.log(replyUrl)
+
   const addRequiredIssuer = (did: string, url?: string) => {
     setRequiredIssuers((s) => s?.concat([{ did, url: url || '' }]))
 

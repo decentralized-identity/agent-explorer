@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, useEffect } from 'react'
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from 'react'
 import { PAGE_DEFAULT_WIDGETS, WIDGET_MAP } from '../components/widgets'
 import { PageWidgetConfig } from '../types'
 
@@ -24,7 +30,7 @@ const PageModuleProvider = (props: any) => {
     })
   }
 
-  const loadPageModules = () => {
+  const loadPageModules = useCallback(() => {
     const localModuleStore = localStorage.getItem(`${pageName}:modules`)
     if (!localModuleStore && PAGE_DEFAULT_WIDGETS[pageName]) {
       const defaultModuleStore = PAGE_DEFAULT_WIDGETS[pageName]
@@ -37,13 +43,13 @@ const PageModuleProvider = (props: any) => {
     } else {
       setModules(localModuleStore ? JSON.parse(localModuleStore) : [])
     }
-  }
+  }, [pageName, setModules])
 
   useEffect(() => {
     if (pageName) {
       loadPageModules()
     }
-  }, [pageName])
+  }, [pageName, loadPageModules])
 
   const saveConfig = (
     _pageName: string,
