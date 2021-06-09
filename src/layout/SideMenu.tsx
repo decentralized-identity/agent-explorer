@@ -50,7 +50,7 @@ const mainMenu = [
   },
   {
     url: '/chats',
-    label: 'Chats',
+    label: 'DID Chats',
     icon: MessageOutlined,
   },
 

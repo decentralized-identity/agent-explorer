@@ -26,14 +26,20 @@ const Page: React.FC<PageProps> = ({
   }, [name, setPageName])
 
   return (
-    <Layout style={{ borderLeft: '2px solid white' }}>
+    <Layout
+      style={{
+        borderLeft: '2px solid white',
+        height: '100%',
+        overflow: 'hidden',
+      }}
+    >
       {header}
       <Row style={{ height: '94vh' }}>
-        <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+        <Col xs={10} sm={10} md={10} lg={10} xl={8}>
           {leftContent}
         </Col>
         {rightContent && (
-          <Col xs={16} sm={16} md={16} lg={16} xl={16}>
+          <Col xs={14} sm={14} md={14} lg={14} xl={16}>
             {rightContent}
           </Col>
         )}
