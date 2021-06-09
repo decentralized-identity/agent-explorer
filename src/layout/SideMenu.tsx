@@ -10,6 +10,7 @@ import {
   PlusOutlined,
   CheckCircleOutlined,
   CloudServerOutlined,
+  MessageOutlined,
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -46,6 +47,11 @@ const mainMenu = [
     url: '/credentials',
     label: 'Credentials',
     icon: SafetyOutlined,
+  },
+  {
+    url: '/chats',
+    label: 'Chats',
+    icon: MessageOutlined,
   },
 
   // {
