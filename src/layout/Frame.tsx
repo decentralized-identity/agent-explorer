@@ -19,6 +19,7 @@ import Discover from '../pages/Discover'
 import Settings from '../pages/Settings'
 import Agents from '../pages/Agents'
 import Agent from '../pages/Agent'
+import Chats from '../pages/Chats'
 
 const { Header, Content } = Layout
 
@@ -37,6 +38,8 @@ const Frame = () => {
               <Route path="/connect" component={Connect} />
               <Route path="/agents" exact component={Agents} />
               <Route path="/agent/:id" component={Agent} />
+              <Route path="/chats" component={Chats} />
+              {/* <Route path="/chats/:id" component={Agent} /> */}
               <Route path="/identifiers" exact component={Identifiers} />
               <Route path="/identifier/:id" component={Identifier} />
               <Route path="/credentials" exact component={Credentials} />
