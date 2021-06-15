@@ -3,21 +3,21 @@ import { Row, Typography } from 'antd'
 
 interface ChatBubbleProps {
   text: string
-  isIssuer?: boolean
+  isSender?: boolean
 }
 
-const ChatBubble: React.FC<ChatBubbleProps> = ({ text, isIssuer }) => {
+const ChatBubble: React.FC<ChatBubbleProps> = ({ text, isSender }) => {
   return (
     <Row
       style={{
-        justifyContent: isIssuer ? 'flex-end' : 'flex-start',
+        justifyContent: isSender ? 'flex-end' : 'flex-start',
         padding: 20,
       }}
     >
       <div
         style={{
-          background: isIssuer ? '#5e9dff' : '#fff',
-          color: isIssuer ? '#fff' : '#000',
+          background: isSender ? '#5e9dff' : '#fff',
+          color: isSender ? '#fff' : '#000',
           padding: '10px 20px',
           borderRadius: 5,
           boxShadow: '2px 2px 1px rgba(0,0,0,0.2)',
