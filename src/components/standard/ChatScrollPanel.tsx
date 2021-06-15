@@ -11,8 +11,8 @@ const ChatScrollPanel: React.FC<ChatScrollPanelProps> = ({
 }) => {
   const reverseStyles = reverse
     ? {
-        justifyContent: 'flex-end',
-        display: 'flex',
+        // justifyContent: 'flex-end',
+        // display: 'flex',
         paddingBottom: 100,
       }
     : {}
@@ -28,7 +28,7 @@ const ChatScrollPanel: React.FC<ChatScrollPanelProps> = ({
         height: '96vh',
       }}
     >
-      {children}
+      <div>{children}</div>
     </Col>
   )
 }
