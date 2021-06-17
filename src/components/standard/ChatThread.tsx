@@ -1,6 +1,7 @@
 import React from 'react'
 import { Row, Typography, Avatar } from 'antd'
 import user1 from '../../static/img/user1.jpeg'
+import user2 from '../../static/img/user3.jpeg'
 import { useHistory } from 'react-router'
 
 const { Title, Text } = Typography
@@ -25,12 +26,16 @@ const ChatThread: React.FC<ChatThreadProps> = ({ thread, threadId }) => {
         borderBottom: '1px solid white',
       }}
     >
-      <Avatar src={user1} size={50} style={{ marginRight: 15 }} />
+      <Avatar
+        src={lastMessage.isSender ? user1 : user2}
+        size={50}
+        style={{ marginRight: 15 }}
+      />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <Title level={5} style={{ marginBottom: 0 }}>
           {lastMessage.isSender ? lastMessage.to : lastMessage.from}
         </Title>
-        {/* <Text>{body.message}</Text> */}
+        <Text>{body.message}</Text>
       </div>
     </Row>
   )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, useParams } from 'react-router-dom'
 import Page from '../layout/SplitPage'
 import ChatThread from '../components/standard/ChatThread'
 import ChatScrollPanel from '../components/standard/ChatScrollPanel'
@@ -15,6 +15,7 @@ const groupBy = (arr: any[], property: string) => {
 }
 
 const ChatView = () => {
+  const { threadId } = useParams<{ threadId: string }>()
   const { agent } = useVeramo()
   const { data: threads } = useQuery(
     ['threads', { id: agent?.context.id }],
@@ -41,7 +42,6 @@ const ChatView = () => {
       refetchInterval: 5000,
     },
   )
-
   return (
     <Page
       name="chats"
