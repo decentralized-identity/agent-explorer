@@ -1,7 +1,5 @@
 import React from 'react'
 import { Row, Typography, Avatar } from 'antd'
-import user1 from '../../static/img/user1.jpeg'
-import user2 from '../../static/img/user3.jpeg'
 import { useHistory } from 'react-router'
 import { useChat } from '../../context/ChatProvider'
 import { identiconUri } from '../../utils/identicon'
@@ -14,15 +12,20 @@ interface ChatThreadProps {
 }
 
 const ChatThread: React.FC<ChatThreadProps> = ({ thread, threadId }) => {
-  const { selectedDid } = useChat()
+  const { selectedDid, setComposing } = useChat()
   const history = useHistory()
   const lastMessage = thread[0]
   const { body } = lastMessage && JSON.parse(lastMessage.raw)
+  const viewThread = () => {
+    setComposing(false)
+    history.push(`/chats/threads/${threadId}`)
+  }
 
   return (
     <Row
-      onClick={() => history.push(`/chats/${threadId}`)}
+      onClick={() => viewThread()}
       style={{
+        cursor: 'pointer',
         padding: 20,
         backgroundColor: '#f7f7f7',
         alignItems: 'center',

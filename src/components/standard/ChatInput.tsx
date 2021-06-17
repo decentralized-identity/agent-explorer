@@ -2,27 +2,36 @@ import React, { useEffect, useState } from 'react'
 import { Input, Button, Row } from 'antd'
 import { SendOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
+import { useChat } from '../../context/ChatProvider'
+import { v4 } from 'uuid'
+import { useHistory } from 'react-router-dom'
 
 const { TextArea } = Input
 
 interface ChatInputProps {
   viewer: string
-  recipient: string
+  recipient?: string
   threadId: string
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
   viewer,
-  recipient,
+  recipient: existingRecipient,
   threadId,
 }) => {
   const [message, setMessage] = useState<string>()
   const { agent } = useVeramo()
+  const { composing, setComposing, newRecipient, setNewRecipient } = useChat()
+  const recipient = existingRecipient || newRecipient
+  const history = useHistory()
+  const _threadId = threadId === 'new-thread' ? v4() : threadId
+
+  console.log('recipient', recipient)
 
   const sendMessage = async (msg: string) => {
     await agent?.sendMessageDIDCommAlpha1({
       data: {
-        id: threadId,
+        id: threadId === 'new-thread' ? v4() : threadId,
         from: viewer as string,
         to: recipient as string,
         type: 'veramo.io-chat-v1',
@@ -35,7 +44,14 @@ const ChatInput: React.FC<ChatInputProps> = ({
       save: true,
     })
 
-    setMessage(' ')
+    setMessage('')
+
+    if (composing) {
+      setNewRecipient('')
+      setComposing(false)
+
+      history.push('/chats/threads/' + _threadId)
+    }
   }
 
   return (
