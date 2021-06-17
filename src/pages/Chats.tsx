@@ -5,6 +5,7 @@ import ChatThread from '../components/standard/ChatThread'
 import ChatScrollPanel from '../components/standard/ChatScrollPanel'
 import ChatWindow from '../components/standard/ChatWindow'
 import ChatHeader from '../components/standard/ChatHeader'
+import Layout from 'antd/lib/layout/layout'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 
@@ -47,27 +48,33 @@ const ChatView = () => {
       name="chats"
       header={<ChatHeader />}
       leftContent={
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'flex-end',
-          }}
-        >
-          <ChatScrollPanel>
-            {threads &&
-              Object.keys(threads).map((index: any) => {
-                return (
-                  <ChatThread
-                    thread={threads[index]}
-                    threadId={index}
-                    key={index}
-                  />
-                )
-              })}
-          </ChatScrollPanel>
-        </div>
+        <Layout>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-end',
+            }}
+          >
+            <ChatScrollPanel>
+              {threads &&
+                Object.keys(threads).map((index: any) => {
+                  return (
+                    <ChatThread
+                      thread={threads[index]}
+                      threadId={index}
+                      key={index}
+                    />
+                  )
+                })}
+            </ChatScrollPanel>
+          </div>
+        </Layout>
       }
-      rightContent={<Route path="/chats/:threadId" component={ChatWindow} />}
+      rightContent={
+        <Layout>
+          <Route path="/chats/threads/:threadId" component={ChatWindow} />
+        </Layout>
+      }
     ></Page>
   )
 }

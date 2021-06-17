@@ -49,7 +49,7 @@ const mainMenu = [
     icon: SafetyOutlined,
   },
   {
-    url: '/chats',
+    url: '/chats/threads/new-thread',
     label: 'DID Chats',
     icon: MessageOutlined,
   },

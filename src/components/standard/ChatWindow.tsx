@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ChatScrollPanel from '../../components/standard/ChatScrollPanel'
 import ChatBubble from '../../components/standard/ChatBubble'
 import ChatInput from '../../components/standard/ChatInput'
@@ -7,14 +7,18 @@ import tile from '../../static/img/tile.png'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { scrollMessages } from '../../utils/scroll'
+import { useChat } from '../../context/ChatProvider'
 
 interface ChatWindowProps {}
 
 const ChatWindow: React.FC<ChatWindowProps> = () => {
   const { threadId } = useParams<{ threadId: string }>()
+  const [recipient, setRecipient] = useState()
+  const { selectedDid } = useChat()
+  const newThread = threadId === 'new-thread'
   const { agent } = useVeramo()
   const { data: messages } = useQuery(
-    ['chats', { id: agent?.context.id }],
+    ['chats', { id: agent?.context.id, threadId: threadId }],
     async () => {
       const owned = await agent?.didManagerFind()
       const _messages = await agent?.dataStoreORMGetMessages({
@@ -30,6 +34,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
     },
     {
       refetchInterval: 1000,
+      enabled: !newThread,
     },
   )
 
@@ -57,11 +62,15 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
           )
         })}
       </ChatScrollPanel>
-      {messages && (
+      {(messages || newThread) && (
         <ChatInput
           threadId={threadId}
-          viewer={messages[0].isSender ? messages[0].from : messages[0].to}
-          recipient={!messages[0].isSender ? messages[0].from : messages[0].to}
+          viewer={selectedDid}
+          recipient={
+            messages && messages[0].from !== selectedDid
+              ? messages && messages[0].from
+              : messages && messages[0].to
+          }
         />
       )}
     </div>

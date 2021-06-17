@@ -61,7 +61,8 @@
     "@veramo/selective-disclosure": "^3.1.2-next.84",
     "commander": "^7.0.0",
     "express": "^4.17.1",
-    "express-favicon": "^2.0.1"
+    "express-favicon": "^2.0.1",
+    "uuid": "^8.3.2"
   },
   "release": {
     "branches": [
