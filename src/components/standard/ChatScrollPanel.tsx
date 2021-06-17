@@ -3,32 +3,36 @@ import { Col } from 'antd'
 
 interface ChatScrollPanelProps {
   reverse?: boolean
+  id?: string
 }
 
 const ChatScrollPanel: React.FC<ChatScrollPanelProps> = ({
   children,
   reverse,
+  id,
 }) => {
   const reverseStyles = reverse
     ? {
-        // justifyContent: 'flex-end',
-        // display: 'flex',
-        paddingBottom: 100,
+        paddingBottom: 200,
+        flexDirection: 'row-reverse',
       }
-    : {}
+    : {
+        flexDirection: 'column',
+      }
 
   return (
     <Col
       className={'hide-scroll'}
+      id={id}
+      // @ts-ignore
       style={{
         ...(reverse ? reverseStyles : {}),
-        flexDirection: 'column',
         flex: 1,
         overflow: 'scroll',
         height: '96vh',
       }}
     >
-      <div>{children}</div>
+      <div id="scroll-items">{children}</div>
     </Col>
   )
 }
