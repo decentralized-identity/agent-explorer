@@ -75,7 +75,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
         onChange={(e) => setMessage(e.target.value)}
       />
       <Button
-        disabled={!message}
+        disabled={!message || !recipient}
         type="link"
         icon={<SendOutlined style={{ fontSize: 28 }} />}
         onClick={() => message && sendMessage(message)}
