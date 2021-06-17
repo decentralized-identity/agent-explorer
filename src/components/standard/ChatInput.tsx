@@ -48,7 +48,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
         bottom: 0,
         left: 0,
         right: 0,
-        height: 150,
+        height: 120,
       }}
     >
       <TextArea

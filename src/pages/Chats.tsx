@@ -4,6 +4,7 @@ import Page from '../layout/SplitPage'
 import ChatThread from '../components/standard/ChatThread'
 import ChatScrollPanel from '../components/standard/ChatScrollPanel'
 import ChatWindow from '../components/standard/ChatWindow'
+import ChatHeader from '../components/standard/ChatHeader'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 
@@ -15,7 +16,6 @@ const groupBy = (arr: any[], property: string) => {
 }
 
 const ChatView = () => {
-  const { threadId } = useParams<{ threadId: string }>()
   const { agent } = useVeramo()
   const { data: threads } = useQuery(
     ['threads', { id: agent?.context.id }],
@@ -45,15 +45,7 @@ const ChatView = () => {
   return (
     <Page
       name="chats"
-      header={
-        <div
-          style={{
-            backgroundColor: '#eaeaea',
-            borderBottom: '1px solid white',
-            height: 65,
-          }}
-        ></div>
-      }
+      header={<ChatHeader />}
       leftContent={
         <div
           style={{
