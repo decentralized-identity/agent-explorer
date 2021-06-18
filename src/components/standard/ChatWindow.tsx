@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ChatScrollPanel from '../../components/standard/ChatScrollPanel'
 import ChatBubble from '../../components/standard/ChatBubble'
 import ChatInput from '../../components/standard/ChatInput'
@@ -13,10 +13,10 @@ interface ChatWindowProps {}
 
 const ChatWindow: React.FC<ChatWindowProps> = () => {
   const { threadId } = useParams<{ threadId: string }>()
-  const [recipient, setRecipient] = useState()
   const { selectedDid } = useChat()
   const newThread = threadId === 'new-thread'
   const { agent } = useVeramo()
+
   const { data: messages } = useQuery(
     ['chats', { id: agent?.context.id, threadId: threadId }],
     async () => {
@@ -67,9 +67,9 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
           threadId={threadId}
           viewer={selectedDid}
           recipient={
-            messages && messages[0].from !== selectedDid
-              ? messages && messages[0].from
-              : messages && messages[0].to
+            messages && messages.length > 0 && messages[0].from !== selectedDid
+              ? messages && messages.length > 0 && messages[0].from
+              : messages && messages.length > 0 && messages[0].to
           }
         />
       )}
