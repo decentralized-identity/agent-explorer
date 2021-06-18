@@ -31,7 +31,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const sendMessage = async (msg: string) => {
     await agent?.sendMessageDIDCommAlpha1({
       data: {
-        id: threadId === 'new-thread' ? v4() : threadId,
+        id: _threadId,
         from: viewer as string,
         to: recipient as string,
         type: 'veramo.io-chat-v1',
