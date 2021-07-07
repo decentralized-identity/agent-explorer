@@ -139,7 +139,11 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
                   {claim.credentials.map((vc, i) => {
                     return (
                       <Radio key={i} value={vc} style={{ display: 'flex' }}>
-                        {vc.credentialSubject[claim.claimType]}
+                        {
+                          vc.verifiableCredential.credentialSubject[
+                            claim.claimType
+                          ]
+                        }
                       </Radio>
                     )
                   })}
