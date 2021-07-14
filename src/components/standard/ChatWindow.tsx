@@ -9,9 +9,11 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { scrollMessages } from '../../utils/scroll'
 import { useChat } from '../../context/ChatProvider'
 
-interface ChatWindowProps {}
+interface ChatWindowProps {
+  profiles: any
+}
 
-const ChatWindow: React.FC<ChatWindowProps> = () => {
+const ChatWindow: React.FC<ChatWindowProps> = ({ profiles }) => {
   const { threadId } = useParams<{ threadId: string }>()
   const { selectedDid } = useChat()
   const newThread = threadId === 'new-thread'
@@ -50,17 +52,20 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
       }}
     >
       <ChatScrollPanel reverse id="chat-window">
-        {messages?.map((message) => {
-          return (
-            <ChatBubble
-              // @ts-ignore
-              text={message?.data?.message}
-              key={message.id}
-              // @ts-ignore
-              isSender={message.isSender}
-            />
-          )
-        })}
+        {profiles &&
+          messages?.map((message) => {
+            return (
+              <ChatBubble
+                // @ts-ignore
+                text={message?.data?.message}
+                attachment={message?.data?.attachment}
+                profile={profiles[threadId]}
+                key={message.id}
+                // @ts-ignore
+                isSender={message.isSender}
+              />
+            )
+          })}
       </ChatScrollPanel>
       {(messages || newThread) && (
         <ChatInput

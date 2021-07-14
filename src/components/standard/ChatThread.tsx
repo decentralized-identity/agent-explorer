@@ -9,13 +9,25 @@ const { Title, Text } = Typography
 interface ChatThreadProps {
   thread: any
   threadId: string
+  threadProfile: any
 }
 
-const ChatThread: React.FC<ChatThreadProps> = ({ thread, threadId }) => {
+const ChatThread: React.FC<ChatThreadProps> = ({
+  thread,
+  threadId,
+  threadProfile,
+}) => {
   const { selectedDid, setComposing } = useChat()
   const history = useHistory()
   const lastMessage = thread[0]
   const { body } = lastMessage && JSON.parse(lastMessage.raw)
+  let recipient = lastMessage.isSender ? lastMessage.to : lastMessage.from
+
+  if (threadProfile && threadProfile[0] && threadProfile[0].profile) {
+    recipient =
+      threadProfile[0].profile.verifiableCredential.credentialSubject.name
+  }
+
   const viewThread = () => {
     setComposing(false)
     history.push(`/chats/threads/${threadId}`)
@@ -43,7 +55,7 @@ const ChatThread: React.FC<ChatThreadProps> = ({ thread, threadId }) => {
       />
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <Title level={5} style={{ marginBottom: 0 }}>
-          {lastMessage.isSender ? lastMessage.to : lastMessage.from}
+          {recipient}
         </Title>
         <Text>{body.message}</Text>
       </div>
