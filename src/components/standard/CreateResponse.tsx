@@ -57,7 +57,7 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
     if (presentation) {
       const messageId = uuidv4()
       const didCommMessage = {
-        type: 'application/didcomm-encrypted+json',
+        type: 'veramo.io/chat/v1/basicmessage',
         to: message?.from as string,
         from: presenter as string,
         id: messageId,

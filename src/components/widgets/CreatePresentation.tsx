@@ -114,7 +114,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
     try {
       const messageId = uuidv4()
       const message = {
-        type: 'application/didcomm-encrypted+json',
+        type: 'veramo.io/chat/v1/basicmessage',
         to: subject as string,
         from: issuer as string,
         id: messageId,
