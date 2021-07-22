@@ -5,6 +5,7 @@ import { PageWidgetProps } from '../../types'
 import { issueCredential, claimToObject } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
+import { v4 as uuidv4 } from 'uuid'
 
 const { Option } = Select
 
@@ -101,15 +102,26 @@ const IssueCredential: React.FC<BarChartProps> = ({
 
   const sendVC = async (body: any) => {
     try {
-      await agent?.sendMessageDIDCommAlpha1({
-        data: {
-          to: subject as string,
-          from: issuer as string,
-          type: proofFormat,
-          body: proofFormat === 'jwt' ? body.proof.jwt : body,
-        },
-        save: true,
+      const messageId = uuidv4()
+      const message = {
+        type: 'application/didcomm-encrypted+json',
+        to: subject as string,
+        from: issuer as string,
+        id: messageId,
+        body: body,
+      }
+      const packedMessage = await agent?.packDIDCommMessage({
+        packing: 'anoncrypt',
+        message,
       })
+      if (packedMessage) {
+        console.log(packedMessage)
+        await agent?.sendDIDCommMessage({
+          messageId: messageId,
+          packedMessage,
+          recipientDidUrl: subject as string,
+        })
+      }
     } catch (err) {
       console.log(err)
 

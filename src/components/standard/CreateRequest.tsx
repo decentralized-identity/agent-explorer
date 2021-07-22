@@ -4,6 +4,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useQueryClient } from 'react-query'
 import { ICredentialRequestInput, Issuer } from '@veramo/selective-disclosure'
 import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons'
+import { v4 as uuidv4 } from 'uuid'
 
 interface CreateRequestProps {}
 
@@ -87,14 +88,25 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
 
     if (subject && request) {
       try {
-        await agent?.sendMessageDIDCommAlpha1({
-          data: {
-            to: subject as string,
-            from: issuer as string,
-            type: 'jwt',
-            body: request,
-          },
+        const messageId = uuidv4()
+        const message = {
+          type: 'application/didcomm-encrypted+json',
+          to: subject as string,
+          from: issuer as string,
+          id: messageId,
+          body: request,
+        }
+        const packedMessage = await agent?.packDIDCommMessage({
+          packing: 'anoncrypt',
+          message,
         })
+        if (packedMessage) {
+          await agent?.sendDIDCommMessage({
+            messageId: messageId,
+            packedMessage,
+            recipientDidUrl: subject as string,
+          })
+        }
       } catch (err) {
         console.log(err)
       }
