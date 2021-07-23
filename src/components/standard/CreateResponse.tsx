@@ -65,7 +65,7 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
       }
 
       const packedMessage = await agent?.packDIDCommMessage({
-        packing: 'anoncrypt',
+        packing: 'authcrypt',
         message: didCommMessage,
       })
 

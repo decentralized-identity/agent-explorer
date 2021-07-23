@@ -104,14 +104,14 @@ const IssueCredential: React.FC<BarChartProps> = ({
     try {
       const messageId = uuidv4()
       const message = {
-        type: 'veramo.io/chat/v1/basicmessagey',
+        type: 'veramo.io/chat/v1/basicmessage',
         to: subject as string,
         from: issuer as string,
         id: messageId,
         body: body,
       }
       const packedMessage = await agent?.packDIDCommMessage({
-        packing: 'anoncrypt',
+        packing: 'authcrypt',
         message,
       })
       if (packedMessage) {

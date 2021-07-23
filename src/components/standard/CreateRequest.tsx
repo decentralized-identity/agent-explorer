@@ -97,7 +97,7 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
           body: request,
         }
         const packedMessage = await agent?.packDIDCommMessage({
-          packing: 'anoncrypt',
+          packing: 'authcrypt',
           message,
         })
         if (packedMessage) {
