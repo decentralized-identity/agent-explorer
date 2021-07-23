@@ -18,7 +18,7 @@
     "test": "craco test --watchAll=false",
     "release": "semantic-release",
     "agent-explore": "./bin/bin.js",
-    "upgrade:next": "yarn add @veramo/core@next @veramo/credential-w3c@next @veramo/data-store@next @veramo/did-comm@next @veramo/did-jwt@next @veramo/did-resolver@next @veramo/message-handler@next @veramo/remote-client@next @veramo/selective-disclosure@next"
+    "upgrade:next": "yarn add @veramo/core@next @veramo/credential-w3c@next @veramo/selective-disclosure@next"
   },
   "homepage": "https://explore.veramo.dev",
   "eslintConfig": {
@@ -54,6 +54,10 @@
     ]
   },
   "dependencies": {
+    "@veramo-community/veramo-react": "^1.0.2",
+    "@veramo/core": "^2.0.2-next.8",
+    "@veramo/credential-w3c": "^2.0.2-next.8",
+    "@veramo/selective-disclosure": "^2.0.2-next.8",
     "commander": "^7.0.0",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1"
@@ -99,16 +103,6 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.7",
     "@types/uuid": "^8.3.1",
-    "@veramo-community/veramo-react": "^1.0.2",
-    "@veramo/core": "^2.0.1-next.6",
-    "@veramo/credential-w3c": "^2.0.1-next.6",
-    "@veramo/data-store": "^2.0.1-next.6",
-    "@veramo/did-comm": "^2.0.1-next.6",
-    "@veramo/did-jwt": "^2.0.1-next.6",
-    "@veramo/did-resolver": "^2.0.1-next.6",
-    "@veramo/message-handler": "^2.0.1-next.6",
-    "@veramo/remote-client": "^2.0.1-next.6",
-    "@veramo/selective-disclosure": "^2.0.1-next.6",
     "antd": "^4.11.2",
     "chart.js": "^2.9.4",
     "craco-less": "^1.17.1",
