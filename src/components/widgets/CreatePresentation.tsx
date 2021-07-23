@@ -17,6 +17,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 
 import { useQuery } from 'react-query'
 import { format } from 'date-fns'
+import { v4 as uuidv4 } from 'uuid'
 
 const { Option } = Select
 
@@ -111,15 +112,25 @@ const CreatePresentation: React.FC<BarChartProps> = ({
 
   const sendVP = async (body: any) => {
     try {
-      await agent?.sendMessageDIDCommAlpha1({
-        data: {
-          to: subject as string,
-          from: issuer as string,
-          type: proofFormat,
-          body: proofFormat === 'jwt' ? body.proof.jwt : body,
-        },
-        save: true,
+      const messageId = uuidv4()
+      const message = {
+        type: 'veramo.io/chat/v1/basicmessage',
+        to: subject as string,
+        from: issuer as string,
+        id: messageId,
+        body: body,
+      }
+      const packedMessage = await agent?.packDIDCommMessage({
+        packing: 'authcrypt',
+        message: message,
       })
+      if (packedMessage) {
+        await agent?.sendDIDCommMessage({
+          messageId: messageId,
+          packedMessage,
+          recipientDidUrl: subject as string,
+        })
+      }
     } catch (err) {
       console.log(err)
       agent?.handleMessage({ raw: body.proof.jwt, save: true })

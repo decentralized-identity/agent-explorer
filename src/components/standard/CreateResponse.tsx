@@ -7,6 +7,7 @@ import { format } from 'date-fns'
 import md5 from 'md5'
 import useSelectedCredentials from '../../hooks/useSelectCredentials'
 import { signVerifiablePresentation } from '../../utils/signing'
+import { v4 as uuidv4 } from 'uuid'
 
 // Move
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
@@ -53,18 +54,29 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
       Object.keys(selected).map((key) => selected[key].vc),
       'jwt',
     )
-
-    await agent?.sendMessageDIDCommAlpha1({
-      save: true,
-      ...(message?.replyUrl ? { url: message.replyUrl } : {}),
-      data: {
-        from: presenter as string,
+    if (presentation) {
+      const messageId = uuidv4()
+      const didCommMessage = {
+        type: 'veramo.io/chat/v1/basicmessage',
         to: message?.from as string,
-        type: 'jwt',
-        body: presentation.proof.jwt,
-      },
-    })
+        from: presenter as string,
+        id: messageId,
+        body: presentation,
+      }
 
+      const packedMessage = await agent?.packDIDCommMessage({
+        packing: 'authcrypt',
+        message: didCommMessage,
+      })
+
+      if (packedMessage) {
+        await agent?.sendDIDCommMessage({
+          messageId: messageId,
+          packedMessage,
+          recipientDidUrl: message?.from as string,
+        })
+      }
+    }
     setPresenter('')
   }
 
@@ -139,7 +151,11 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
                   {claim.credentials.map((vc, i) => {
                     return (
                       <Radio key={i} value={vc} style={{ display: 'flex' }}>
-                        {vc.credentialSubject[claim.claimType]}
+                        {
+                          vc.verifiableCredential.credentialSubject[
+                            claim.claimType
+                          ]
+                        }
                       </Radio>
                     )
                   })}
