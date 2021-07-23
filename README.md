@@ -2,7 +2,7 @@
 
 ## Basic architecture
 
-Agent Explorer is provides a quick and easy UI framwork to get started building and testing features in Veramo. If you have an idea to build someting you can create a Widget for it and pin it to your dashboard for ease of access. As we use it internally for building new features, POCs and demos we designed it to be as flexible as possible with the most common use cases surfaced.
+Agent Explorer is provides a quick and easy UI framework to get started building and testing features in Veramo. If you have an idea to build something you can create a Widget for it and pin it to your dashboard for ease of access. As we use it internally for building new features, POCs and demos we designed it to be as flexible as possible with the most common use cases surfaced.
 
 ### Pages
 
