@@ -6,7 +6,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import JsonBlock from '../components/standard/Json'
-import IDModule from '../components/standard/Identifier'
+import IDModule from '../components/standard/IdentifierKeys'
 import { BlockOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
