@@ -1,3 +1,9 @@
+import { IDIDManager, TAgent } from '@veramo/core'
+import { ICredentialIssuer } from '@veramo/credential-w3c'
+import { ISelectiveDisclosure } from '@veramo/selective-disclosure'
+
+export type ConfiguredAgent = TAgent<ICredentialIssuer & IDIDManager & ISelectiveDisclosure>
+
 export interface PageWidgetConfig {
   /**
    * This is the function name
@@ -64,3 +70,4 @@ export interface PageWidgetProps {
    */
   noPadding?: boolean
 }
+

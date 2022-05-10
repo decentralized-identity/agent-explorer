@@ -18,6 +18,9 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { format } from 'date-fns'
 import { v4 as uuidv4 } from 'uuid'
+import { IDIDManager } from '@veramo/core'
+import { ICredentialIssuer, ProofFormat } from '@veramo/credential-w3c'
+import { ISelectiveDisclosure } from '@veramo/selective-disclosure'
 
 const { Option } = Select
 
@@ -70,12 +73,13 @@ const CreatePresentation: React.FC<BarChartProps> = ({
   remove,
   removeDisabled,
 }) => {
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<ICredentialIssuer & IDIDManager & ISelectiveDisclosure, any>()
+  if (!agent) throw Error('No agent')
   const [selectedCredentials, setSelectedCredentials] = useState<any[]>([])
   const [sending] = useState<boolean>(false)
   const [issuer, setIssuer] = useState<string>('')
   const [subject, setSubject] = useState<string>('')
-  const [proofFormat, setProofFormat] = useState('jwt')
+  const [proofFormat, setProofFormat] = useState<ProofFormat>('jwt')
   const { data: credentials, isLoading: credentialHistoryLoading } = useQuery(
     ['credentials'],
     () => agent?.dataStoreORMGetVerifiableCredentials(),
@@ -94,7 +98,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
 
   const signVP = async (send?: boolean) => {
     const vp = await signVerifiablePresentation(
-      agent,
+      agent, 
       issuer,
       [subject],
       selectedCredentials,
@@ -178,7 +182,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
         <Form.Item>
           <Select
             style={{ width: '60%' }}
-            onChange={(e) => setProofFormat(e as string)}
+            onChange={(e) => setProofFormat(e as ProofFormat)}
             placeholder="jwt or lds"
             defaultActiveFirstOption={true}
           >

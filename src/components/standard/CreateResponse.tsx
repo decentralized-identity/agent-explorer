@@ -8,6 +8,9 @@ import md5 from 'md5'
 import useSelectedCredentials from '../../hooks/useSelectCredentials'
 import { signVerifiablePresentation } from '../../utils/signing'
 import { v4 as uuidv4 } from 'uuid'
+import { ICredentialIssuer } from '@veramo/credential-w3c'
+import { IDIDManager, W3CVerifiableCredential } from '@veramo/core'
+import { ISelectiveDisclosure } from '@veramo/selective-disclosure'
 
 // Move
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
@@ -18,7 +21,8 @@ const uri = (did: string) => {
 interface CreateResponseProps {}
 
 const CreateResponse: React.FC<CreateResponseProps> = () => {
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<ICredentialIssuer & IDIDManager & ISelectiveDisclosure, any>()
+  if (!agent) throw Error('no agent')
   const [presenter, setPresenter] = useState<string>('')
   const { messageId } = useParams<{ messageId: string }>()
   const { data: message, isLoading } = useQuery(
@@ -51,7 +55,7 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
       agent,
       presenter as string,
       [message?.from as string],
-      Object.keys(selected).map((key) => selected[key].vc),
+      Object.keys(selected).map((key) => selected[key].vc?.verifiableCredential as W3CVerifiableCredential),
       'jwt',
     )
     if (presentation) {

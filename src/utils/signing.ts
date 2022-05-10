@@ -1,3 +1,7 @@
+import { W3CVerifiableCredential } from "@veramo/core"
+import { ProofFormat } from "@veramo/credential-w3c"
+import { ConfiguredAgent } from "../types"
+
 const shortId = (did: string) => `${did.slice(0, 15)}...${did.slice(-4)}`
 
 const claimToObject = (arr: any[]) => {
@@ -32,11 +36,11 @@ const issueCredential = async (
 }
 
 const signVerifiablePresentation = async (
-  agent: any,
+  agent: ConfiguredAgent,
   did: string,
   verifier: string[],
-  selected: any,
-  proofFormat: string,
+  selected: W3CVerifiableCredential[],
+  proofFormat: ProofFormat,
 ) => {
   return await agent?.createVerifiablePresentation({
     presentation: {
