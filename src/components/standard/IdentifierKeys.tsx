@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Card, List, message } from 'antd'
+import { Button, Card, List } from 'antd'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import IdentifierKey from './IdentifierKey'
