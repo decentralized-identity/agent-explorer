@@ -1,10 +1,13 @@
 import React from 'react'
-import { Modal, Form, Input } from 'antd'
+import { Modal, Form, Input, Select } from 'antd'
+import { TKeyType } from '@veramo/core'
+
+const { Option } = Select
 
 export interface AddKeyModalValues {
   kid: string
   kms: string
-  type: string
+  type: TKeyType
   publicKeyHex: string
   privateKeyHex?: string
 }
@@ -21,6 +24,10 @@ const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
   onCancel,
 }) => {
   const [form] = Form.useForm()
+
+  const onTypeChange = (value: string) => {
+    form.setFieldsValue({ type: value })
+  }
   return (
     <Modal
       visible={visible}
@@ -63,6 +70,25 @@ const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
           ]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          name="type"
+          label="Type"
+          rules={[
+            { required: true, message: 'Please select the TYPE of the key!' },
+          ]}
+        >
+          <Select
+            placeholder="Select a type of key"
+            onChange={onTypeChange}
+            allowClear
+          >
+            <Option value="Ed25519">Ed25519</Option>
+            <Option value="Secp256k1">Secp256k1</Option>
+            <Option value="X25519">X25519</Option>
+            <Option value="Bls12381G1">Bls12381G1</Option>
+            <Option value="Bls12381G2">Bls12381G2</Option>
+          </Select>
         </Form.Item>
         <Form.Item
           name="publicKeyHex"

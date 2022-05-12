@@ -55,7 +55,7 @@
     ]
   },
   "dependencies": {
-    "@veramo-community/veramo-react": "^1.0.29",
+    "@veramo-community/veramo-react": "^1.0.63",
     "@veramo/core": "^3.1.2-next.84",
     "@veramo/credential-w3c": "^3.1.2-next.84",
     "@veramo/selective-disclosure": "^3.1.2-next.84",
@@ -118,8 +118,8 @@
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "random-words": "^1.1.1",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
     "react-query": "^3.6.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^4.0.1",

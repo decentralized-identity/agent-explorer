@@ -6,6 +6,7 @@ import { issueCredential, claimToObject } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
+import { IIdentifier } from '@veramo/core'
 
 const { Option } = Select
 
@@ -164,7 +165,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
             defaultActiveFirstOption={true}
           >
             {identifiers &&
-              identifiers.map((id) => (
+              identifiers.map((id: IIdentifier) => (
                 <Option key={id.did} value={id.did as string}>
                   {id.did}
                 </Option>

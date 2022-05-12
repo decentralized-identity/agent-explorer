@@ -4,6 +4,7 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import IdentifierKey from './IdentifierKey'
 import AddKeyModalForm, { AddKeyModalValues } from './AddKeyModalForm'
+import { TKeyType } from '@veramo/core'
 
 interface IdentifierModuleProps {
   title: string
@@ -30,8 +31,10 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
   }
 
   const handleOk = (values: AddKeyModalValues) => {
-    message.error('not yet supported')
-    //agent?.didManagerAddKey({ did: identifier, key: {...values, type: t}})
+    agent?.didManagerAddKey({
+      did: identifier,
+      key: { ...values, type: values.type as TKeyType },
+    })
     setIsModalVisible(false)
   }
 
@@ -55,10 +58,12 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
       />
       <List
         dataSource={
-          (data as any)?.verificationMethod || (data as any)?.publicKey
+          data?.didDocument?.verificationMethod || data?.didDocument?.publicKey
         }
         renderItem={(item: any, i: number) => {
-          return <IdentifierKey i={i} item={item} did={(data as any).id} />
+          return (
+            <IdentifierKey i={i} item={item} did={data?.didDocument?.id!} />
+          )
         }}
       ></List>
     </Card>

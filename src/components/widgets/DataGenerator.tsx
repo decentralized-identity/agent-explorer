@@ -156,7 +156,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
                 onSelect={(value: string) => setIdentifierProvider(value)}
                 defaultValue="did:ethr:rinkeby"
               >
-                {providers?.map((provider) => {
+                {providers?.map((provider: string) => {
                   return (
                     <Select.Option key={provider} value={provider}>
                       {provider}

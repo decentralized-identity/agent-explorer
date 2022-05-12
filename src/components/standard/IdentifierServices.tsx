@@ -54,9 +54,11 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
         }}
       />
       <List
-        dataSource={(data as any)?.service}
+        dataSource={data?.didDocument?.service}
         renderItem={(item: any, i: number) => {
-          return <IdentifierService i={i} item={item} did={(data as any).id} />
+          return (
+            <IdentifierService i={i} item={item} did={data?.didDocument?.id!} />
+          )
         }}
       ></List>
     </Card>
