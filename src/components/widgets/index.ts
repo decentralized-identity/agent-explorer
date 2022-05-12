@@ -39,11 +39,6 @@ export const WIDGET_MAP: { [index: string]: PageWidgetConfig } = {
     config: {},
     unlisted: true,
   },
-  CREATE_IDENTIFIER: {
-    widgetName: 'CreateIdentifier',
-    widgetLabel: 'Create Identifier',
-    config: {},
-  },
 }
 
 export const PAGE_DEFAULT_WIDGETS: PageWidgetDefaults = {
