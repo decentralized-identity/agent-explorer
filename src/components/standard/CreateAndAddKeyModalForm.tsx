@@ -1,27 +1,24 @@
 import React from 'react'
-import { Modal, Form, Input, Select } from 'antd'
+import { Modal, Form, Select } from 'antd'
 import { TKeyType } from '@veramo/core'
 
 const { Option } = Select
 
-export interface AddKeyModalValues {
-  kid: string
+export interface CreateAndAddKeyModalValues {
   kms: string
   type: TKeyType
-  publicKeyHex: string
-  privateKeyHex?: string
 }
 
-interface AddKeyModalFormProps {
+interface CreateAndAddKeyModalFormProps {
   visible: boolean
-  onAdd: (values: AddKeyModalValues) => void
+  onCreateAndAdd: (values: CreateAndAddKeyModalValues) => void
   onCancel: () => void
   kmsOptions: string[]
 }
 
-const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
+const CreateAndAddKeyModalForm: React.FC<CreateAndAddKeyModalFormProps> = ({
   visible,
-  onAdd,
+  onCreateAndAdd,
   onCancel,
   kmsOptions,
 }) => {
@@ -36,7 +33,7 @@ const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
   return (
     <Modal
       visible={visible}
-      title="Add Public Key to DID"
+      title="Create New Key and add to this DID"
       okText="Create"
       cancelText="Cancel"
       onCancel={onCancel}
@@ -45,7 +42,7 @@ const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
           .validateFields()
           .then((values) => {
             form.resetFields()
-            onAdd(values)
+            onCreateAndAdd(values)
           })
           .catch((info) => {
             console.log('Validate Failed:', info)
@@ -58,15 +55,6 @@ const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
         name="form_in_modal"
         initialValues={{}}
       >
-        <Form.Item
-          name="kid"
-          label="Key ID"
-          rules={[
-            { required: true, message: 'Please input the ID of the key!' },
-          ]}
-        >
-          <Input />
-        </Form.Item>
         <Form.Item
           name="kms"
           label="Key Management System"
@@ -103,25 +91,9 @@ const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
             <Option value="Bls12381G2">Bls12381G2</Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          name="publicKeyHex"
-          label="Public Key Hex"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the Public Key Hex of the key!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item name="privateKeyHex" label="Private Key Hex (optional)">
-          <Input />
-        </Form.Item>
-        {/* TODO: Add key metadata */}
       </Form>
     </Modal>
   )
 }
 
-export default AddKeyModalForm
+export default CreateAndAddKeyModalForm

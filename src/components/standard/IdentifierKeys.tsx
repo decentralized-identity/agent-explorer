@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
-import { Button, Card, List } from 'antd'
+import { Button, Card, List, message } from 'antd'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import IdentifierKey from './IdentifierKey'
 import AddKeyModalForm, { AddKeyModalValues } from './AddKeyModalForm'
-import { TKeyType } from '@veramo/core'
+import CreateAndAddKeyModalForm, {
+  CreateAndAddKeyModalValues,
+} from './CreateAndAddKeyModalForm'
 
 interface IdentifierModuleProps {
   title: string
@@ -23,23 +25,41 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
     () => agent?.resolveDid({ didUrl: identifier }),
     { enabled: !!identifier },
   )
+  const { data: kmsOptions } = useQuery(
+    ['kms', { agentId: agent?.context.id }],
+    () => agent?.keyManagerGetKeyManagementSystems(),
+  )
 
-  const [isModalVisible, setIsModalVisible] = useState(false)
-
-  const showModal = () => {
-    setIsModalVisible(true)
+  // Create and Add New Key Modal
+  const [isCreateAddModalVisible, setIsCreateAddModalVisible] = useState(false)
+  const showCreateAddModal = () => {
+    setIsCreateAddModalVisible(true)
   }
-
-  const handleOk = (values: AddKeyModalValues) => {
-    agent?.didManagerAddKey({
+  const handleCreateAddOk = async (values: CreateAndAddKeyModalValues) => {
+    const { kms, type } = values
+    const key = await agent?.keyManagerCreate({ kms, type })
+    await agent?.didManagerAddKey({
       did: identifier,
-      key: { ...values, type: values.type as TKeyType },
+      // @ts-ignore
+      key,
     })
-    setIsModalVisible(false)
+    setIsCreateAddModalVisible(false)
+  }
+  const handleCreateAddCancel = () => {
+    setIsCreateAddModalVisible(false)
   }
 
-  const handleCancel = () => {
-    setIsModalVisible(false)
+  // Add Existing Key Modal
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false)
+  const showAddModal = () => {
+    setIsAddModalVisible(true)
+  }
+  const handleAddOk = async (values: AddKeyModalValues) => {
+    message.error('not implemented yet')
+    setIsAddModalVisible(false)
+  }
+  const handleAddCancel = () => {
+    setIsAddModalVisible(false)
   }
 
   return (
@@ -47,14 +67,26 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
       title={title}
       style={{ flexWrap: 'wrap' }}
       loading={isLoading}
-      actions={[<Button onClick={() => showModal()}>Add Key</Button>]}
+      actions={[
+        <Button onClick={() => showCreateAddModal()}>Create New Key</Button>,
+        <Button onClick={() => showAddModal()}>Add Existing Key</Button>,
+      ]}
     >
-      <AddKeyModalForm
-        visible={isModalVisible}
-        onAdd={handleOk}
+      <CreateAndAddKeyModalForm
+        visible={isCreateAddModalVisible}
+        onCreateAndAdd={handleCreateAddOk}
         onCancel={() => {
-          handleCancel()
+          handleCreateAddCancel()
         }}
+        kmsOptions={kmsOptions!}
+      />
+      <AddKeyModalForm
+        visible={isAddModalVisible}
+        onAdd={handleAddOk}
+        onCancel={() => {
+          handleAddCancel()
+        }}
+        kmsOptions={kmsOptions!}
       />
       <List
         dataSource={
