@@ -6,7 +6,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import JsonBlock from '../components/standard/Json'
-import IDModule from '../components/standard/Identifier'
+import IDModule from '../components/standard/IdentifierKeys'
 import { BlockOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
@@ -25,7 +25,7 @@ const Credential = () => {
     where: [
       {
         column: 'issuer',
-        value: [credential?.issuer.id as string],
+        value: [credential?.issuer],
       },
       {
         column: 'subject',
@@ -65,7 +65,7 @@ const Credential = () => {
       <Layout>
         <Card title="Context">
           <List
-            dataSource={credential?.['@context']}
+            dataSource={credential?.['@context'] as string[]}
             renderItem={(item: any, i: number) => {
               return (
                 <List.Item key={i}>
@@ -86,7 +86,7 @@ const Credential = () => {
         <IDModule
           cacheKey="issuer"
           title="Issuer"
-          identifier={credential?.issuer.id as string}
+          identifier={credential?.issuer as string}
         />
         <IDModule
           cacheKey="subject"
@@ -96,7 +96,7 @@ const Credential = () => {
       </Layout>
     )
   }
-
+  console.log('credential: ', credential)
   return (
     <Page
       name="credential"
@@ -105,7 +105,7 @@ const Credential = () => {
           <Title style={{ fontWeight: 'bold' }}>Verifiable Credential</Title>
           <Row style={{}} justify="space-between">
             <Col>
-              {credential?.type.map((type: string) => {
+              {(credential?.type as string[])?.map((type: string) => {
                 return (
                   <Tag color="geekblue" key={type}>
                     {type}

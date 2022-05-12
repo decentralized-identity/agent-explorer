@@ -5,6 +5,7 @@ import { formatDistanceToNow, format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
+import { IIdentifier, IMessage } from '@veramo/core'
 
 const { Title } = Typography
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
@@ -37,14 +38,14 @@ const Messages = () => {
     () => agent?.didManagerFind(),
   )
   const isManaged = (did: string) => {
-    return managedIdentifiers?.find((i) => i.did === did)
+    return managedIdentifiers?.find((i: IIdentifier) => i.did === did)
   }
 
   return (
     <Page header={<Title style={{ fontWeight: 'bold' }}>Activity</Title>}>
       <List
         dataSource={messages}
-        renderItem={(item, index) => (
+        renderItem={(item: IMessage, index: number) => (
           <Card key={index}>
             <Card.Meta
               avatar={<Avatar size="large" src={uri(item.from || '')} />}
@@ -64,9 +65,12 @@ const Messages = () => {
                     <Card.Meta
                       style={{ marginBottom: 15 }}
                       title="Issuer"
-                      description={vc.issuer.id}
+                      description={vc.issuer}
                       avatar={
-                        <Avatar size="large" src={uri(vc.issuer.id || '')} />
+                        <Avatar
+                          size="large"
+                          src={uri((vc.issuer as string) || '')}
+                        />
                       }
                     ></Card.Meta>
                     <div style={{ marginLeft: 55 }}>
@@ -92,7 +96,7 @@ const Messages = () => {
                       <Card.Meta
                         style={{ marginBottom: 15 }}
                         title="Credential Type"
-                        description={vc.type.map((type) => (
+                        description={(vc.type as string[]).map((type) => (
                           <Tag color="geekblue">{type}</Tag>
                         ))}
                       ></Card.Meta>

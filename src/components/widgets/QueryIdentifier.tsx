@@ -43,7 +43,7 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
     () => agent?.dataStoreGetVerifiableCredential({ hash: id }),
   )
   const [queryModuleIdentifier, setQueryModuleIdentifier] = useState(
-    credential?.issuer.id,
+    credential?.issuer,
   )
 
   /**
@@ -64,7 +64,7 @@ const QueryIdentifier: React.FC<QueryIdentifierProps> = ({
     setQueryModuleIdentifier(
       identifierType === 'subject'
         ? credential?.credentialSubject.id
-        : credential?.issuer.id,
+        : credential?.issuer,
     )
   }, [identifierType, credential])
 

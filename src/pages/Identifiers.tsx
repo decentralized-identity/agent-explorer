@@ -53,9 +53,12 @@ const Identifiers = () => {
     ['providers', { agentId: agent?.context.id }],
     () => agent?.didManagerGetProviders(),
   )
-  const { data: identifiers, isLoading, refetch } = useQuery(
-    ['identifiers', { agentId: agent?.context.id }],
-    () => agent?.dataStoreORMGetIdentifiers(),
+  const {
+    data: identifiers,
+    isLoading,
+    refetch,
+  } = useQuery(['identifiers', { agentId: agent?.context.id }], () =>
+    agent?.dataStoreORMGetIdentifiers(),
   )
   const generateIdentifier = async () => {
     setIdentifiersGenerating(true)
@@ -84,7 +87,7 @@ const Identifiers = () => {
               onSelect={(value: string) => setIdentifierProvider(value)}
               defaultValue="did:ethr:rinkeby"
             >
-              {providers?.map((provider) => {
+              {providers?.map((provider: string) => {
                 return (
                   <Select.Option key={provider} value={provider}>
                     {provider}
