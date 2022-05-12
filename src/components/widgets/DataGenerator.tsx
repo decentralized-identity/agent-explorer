@@ -104,6 +104,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
       await generatorUtils.createP2PCredentials(
         // @ts-ignore
         identifiers,
+        // @ts-ignore
         agent?.createVerifiableCredential,
         'Kudos',
         // @todo allow custom credential

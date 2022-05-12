@@ -26,22 +26,24 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const history = useHistory()
   const _threadId = threadId === 'new-thread' ? v4() : threadId
 
-  console.log('recipient', recipient)
-
+  const messageId = v4()
   const sendMessage = async (msg: string) => {
-    await agent?.sendMessageDIDCommAlpha1({
-      data: {
-        id: _threadId,
-        from: viewer as string,
-        to: recipient as string,
-        type: 'veramo.io-chat-v1',
-        body: {
-          message: msg,
-        },
-        // @ts-ignore
-        iat: new Date().getTime(),
-      },
-      save: true,
+    const message = {
+      type: 'veramo.io-chat-v1',
+      to: recipient as string,
+      from: viewer as string,
+      id: messageId,
+      thid: _threadId,
+      body: { message: msg },
+    }
+    const packedMessage = await agent?.packDIDCommMessage({
+      packing: 'jws',
+      message,
+    })!
+    await agent?.sendDIDCommMessage({
+      packedMessage,
+      messageId,
+      recipientDidUrl: recipient,
     })
 
     setMessage('')

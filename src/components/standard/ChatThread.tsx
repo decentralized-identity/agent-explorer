@@ -45,7 +45,7 @@ const ChatThread: React.FC<ChatThreadProps> = ({ thread, threadId }) => {
         <Title level={5} style={{ marginBottom: 0 }}>
           {lastMessage.isSender ? lastMessage.to : lastMessage.from}
         </Title>
-        <Text>{body.message}</Text>
+        <Text>{body?.data.message}</Text>
       </div>
     </Row>
   )

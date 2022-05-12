@@ -8,6 +8,7 @@ import { useQuery } from 'react-query'
 import { FormOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 import { SelectProps } from 'antd/es/select'
+import { IIdentifier } from '@veramo/core'
 
 interface ChatHeaderProps {}
 
@@ -71,10 +72,13 @@ const ChatHeader: React.FC<ChatHeaderProps> = ({}) => {
     ['identifiers', { id: agent?.context.id }],
     () => agent?.didManagerFind(),
     {
-      onSuccess: (data) => {
+      onSuccess: (data: IIdentifier[]) => {
         if (data) {
-          setSelectedDid(data[0].did)
-          setUri(identiconUri(data[0].did))
+          const didsWithDIDComm = data.filter((did) =>
+            did.services.some((service) => service.type === 'DIDCommMessaging'),
+          )
+          setSelectedDid(didsWithDIDComm[1].did)
+          setUri(identiconUri(didsWithDIDComm[1].did))
         }
       },
     },

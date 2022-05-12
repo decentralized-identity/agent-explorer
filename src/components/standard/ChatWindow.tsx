@@ -50,7 +50,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
       }}
     >
       <ChatScrollPanel reverse id="chat-window">
-        {messages?.map((message) => {
+        {messages?.map((message: any) => {
           return (
             <ChatBubble
               // @ts-ignore

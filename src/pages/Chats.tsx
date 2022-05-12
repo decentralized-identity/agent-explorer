@@ -27,7 +27,7 @@ const ChatView = () => {
         order: [{ column: 'createdAt', direction: 'DESC' }],
       })
 
-      const senderTagged = messages?.map((message) => {
+      const senderTagged = messages?.map((message: any) => {
         return {
           ...message,
           isSender: owned?.map((a: any) => a.did).includes(message.from),
