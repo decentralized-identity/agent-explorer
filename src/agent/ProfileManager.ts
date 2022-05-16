@@ -1,5 +1,9 @@
-import { IAgentPlugin, IPluginMethodMap, IAgentContext } from '@veramo/core'
-import { IDataStoreORM } from '@veramo/data-store'
+import {
+  IAgentPlugin,
+  IPluginMethodMap,
+  IAgentContext,
+  IDataStoreORM,
+} from '@veramo/core'
 import { IProfile } from '../types'
 import parse from 'url-parse'
 import md5 from 'md5'
@@ -37,23 +41,31 @@ export class ProfileManager implements IAgentPlugin {
         did: args.did,
         name: parsed.hostname,
         nickname: parsed.pathname,
-        picture: defaultPictureUrl
+        picture: defaultPictureUrl,
       }
     }
 
     if (args.did.substr(0, 7) === 'did:nft') {
       const split = args.did.split(':')
-      const asset = await (await fetch(`https://api.opensea.io/api/v1/asset/${split[3]}/${split[4]}/`)).json()
-  
+      const asset = await (
+        await fetch(
+          `https://api.opensea.io/api/v1/asset/${split[3]}/${split[4]}/`,
+        )
+      ).json()
+
       return {
         did: args.did,
         name: asset?.name,
         nickname: asset?.description,
-        picture: asset?.image_preview_url
+        picture: asset?.image_preview_url,
       }
     }
 
-    if (!context.agent.availableMethods().includes('dataStoreORMGetVerifiableCredentials')) {
+    if (
+      !context.agent
+        .availableMethods()
+        .includes('dataStoreORMGetVerifiableCredentials')
+    ) {
       return { did: args.did, name: args.did, picture: defaultPictureUrl }
     }
     const result = await context.agent.dataStoreORMGetVerifiableCredentials({
@@ -64,7 +76,8 @@ export class ProfileManager implements IAgentPlugin {
       order: [{ column: 'issuanceDate', direction: 'DESC' }],
     })
     if (result.length > 0) {
-      const { name, nickname, picture } = result[0].verifiableCredential.credentialSubject
+      const { name, nickname, picture } =
+        result[0].verifiableCredential.credentialSubject
       return { did: args.did, name, nickname, picture }
     } else {
       return { did: args.did, name: args.did, picture: defaultPictureUrl }

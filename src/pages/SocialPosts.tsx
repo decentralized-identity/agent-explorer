@@ -4,22 +4,24 @@ import Page from '../layout/Page'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import PostButton from '../components/modules/PostButton'
+import { IDataStoreORM } from '@veramo/core'
 
 const { Title } = Typography
 
 const Credentials = () => {
-
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDataStoreORM>()
   const { data: credentials } = useQuery(
     ['credentials', { agentId: agent?.context.name }],
-    () => agent?.dataStoreORMGetVerifiableCredentials({
-      where: [
-        { column: 'type', value: ['VerifiableCredential,VerifiableSocialPosting'] }
-      ],
-      order: [
-        {column: 'issuanceDate', direction: 'DESC'}
-      ]
-    }),
+    () =>
+      agent?.dataStoreORMGetVerifiableCredentials({
+        where: [
+          {
+            column: 'type',
+            value: ['VerifiableCredential,VerifiableSocialPosting'],
+          },
+        ],
+        order: [{ column: 'issuanceDate', direction: 'DESC' }],
+      }),
   )
 
   return (
@@ -29,12 +31,27 @@ const Credentials = () => {
       <List
         itemLayout="horizontal"
         dataSource={credentials}
-        renderItem={item => (
+        renderItem={(item) => (
           <List.Item>
             <List.Item.Meta
-              avatar={<Avatar src={item.verifiableCredential.credentialSubject.author?.image} size='large'/>}
-              title={<a href={'/credential/' + item.hash}>{item.verifiableCredential.credentialSubject.author?.name}</a>}
-              description={item.verifiableCredential.credentialSubject?.headline + ' ' + item.verifiableCredential.credentialSubject?.articleBody}
+              avatar={
+                <Avatar
+                  src={
+                    item.verifiableCredential.credentialSubject.author?.image
+                  }
+                  size="large"
+                />
+              }
+              title={
+                <a href={'/credential/' + item.hash}>
+                  {item.verifiableCredential.credentialSubject.author?.name}
+                </a>
+              }
+              description={
+                item.verifiableCredential.credentialSubject?.headline +
+                ' ' +
+                item.verifiableCredential.credentialSubject?.articleBody
+              }
             />
           </List.Item>
         )}

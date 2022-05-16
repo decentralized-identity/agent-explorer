@@ -1,55 +1,49 @@
-import { Web3Provider } from '@ethersproject/providers'
-import { TKeyType, IKey, EcdsaSignature } from '@veramo/core'
+import { TransactionRequest, Web3Provider } from '@ethersproject/providers'
+import {
+  TKeyType,
+  IKey,
+  ManagedKeyInfo,
+  MinimalImportableKey,
+} from '@veramo/core'
 import { AbstractKeyManagementSystem } from '@veramo/key-manager'
-import { normalizeCredential } from 'did-jwt-vc'
+import { toUtf8String } from '@ethersproject/strings'
+import { TypedDataDomain, TypedDataField } from '@ethersproject/abstract-signer'
+import { parse } from '@ethersproject/transactions'
+// import Debug from 'debug'
+// const debug = Debug('veramo:kms:web3')
 
-
-const getEIP712Schema = () => ({
-  VerifiableCredential: [
-    { name: '@context', type: 'string[]' },
-    { name: 'type', type: 'string[]' },
-    { name: 'id', type: 'string' },
-    { name: 'issuer', type: 'Issuer' },
-    { name: 'issuanceDate', type: 'string' },
-    { name: 'credentialSubject', type: 'CredentialSubject' },
-    { name: 'credentialSchema', type: 'CredentialSchema' }
-  ],
-  Issuer: [
-    { name: 'id', type: 'string' }
-  ],
-  CredentialSchema: [
-    { name: 'id', type: 'string' },
-    { name: 'type', type: 'string' },
-  ],
-  CredentialSubject: [
-    { name: 'type', type: 'string' },
-    { name: 'id', type: 'string' },
-    { name: 'headline', type: 'string' },
-    { name: 'articleBody', type: 'string' },
-    { name: 'author', type: 'Person' }
-  ],
-  Person: [
-    // { name: 'type', type: 'string' },
-    { name: 'id', type: 'string' },
-    // { name: 'thumbnail', type: 'string' },
-    { name: 'image', type: 'string' },
-    { name: 'name', type: 'string' }
-  ]
-})
-
-const getDomain = (activeChainId: number) => ({
-  name: 'Sign Tweet',
-  version: '1',
-  chainId: activeChainId,
-})
-
+type Eip712Payload = {
+  domain: TypedDataDomain
+  types: Record<string, TypedDataField[]>
+  primaryType: string
+  message: Record<string, any>
+}
 
 export class Web3KeyManagementSystem extends AbstractKeyManagementSystem {
+  private web3Provider: Web3Provider
   constructor(private provider: any) {
     super()
+    this.web3Provider = new Web3Provider(provider)
   }
 
-  async createKey({ type }: { type: TKeyType }): Promise<Omit<IKey, 'kms'>> {
+  async createKey({ type }: { type: TKeyType }): Promise<ManagedKeyInfo> {
+    throw Error('Not implemented')
+  }
+
+  async importKey(
+    args: Omit<MinimalImportableKey, 'kms'>,
+  ): Promise<ManagedKeyInfo> {
+    throw Error('Not implemented')
+  }
+
+  async listKeys(): Promise<ManagedKeyInfo[]> {
+    throw Error('Not implemented')
+  }
+
+  async sharedSecret(args: {
+    myKeyRef: Pick<IKey, 'kid'>
+    theirKey: Pick<IKey, 'type' | 'publicKeyHex'>
+  }): Promise<string> {
     throw Error('Not implemented')
   }
 
@@ -58,58 +52,101 @@ export class Web3KeyManagementSystem extends AbstractKeyManagementSystem {
     return true
   }
 
-  async encryptJWE({
-    key,
-    to,
+  async sign({
+    keyRef,
+    algorithm,
     data,
   }: {
-    key: IKey
-    to: IKey
-    data: string
+    keyRef: Pick<IKey, 'kid'>
+    algorithm?: string
+    data: Uint8Array
   }): Promise<string> {
-    throw Error('Not implemented')
+    if (algorithm) {
+      if (
+        ['eth_signTransaction', 'signTransaction', 'signTx'].includes(algorithm)
+      ) {
+        return await this.eth_signTransaction(data)
+      } else if (algorithm === 'eth_signMessage') {
+        return await this.eth_signMessage(data)
+      } else if (
+        ['eth_signTypedData', 'EthereumEip712Signature2021'].includes(algorithm)
+      ) {
+        return await this.eth_signTypedData(data)
+      }
+    }
+
+    throw Error(`not_supported: Cannot sign ${algorithm} `)
   }
 
-  async decryptJWE({
-    key,
-    data,
-  }: {
-    key: IKey
-    data: string
-  }): Promise<string> {
-    throw Error('Not implemented')
+  /**
+   * @returns a `0x` prefixed hex string representing the signed EIP712 data
+   */
+  private async eth_signTypedData(data: Uint8Array) {
+    let msg, msgDomain, msgTypes
+    const serializedData = toUtf8String(data)
+    try {
+      let jsonData = JSON.parse(serializedData) as Eip712Payload
+      if (
+        typeof jsonData.domain === 'object' &&
+        typeof jsonData.types === 'object'
+      ) {
+        const { domain, types, message } = jsonData
+        msg = message
+        msgDomain = domain
+        msgTypes = types
+      } else {
+        // next check will throw since the data couldn't be parsed
+      }
+    } catch (e) {
+      // next check will throw since the data couldn't be parsed
+    }
+    if (
+      typeof msgDomain !== 'object' ||
+      typeof msgTypes !== 'object' ||
+      typeof msg !== 'object'
+    ) {
+      throw Error(
+        `invalid_arguments: Cannot sign typed data. 'domain', 'types', and 'message' must be provided`,
+      )
+    }
+
+    const signature = await this.web3Provider
+      .getSigner()
+      ._signTypedData(msgDomain, msgTypes, msg)
+    return signature
   }
 
-  async signEthTX({
-    key,
-    transaction,
-  }: {
-    key: IKey
-    transaction: object
-  }): Promise<string> {
-    throw Error('Not implemented')
-    // this.provider.send
-    // return sign(transaction, '0x' + key.privateKeyHex)
+  /**
+   * @returns a `0x` prefixed hex string representing the signed message
+   */
+  private async eth_signMessage(rawMessageBytes: Uint8Array) {
+    const signature = await this.web3Provider
+      .getSigner()
+      .signMessage(rawMessageBytes)
+    // HEX encoded string, 0x prefixed
+    return signature
   }
 
-  async signJWT({
-    key,
-    data,
-  }: {
-    key: IKey
-    data: string
-  }): Promise<EcdsaSignature | string> {
-    // const p = await this.provider as any
-    const web3Provider = new Web3Provider(this.provider)
-    const { chainId } = await web3Provider.getNetwork()
+  /**
+   * @returns a `0x` prefixed hex string representing the signed raw transaction
+   */
+  private async eth_signTransaction(rlpTransaction: Uint8Array) {
+    const { v, r, s, from, ...tx } = parse(rlpTransaction)
 
-    // Hacky payload transformation
-    const w3c_vc = normalizeCredential(`${data}.signature`) as any
-    // Fix signing output
-    delete w3c_vc.proof
-
-    // signature is 0x hex endcoded.
-    const signature = await web3Provider.getSigner()._signTypedData(getDomain(chainId), getEIP712Schema(), w3c_vc)
-    return 'WEB3' + signature
+    //FIXME
+    // if (from) {
+    //   debug('WARNING: executing a transaction signing request with a `from` field.')
+    //   if (this.web3Provider.address.toLowerCase() !== from.toLowerCase()) {
+    //     const msg =
+    //       'invalid_arguments: eth_signTransaction `from` field does not match the chosen key. `from` field should be omitted.'
+    //     debug(msg)
+    //     throw new Error(msg)
+    //   }
+    // }
+    const signedRawTransaction = await this.web3Provider
+      .getSigner()
+      .signTransaction(tx as TransactionRequest)
+    // HEX encoded string, 0x prefixed
+    return signedRawTransaction
   }
 }

@@ -40,7 +40,7 @@ const Module: React.FC<IdentifierModuleProps> = ({
   )
 
   const { data: localVersion } = useQuery(
-    [cacheKey+'local'],
+    [cacheKey + 'local'],
     () => agent?.didManagerGet({ did: identifier }),
     { enabled: !!identifier },
   )
@@ -74,10 +74,10 @@ const Module: React.FC<IdentifierModuleProps> = ({
 
   return (
     <Card title={title} style={{ flexWrap: 'wrap' }} loading={isLoading}>
-      <Card title='External'>
+      <Card title="External">
         <Card title="Public keys">
           <List
-            dataSource={data?.publicKey}
+            dataSource={data?.didDocument?.verificationMethod}
             renderItem={(item: any, i: number) => {
               return (
                 <List.Item key={i}>
@@ -98,7 +98,7 @@ const Module: React.FC<IdentifierModuleProps> = ({
 
         <Card title="Services">
           <List
-            dataSource={data?.service}
+            dataSource={data?.didDocument?.service}
             renderItem={(item: ServiceEndpoint, i: number) => {
               return (
                 <List.Item key={i}>
@@ -140,8 +140,7 @@ const Module: React.FC<IdentifierModuleProps> = ({
         </Card>
       </Card>
 
-
-      <Card title='Local'>
+      <Card title="Local">
         <Card title="Public keys">
           <List
             dataSource={localVersion?.keys}
@@ -150,9 +149,7 @@ const Module: React.FC<IdentifierModuleProps> = ({
                 <List.Item key={i}>
                   <List.Item.Meta
                     avatar={<LockOutlined />}
-                    title={
-                        <code>{item.kid}</code>
-                    }
+                    title={<code>{item.kid}</code>}
                     description={`${item.type}`}
                   />
                 </List.Item>
@@ -178,7 +175,6 @@ const Module: React.FC<IdentifierModuleProps> = ({
           ></List>
         </Card>
 
-        
         <Card title="JSON">
           <pre>{JSON.stringify(localVersion, null, 2)}</pre>
         </Card>

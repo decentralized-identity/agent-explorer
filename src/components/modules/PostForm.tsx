@@ -22,18 +22,23 @@ interface FormValues {
 }
 
 const Module: React.FC<Props> = (props: Props) => {
-  const { agent, agents, getAgent } = useVeramo<IDIDManager & IDataStore & IProfileManager>()
+  const { agent, agents, getAgent } = useVeramo<
+    IDIDManager & IDataStore & IProfileManager
+  >()
 
-  const [progressStatus, setProgressStatus] = useState<'active' | 'exception' | undefined>(undefined)
+  const [progressStatus, setProgressStatus] = useState<
+    'active' | 'exception' | undefined
+  >(undefined)
   const [progress, setProgress] = useState<number | undefined>(undefined)
 
-  const filteredAgents = agents.filter(a => a.availableMethods().includes('dataStoreSaveVerifiableCredential'))
+  const filteredAgents = agents.filter((a) =>
+    a.availableMethods().includes('dataStoreSaveVerifiableCredential'),
+  )
 
   const { data: identifiers, isLoading: isLoadingIdentifiers } = useQuery(
     ['managedIdentifiers', { agentId: agent?.context.id }],
     () => agent?.didManagerFind(),
   )
-
 
   const initialValues: FormValues = {
     from: '',
@@ -41,15 +46,13 @@ const Module: React.FC<Props> = (props: Props) => {
     headline: 'Title',
     subject: 'https://pulsar.veramo.io/posts/' + shortId(),
     articleBody: 'Body',
-    agents: []
+    agents: [],
   }
 
   const createPost = async (values: FormValues) => {
-
     setProgressStatus('active')
     setProgress(20)
     try {
-
       const profile = await agent?.getProfile({ did: values.from })
 
       const verifiableCredential = await agent?.createVerifiableCredential({
@@ -57,12 +60,9 @@ const Module: React.FC<Props> = (props: Props) => {
           issuer: { id: values.from },
           '@context': [
             'https://www.w3.org/2018/credentials/v1',
-            'https://www.w3id.org/veramolabs/socialmedia/context/v1'
+            'https://www.w3id.org/veramolabs/socialmedia/context/v1',
           ],
-          type: [
-            'VerifiableCredential',
-            'VerifiableSocialPosting'
-          ],
+          type: ['VerifiableCredential', 'VerifiableSocialPosting'],
           id: initialValues.subject,
           issuanceDate: new Date().toISOString(),
           credentialSubject: {
@@ -71,10 +71,10 @@ const Module: React.FC<Props> = (props: Props) => {
             author: {
               id: values.from,
               image: profile?.picture,
-              name: profile?.name
+              name: profile?.name,
             },
             headline: values.headline,
-            articleBody: values.articleBody
+            articleBody: values.articleBody,
           },
         },
         proofFormat: 'jwt',
@@ -83,13 +83,15 @@ const Module: React.FC<Props> = (props: Props) => {
 
       for (const agentId of values.agents) {
         try {
-          await getAgent(agentId).dataStoreSaveVerifiableCredential({ verifiableCredential })
-          notification.success({
-            message: 'Credential saved in: ' + getAgent(agentId).context.name
+          await getAgent(agentId).dataStoreSaveVerifiableCredential({
+            verifiableCredential,
           })
-        } catch (e) {
+          notification.success({
+            message: 'Credential saved in: ' + getAgent(agentId).context.name,
+          })
+        } catch (e: any) {
           notification.error({
-            message: e.message
+            message: e.message,
           })
           setProgressStatus('exception')
         }
@@ -103,27 +105,24 @@ const Module: React.FC<Props> = (props: Props) => {
               from: values.from,
               to: values.to,
               body: verifiableCredential.proof.jwt,
-              type: 'jwt'
-            }
+              type: 'jwt',
+            },
           })
           notification.success({
-            message: 'Message sent to: ' + values.to
+            message: 'Message sent to: ' + values.to,
           })
-        } catch (e) {
+        } catch (e: any) {
           notification.error({
-            message: e.message
+            message: e.message,
           })
           setProgressStatus('exception')
-
         }
       }
-
-    } catch (e) {
+    } catch (e: any) {
       notification.error({
-        message: e.message
+        message: e.message,
       })
       setProgressStatus('exception')
-
     }
     setProgress(100)
 
@@ -135,110 +134,103 @@ const Module: React.FC<Props> = (props: Props) => {
     }, 1000)
   }
 
-
   function tagRender(props: any) {
-    const { label, closable, onClose } = props;
+    const { label, closable, onClose } = props
 
     return (
       <Tag closable={closable} onClose={onClose} style={{ marginRight: 3 }}>
         {label}
       </Tag>
-    );
+    )
   }
 
-
-
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
+    console.log('Failed:', errorInfo)
+  }
 
   const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
-  };
+  }
 
   const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
-  };
-
+  }
 
   return (
-    
-
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={initialValues}
-        onFinish={createPost}
-        onFinishFailed={onFinishFailed}
+    <Form
+      {...layout}
+      name="basic"
+      initialValues={initialValues}
+      onFinish={createPost}
+      onFinishFailed={onFinishFailed}
+    >
+      <Form.Item
+        label="From"
+        name="from"
+        rules={[{ required: true, message: 'Please select From!' }]}
       >
-        <Form.Item
-          label="From"
-          name="from"
-          rules={[{ required: true, message: 'Please select From!' }]}
-        >
-          <Select loading={isLoadingIdentifiers}>
-            {identifiers?.map(i => (
-              <Select.Option value={i.did} key={i.did}>
-                <IdentifierProfileSelectOption did={i.did} />
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
+        <Select loading={isLoadingIdentifiers}>
+          {identifiers?.map((i) => (
+            <Select.Option value={i.did} key={i.did}>
+              <IdentifierProfileSelectOption did={i.did} />
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
 
-        <Form.Item
-          label="Subject"
-          name="subject"
-          rules={[{ required: true, message: 'Please input Subject!' }]}
-        >
-          <Input />
-        </Form.Item>
+      <Form.Item
+        label="Subject"
+        name="subject"
+        rules={[{ required: true, message: 'Please input Subject!' }]}
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item
-          label="Headline"
-          name="headline"
-          rules={[{ required: true, message: 'Please input Headline!' }]}
-        >
-          <Input />
-        </Form.Item>
+      <Form.Item
+        label="Headline"
+        name="headline"
+        rules={[{ required: true, message: 'Please input Headline!' }]}
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item
-          label="Article body"
-          name="articleBody"
-          rules={[{ required: true, message: 'Please input Article body!' }]}
-        >
-          <Input />
-        </Form.Item>
+      <Form.Item
+        label="Article body"
+        name="articleBody"
+        rules={[{ required: true, message: 'Please input Article body!' }]}
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item
-          label="Send to"
-          name="to"
-        >
-          <Input />
-        </Form.Item>
+      <Form.Item label="Send to" name="to">
+        <Input />
+      </Form.Item>
 
-        <Form.Item
-          label="Save to"
-          name="agents"
-        >
-          <Select
-            mode="multiple"
-            showArrow
-            tagRender={tagRender}
-            style={{ width: '100%' }}
-            options={filteredAgents.map(a => ({ label: a?.context.name as string, value: a?.context.id as string }))}
-          />
-        </Form.Item>
+      <Form.Item label="Save to" name="agents">
+        <Select
+          mode="multiple"
+          showArrow
+          tagRender={tagRender}
+          style={{ width: '100%' }}
+          options={filteredAgents.map((a) => ({
+            label: a?.context.name as string,
+            value: a?.context.id as string,
+          }))}
+        />
+      </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          {progress === undefined && <Button type="primary" htmlType="submit">
+      <Form.Item {...tailLayout}>
+        {progress === undefined && (
+          <Button type="primary" htmlType="submit">
             Submit
-          </Button>}
-          {progress && <Progress type="circle" percent={progress} status={progressStatus} />}
-        </Form.Item>
-      </Form>
-
+          </Button>
+        )}
+        {progress && (
+          <Progress type="circle" percent={progress} status={progressStatus} />
+        )}
+      </Form.Item>
+    </Form>
   )
 }
 

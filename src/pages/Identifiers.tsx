@@ -7,6 +7,7 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import * as generatorUtils from '../utils/dataGenerator'
 import { useGenerator } from '../hooks/useGenerator'
+import { IDIDManager } from '@veramo/core'
 
 const { Title } = Typography
 
@@ -48,14 +49,17 @@ const Identifiers = () => {
     setIdentifiersGenerating,
     setAlias,
   } = useGenerator()
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDIDManager>()
   const { data: providers } = useQuery(
     ['providers', { agentId: agent?.context.id }],
     () => agent?.didManagerGetProviders(),
   )
-  const { data: identifiers, isLoading, refetch } = useQuery(
-    ['identifiers', { agentId: agent?.context.id }],
-    () => agent?.dataStoreORMGetIdentifiers(),
+  const {
+    data: identifiers,
+    isLoading,
+    refetch,
+  } = useQuery(['identifiers', { agentId: agent?.context.id }], () =>
+    agent?.dataStoreORMGetIdentifiers(),
   )
   const generateIdentifier = async () => {
     setIdentifiersGenerating(true)

@@ -6,6 +6,7 @@ import { issueCredential, claimToObject } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
+import { IDIDManager } from '@veramo/core'
 
 const { Option } = Select
 
@@ -33,7 +34,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
   remove,
   removeDisabled,
 }) => {
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDIDManager>()
   const [claimType, setClaimType] = useState<string>('')
   const [claimValue, setClaimValue] = useState<string>('')
   const [credentialType, setCredentialType] = useState<string>('')

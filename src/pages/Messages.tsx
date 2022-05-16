@@ -5,6 +5,8 @@ import { formatDistanceToNow, format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
+import { IDIDManager } from '@veramo/core'
+import { IDataStoreORM } from '@veramo/core'
 
 const { Title } = Typography
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
@@ -21,7 +23,7 @@ const messageType = (type: string) => {
 }
 
 const Messages = () => {
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDataStoreORM & IDIDManager>()
   const uri = (did: string) => {
     return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
   }
@@ -64,9 +66,12 @@ const Messages = () => {
                     <Card.Meta
                       style={{ marginBottom: 15 }}
                       title="Issuer"
-                      description={vc.issuer.id}
+                      description={(vc.issuer as any).id}
                       avatar={
-                        <Avatar size="large" src={uri(vc.issuer.id || '')} />
+                        <Avatar
+                          size="large"
+                          src={uri((vc.issuer as any).id || '')}
+                        />
                       }
                     ></Card.Meta>
                     <div style={{ marginLeft: 55 }}>
@@ -92,7 +97,7 @@ const Messages = () => {
                       <Card.Meta
                         style={{ marginBottom: 15 }}
                         title="Credential Type"
-                        description={vc.type.map((type) => (
+                        description={(vc.type as string[]).map((type) => (
                           <Tag color="geekblue">{type}</Tag>
                         ))}
                       ></Card.Meta>

@@ -8,6 +8,7 @@ import md5 from 'md5'
 import { Route, useHistory } from 'react-router-dom'
 import CreateRequest from '../components/standard/CreateRequest'
 import CreateResponse from '../components/standard/CreateResponse'
+import { IDataStoreORM } from '@veramo/core'
 
 const { Title } = Typography
 
@@ -19,7 +20,7 @@ const uri = (did: string) => {
 
 const Requests = () => {
   const history = useHistory()
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDataStoreORM>()
   const { data: messages } = useQuery(
     ['requests', { agentId: agent?.context.name }],
     () =>
@@ -66,9 +67,12 @@ const Requests = () => {
                     <Card.Meta
                       style={{ marginBottom: 15 }}
                       title="Issuer"
-                      description={vc.issuer.id}
+                      description={(vc.issuer as any).id}
                       avatar={
-                        <Avatar size="large" src={uri(vc.issuer.id || '')} />
+                        <Avatar
+                          size="large"
+                          src={uri((vc.issuer as any).id || '')}
+                        />
                       }
                     ></Card.Meta>
                     <div style={{ marginLeft: 55 }}>
@@ -94,7 +98,7 @@ const Requests = () => {
                       <Card.Meta
                         style={{ marginBottom: 15 }}
                         title="Credential Type"
-                        description={vc.type.map((type) => (
+                        description={(vc.type as string[]).map((type) => (
                           <Tag color="geekblue">{type}</Tag>
                         ))}
                       ></Card.Meta>

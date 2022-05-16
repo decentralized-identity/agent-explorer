@@ -16,6 +16,8 @@ import * as generatorUtils from '../../utils/dataGenerator'
 import { useGenerator } from '../../hooks/useGenerator'
 import PageWidget from '../../layout/PageWidget'
 import { PageWidgetProps } from '../../types'
+import { IDIDManager } from '@veramo/core'
+import { ICredentialIssuer } from '@veramo/credential-w3c'
 
 const { Title, Text } = Typography
 const { Panel } = Collapse
@@ -29,7 +31,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
   isLoading,
 }) => {
   const queryClient = useQueryClient()
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDIDManager & ICredentialIssuer>()
   const { data: identifiers } = useQuery(
     ['identifiers', { agentId: agent?.context.id }],
     () => agent?.dataStoreORMGetIdentifiers(),
@@ -101,17 +103,19 @@ const DataGenerator: React.FC<IDataGenerator> = ({
           ? identifiers.length
           : credentialIssueToCount
 
-      await generatorUtils.createP2PCredentials(
-        // @ts-ignore
-        identifiers,
-        agent?.createVerifiableCredential,
-        'Kudos',
-        // @todo allow custom credential
-        { kudos: 1 },
-        { from: fromCount, to: toCount },
-        // @todo allow date to be user selectable
-        { from: '2019-01-01T00:00:00.271Z', to: '2021-02-01T01:00:00.271Z' },
-      )
+      if (agent?.createVerifiableCredential) {
+        await generatorUtils.createP2PCredentials(
+          // @ts-ignore
+          identifiers,
+          agent.createVerifiableCredential,
+          'Kudos',
+          // @todo allow custom credential
+          { kudos: 1 },
+          { from: fromCount, to: toCount },
+          // @todo allow date to be user selectable
+          { from: '2019-01-01T00:00:00.271Z', to: '2021-02-01T01:00:00.271Z' },
+        )
+      }
 
       setCredentialsP2PGenerating(false)
     }
