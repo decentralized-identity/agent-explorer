@@ -22,7 +22,7 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import { ProfileManager } from '../agent/ProfileManager'
 import { Web3JwtMessageHandler } from './Web3JWTMessageHandler'
 import { MinimalImportableKey } from '@veramo/core'
-
+const infuraProjectId = '3586660d179141e3801c3895de1c2eba'
 let dataStore = LocalStorageStore.fromLocalStorage('veramo-state')
 
 export async function createWeb3Agent({
@@ -45,7 +45,8 @@ export async function createWeb3Agent({
       new DIDResolverPlugin({
         resolver: new Resolver({
           ethr: ethrDidResolver({
-            provider: web3Provider,
+            infuraProjectId,
+            // provider: web3Provider,
           }).ethr,
           web: webDidResolver().web,
           // nft: NFTResolver({ provider: web3Provider }),
@@ -103,33 +104,35 @@ export async function createWeb3Agent({
       services: didDocument.service || [],
     })
 
-    try {
-      const { assets } = await (
-        await fetch(
-          `https://api.opensea.io/api/v1/assets?owner=${account}&order_direction=desc&offset=0&limit=20`,
-        )
-      ).json()
+    console.log(await agent.didManagerFind())
 
-      for (const asset of assets) {
-        await agent.didManagerImport({
-          did: `did:nft:0x${chainId}:${asset.asset_contract.address}:${asset.token_id}`,
-          provider: 'did:nft',
-          controllerKeyId: didDocument.id + '#controller',
-          keys: didDocument.verificationMethod.map(
-            (pub) =>
-              ({
-                kid: pub.id,
-                type: 'Secp256k1',
-                kms: 'web3',
-                publicKeyHex: pub.publicKeyHex,
-              } as MinimalImportableKey),
-          ),
-          services: didDocument.service || [],
-        })
-      }
-    } catch (e: any) {
-      console.log(e.message)
-    }
+    // try {
+    //   const { assets } = await (
+    //     await fetch(
+    //       `https://api.opensea.io/api/v1/assets?owner=${account}&order_direction=desc&offset=0&limit=20`,
+    //     )
+    //   ).json()
+
+    //   for (const asset of assets) {
+    //     await agent.didManagerImport({
+    //       did: `did:nft:0x${chainId}:${asset.asset_contract.address}:${asset.token_id}`,
+    //       provider: 'did:nft',
+    //       controllerKeyId: didDocument.id + '#controller',
+    //       keys: didDocument.verificationMethod.map(
+    //         (pub) =>
+    //           ({
+    //             kid: pub.id,
+    //             type: 'Secp256k1',
+    //             kms: 'web3',
+    //             publicKeyHex: pub.publicKeyHex,
+    //           } as MinimalImportableKey),
+    //       ),
+    //       services: didDocument.service || [],
+    //     })
+    //   }
+    // } catch (e: any) {
+    //   console.log(e.message)
+    // }
   }
 
   return agent

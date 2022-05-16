@@ -33,7 +33,8 @@ export class Web3KeyManagementSystem extends AbstractKeyManagementSystem {
   async importKey(
     args: Omit<MinimalImportableKey, 'kms'>,
   ): Promise<ManagedKeyInfo> {
-    throw Error('Not implemented')
+    // throw Error('Not implemented')
+    return args as any as ManagedKeyInfo
   }
 
   async listKeys(): Promise<ManagedKeyInfo[]> {

@@ -2,10 +2,10 @@ import React from 'react'
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import {
   NoEthereumProviderError,
-  UserRejectedRequestError as UserRejectedRequestErrorInjected
+  UserRejectedRequestError as UserRejectedRequestErrorInjected,
 } from '@web3-react/injected-connector'
 import { UserRejectedRequestError as UserRejectedRequestErrorWalletConnect } from '@web3-react/walletconnect-connector'
-import { UserRejectedRequestError as UserRejectedRequestErrorFrame } from '@web3-react/frame-connector'
+// import { UserRejectedRequestError as UserRejectedRequestErrorFrame } from '@web3-react/frame-connector'
 import { Web3Provider } from '@ethersproject/providers'
 import { formatEther } from '@ethersproject/units'
 
@@ -24,7 +24,6 @@ import {
   // portis,
   // torus
 } from './connectors'
-
 
 enum ConnectorNames {
   Injected = 'Injected',
@@ -65,8 +64,7 @@ function getErrorMessage(error: Error) {
     return "You're connected to an unsupported network."
   } else if (
     error instanceof UserRejectedRequestErrorInjected ||
-    error instanceof UserRejectedRequestErrorWalletConnect ||
-    error instanceof UserRejectedRequestErrorFrame
+    error instanceof UserRejectedRequestErrorWalletConnect
   ) {
     return 'Please authorize this website to access your Ethereum account.'
   } else {
@@ -74,8 +72,6 @@ function getErrorMessage(error: Error) {
     return 'An unknown error occurred. Check the console for more details.'
   }
 }
-
-
 
 function ChainId() {
   const { chainId } = useWeb3React()
@@ -149,8 +145,10 @@ function Account() {
         {account === null
           ? '-'
           : account
-            ? `${account.substring(0, 6)}...${account.substring(account.length - 4)}`
-            : ''}
+          ? `${account.substring(0, 6)}...${account.substring(
+              account.length - 4,
+            )}`
+          : ''}
       </span>
     </>
   )
@@ -190,7 +188,13 @@ function Balance() {
       <span role="img" aria-label="gold">
         💰
       </span>
-      <span>{balance === null ? 'Error' : balance ? `Ξ${formatEther(balance as any)}` : ''}</span>
+      <span>
+        {balance === null
+          ? 'Error'
+          : balance
+          ? `Ξ${formatEther(balance as any)}`
+          : ''}
+      </span>
     </>
   )
 }
@@ -200,7 +204,9 @@ function Header() {
 
   return (
     <>
-      <h1 style={{ margin: '1rem', textAlign: 'right' }}>{active ? '🟢' : error ? '🔴' : '🟠'}</h1>
+      <h1 style={{ margin: '1rem', textAlign: 'right' }}>
+        {active ? '🟢' : error ? '🔴' : '🟠'}
+      </h1>
       <h3
         style={{
           display: 'grid',
@@ -208,7 +214,7 @@ function Header() {
           gridTemplateColumns: '1fr min-content 1fr',
           maxWidth: '20rem',
           lineHeight: '2rem',
-          margin: 'auto'
+          margin: 'auto',
         }}
       >
         <ChainId />
@@ -222,10 +228,16 @@ function Header() {
 
 export function Web3() {
   const context = useWeb3React<Web3Provider>()
-  const { connector,
+  const {
+    connector,
     library,
-    // chainId, 
-    account, activate, deactivate, active, error } = context
+    // chainId,
+    account,
+    activate,
+    deactivate,
+    active,
+    error,
+  } = context
 
   // handle logic to recognize the connector currently being activated
   const [activatingConnector, setActivatingConnector] = React.useState<any>()
@@ -234,7 +246,6 @@ export function Web3() {
       setActivatingConnector(undefined)
     }
   }, [activatingConnector, connector])
-
 
   return (
     <>
@@ -246,10 +257,10 @@ export function Web3() {
           gridGap: '1rem',
           gridTemplateColumns: '1fr 1fr',
           maxWidth: '20rem',
-          margin: 'auto'
+          margin: 'auto',
         }}
       >
-        {Object.keys(connectorsByName).map(name => {
+        {Object.keys(connectorsByName).map((name) => {
           //@ts-ignore
           const currentConnector = connectorsByName[name]
           const activating = currentConnector === activatingConnector
@@ -261,9 +272,13 @@ export function Web3() {
               style={{
                 height: '3rem',
                 borderRadius: '1rem',
-                borderColor: activating ? 'orange' : connected ? 'green' : 'unset',
+                borderColor: activating
+                  ? 'orange'
+                  : connected
+                  ? 'green'
+                  : 'unset',
                 cursor: disabled ? 'unset' : 'pointer',
-                position: 'relative'
+                position: 'relative',
               }}
               disabled={disabled}
               key={name}
@@ -282,12 +297,14 @@ export function Web3() {
                   display: 'flex',
                   alignItems: 'center',
                   color: 'black',
-                  margin: '0 0 0 1rem'
+                  margin: '0 0 0 1rem',
                 }}
               >
-                {activating && <span role="img" aria-label="check">
-                  loading...
-                  </span>}
+                {activating && (
+                  <span role="img" aria-label="check">
+                    loading...
+                  </span>
+                )}
                 {connected && (
                   <span role="img" aria-label="check">
                     ✅
@@ -299,7 +316,13 @@ export function Web3() {
           )
         })}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         {(active || error) && (
           <button
             style={{
@@ -307,7 +330,7 @@ export function Web3() {
               marginTop: '2rem',
               borderRadius: '1rem',
               borderColor: 'red',
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
             onClick={() => {
               deactivate()
@@ -317,7 +340,11 @@ export function Web3() {
           </button>
         )}
 
-        {!!error && <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>{getErrorMessage(error)}</h4>}
+        {!!error && (
+          <h4 style={{ marginTop: '1rem', marginBottom: '0' }}>
+            {getErrorMessage(error)}
+          </h4>
+        )}
       </div>
 
       <hr style={{ margin: '2rem' }} />
@@ -328,7 +355,7 @@ export function Web3() {
           gridGap: '1rem',
           gridTemplateColumns: 'fit-content',
           maxWidth: '20rem',
-          margin: 'auto'
+          margin: 'auto',
         }}
       >
         {!!(library && account) && (
@@ -336,7 +363,7 @@ export function Web3() {
             style={{
               height: '3rem',
               borderRadius: '1rem',
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
             onClick={() => {
               library
@@ -346,7 +373,10 @@ export function Web3() {
                   window.alert(`Success!\n\n${signature}`)
                 })
                 .catch((error: any) => {
-                  window.alert('Failure!' + (error && error.message ? `\n\n${error.message}` : ''))
+                  window.alert(
+                    'Failure!' +
+                      (error && error.message ? `\n\n${error.message}` : ''),
+                  )
                 })
             }}
           >
@@ -359,10 +389,10 @@ export function Web3() {
             style={{
               height: '3rem',
               borderRadius: '1rem',
-              cursor: 'pointer'
+              cursor: 'pointer',
             }}
             onClick={() => {
-              ; (connector as any).close()
+              ;(connector as any).close()
             }}
           >
             Kill WalletConnect Session
