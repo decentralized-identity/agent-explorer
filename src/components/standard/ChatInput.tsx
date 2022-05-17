@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Input, Button, Row } from 'antd'
 import { SendOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
