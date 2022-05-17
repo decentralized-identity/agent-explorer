@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Typography } from 'antd'
+import { Row } from 'antd'
 
 interface ChatBubbleProps {
   text: string

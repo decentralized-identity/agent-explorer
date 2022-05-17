@@ -12,11 +12,7 @@ import { IIdentifier } from '@veramo/core'
 
 interface ChatHeaderProps {}
 
-function getRandomInt(max: number, min: number = 0) {
-  return Math.floor(Math.random() * (max - min + 1)) + min // eslint-disable-line no-mixed-operators
-}
-
-const ChatHeader: React.FC<ChatHeaderProps> = ({}) => {
+const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const { agent } = useVeramo<IDIDDiscovery>()
   const [uri, setUri] = useState<string>()
   const {

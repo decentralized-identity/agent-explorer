@@ -1,5 +1,4 @@
-import React from 'react'
-import { Route, useParams } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import Page from '../layout/SplitPage'
 import ChatThread from '../components/standard/ChatThread'
 import ChatScrollPanel from '../components/standard/ChatScrollPanel'
