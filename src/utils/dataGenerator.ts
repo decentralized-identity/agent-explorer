@@ -48,7 +48,12 @@ export async function createIdentifiers(
 
         return await createIdentifer({
           provider,
-          alias: count === 1 && alias ? domain + ':' + alias : generatedAlias,
+          alias:
+            count === 1 && alias
+              ? provider === 'did:web'
+                ? domain + ':' + alias
+                : alias
+              : generatedAlias,
         })
       }),
     )
