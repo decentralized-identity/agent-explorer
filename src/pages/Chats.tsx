@@ -7,6 +7,9 @@ import ChatHeader from '../components/standard/ChatHeader'
 import Layout from 'antd/lib/layout/layout'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
+import { useChat } from '../context/ChatProvider'
+import { IMessage } from '@veramo/core'
+import { useEffect } from 'react'
 
 const groupBy = (arr: any[], property: string) => {
   return arr.reduce((acc, cur) => {
@@ -17,19 +20,24 @@ const groupBy = (arr: any[], property: string) => {
 
 const ChatView = () => {
   const { agent } = useVeramo()
-  const { data: threads } = useQuery(
+  const { selectedDid } = useChat()
+  const { data: threads, refetch } = useQuery(
     ['threads', { id: agent?.context.id }],
     async () => {
-      const owned = await agent?.didManagerFind()
       const messages = await agent?.dataStoreORMGetMessages({
         where: [{ column: 'type', value: ['veramo.io-chat-v1'] }],
         order: [{ column: 'createdAt', direction: 'DESC' }],
       })
 
-      const senderTagged = messages?.map((message: any) => {
+      // TODO: should be able to do this filter in the query instead of here
+      const applicableMessages = (messages as IMessage[])?.filter(
+        (message) => message.from === selectedDid || message.to === selectedDid,
+      )
+
+      const senderTagged = applicableMessages?.map((message: any) => {
         return {
           ...message,
-          isSender: owned?.map((a: any) => a.did).includes(message.from),
+          isSender: message.from === selectedDid,
         }
       })
 
@@ -42,6 +50,10 @@ const ChatView = () => {
       refetchInterval: 5000,
     },
   )
+  useEffect(() => {
+    refetch()
+  }, [selectedDid])
+
   return (
     <Page
       name="chats"

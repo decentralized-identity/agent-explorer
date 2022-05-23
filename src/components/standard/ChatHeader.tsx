@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Typography, Avatar, Button, Input, AutoComplete } from 'antd'
+import { Row, Col, Avatar, Button, Input, AutoComplete, Select } from 'antd'
 import { useChat } from '../../context/ChatProvider'
 import { identiconUri } from '../../utils/identicon'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -9,6 +9,8 @@ import { FormOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 import { SelectProps } from 'antd/es/select'
 import { IIdentifier } from '@veramo/core'
+
+const { Option } = Select
 
 interface ChatHeaderProps {}
 
@@ -25,11 +27,13 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
   } = useChat()
   const history = useHistory()
   const [options, setOptions] = useState<SelectProps<object>['options']>([])
+  const [agentChatIdentifiers, setAgentChatIdentifiers] = useState<
+    IIdentifier[]
+  >([])
 
   const searchResult = async (query: string) => {
     const response = await agent?.discoverDid({ query })
     const selectOptions: Array<{ value: string; label: any }> = []
-
     response?.results.forEach((r) => {
       r.matches.forEach((m) => {
         selectOptions.push({
@@ -73,8 +77,9 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
           const didsWithDIDComm = data.filter((did) =>
             did.services.some((service) => service.type === 'DIDCommMessaging'),
           )
-          setSelectedDid(didsWithDIDComm[1].did)
-          setUri(identiconUri(didsWithDIDComm[1].did))
+          setAgentChatIdentifiers(didsWithDIDComm)
+          setSelectedDid(didsWithDIDComm[0].did)
+          setUri(identiconUri(didsWithDIDComm[0].did))
         }
       },
     },
@@ -103,7 +108,25 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
             )}
           </Col>
           <Col style={{ marginLeft: 24, flex: 1 }}>
-            <Typography.Text>{selectedDid}</Typography.Text>
+            {agentChatIdentifiers.length > 0 && (
+              <Select
+                defaultValue={selectedDid}
+                style={{ width: 480 }}
+                onChange={(value) => {
+                  const id = agentChatIdentifiers.filter(
+                    (id) => id.did === value,
+                  )[0]
+                  setSelectedDid(id.did)
+                  setUri(identiconUri(id.did))
+                }}
+              >
+                {agentChatIdentifiers.map((identifier) => {
+                  return (
+                    <Option value={identifier.did}>{identifier.did}</Option>
+                  )
+                })}
+              </Select>
+            )}
           </Col>
           <Button
             onClick={() => composeNewThread()}

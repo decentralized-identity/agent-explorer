@@ -17,10 +17,9 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
   const newThread = threadId === 'new-thread'
   const { agent } = useVeramo()
 
-  const { data: messages } = useQuery(
+  const { data: messages, refetch } = useQuery(
     ['chats', { id: agent?.context.id, threadId: threadId }],
     async () => {
-      const owned = await agent?.didManagerFind()
       const _messages = await agent?.dataStoreORMGetMessages({
         where: [{ column: 'threadId', value: [threadId] }],
         order: [{ column: 'createdAt', direction: 'ASC' }],
@@ -28,7 +27,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
       return _messages?.map((_msg: any) => {
         return {
           ..._msg,
-          isSender: owned?.map((a: any) => a.did).includes(_msg.from),
+          isSender: _msg.from === selectedDid,
         }
       })
     },
@@ -41,6 +40,9 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
   useEffect(() => {
     scrollMessages()
   }, [messages])
+  useEffect(() => {
+    refetch()
+  }, [selectedDid])
 
   return (
     <div
