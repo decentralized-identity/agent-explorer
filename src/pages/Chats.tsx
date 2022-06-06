@@ -52,7 +52,7 @@ const ChatView = () => {
   )
   useEffect(() => {
     refetch()
-  }, [selectedDid])
+  }, [selectedDid, refetch])
 
   return (
     <Page

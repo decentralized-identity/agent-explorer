@@ -42,7 +42,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
   }, [messages])
   useEffect(() => {
     refetch()
-  }, [selectedDid])
+  }, [selectedDid, refetch])
 
   return (
     <div
