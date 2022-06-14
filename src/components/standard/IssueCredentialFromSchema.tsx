@@ -29,9 +29,7 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
   const [sending] = useState(false)
   const [issuer, setIssuer] = useState<string>('')
   const [subject, setSubject] = useState<string>()
-
   const [formData, setFormData] = useState<any>({})
-
   const [proofFormat, setProofFormat] = useState('jwt')
 
   const { data: identifiers, isLoading: identifiersLoading } = useQuery(
@@ -47,10 +45,10 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
         subject,
         fields,
         proofFormat,
-        schema.id,
+        '',
         schema.name,
+        schema.id,
       )
-      console.log('res: ', res)
       setIssuer('')
       setSubject('')
       setFormData({})

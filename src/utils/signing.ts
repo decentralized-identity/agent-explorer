@@ -1,6 +1,6 @@
-import { W3CVerifiableCredential } from "@veramo/core"
-import { ProofFormat } from "@veramo/credential-w3c"
-import { ConfiguredAgent } from "../types"
+import { W3CVerifiableCredential } from '@veramo/core'
+import { ProofFormat } from '@veramo/credential-w3c'
+import { ConfiguredAgent } from '../types'
 
 const shortId = (did: string) => `${did.slice(0, 15)}...${did.slice(-4)}`
 
@@ -19,6 +19,7 @@ const issueCredential = async (
   proofFormat: string,
   customContext?: string,
   type?: string,
+  credentialSchemaId?: string,
 ) => {
   return await agent?.createVerifiableCredential({
     credential: {
@@ -29,6 +30,9 @@ const issueCredential = async (
         : ['https://www.w3.org/2018/credentials/v1'],
       type: type ? ['VerifiableCredential', type] : ['VerifiableCredential'],
       credentialSubject: { id: sub, ...claimToObject(claims) },
+      credentialSchema: credentialSchemaId
+        ? { id: credentialSchemaId, type: 'JsonSchemaValidator2018' }
+        : undefined,
     },
     proofFormat,
     save: true,
