@@ -22,6 +22,11 @@ export const WIDGET_MAP: { [index: string]: PageWidgetConfig } = {
     widgetLabel: 'Issue Credential',
     config: {},
   },
+  SELECT_SCHEMA_AND_ISSUE: {
+    widgetName: 'SelectSchemaAndIssue',
+    widgetLabel: 'Select Schema and Issue',
+    config: {},
+  },
   CREATE_PRESENTATION: {
     widgetName: 'CreatePresentation',
     widgetLabel: 'Create Presentation',
@@ -60,6 +65,9 @@ export const DYNAMIC_COMPONENTS: {
   ),
   [WIDGET_MAP.ISSUE_CREDENTIAL.widgetName]: React.lazy(
     () => import('./IssueCredential'),
+  ),
+  [WIDGET_MAP.SELECT_SCHEMA_AND_ISSUE.widgetName]: React.lazy(
+    () => import('./SelectSchemaAndIssue'),
   ),
   [WIDGET_MAP.CREATE_PRESENTATION.widgetName]: React.lazy(
     () => import('./CreatePresentation'),
