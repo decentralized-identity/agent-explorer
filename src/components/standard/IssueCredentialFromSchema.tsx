@@ -39,7 +39,7 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
 
   const signVc = async (fields: Field[]) => {
     try {
-      const res = await issueCredential(
+      await issueCredential(
         agent,
         issuer,
         subject,
@@ -52,16 +52,18 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
       setIssuer('')
       setSubject('')
       setFormData({})
-    } catch (error: any) {
-      console.error('ex: ', error)
-      setErrorMessage(error.toString())
+    } catch (err) {
+      console.error('signVC Error: ', err)
+      setErrorMessage(
+        'Unable to Issue Credential. Check console log for more info.',
+      )
     }
   }
 
   return (
     <Card>
       <JsonSchemaForm
-        schema={(schema as any).schema}
+        schema={schema.schema}
         formData={formData}
         onChange={(e) => {
           setFormData(e.formData)

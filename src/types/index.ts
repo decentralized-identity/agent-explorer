@@ -74,7 +74,8 @@ export interface PageWidgetProps {
   noPadding?: boolean
 }
 
-export interface VCJSONSchema extends JSONSchema7 {
+export interface VCJSONSchema {
   id: string
   name: string
+  schema: JSONSchema7
 }

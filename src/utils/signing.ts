@@ -2,8 +2,6 @@ import { W3CVerifiableCredential } from '@veramo/core'
 import { ProofFormat } from '@veramo/credential-w3c'
 import { ConfiguredAgent } from '../types'
 
-const shortId = (did: string) => `${did.slice(0, 15)}...${did.slice(-4)}`
-
 const claimToObject = (arr: any[]) => {
   return arr.reduce(
     (obj, item) => Object.assign(obj, { [item.type]: item.value }),
@@ -58,4 +56,4 @@ const signVerifiablePresentation = async (
   })
 }
 
-export { claimToObject, shortId, issueCredential, signVerifiablePresentation }
+export { claimToObject, issueCredential, signVerifiablePresentation }
