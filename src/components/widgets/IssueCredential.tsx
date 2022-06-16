@@ -26,9 +26,9 @@ interface Field {
   value: any
 }
 
-interface BarChartProps extends PageWidgetProps {}
+interface IssueCredentialProps extends PageWidgetProps {}
 
-const IssueCredential: React.FC<BarChartProps> = ({
+const IssueCredential: React.FC<IssueCredentialProps> = ({
   title,
   isLoading,
   remove,
@@ -53,7 +53,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
 
   const updateClaimFields = (field: Field) => {
     const claimTypes = fields.map((field: Field) => field.type)
-    const newfields = fields.concat([field])
+    const newFields = fields.concat([field])
     setErrorMessage(null)
 
     if (!field.type) {
@@ -71,7 +71,7 @@ const IssueCredential: React.FC<BarChartProps> = ({
       return
     }
 
-    updateFields(newfields)
+    updateFields(newFields)
     setClaimValue('')
     setClaimType('')
   }

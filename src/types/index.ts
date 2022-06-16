@@ -1,8 +1,11 @@
 import { IDIDManager, TAgent } from '@veramo/core'
 import { ICredentialIssuer } from '@veramo/credential-w3c'
 import { ISelectiveDisclosure } from '@veramo/selective-disclosure'
+import { JSONSchema7 } from 'json-schema'
 
-export type ConfiguredAgent = TAgent<ICredentialIssuer & IDIDManager & ISelectiveDisclosure>
+export type ConfiguredAgent = TAgent<
+  ICredentialIssuer & IDIDManager & ISelectiveDisclosure
+>
 
 export interface PageWidgetConfig {
   /**
@@ -71,3 +74,8 @@ export interface PageWidgetProps {
   noPadding?: boolean
 }
 
+export interface VCJSONSchema {
+  id: string
+  name: string
+  schema: JSONSchema7
+}
