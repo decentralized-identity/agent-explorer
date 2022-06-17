@@ -38,7 +38,7 @@ const issueCredential = async (
 }
 
 const signVerifiablePresentation = async (
-  agent: ConfiguredAgent,
+  agent: any,
   did: string,
   verifier: string[],
   selected: W3CVerifiableCredential[],
