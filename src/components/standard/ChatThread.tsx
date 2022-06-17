@@ -3,6 +3,9 @@ import { Row, Typography, Avatar } from 'antd'
 import { useHistory } from 'react-router'
 import { useChat } from '../../context/ChatProvider'
 import { identiconUri } from '../../utils/identicon'
+import { useQuery } from 'react-query'
+import { useVeramo } from '@veramo-community/veramo-react'
+import ChatThreadProfileHeader from './ChatThreadProfileHeader'
 
 const { Title, Text } = Typography
 
@@ -12,42 +15,38 @@ interface ChatThreadProps {
 }
 
 const ChatThread: React.FC<ChatThreadProps> = ({ thread, threadId }) => {
+  const { agent } = useVeramo()
   const { selectedDid, setComposing } = useChat()
   const history = useHistory()
-  const lastMessage = thread[0]
-  const { body } = lastMessage && JSON.parse(lastMessage.raw)
+  const lastMessage = thread[thread.length - 1]
   const viewThread = () => {
     setComposing(false)
     history.push(`/chats/threads/${threadId}`)
   }
 
+  const counterPartyDid =
+    lastMessage.from === selectedDid ? lastMessage.to : lastMessage.from
+  const { data: counterPartyProfileCredentials } = useQuery(
+    [
+      'counterPartyProfileCredentials',
+      { agentId: agent?.context.name, counterPartyDid },
+    ],
+    () =>
+      agent?.dataStoreORMGetVerifiableCredentials({
+        where: [{ column: 'issuer', value: [counterPartyDid], op: 'Equal' }],
+        order: [{ column: 'issuanceDate', direction: 'DESC' }],
+      }),
+  )
+  const profileCredential =
+    counterPartyProfileCredentials?.length > 0 &&
+    counterPartyProfileCredentials[0].verifiableCredential
+  console.log('Chat Thread profileCredential: ', profileCredential)
   return (
-    <Row
-      onClick={() => viewThread()}
-      style={{
-        cursor: 'pointer',
-        padding: 20,
-        backgroundColor: '#f7f7f7',
-        alignItems: 'center',
-        borderBottom: '1px solid white',
-      }}
-    >
-      <Avatar
-        src={
-          lastMessage.from === selectedDid
-            ? identiconUri(lastMessage.to)
-            : identiconUri(lastMessage.from)
-        }
-        size={50}
-        style={{ marginRight: 15 }}
-      />
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <Title level={5} style={{ marginBottom: 0 }}>
-          {lastMessage.isSender ? lastMessage.to : lastMessage.from}
-        </Title>
-        <Text>{body?.data.message}</Text>
-      </div>
-    </Row>
+    <ChatThreadProfileHeader
+      did={counterPartyDid}
+      profileCredential={profileCredential}
+      onRowClick={viewThread}
+    />
   )
 }
 

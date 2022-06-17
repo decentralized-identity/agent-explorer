@@ -8,6 +8,7 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { scrollMessages } from '../../utils/scroll'
 import { useChat } from '../../context/ChatProvider'
+import ChatThreadHeader from './ChatThreadHeader'
 
 interface ChatWindowProps {}
 
@@ -36,7 +37,11 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
       enabled: !newThread,
     },
   )
-
+  const lastMessage =
+    messages && messages.length > 0 && messages[messages.length - 1]
+  const counterParty = lastMessage && {
+    did: lastMessage.from === selectedDid ? lastMessage.to : lastMessage.from,
+  }
   useEffect(() => {
     scrollMessages()
   }, [messages])
@@ -51,6 +56,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
         backgroundRepeat: 'repeat',
       }}
     >
+      <ChatThreadHeader counterParty={counterParty} threadId={threadId} />
       <ChatScrollPanel reverse id="chat-window">
         {messages?.map((message: any) => {
           return (
