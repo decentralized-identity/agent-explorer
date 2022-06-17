@@ -12,9 +12,15 @@ const { Title, Text } = Typography
 interface ChatThreadProps {
   thread: any
   threadId: string
+  threadSelected: boolean
 }
 
-const ChatThread: React.FC<ChatThreadProps> = ({ thread, threadId }) => {
+const ChatThread: React.FC<ChatThreadProps> = ({
+  thread,
+  threadId,
+  threadSelected,
+}) => {
+  console.log('CHAT THREAD SELECTED: ', threadSelected)
   const { agent } = useVeramo()
   const { selectedDid, setComposing } = useChat()
   const history = useHistory()
@@ -33,19 +39,26 @@ const ChatThread: React.FC<ChatThreadProps> = ({ thread, threadId }) => {
     ],
     () =>
       agent?.dataStoreORMGetVerifiableCredentials({
-        where: [{ column: 'issuer', value: [counterPartyDid], op: 'Equal' }],
+        where: [
+          { column: 'issuer', value: [counterPartyDid], op: 'Equal' },
+          {
+            column: 'type',
+            value: ['VerifiableCredential,ProfileCredentialSchema'],
+            op: 'Equal',
+          },
+        ],
         order: [{ column: 'issuanceDate', direction: 'DESC' }],
       }),
   )
   const profileCredential =
     counterPartyProfileCredentials?.length > 0 &&
     counterPartyProfileCredentials[0].verifiableCredential
-  console.log('Chat Thread profileCredential: ', profileCredential)
   return (
     <ChatThreadProfileHeader
       did={counterPartyDid}
       profileCredential={profileCredential}
       onRowClick={viewThread}
+      selected={threadSelected}
     />
   )
 }

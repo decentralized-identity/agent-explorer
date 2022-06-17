@@ -33,7 +33,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
       })
     },
     {
-      refetchInterval: 1000,
+      refetchInterval: 5000,
       enabled: !newThread,
     },
   )
@@ -48,6 +48,10 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
   useEffect(() => {
     refetch()
   }, [selectedDid, refetch])
+
+  if (selectedDid !== lastMessage?.to && selectedDid !== lastMessage?.from) {
+    return <div></div>
+  }
 
   return (
     <div

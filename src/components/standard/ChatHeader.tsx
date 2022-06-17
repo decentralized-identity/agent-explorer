@@ -9,6 +9,8 @@ import { FormOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 import { SelectProps } from 'antd/es/select'
 import { IIdentifier } from '@veramo/core'
+import Text from 'antd/lib/typography/Text'
+import Title from 'antd/lib/typography/Title'
 
 const { Option } = Select
 
@@ -16,7 +18,7 @@ interface ChatHeaderProps {}
 
 const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const { agent } = useVeramo<IDIDDiscovery>()
-  const [uri, setUri] = useState<string>()
+  // const [uri, setUri] = useState<string>()
   const {
     selectedDid,
     setSelectedDid,
@@ -79,11 +81,35 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
           )
           setAgentChatIdentifiers(didsWithDIDComm)
           setSelectedDid(didsWithDIDComm[0].did)
-          setUri(identiconUri(didsWithDIDComm[0].did))
         }
       },
     },
   )
+
+  const { data: selectedDidProfiles } = useQuery(
+    ['selectedDidProfileCredentials', { id: agent?.context.id, selectedDid }],
+    () =>
+      agent?.dataStoreORMGetVerifiableCredentials({
+        where: [
+          { column: 'issuer', value: [selectedDid], op: 'Equal' },
+          {
+            column: 'type',
+            value: ['VerifiableCredential,ProfileCredentialSchema'],
+            op: 'Equal',
+          },
+        ],
+        order: [{ column: 'issuanceDate', direction: 'DESC' }],
+      }),
+  )
+  const name =
+    selectedDidProfiles &&
+    selectedDidProfiles.length > 0 &&
+    selectedDidProfiles[0].verifiableCredential.credentialSubject.name
+  const avatar =
+    selectedDidProfiles &&
+    selectedDidProfiles.length > 0 &&
+    selectedDidProfiles[0].verifiableCredential.credentialSubject.avatar
+  const uri = avatar || (selectedDid && identiconUri(selectedDid))
 
   return (
     <Row
@@ -101,11 +127,14 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
           }}
         >
           <Col>
-            {uri ? (
-              <Avatar size={35} src={uri} style={{ marginLeft: 27 }} />
-            ) : (
-              <Avatar size={50} />
-            )}
+            <Row style={{ alignItems: 'center' }}>
+              {uri ? (
+                <Avatar size={35} src={uri} style={{ marginLeft: 27 }} />
+              ) : (
+                <Avatar size={50} />
+              )}
+              <Title level={5}>{name}</Title>
+            </Row>
           </Col>
           <Col style={{ marginLeft: 24, flex: 1 }}>
             {agentChatIdentifiers.length > 0 && (
@@ -117,7 +146,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
                     (id) => id.did === value,
                   )[0]
                   setSelectedDid(id.did)
-                  setUri(identiconUri(id.did))
                 }}
               >
                 {agentChatIdentifiers.map((identifier) => {
