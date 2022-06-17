@@ -26,9 +26,6 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
 }) => {
   const { selectedDid } = useChat()
   const { agent } = useVeramo()
-  // const history = useHistory()
-
-  // console.log("selectedDid: ", selectedDid)
   const { data: selectedDidProfileCredentials } = useQuery(
     [
       'selectedDidProfileCredentials',
@@ -36,18 +33,21 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
     ],
     () =>
       agent?.dataStoreORMGetVerifiableCredentials({
-        where: [{ column: 'issuer', value: [selectedDid], op: 'Equal' }],
+        where: [
+          { column: 'issuer', value: [selectedDid], op: 'Equal' },
+          {
+            column: 'type',
+            value: ['VerifiableCredential,ProfileCredentialSchema'],
+            op: 'Equal',
+          },
+        ],
         order: [{ column: 'issuanceDate', direction: 'DESC' }],
       }),
   )
-  // console.log("credentials: ", selectedDidProfileCredentials)
   const selectedDidProfileCredential =
     selectedDidProfileCredentials &&
     selectedDidProfileCredentials.length > 0 &&
     selectedDidProfileCredentials[0].verifiableCredential
-  // console.log("selectedDidProfileCredential: ", selectedDidProfileCredential)
-
-  // console.log("counterParty.did: ", counterParty?.did)
   const { data: counterPartyProfileCredentials } = useQuery(
     [
       'counterPartyProfileCredentials',
@@ -55,18 +55,22 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
     ],
     () =>
       agent?.dataStoreORMGetVerifiableCredentials({
-        where: [{ column: 'issuer', value: [counterParty?.did], op: 'Equal' }],
+        where: [
+          { column: 'issuer', value: [counterParty?.did], op: 'Equal' },
+          {
+            column: 'type',
+            value: ['VerifiableCredential,ProfileCredentialSchema'],
+            op: 'Equal',
+          },
+        ],
         order: [{ column: 'issuanceDate', direction: 'DESC' }],
       }),
   )
 
-  // console.log("counterPartyProfileCredentials: ", counterPartyProfileCredentials);
   const counterPartyProfileCredential =
     counterPartyProfileCredentials &&
     counterPartyProfileCredentials.length > 0 &&
     counterPartyProfileCredentials[0].verifiableCredential
-
-  // console.log("counterPartyProfileCredential: ", counterPartyProfileCredential);
 
   const messageId = v4()
   const sendMessage = async (msg: string, attachment?: any) => {
@@ -89,7 +93,6 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
     })
   }
 
-  // console.log("counterParty: ", counterParty)
   if (!counterParty || !counterParty.did) {
     return (
       <Row

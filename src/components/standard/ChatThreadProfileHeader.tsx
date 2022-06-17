@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Typography, Avatar } from 'antd'
+import { Row, Typography, Avatar, Col } from 'antd'
 import { useHistory } from 'react-router'
 import { useChat } from '../../context/ChatProvider'
 import { identiconUri } from '../../utils/identicon'
@@ -12,49 +12,58 @@ interface ChatThreadProfileHeaderProps {
   did: string
   profileCredential?: any
   onRowClick?: any
+  selected?: boolean
 }
 
 const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
   did,
   profileCredential,
   onRowClick,
+  selected,
 }) => {
+  console.log('CHAT THREAD PROFILE HEADER selected: ', selected)
   return (
     <Row
       onClick={onRowClick}
       style={{
         cursor: 'pointer',
         padding: 20,
-        backgroundColor: '#f7f7f7',
+        backgroundColor: selected ? `#000000` : '#f7f7f7',
         alignItems: 'center',
         borderBottom: '1px solid white',
       }}
     >
-      <Avatar
-        src={
-          profileCredential
-            ? profileCredential.credentialSubject.avatar
-            : identiconUri(did)
-        }
-        size={50}
-        style={{ marginRight: 15 }}
-      />
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <Col>
+        <Avatar
+          src={
+            profileCredential
+              ? profileCredential.credentialSubject.avatar
+              : identiconUri(did)
+          }
+          size={50}
+          style={{ marginRight: 15 }}
+        />
+      </Col>
+      <Col style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {profileCredential ? (
-          <div>
-            <Title level={5} style={{ marginBottom: 0 }}>
-              {profileCredential.credentialSubject.name}
-            </Title>
-            <Text>{did}</Text>
-          </div>
+          <Col>
+            <Row>
+              <Text style={{ marginBottom: 0 }} strong>
+                {profileCredential.credentialSubject.name}
+              </Text>
+            </Row>
+            <Row>
+              <Text>{did}</Text>
+            </Row>
+          </Col>
         ) : (
           <div>
-            <Title level={5} style={{ marginBottom: 0 }}>
+            <Text style={{ marginBottom: 0 }} strong>
               {did}
-            </Title>
+            </Text>
           </div>
         )}
-      </div>
+      </Col>
     </Row>
   )
 }
