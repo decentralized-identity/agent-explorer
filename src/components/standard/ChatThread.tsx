@@ -1,5 +1,4 @@
 import React from 'react'
-import { Typography } from 'antd'
 import { useHistory } from 'react-router'
 import { useChat } from '../../context/ChatProvider'
 import { useQuery } from 'react-query'
