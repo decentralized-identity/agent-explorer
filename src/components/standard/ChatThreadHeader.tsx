@@ -1,15 +1,11 @@
 import React from 'react'
-import { Row, Typography, Avatar } from 'antd'
-import { useHistory } from 'react-router'
+import { Row } from 'antd'
 import { useChat } from '../../context/ChatProvider'
-import { identiconUri } from '../../utils/identicon'
 import { v4 } from 'uuid'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { signVerifiablePresentation } from '../../utils/signing'
 import ChatThreadProfileHeader from './ChatThreadProfileHeader'
-
-const { Title, Text } = Typography
 
 interface ChatThreadHeaderProps {
   counterParty: CounterParty

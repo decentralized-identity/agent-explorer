@@ -1,12 +1,8 @@
 import React from 'react'
 import { Row, Typography, Avatar, Col } from 'antd'
-import { useHistory } from 'react-router'
-import { useChat } from '../../context/ChatProvider'
 import { identiconUri } from '../../utils/identicon'
-import { useQuery } from 'react-query'
-import { useVeramo } from '@veramo-community/veramo-react'
 
-const { Title, Text } = Typography
+const { Text } = Typography
 
 interface ChatThreadProfileHeaderProps {
   did: string
@@ -21,7 +17,6 @@ const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
   onRowClick,
   selected,
 }) => {
-  console.log('CHAT THREAD PROFILE HEADER selected: ', selected)
   return (
     <Row
       onClick={onRowClick}

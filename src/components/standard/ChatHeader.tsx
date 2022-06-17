@@ -9,7 +9,6 @@ import { FormOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
 import { SelectProps } from 'antd/es/select'
 import { IIdentifier } from '@veramo/core'
-import Text from 'antd/lib/typography/Text'
 import Title from 'antd/lib/typography/Title'
 
 const { Option } = Select
@@ -18,7 +17,6 @@ interface ChatHeaderProps {}
 
 const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const { agent } = useVeramo<IDIDDiscovery>()
-  // const [uri, setUri] = useState<string>()
   const {
     selectedDid,
     setSelectedDid,

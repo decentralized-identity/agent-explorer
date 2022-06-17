@@ -1,13 +1,10 @@
 import React from 'react'
-import { Row, Typography, Avatar } from 'antd'
+import { Typography } from 'antd'
 import { useHistory } from 'react-router'
 import { useChat } from '../../context/ChatProvider'
-import { identiconUri } from '../../utils/identicon'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import ChatThreadProfileHeader from './ChatThreadProfileHeader'
-
-const { Title, Text } = Typography
 
 interface ChatThreadProps {
   thread: any
@@ -20,7 +17,6 @@ const ChatThread: React.FC<ChatThreadProps> = ({
   threadId,
   threadSelected,
 }) => {
-  console.log('CHAT THREAD SELECTED: ', threadSelected)
   const { agent } = useVeramo()
   const { selectedDid, setComposing } = useChat()
   const history = useHistory()
