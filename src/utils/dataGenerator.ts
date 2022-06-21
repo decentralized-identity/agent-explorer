@@ -40,7 +40,7 @@ export async function createIdentifiers(
         const _alias = randomWords({
           exactly: 1,
           wordsPerString: 2,
-          separator: '-',
+          join: '-',
         })
 
         const generatedAlias =
