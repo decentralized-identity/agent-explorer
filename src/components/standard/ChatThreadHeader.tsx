@@ -41,9 +41,8 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
       }),
   )
   const selectedDidProfileCredential =
-    selectedDidProfileCredentials &&
-    selectedDidProfileCredentials.length > 0 &&
-    selectedDidProfileCredentials[0].verifiableCredential
+    selectedDidProfileCredentials?.[0]?.verifiableCredential
+
   const { data: counterPartyProfileCredentials } = useQuery(
     [
       'counterPartyProfileCredentials',
@@ -117,7 +116,9 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
               agent,
               selectedDid,
               [],
-              [selectedDidProfileCredential],
+              selectedDidProfileCredential
+                ? [selectedDidProfileCredential]
+                : [],
               'jwt',
             )
             sendMessage('Attached Profile', signedPresentation)
