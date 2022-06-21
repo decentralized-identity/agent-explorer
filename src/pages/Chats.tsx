@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom'
+import { Route, useParams } from 'react-router-dom'
 import Page from '../layout/SplitPage'
 import ChatThread from '../components/standard/ChatThread'
 import ChatScrollPanel from '../components/standard/ChatScrollPanel'
@@ -21,8 +21,9 @@ const groupBy = (arr: any[], property: string) => {
 const ChatView = () => {
   const { agent } = useVeramo()
   const { selectedDid } = useChat()
+  const { threadId } = useParams<{ threadId: string }>()
   const { data: threads, refetch } = useQuery(
-    ['threads', { id: agent?.context.id }],
+    ['threads', { id: agent?.context.id, selectedDid, threadId }],
     async () => {
       const messages = await agent?.dataStoreORMGetMessages({
         where: [{ column: 'type', value: ['veramo.io-chat-v1'] }],
@@ -52,7 +53,7 @@ const ChatView = () => {
   )
   useEffect(() => {
     refetch()
-  }, [selectedDid, refetch])
+  }, [selectedDid, refetch, threadId])
 
   return (
     <Page
@@ -74,6 +75,7 @@ const ChatView = () => {
                       thread={threads[index]}
                       threadId={index}
                       key={index}
+                      threadSelected={index === threadId}
                     />
                   )
                 })}
