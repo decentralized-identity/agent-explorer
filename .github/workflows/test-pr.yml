@@ -16,8 +16,3 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: yarn test
       - run: yarn build
-
-      - name: 'Upload coverage reports'
-        uses: codecov/codecov-action@v2
-        with:
-          fail_ci_if_error: true
