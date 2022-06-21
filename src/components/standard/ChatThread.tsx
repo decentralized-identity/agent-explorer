@@ -46,7 +46,8 @@ const ChatThread: React.FC<ChatThreadProps> = ({
       }),
   )
   const profileCredential =
-    counterPartyProfileCredentials?.length > 0 &&
+    counterPartyProfileCredentials &&
+    counterPartyProfileCredentials.length > 0 &&
     counterPartyProfileCredentials[0].verifiableCredential
   return (
     <ChatThreadProfileHeader
