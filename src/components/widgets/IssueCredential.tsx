@@ -124,7 +124,7 @@ const IssueCredential: React.FC<IssueCredentialProps> = ({
         })
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
 
       agent?.handleMessage({ raw: body.proof.jwt, save: true })
     }

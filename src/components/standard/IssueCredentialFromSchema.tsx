@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Input, Button, Select, Card, Alert } from 'antd'
+import { Button, Select, Card, Alert } from 'antd'
 import { issueCredential } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
@@ -8,6 +8,7 @@ import { IIdentifier } from '@veramo/core'
 import { withTheme } from '@rjsf/core'
 import { Theme as AntDTheme } from '@rjsf/antd'
 import { VCJSONSchema } from '../../types'
+import DIDDiscoveryBar from './DIDDiscoveryBar'
 const JsonSchemaForm = withTheme(AntDTheme)
 
 const { Option } = Select
@@ -70,11 +71,10 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
         }}
         onError={() => {}}
       >
-        <Input
-          value={subject}
-          placeholder="subject DID"
-          style={{ width: '60%' }}
-          onChange={(e) => setSubject(e.target.value)}
+        <DIDDiscoveryBar
+          handleSelect={(e: any) => {
+            setSubject(e)
+          }}
         />
         <Select
           style={{ width: '60%' }}

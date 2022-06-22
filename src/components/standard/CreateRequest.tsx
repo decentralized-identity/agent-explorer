@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Form, Input, Button, Col, Row, Card, Checkbox } from 'antd'
+import { Form, Input, Button, Col, Row, Card, Checkbox, Alert } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQueryClient } from 'react-query'
 import { ICredentialRequestInput, Issuer } from '@veramo/selective-disclosure'
 import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { v4 as uuidv4 } from 'uuid'
+import DIDDiscoveryBar from './DIDDiscoveryBar'
 
 interface CreateRequestProps {}
 
@@ -32,14 +33,12 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
   const [claimValue, setClaimValue] = useState<string>('')
   const [reason, setReason] = useState<string>('')
   const [claimRequired, setClaimRequired] = useState<boolean>(false)
-  const [replyUrl, setReplyUrl] = useState<string>()
   const [requiredIssuers, setRequiredIssuers] = useState<Issuer[]>([])
   const [requiredIssuer, setRequiredIssuer] = useState<string>('')
   const [requiredIssuerUrl, setRequiredIssuerUrl] = useState<string>('')
   const [claims, setClaims] = useState<ICredentialRequestInput[]>([])
   const [panelOpen, setPanelOpen] = useState(false)
-
-  console.log(replyUrl)
+  const [errorMessage, setErrorMessage] = useState('')
 
   const addRequiredIssuer = (did: string, url?: string) => {
     setRequiredIssuers((s) => s?.concat([{ did, url: url || '' }]))
@@ -63,18 +62,25 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
 
     setClaimType('')
     setClaimValue('')
-    setReplyUrl('')
     setRequiredIssuers([])
   }
 
   const createSDR = async (sdrArgs: SDRArgs) => {
-    const request = await agent?.createSelectiveDisclosureRequest({
-      data: {
-        subject: sdrArgs.subject,
-        issuer: sdrArgs.issuer,
-        claims: sdrArgs.claims,
-      },
-    })
+    let request
+    try {
+      request = await agent?.createSelectiveDisclosureRequest({
+        data: {
+          subject: sdrArgs.subject,
+          issuer: sdrArgs.issuer,
+          claims: sdrArgs.claims,
+        },
+      })
+    } catch (err) {
+      console.error('Error in createSelectiveDisclosureRequest:', err)
+      setErrorMessage(
+        'Error Creating Selecting Disclosure Request. Please ensure that the DID used to issue this SDR has a "Secp256k1" signing key available. Check Logs.',
+      )
+    }
 
     if (request) {
       await agent?.handleMessage({ raw: request, save: true })
@@ -83,32 +89,38 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
 
     setIssuer('')
     setSubject('')
-    setReplyUrl('')
     setClaims([])
 
     if (subject && request) {
+      const messageId = uuidv4()
+      const message = {
+        type: 'veramo.io/chat/v1/basicmessage',
+        to: subject as string,
+        from: issuer as string,
+        id: messageId,
+        body: request,
+      }
+      let packedMessage
       try {
-        const messageId = uuidv4()
-        const message = {
-          type: 'veramo.io/chat/v1/basicmessage',
-          to: subject as string,
-          from: issuer as string,
-          id: messageId,
-          body: request,
-        }
-        const packedMessage = await agent?.packDIDCommMessage({
+        packedMessage = await agent?.packDIDCommMessage({
           packing: 'authcrypt',
           message,
         })
-        if (packedMessage) {
+      } catch (err) {
+        console.error('Error in packDIDCommMessage. err: ', err)
+        setErrorMessage('Error in sendDIDCommMessage. Check Logs.')
+      }
+      if (packedMessage) {
+        try {
           await agent?.sendDIDCommMessage({
             messageId: messageId,
             packedMessage,
             recipientDidUrl: subject as string,
           })
+        } catch (err) {
+          console.error('Error in sendDIDCommMessage. err: ', err)
+          setErrorMessage('Error in sendDIDCommMessage. Check Logs.')
         }
-      } catch (err) {
-        console.log(err)
       }
     }
   }
@@ -135,27 +147,18 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
             <code>{JSON.stringify(claims, null, 2)}</code>
           </pre>
           <Row>
-            <Form.Item label="Issuer">
-              <Input
-                type="text"
-                style={{ width: 250, marginRight: 15 }}
-                onChange={(e) => setIssuer(e.target.value)}
+            <Form.Item label="SDR Issuer">
+              <DIDDiscoveryBar
+                handleSelect={(value: any) => {
+                  setIssuer(value)
+                }}
               />
             </Form.Item>
-            <Form.Item label="Subject">
-              <Input
-                type="text"
-                style={{ width: 250 }}
-                onChange={(e) => setSubject(e.target.value)}
-              />
-            </Form.Item>
-          </Row>
-          <Row>
-            <Form.Item label="Reply url">
-              <Input
-                type="text"
-                style={{ width: 250 }}
-                onChange={(e) => setReplyUrl(e.target.value)}
+            <Form.Item label="SDR Subject">
+              <DIDDiscoveryBar
+                handleSelect={(value: any) => {
+                  setSubject(value)
+                }}
               />
             </Form.Item>
           </Row>
@@ -195,20 +198,12 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
             </pre>
             <Card>
               <Row>
-                <Form.Item label="Issuer">
-                  <Input
-                    value={requiredIssuer}
-                    type="text"
-                    style={{ width: 250, marginRight: 15 }}
-                    onChange={(e) => setRequiredIssuer(e.target.value)}
-                  />
-                </Form.Item>
-                <Form.Item label="Issuer Url">
-                  <Input
-                    value={requiredIssuerUrl}
-                    type="text"
-                    style={{ width: 250 }}
-                    onChange={(e) => setRequiredIssuerUrl(e.target.value)}
+                <Form.Item label="Credential Issuer">
+                  <DIDDiscoveryBar
+                    handleSelect={(e: any) => {
+                      setRequiredIssuer(e)
+                      setRequiredIssuerUrl(e)
+                    }}
                   />
                 </Form.Item>
               </Row>
@@ -260,6 +255,13 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
             Create request
           </Button>
         </Form>
+      )}
+      {errorMessage && (
+        <>
+          <br />
+          <br />
+          <Alert message={errorMessage} type="error" />
+        </>
       )}
     </Card>
   )

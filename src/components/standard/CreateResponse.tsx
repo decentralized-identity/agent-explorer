@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Avatar, Radio, Space, Button, Row, Select } from 'antd'
+import { Card, Avatar, Radio, Space, Button, Row, Select, Alert } from 'antd'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -21,9 +21,13 @@ const uri = (did: string) => {
 interface CreateResponseProps {}
 
 const CreateResponse: React.FC<CreateResponseProps> = () => {
-  const { agent } = useVeramo<ICredentialIssuer & IDIDManager & ISelectiveDisclosure, any>()
+  const { agent } = useVeramo<
+    ICredentialIssuer & IDIDManager & ISelectiveDisclosure,
+    any
+  >()
   if (!agent) throw Error('no agent')
   const [presenter, setPresenter] = useState<string>('')
+  const [errorMessage, setErrorMessage] = useState('')
   const { messageId } = useParams<{ messageId: string }>()
   const { data: message, isLoading } = useQuery(
     ['message', { agentId: agent?.context.name }],
@@ -51,34 +55,57 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
   )
 
   const shareVCPresentation = async () => {
-    const presentation = await signVerifiablePresentation(
-      agent,
-      presenter as string,
-      [message?.from as string],
-      Object.keys(selected).map((key) => selected[key].vc?.verifiableCredential as W3CVerifiableCredential),
-      'jwt',
-    )
+    let presentation
+    try {
+      presentation = await signVerifiablePresentation(
+        agent,
+        presenter as string,
+        [message?.from as string],
+        Object.keys(selected).map(
+          (key) =>
+            selected[key].vc?.verifiableCredential as W3CVerifiableCredential,
+        ),
+        'jwt',
+      )
+    } catch (err: any) {
+      console.error('Unable to signVerifiablePresentation: ', err)
+      setErrorMessage(
+        'Error when calling signVerifiablePresentation. Check logs.',
+      )
+    }
     if (presentation) {
-      const messageId = uuidv4()
-      const didCommMessage = {
-        type: 'veramo.io/chat/v1/basicmessage',
-        to: message?.from as string,
-        from: presenter as string,
-        id: messageId,
-        body: presentation,
+      let packedMessage
+      try {
+        const messageId = uuidv4()
+        const didCommMessage = {
+          type: 'veramo.io-chat-v1',
+          to: message?.from as string,
+          from: presenter as string,
+          id: messageId,
+          thid: uuidv4(),
+          body: { message: 'Sent SDR Response', presentation },
+        }
+
+        packedMessage = await agent?.packDIDCommMessage({
+          packing: 'jws',
+          message: didCommMessage,
+        })
+      } catch (err) {
+        console.error('Unable to packDIDCommMessage: ', err)
+        setErrorMessage('Error when calling packDIDCommMessage. Check logs.')
       }
 
-      const packedMessage = await agent?.packDIDCommMessage({
-        packing: 'authcrypt',
-        message: didCommMessage,
-      })
-
       if (packedMessage) {
-        await agent?.sendDIDCommMessage({
-          messageId: messageId,
-          packedMessage,
-          recipientDidUrl: message?.from as string,
-        })
+        try {
+          await agent?.sendDIDCommMessage({
+            messageId: messageId,
+            packedMessage,
+            recipientDidUrl: message?.from as string,
+          })
+        } catch (err) {
+          console.error('Unable to sendDIDCommMessage: ', err)
+          setErrorMessage('Error when calling sendDIDCommMessage. Check logs.')
+        }
       }
     }
     setPresenter('')
@@ -178,6 +205,13 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
           Share Credentials
         </Button>
       </Row>
+      {errorMessage && (
+        <>
+          <br />
+          <br />
+          <Alert message={errorMessage} type="error" />
+        </>
+      )}
     </Card>
   )
 }

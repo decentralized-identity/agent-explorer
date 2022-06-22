@@ -168,7 +168,12 @@ const SideMenu = () => {
             return (
               <Menu.Item
                 key={menuItem.label}
-                icon={<menuItem.icon style={{ fontSize: '17px' }} />}
+                icon={
+                  <menuItem.icon
+                    style={{ fontSize: '17px' }}
+                    key={'menuItem' + menuItem.url}
+                  />
+                }
               >
                 <Link to={menuItem.url}>{menuItem.label}</Link>
               </Menu.Item>
@@ -187,12 +192,12 @@ const SideMenu = () => {
           marginBottom: 50,
         }}
       >
-        <Menu.Item></Menu.Item>
-        <Menu.Item>
+        <Menu.Item key="blankItem"></Menu.Item>
+        <Menu.Item key="settings">
           <Link to="/settings">Settings</Link>
           (<Version versionOnly />)
         </Menu.Item>
-        <Menu.Item>
+        <Menu.Item key="githublink">
           <a
             target="_blank"
             rel="noreferrer"
