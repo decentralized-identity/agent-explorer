@@ -27,9 +27,8 @@ const ChatScrollPanel: React.FC<ChatScrollPanelProps> = ({
       // @ts-ignore
       style={{
         ...(reverse ? reverseStyles : {}),
-        flex: 3,
+        flex: 1,
         overflow: 'scroll',
-        // height: 'calc(100vh - 120px)',
       }}
     >
       <div id="scroll-items">{children}</div>
