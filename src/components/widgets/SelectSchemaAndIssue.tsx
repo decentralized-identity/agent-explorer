@@ -38,12 +38,18 @@ const SelectSchemaAndIssue: React.FC<SelectSchemaAndIssueProps> = ({
   // load selected schema
   useEffect(() => {
     const getSchemas = async () => {
-      const url = `${schemasRepositoryUrlBase}/${selectedSchemaUrl}`
-      const response = await fetch(url, {
-        method: 'GET',
-      })
-      const json = await response.json()
-      setSelectedSchema(json)
+      if (selectedSchemaUrl) {
+        const url = `${schemasRepositoryUrlBase}/${selectedSchemaUrl}`
+        const response = await fetch(url, {
+          method: 'GET',
+        })
+        try {
+          const json = await response.json()
+          setSelectedSchema(json)
+        } catch (err) {
+          console.log('Error Setting Schemas: ', err)
+        }
+      }
     }
     getSchemas()
   }, [selectedSchemaUrl])
