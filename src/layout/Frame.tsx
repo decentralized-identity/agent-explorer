@@ -38,7 +38,6 @@ const Frame = () => {
               <Route path="/connect" component={Connect} />
               <Route path="/agents" exact component={Agents} />
               <Route path="/agent/:id" component={Agent} />
-              <Route path="/chats" component={Chats} />
               <Route path="/chats/threads/:threadId" component={Chats} />
               <Route path="/identifiers" exact component={Identifiers} />
               <Route path="/identifier/:id" component={Identifier} />

@@ -23,7 +23,7 @@ const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
       style={{
         cursor: 'pointer',
         padding: 20,
-        backgroundColor: selected ? `#000000` : '#f7f7f7',
+        backgroundColor: selected ? `#cef0ef` : '#f7f7f7',
         alignItems: 'center',
         borderBottom: '1px solid white',
       }}

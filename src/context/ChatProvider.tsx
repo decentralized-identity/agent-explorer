@@ -6,7 +6,6 @@ const ChatProvider = (props: any) => {
   const [selectedDid, setSelectedDid] = useState()
   const [composing, setComposing] = useState(false)
   const [newRecipient, setNewRecipient] = useState()
-
   return (
     <ChatContext.Provider
       value={{

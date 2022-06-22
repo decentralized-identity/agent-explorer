@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Avatar, Button, Input, AutoComplete, Select } from 'antd'
+import { Row, Col, Avatar, Button, Select } from 'antd'
 import { useChat } from '../../context/ChatProvider'
 import { identiconUri } from '../../utils/identicon'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -7,9 +7,9 @@ import { IDIDDiscovery } from '@veramo/did-discovery'
 import { useQuery } from 'react-query'
 import { FormOutlined } from '@ant-design/icons'
 import { useHistory } from 'react-router-dom'
-import { SelectProps } from 'antd/es/select'
 import { IIdentifier } from '@veramo/core'
 import Title from 'antd/lib/typography/Title'
+import DIDDiscoveryBar from './DIDDiscoveryBar'
 
 const { Option } = Select
 
@@ -22,46 +22,12 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
     setSelectedDid,
     composing,
     setComposing,
-    newRecipient,
     setNewRecipient,
   } = useChat()
   const history = useHistory()
-  const [options, setOptions] = useState<SelectProps<object>['options']>([])
   const [agentChatIdentifiers, setAgentChatIdentifiers] = useState<
     IIdentifier[]
   >([])
-
-  const searchResult = async (query: string) => {
-    const response = await agent?.discoverDid({ query })
-    const selectOptions: Array<{ value: string; label: any }> = []
-    response?.results.forEach((r) => {
-      r.matches.forEach((m) => {
-        selectOptions.push({
-          value: m.did,
-          label: (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span>{m.did}</span>
-              <span>{r.provider}</span>
-            </div>
-          ),
-        })
-      })
-    })
-    return selectOptions
-  }
-
-  const handleSearch = async (value: string) => {
-    setOptions(value ? await searchResult(value) : [])
-  }
-
-  const onSelect = (value: string) => {
-    console.log('onSelect', value)
-  }
 
   const composeNewThread = () => {
     history.push('/chats/threads/new-thread')
@@ -179,26 +145,9 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
                 paddingRight: 24,
               }}
             >
-              <Row>
-                <AutoComplete
-                  dropdownMatchSelectWidth={true}
-                  style={{ width: '100%' }}
-                  options={options}
-                  onSelect={onSelect}
-                  onSearch={handleSearch}
-                >
-                  <Input
-                    value={newRecipient}
-                    onChange={(e) => setNewRecipient(e.target.value)}
-                    style={{
-                      flex: 1,
-                      backgroundColor: 'transparent',
-                      paddingTop: 10,
-                      paddingBottom: 10,
-                    }}
-                  />
-                </AutoComplete>
-              </Row>
+              <DIDDiscoveryBar
+                handleSelect={(value: any) => setNewRecipient(value)}
+              />
             </Col>
           </Row>
         )}

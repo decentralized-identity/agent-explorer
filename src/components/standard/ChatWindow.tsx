@@ -11,10 +11,9 @@ import { useChat } from '../../context/ChatProvider'
 import ChatThreadHeader from './ChatThreadHeader'
 
 interface ChatWindowProps {}
-
 const ChatWindow: React.FC<ChatWindowProps> = () => {
   const { threadId } = useParams<{ threadId: string }>()
-  const { selectedDid } = useChat()
+  const { selectedDid, newRecipient } = useChat()
   const newThread = threadId === 'new-thread'
   const { agent } = useVeramo()
 
@@ -39,9 +38,12 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
   )
   const lastMessage =
     messages && messages.length > 0 && messages[messages.length - 1]
-  const counterParty = lastMessage && {
-    did: lastMessage.from === selectedDid ? lastMessage.to : lastMessage.from,
-  }
+  const counterParty = lastMessage
+    ? {
+        did:
+          lastMessage.from === selectedDid ? lastMessage.to : lastMessage.from,
+      }
+    : { did: newRecipient }
   useEffect(() => {
     scrollMessages()
   }, [messages])
@@ -49,7 +51,11 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
     refetch()
   }, [selectedDid, refetch])
 
-  if (selectedDid !== lastMessage?.to && selectedDid !== lastMessage?.from) {
+  if (
+    !newThread &&
+    selectedDid !== lastMessage?.to &&
+    selectedDid !== lastMessage?.from
+  ) {
     return <div></div>
   }
 
@@ -58,6 +64,8 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
       style={{
         backgroundImage: `url(${tile})`,
         backgroundRepeat: 'repeat',
+        flexGrow: 1,
+        height: 'calc(100vh - 80px)',
       }}
     >
       <ChatThreadHeader counterParty={counterParty} threadId={threadId} />

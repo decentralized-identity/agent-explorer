@@ -1,4 +1,4 @@
-import { Route, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Page from '../layout/SplitPage'
 import ChatThread from '../components/standard/ChatThread'
 import ChatScrollPanel from '../components/standard/ChatScrollPanel'
@@ -85,7 +85,7 @@ const ChatView = () => {
       }
       rightContent={
         <Layout>
-          <Route path="/chats/threads/:threadId" component={ChatWindow} />
+          <ChatWindow />
         </Layout>
       }
     ></Page>
