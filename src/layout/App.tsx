@@ -1,11 +1,11 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import Frame from './Frame'
-import { VeramoProvider } from '@veramo-community/veramo-react'
 import { ThemeProvider } from '../context/ThemeProvider'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { PageModuleProvider } from '../context/WidgetProvider'
 import { ChatProvider } from '../context/ChatProvider'
+import { VeramoWeb3Provider } from '../context/web3/VeramoWeb3Provider'
 
 declare global {
   interface Window {
@@ -20,7 +20,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         {
-          <VeramoProvider>
+          <VeramoWeb3Provider>
             <ChatProvider>
               <PageModuleProvider>
                 <BrowserRouter>
@@ -28,7 +28,7 @@ const App = () => {
                 </BrowserRouter>
               </PageModuleProvider>
             </ChatProvider>
-          </VeramoProvider>
+          </VeramoWeb3Provider>
         }
       </ThemeProvider>
     </QueryClientProvider>
