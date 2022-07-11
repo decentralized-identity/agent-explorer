@@ -6,6 +6,7 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import IdentifierKeys from '../components/standard/IdentifierKeys'
 import IdentifierServices from '../components/standard/IdentifierServices'
+import IdentifierQuickSetup from '../components/standard/IdentifierQuickSetup'
 
 const { Title } = Typography
 const { TabPane } = Tabs
@@ -16,7 +17,9 @@ const Identifier = () => {
   const { data: identifer, isLoading } = useQuery(['identifier', id], () =>
     agent?.resolveDid({ didUrl: id }),
   )
-
+  const { data: managedDID } = useQuery(['managedDid', id], () =>
+    agent?.didManagerGet({ did: id }),
+  )
   return (
     <Page
       header={
@@ -29,15 +32,24 @@ const Identifier = () => {
       <Tabs>
         <TabPane tab="Fields" key="1">
           <Layout>
+            {managedDID && (
+              <IdentifierQuickSetup
+                title="Quick Setup"
+                identifier={id}
+                cacheKey={`identifier-quicksetup-${id}`}
+              />
+            )}
             <IdentifierKeys
               title="Keys"
               identifier={id}
-              cacheKey="identifier"
+              cacheKey={`identifier-keys-${id}`}
+              isManaged={managedDID}
             />
             <IdentifierServices
               title="Services"
               identifier={id}
-              cacheKey="identifier"
+              cacheKey={`identifier-services-${id}`}
+              isManaged={managedDID}
             />
           </Layout>
         </TabPane>

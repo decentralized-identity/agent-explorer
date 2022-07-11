@@ -12,12 +12,14 @@ interface IdentifierModuleProps {
   title: string
   identifier: string
   cacheKey: any
+  isManaged?: boolean
 }
 
 const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
   title,
   identifier,
   cacheKey,
+  isManaged = false,
 }) => {
   const { agent } = useVeramo()
   const { data, isLoading } = useQuery(
@@ -62,15 +64,19 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
     setIsAddModalVisible(false)
   }
 
+  const actions = isManaged
+    ? [
+        <Button onClick={() => showCreateAddModal()}>Create New Key</Button>,
+        <Button onClick={() => showAddModal()}>Add Existing Key</Button>,
+      ]
+    : []
+
   return (
     <Card
       title={title}
       style={{ flexWrap: 'wrap' }}
       loading={isLoading}
-      actions={[
-        <Button onClick={() => showCreateAddModal()}>Create New Key</Button>,
-        <Button onClick={() => showAddModal()}>Add Existing Key</Button>,
-      ]}
+      actions={actions}
     >
       <CreateAndAddKeyModalForm
         visible={isCreateAddModalVisible}
