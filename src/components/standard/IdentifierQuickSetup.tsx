@@ -45,14 +45,32 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
         // @ts-ignore
         key,
       })
-      await agent?.didManagerAddService({
-        did: identifier,
-        service: {
-          id: `${identifier}-didcomm-messaging`,
-          type: 'DIDCommMessaging',
-          serviceEndpoint,
-        },
-      })
+      if (serviceEndpoint) {
+        // can just use normal https endpoint
+        await agent?.didManagerAddService({
+          did: identifier,
+          service: {
+            id: `${identifier}-didcomm-messaging`,
+            type: 'DIDCommMessaging',
+            serviceEndpoint,
+          },
+        })
+      } else {
+        // use libp2p
+        await agent?.didManagerAddService({
+          did: identifier,
+          service: {
+            id: `${identifier}-didcomm-messaging`,
+            type: 'DIDCommMessaging',
+            serviceEndpoint: {
+              transportType: 'libp2p',
+              network: 'didcomm-public',
+              supportedProtocols: ['didcomm/v2', 'ipfs'],
+              peerId: localStorage.getItem('libp2p-peerId'),
+            },
+          },
+        })
+      }
     } catch (err) {
       console.log('err: ', err)
       setErrorMessage(

@@ -26,6 +26,9 @@ import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { MinimalImportableKey } from '@veramo/core'
 import { Web3Provider } from '@ethersproject/providers'
 
+import setupLibp2p from '../libp2p/libp2p'
+// console.log("setupLibp2p: ", setupLibp2p)
+
 const dataStore = BrowserLocalStorageStore.fromLocalStorage('veramo-state')
 const infuraProjectId = '3586660d179141e3801c3895de1c2eba'
 
@@ -42,6 +45,9 @@ export async function createWeb3Agent({
 }: {
   connectors: ConnectorInfo[]
 }) {
+  const libp2p = await setupLibp2p()
+  console.log('libp2p: ', libp2p)
+
   const didProviders: Record<string, AbstractIdentifierProvider> = {}
   const web3Providers: Record<string, Web3Provider> = {}
 

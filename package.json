@@ -5,7 +5,7 @@
     "access": "public"
   },
   "engines": {
-    "node": "14.x"
+    "node": ">=14.x"
   },
   "license": "Apache-2.0",
   "files": [
@@ -58,9 +58,12 @@
     ]
   },
   "dependencies": {
+    "@libp2p/peer-id-factory": "^1.0.15",
     "commander": "^7.0.0",
     "express": "^4.17.1",
-    "express-favicon": "^2.0.1"
+    "express-favicon": "^2.0.1",
+    "libp2p-crypto": "^0.21.2",
+    "peer-id": "^0.16.0"
   },
   "release": {
     "branches": [
@@ -84,9 +87,14 @@
     ]
   },
   "devDependencies": {
+    "@chainsafe/libp2p-noise": "^6.2.0",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@craco/craco": "^6.4.3",
+    "@libp2p/bootstrap": "^2.0.0",
+    "@libp2p/mplex": "^3.0.0",
+    "@libp2p/webrtc-star": "^2.0.1",
+    "@libp2p/websockets": "^3.0.0",
     "@rjsf/antd": "^4.2.0",
     "@rjsf/core": "^4.2.0",
     "@semantic-release/commit-analyzer": "^8.0.1",
@@ -102,16 +110,16 @@
     "@types/json-schema": "^7.0.11",
     "@types/md5": "^2.2.1",
     "@types/random-words": "^1.1.0",
+    "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.1",
     "@types/react-router-dom": "^5.1.7",
-    "@types/react": "^17.0.1",
     "@types/uuid": "^8.3.1",
     "@veramo-community/veramo-react": "^1.0.79",
     "@veramo/core": "^3.1.6-next.139",
     "@veramo/credential-eip712": "^3.1.6-next.139",
     "@veramo/credential-w3c": "^3.1.6-next.139",
-    "@veramo/data-store-json": "^3.1.6-next.139",
     "@veramo/data-store": "^3.1.6-next.139",
+    "@veramo/data-store-json": "^3.1.6-next.139",
     "@veramo/did-comm": "^3.1.6-next.139",
     "@veramo/did-discovery": "^3.1.6-next.139",
     "@veramo/did-jwt": "^3.1.6-next.139",
@@ -139,20 +147,21 @@
     "did-resolver": "^3.1.0",
     "ethr-did-resolver": "^4.3.0",
     "husky": "^4.3.8",
+    "libp2p": "^0.37.3",
     "md5": "^2.3.0",
-    "node-sass": "^5.0.0",
+    "node-sass": "^6.0.0",
     "postcss-normalize": "^10.0.1",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "random-words": "^1.1.1",
+    "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-query": "^3.6.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^5.0.1",
-    "react": "^17.0.1",
     "semantic-release": "^17.4.3",
-    "stream-browserify": "^3.0.0",
     "stream": "npm:stream-browserify",
+    "stream-browserify": "^3.0.0",
     "typescript": "^4.0.3",
     "util": "^0.12.4",
     "uuid": "^8.3.2",
