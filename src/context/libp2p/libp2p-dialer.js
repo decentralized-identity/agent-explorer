@@ -8,6 +8,7 @@ import crypto from 'libp2p-crypto'
 import { createFromJSON } from '@libp2p/peer-id-factory'
 import { stdinToStream, streamToConsole } from './stream.js'
 import { Multiaddr } from '@multiformats/multiaddr'
+import { fromString } from 'uint8arrays/from-string'
 const PeerId = require('peer-id')
 
 export default async function sendMessage(toPeerId, msg) {
@@ -67,9 +68,18 @@ export default async function sendMessage(toPeerId, msg) {
 
   // Dial to the remote peer (the "listener")
   const listenerMa = new Multiaddr(
-    `/dnsaddr/bootstrap.libp2p.io/p2p/${toPeerId}`,
+    `/dns4/wrtc-star1.par.dwebops.pub/tcp/443/wss/p2p-webrtc-star/p2p/${toPeerId}`,
   )
+
+  console.log('listernerMa: ', listenerMa)
+
+  // const toPeerIdArray = fromString(toPeerId)
+  // console.log("toPeerIdArray: ", toPeerIdArray)
+  // const toPeer = new PeerId(toPeerIdArray)
+  //   console.log("toPeer: ", toPeer)
   const stream = await libp2p.dialProtocol(listenerMa, '/didComm')
+
+  console.log('stream: ', stream)
 
   stream.console.log('Dialer dialed to listener on protocol: /didComm')
   console.log('Type a message and see what happens')

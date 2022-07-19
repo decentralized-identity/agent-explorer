@@ -60,11 +60,11 @@ export default async function setupLibp2p() {
   function log(s) {
     console.log(s)
   }
-  // Listen for new peers
-  libp2p.addEventListener('peer:discovery', (evt) => {
-    const peer = evt.detail
-    // log(`Found peer ${peer.id.toString()}`)
-  })
+  // // Listen for new peers
+  // libp2p.addEventListener('peer:discovery', (evt) => {
+  //   const peer = evt.detail
+  //   // log(`Found peer ${peer.id.toString()}`)
+  // })
 
   // Listen for new connections to peers
   libp2p.connectionManager.addEventListener('peer:connect', (evt) => {
@@ -72,14 +72,15 @@ export default async function setupLibp2p() {
     log(`Connected to ${connection.remotePeer.toString()}`)
   })
 
-  // Listen for peers disconnecting
-  libp2p.connectionManager.addEventListener('peer:disconnect', (evt) => {
-    const connection = evt.detail
-    log(`Disconnected from ${connection.remotePeer.toString()}`)
-  })
+  // // Listen for peers disconnecting
+  // libp2p.connectionManager.addEventListener('peer:disconnect', (evt) => {
+  //   const connection = evt.detail
+  //   // log(`Disconnected from ${connection.remotePeer.toString()}`)
+  // })
 
   // Handle messages for the protocol
   await libp2p.handle('/didComm', async ({ stream }) => {
+    console.log('handling something!!!')
     // Send stdin to the stream
     stdinToStream(stream)
     // Read the stream and output to console
@@ -88,6 +89,11 @@ export default async function setupLibp2p() {
 
   await libp2p.start()
   log(`libp2p id is ${libp2p.peerId.toString()}`)
+
+  log('Listener ready, listening on:')
+  libp2p.getMultiaddrs().forEach((ma) => {
+    log(ma.toString())
+  })
 
   // Export libp2p to the window so you can play with the API
   window.libp2p = libp2p
