@@ -7,9 +7,10 @@ import { Bootstrap } from '@libp2p/bootstrap'
 import crypto from 'libp2p-crypto'
 import { createFromJSON } from '@libp2p/peer-id-factory'
 import { stdinToStream, streamToConsole } from './stream.js'
+import { Multiaddr } from '@multiformats/multiaddr'
 const PeerId = require('peer-id')
 
-export default async function setupLibp2p() {
+export default async function sendMessage(toPeerId, msg) {
   const webRtcStar = new WebRTCStar()
 
   // get keypair
@@ -60,37 +61,21 @@ export default async function setupLibp2p() {
   function log(s) {
     console.log(s)
   }
-  // Listen for new peers
-  libp2p.addEventListener('peer:discovery', (evt) => {
-    const peer = evt.detail
-    // log(`Found peer ${peer.id.toString()}`)
-  })
-
-  // Listen for new connections to peers
-  libp2p.connectionManager.addEventListener('peer:connect', (evt) => {
-    const connection = evt.detail
-    log(`Connected to ${connection.remotePeer.toString()}`)
-  })
-
-  // Listen for peers disconnecting
-  libp2p.connectionManager.addEventListener('peer:disconnect', (evt) => {
-    const connection = evt.detail
-    log(`Disconnected from ${connection.remotePeer.toString()}`)
-  })
-
-  // Handle messages for the protocol
-  await libp2p.handle('/didComm', async ({ stream }) => {
-    // Send stdin to the stream
-    stdinToStream(stream)
-    // Read the stream and output to console
-    streamToConsole(stream)
-  })
 
   await libp2p.start()
   log(`libp2p id is ${libp2p.peerId.toString()}`)
 
-  // Export libp2p to the window so you can play with the API
-  window.libp2p = libp2p
+  // Dial to the remote peer (the "listener")
+  const listenerMa = new Multiaddr(
+    `/dnsaddr/bootstrap.libp2p.io/p2p/${toPeerId}`,
+  )
+  const stream = await libp2p.dialProtocol(listenerMa, '/didComm')
 
-  return libp2p
+  stream.console.log('Dialer dialed to listener on protocol: /didComm')
+  console.log('Type a message and see what happens')
+
+  // Send stdin to the stream
+  stdinToStream(stream)
+  // Read the stream and output to console
+  streamToConsole(stream)
 }

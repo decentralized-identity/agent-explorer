@@ -66,7 +66,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
               transportType: 'libp2p',
               network: 'didcomm-public',
               supportedProtocols: ['didcomm/v2', 'ipfs'],
-              peerId: localStorage.getItem('libp2p-peerId'),
+              peerId: JSON.parse(localStorage.getItem('libp2p-peerId')!).id,
             },
           },
         })

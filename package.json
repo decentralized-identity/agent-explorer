@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@libp2p/peer-id-factory": "^1.0.15",
+    "@multiformats/multiaddr": "^10.3.3",
     "commander": "^7.0.0",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
