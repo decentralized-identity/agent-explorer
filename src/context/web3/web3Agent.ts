@@ -45,8 +45,8 @@ export async function createWeb3Agent({
 }: {
   connectors: ConnectorInfo[]
 }) {
-  const libp2p = await setupLibp2p()
-  console.log('libp2p: ', libp2p)
+  // const libp2p = await setupLibp2p()
+  // console.log('libp2p: ', libp2p)
 
   const didProviders: Record<string, AbstractIdentifierProvider> = {}
   const web3Providers: Record<string, Web3Provider> = {}

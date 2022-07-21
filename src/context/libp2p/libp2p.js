@@ -79,7 +79,7 @@ export default async function setupLibp2p() {
   // })
 
   // Handle messages for the protocol
-  await libp2p.handle('/didComm', async ({ stream }) => {
+  await libp2p.handle('/didComm/1.0.0', async ({ stream }) => {
     console.log('handling something!!!')
     // Send stdin to the stream
     stdinToStream(stream)
