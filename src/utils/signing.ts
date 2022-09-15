@@ -1,5 +1,4 @@
-import { W3CVerifiableCredential } from '@veramo/core'
-import { ProofFormat } from '@veramo/credential-w3c'
+import { W3CVerifiableCredential, ProofFormat } from '@veramo/core'
 
 const claimToObject = (arr: any[]) => {
   return arr.reduce(
