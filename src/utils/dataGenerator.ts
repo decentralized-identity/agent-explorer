@@ -1,5 +1,8 @@
-import { ICreateVerifiableCredentialArgs } from '@veramo/credential-w3c'
-import { VerifiableCredential, IIdentifier } from '@veramo/core'
+import {
+  VerifiableCredential,
+  IIdentifier,
+  ICreateVerifiableCredentialArgs,
+} from '@veramo/core'
 import randomWords from 'random-words'
 
 export function getRandomDate(from: Date, to: Date) {

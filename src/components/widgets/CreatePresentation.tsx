@@ -18,8 +18,8 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { format } from 'date-fns'
 import { v4 as uuidv4 } from 'uuid'
-import { IDIDManager } from '@veramo/core'
-import { ICredentialIssuer, ProofFormat } from '@veramo/credential-w3c'
+import { IDIDManager, ProofFormat } from '@veramo/core'
+import { ICredentialIssuer } from '@veramo/credential-w3c'
 import { ISelectiveDisclosure } from '@veramo/selective-disclosure'
 
 const { Option } = Select
@@ -73,7 +73,10 @@ const CreatePresentation: React.FC<BarChartProps> = ({
   remove,
   removeDisabled,
 }) => {
-  const { agent } = useVeramo<ICredentialIssuer & IDIDManager & ISelectiveDisclosure, any>()
+  const { agent } = useVeramo<
+    ICredentialIssuer & IDIDManager & ISelectiveDisclosure,
+    any
+  >()
   if (!agent) throw Error('No agent')
   const [selectedCredentials, setSelectedCredentials] = useState<any[]>([])
   const [sending] = useState<boolean>(false)
@@ -98,7 +101,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
 
   const signVP = async (send?: boolean) => {
     const vp = await signVerifiablePresentation(
-      agent, 
+      agent,
       issuer,
       [subject],
       selectedCredentials,
