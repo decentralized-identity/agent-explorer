@@ -5,7 +5,7 @@ import { formatDistanceToNow, format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
-import { Route, useHistory } from 'react-router-dom'
+import { Route, useNavigate } from 'react-router-dom'
 import CreateRequest from '../components/standard/CreateRequest'
 import CreateResponse from '../components/standard/CreateResponse'
 import { IMessage } from '@veramo/core'
@@ -19,7 +19,7 @@ const uri = (did: string) => {
 }
 
 const Requests = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { agent } = useVeramo()
   const { data: messages } = useQuery(
     ['requests', { agentId: agent?.context.name }],
@@ -32,7 +32,7 @@ const Requests = () => {
 
   const RightContent = () => {
     return (
-      <Route path="/requests/sdr/:messageId" exact component={CreateResponse} />
+      <Route path="/requests/sdr/:messageId" element={<CreateResponse />} />
     )
   }
 
@@ -49,7 +49,7 @@ const Requests = () => {
           <Card
             key={index}
             style={{ cursor: 'pointer' }}
-            onClick={() => history.push('/requests/sdr/' + item.id)}
+            onClick={() => navigate('/requests/sdr/' + item.id)}
           >
             <Card.Meta
               avatar={<Avatar size="large" src={uri(item.from || '')} />}

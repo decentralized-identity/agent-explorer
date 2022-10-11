@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import Frame from './Frame'
 import { ThemeProvider } from '../context/ThemeProvider'
 import { QueryClientProvider, QueryClient } from 'react-query'
@@ -24,7 +24,7 @@ const App = () => {
             <ChatProvider>
               <PageModuleProvider>
                 <BrowserRouter>
-                  <Route component={Frame} />
+                  <Frame />
                 </BrowserRouter>
               </PageModuleProvider>
             </ChatProvider>

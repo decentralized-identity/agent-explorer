@@ -15,7 +15,9 @@ const columns = [
     title: 'DID',
     dataIndex: 'did',
     key: 'did',
-    render: (did: string) => <Link to={'/identifier/' + did}>{did}</Link>,
+    render: (did: string) => (
+      <Link to={'/identifier/' + encodeURIComponent(did)}>{did}</Link>
+    ),
   },
   {
     title: 'Provider',

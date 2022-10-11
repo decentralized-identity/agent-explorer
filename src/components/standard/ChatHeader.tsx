@@ -6,7 +6,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { useQuery } from 'react-query'
 import { FormOutlined } from '@ant-design/icons'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { IIdentifier } from '@veramo/core'
 import Title from 'antd/lib/typography/Title'
 import DIDDiscoveryBar from './DIDDiscoveryBar'
@@ -24,13 +24,13 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
     setComposing,
     setNewRecipient,
   } = useChat()
-  const history = useHistory()
+  const navigate = useNavigate()
   const [agentChatIdentifiers, setAgentChatIdentifiers] = useState<
     IIdentifier[]
   >([])
 
   const composeNewThread = () => {
-    history.push('/chats/threads/new-thread')
+    navigate('/chats/threads/new-thread')
     setComposing(true)
   }
 
@@ -114,7 +114,9 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
               >
                 {agentChatIdentifiers.map((identifier) => {
                   return (
-                    <Option value={identifier.did}>{identifier.did}</Option>
+                    <Option value={identifier.did} key={identifier.did}>
+                      {identifier.did}
+                    </Option>
                   )
                 })}
               </Select>

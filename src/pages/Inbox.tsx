@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography, Table, Tag } from 'antd'
 import Page from '../layout/Page'
 import { format } from 'date-fns'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 
@@ -72,7 +72,7 @@ const columns = [
 ]
 
 const Credentials = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { agent } = useVeramo()
   const { data: credentials, isLoading } = useQuery(
     ['credentials', { agentId: agent?.context.name }],
@@ -86,7 +86,7 @@ const Credentials = () => {
         rowKey={(record) => record.hash}
         onRow={(record, rowIndex) => {
           return {
-            onClick: (e) => history.push('/credential/' + record.hash),
+            onClick: (e) => navigate('/credential/' + record.hash),
           }
         }}
         dataSource={credentials}

@@ -4,14 +4,14 @@ import { SendOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useChat } from '../../context/ChatProvider'
 import { v4 } from 'uuid'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const { TextArea } = Input
 
 interface ChatInputProps {
   viewer: string
   recipient?: string
-  threadId: string
+  threadId?: string
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
@@ -24,7 +24,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const { agent } = useVeramo()
   const { composing, setComposing, newRecipient, setNewRecipient } = useChat()
   const recipient = existingRecipient || newRecipient
-  const history = useHistory()
+  const navigate = useNavigate()
   const _threadId = threadId === 'new-thread' ? v4() : threadId
 
   const messageId = v4()
@@ -61,7 +61,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
           setNewRecipient('')
           setComposing(false)
 
-          history.push('/chats/threads/' + _threadId)
+          navigate('/chats/threads/' + _threadId)
         }
       } catch (err) {
         console.error('Error in sendDIDCommMessage: ', err)

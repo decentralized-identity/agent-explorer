@@ -103,7 +103,6 @@ export const VeramoWeb3Provider = ({
   if (preConfiguredAgents) {
     allAgents = allAgents.concat(preConfiguredAgents)
   }
-  console.log({ isLoading })
 
   return (
     <VeramoProvider agents={allAgents} plugins={plugins}>

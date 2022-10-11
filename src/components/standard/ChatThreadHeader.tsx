@@ -9,7 +9,7 @@ import ChatThreadProfileHeader from './ChatThreadProfileHeader'
 
 interface ChatThreadHeaderProps {
   counterParty: CounterParty
-  threadId: string
+  threadId?: string
 }
 
 interface CounterParty {
