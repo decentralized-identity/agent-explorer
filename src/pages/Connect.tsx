@@ -3,12 +3,12 @@ import { Typography, Form, Input, Button, List } from 'antd'
 import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
-import { useHistory } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const { Title } = Typography
 
 const Connect = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { addAgentConfig } = useVeramo()
   const [name, setName] = useState<string>()
   const [schemaUrl, setSchemaUrl] = useState<string>()
@@ -26,7 +26,7 @@ const Connect = () => {
         },
       ],
     })
-    history.push('/agents')
+    navigate('/agents')
   }
 
   const {

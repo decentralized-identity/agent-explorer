@@ -13,6 +13,8 @@ const { TabPane } = Tabs
 
 const Identifier = () => {
   const { id } = useParams<{ id: string }>()
+  if (!id) throw Error('id is missing')
+
   const { agent } = useVeramo()
   const { data: identifer, isLoading } = useQuery(['identifier', id], () =>
     agent?.resolveDid({ didUrl: id }),

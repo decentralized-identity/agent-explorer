@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from 'antd'
 import '../theme/base.less'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -32,31 +32,33 @@ const Frame = () => {
       <Layout>
         <Header style={{ padding: 0 }} className="mobile-header"></Header>
         <Content className="main-content-container">
-          {agent ? (
-            <>
-              <Route path="/" exact component={Overview} />
-              <Route path="/connect" component={Connect} />
-              <Route path="/agents" exact component={Agents} />
-              <Route path="/agent/:id" component={Agent} />
-              <Route path="/chats/threads/:threadId" component={Chats} />
-              <Route path="/identifiers" exact component={Identifiers} />
-              <Route path="/identifier/:id" component={Identifier} />
-              <Route path="/credentials" exact component={Credentials} />
-              <Route path="/credential/:id" component={Credential} />
-              <Route path="/activity" component={Activity} />
-              <Route path="/requests" component={Requests} />
-              <Route path="/inbox" component={Inbox} />
-              <Route path="/network" component={Network} />
-              <Route path="/discover" component={Discover} />
-            </>
-          ) : (
-            <>
-              <Redirect from="/" to="/connect" />
-              <Route path="/connect" exact component={Connect} />
-            </>
-          )}
+          <Routes>
+            {agent ? (
+              <>
+                <Route path="/" element={<Overview />} />
+                <Route path="/connect" element={<Connect />} />
+                <Route path="/agents" element={<Agents />} />
+                <Route path="/agent/:id" element={<Agent />} />
+                <Route path="/chats/threads/:threadId" element={<Chats />} />
+                <Route path="/identifiers" element={<Identifiers />} />
+                <Route path="/identifier/:id" element={<Identifier />} />
+                <Route path="/credentials" element={<Credentials />} />
+                <Route path="/credential/:id" element={<Credential />} />
+                <Route path="/activity" element={<Activity />} />
+                <Route path="/requests" element={<Requests />} />
+                <Route path="/inbox" element={<Inbox />} />
+                <Route path="/network" element={<Network />} />
+                <Route path="/discover" element={<Discover />} />
+              </>
+            ) : (
+              <>
+                <Navigate to="/connect" />
+                <Route path="/connect" element={<Connect />} />
+              </>
+            )}
 
-          <Route path="/settings" component={Settings} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
         </Content>
       </Layout>
     </Layout>

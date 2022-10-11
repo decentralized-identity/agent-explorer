@@ -1,5 +1,5 @@
 import React from 'react'
-import { useHistory } from 'react-router'
+import { useNavigate } from 'react-router'
 import { useChat } from '../../context/ChatProvider'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -18,11 +18,11 @@ const ChatThread: React.FC<ChatThreadProps> = ({
 }) => {
   const { agent } = useVeramo()
   const { selectedDid, setComposing } = useChat()
-  const history = useHistory()
+  const navigate = useNavigate()
   const lastMessage = thread[thread.length - 1]
   const viewThread = () => {
     setComposing(false)
-    history.push(`/chats/threads/${threadId}`)
+    navigate(`/chats/threads/${threadId}`)
   }
 
   const counterPartyDid =

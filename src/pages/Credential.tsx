@@ -2,7 +2,7 @@ import React from 'react'
 import { Typography, Card, Layout, Tag, Row, Col, Table, List } from 'antd'
 import { format } from 'date-fns'
 import Page from '../layout/Page'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import JsonBlock from '../components/standard/Json'
@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom'
 const { Title } = Typography
 
 const Credential = () => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const { agent } = useVeramo()
 
@@ -129,7 +129,7 @@ const Credential = () => {
           loading={credentialHistoryLoading}
           onRow={(record) => {
             return {
-              onClick: (e) => history.push('/credential/' + record.hash),
+              onClick: (e) => navigate('/credential/' + record.hash),
             }
           }}
           rowKey={(record) => record.hash}

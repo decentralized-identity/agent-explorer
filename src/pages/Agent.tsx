@@ -18,6 +18,8 @@ const Agents = () => {
     getAgentConfig,
   } = useVeramo()
   const { id } = useParams<{ id: string }>()
+  if (!id) throw Error('Agent id is missing')
+
   const agent = getAgent(id)
   const config = getAgentConfig(id)
   const [agentName, setAgentName] = useState<string>(agent?.context.name || '')
