@@ -33,10 +33,10 @@ const Frame = () => {
         <Header style={{ padding: 0 }} className="mobile-header"></Header>
         <Content className="main-content-container">
           <Routes>
+            <Route path="/connect" element={<Connect />} />
             {agent ? (
               <>
                 <Route path="/" element={<Overview />} />
-                <Route path="/connect" element={<Connect />} />
                 <Route path="/agents" element={<Agents />} />
                 <Route path="/agent/:id" element={<Agent />} />
                 <Route path="/chats/threads/:threadId" element={<Chats />} />
@@ -51,12 +51,8 @@ const Frame = () => {
                 <Route path="/discover" element={<Discover />} />
               </>
             ) : (
-              <>
-                <Navigate to="/connect" />
-                <Route path="/connect" element={<Connect />} />
-              </>
+              <Route path="/" element={<Navigate replace to="/connect" />} />
             )}
-
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </Content>
