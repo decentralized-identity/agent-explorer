@@ -45,7 +45,7 @@ const Frame = () => {
                 <Route path="/credentials" element={<Credentials />} />
                 <Route path="/credential/:id" element={<Credential />} />
                 <Route path="/activity" element={<Activity />} />
-                <Route path="/requests" element={<Requests />} />
+                <Route path="/requests/*" element={<Requests />} />
                 <Route path="/inbox" element={<Inbox />} />
                 <Route path="/network" element={<Network />} />
                 <Route path="/discover" element={<Discover />} />

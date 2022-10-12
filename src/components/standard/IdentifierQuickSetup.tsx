@@ -64,6 +64,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
 
   return (
     <Card
+      size="small"
       title={title}
       style={{ flexWrap: 'wrap' }}
       loading={isLoading}
