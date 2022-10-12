@@ -46,6 +46,7 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
     : []
   return (
     <Card
+      size="small"
       title={title}
       style={{ flexWrap: 'wrap' }}
       loading={isLoading}

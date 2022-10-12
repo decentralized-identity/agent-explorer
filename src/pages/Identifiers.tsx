@@ -1,7 +1,6 @@
 import React from 'react'
 import { Typography, Table, Button, Form, Select, Input, Card } from 'antd'
 import Page from '../layout/Page'
-import { FundViewOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -30,12 +29,6 @@ const columns = [
     dataIndex: 'alias',
     key: 'alias',
     responsive: ['lg'],
-  },
-  {
-    title: 'Explore',
-    width: 100,
-    dataIndex: 'did',
-    render: (did: string) => <Button icon={<FundViewOutlined />} />,
   },
 ]
 
@@ -76,57 +69,15 @@ const Identifiers = () => {
     refetch()
   }
 
+  const canCreateIdentifiers = agent
+    ?.availableMethods()
+    .includes('didManagerCreate')
+
   return (
     <Page
       renderModulesBefore
       header={<Title style={{ fontWeight: 'bold' }}>Identifiers</Title>}
     >
-      <Card title="Create Identifier">
-        <Form labelCol={{ span: 10 }} wrapperCol={{ span: 30 }} layout="inline">
-          <Form.Item label="Provider">
-            <Select
-              style={{ width: 200 }}
-              onSelect={(value: string) => setIdentifierProvider(value)}
-              defaultValue="did:ethr:rinkeby"
-            >
-              {providers?.map((provider: string) => {
-                return (
-                  <Select.Option key={provider} value={provider}>
-                    {provider}
-                  </Select.Option>
-                )
-              })}
-            </Select>
-          </Form.Item>
-          {identifierProvider === 'did:web' && (
-            <Form.Item label="Domain">
-              <Input
-                defaultValue={domain}
-                onChange={(e) => setDomain(e.target.value)}
-              />
-            </Form.Item>
-          )}
-          <Form.Item label="Alias">
-            <Input
-              defaultValue={alias}
-              onChange={(e) => setAlias(e.target.value)}
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <Button
-              onClick={() => generateIdentifier()}
-              disabled={
-                (identifierProvider === 'did:web' && !domain) ||
-                identifiersGenerating ||
-                !identifierProvider
-              }
-            >
-              Generate
-            </Button>
-          </Form.Item>
-        </Form>
-      </Card>
       <Table
         loading={isLoading}
         rowKey={(record) => record.did as string}
@@ -134,6 +85,59 @@ const Identifiers = () => {
         // @ts-ignore
         columns={columns}
       />
+
+      {canCreateIdentifiers && (
+        <Card title="Create Identifier" size="small">
+          <Form
+            labelCol={{ span: 10 }}
+            wrapperCol={{ span: 30 }}
+            layout="inline"
+          >
+            <Form.Item label="Provider">
+              <Select
+                style={{ width: 200 }}
+                onSelect={(value: string) => setIdentifierProvider(value)}
+                defaultValue="did:ethr:goerli"
+              >
+                {providers?.map((provider: string) => {
+                  return (
+                    <Select.Option key={provider} value={provider}>
+                      {provider}
+                    </Select.Option>
+                  )
+                })}
+              </Select>
+            </Form.Item>
+            {identifierProvider === 'did:web' && (
+              <Form.Item label="Domain">
+                <Input
+                  defaultValue={domain}
+                  onChange={(e) => setDomain(e.target.value)}
+                />
+              </Form.Item>
+            )}
+            <Form.Item label="Alias">
+              <Input
+                defaultValue={alias}
+                onChange={(e) => setAlias(e.target.value)}
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <Button
+                onClick={() => generateIdentifier()}
+                disabled={
+                  (identifierProvider === 'did:web' && !domain) ||
+                  identifiersGenerating ||
+                  !identifierProvider
+                }
+              >
+                Generate
+              </Button>
+            </Form.Item>
+          </Form>
+        </Card>
+      )}
     </Page>
   )
 }

@@ -73,6 +73,7 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
 
   return (
     <Card
+      size="small"
       title={title}
       style={{ flexWrap: 'wrap' }}
       loading={isLoading}
@@ -100,7 +101,12 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
         }
         renderItem={(item: any, i: number) => {
           return (
-            <IdentifierKey i={i} item={item} did={data?.didDocument?.id!} />
+            <IdentifierKey
+              i={i}
+              key={i}
+              item={item}
+              did={data?.didDocument?.id!}
+            />
           )
         }}
       ></List>

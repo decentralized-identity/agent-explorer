@@ -68,7 +68,11 @@ const CreateAndAddKeyModalForm: React.FC<CreateAndAddKeyModalFormProps> = ({
             allowClear
           >
             {kmsOptions?.map((kms) => {
-              return <Option value={kms}>{kms}</Option>
+              return (
+                <Option value={kms} key={kms}>
+                  {kms}
+                </Option>
+              )
             })}
           </Select>
         </Form.Item>
