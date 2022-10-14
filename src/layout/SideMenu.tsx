@@ -22,49 +22,7 @@ const { Title, Text } = Typography
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
-const mainMenu = [
-  {
-    url: '/',
-    label: 'Dashboard',
-    icon: EyeOutlined,
-  },
-  {
-    url: '/activity',
-    label: 'Activity',
-    icon: BarsOutlined,
-  },
-  {
-    url: '/requests',
-    label: 'Requests',
-    icon: InteractionOutlined,
-  },
-  {
-    url: '/identifiers',
-    label: 'Identifiers',
-    icon: UserOutlined,
-  },
-  {
-    url: '/credentials',
-    label: 'Credentials',
-    icon: SafetyOutlined,
-  },
-  {
-    url: '/chats/threads/new-thread',
-    label: 'DID Chats',
-    icon: MessageOutlined,
-  },
 
-  // {
-  //   url: '/network',
-  //   label: 'Network',
-  //   icon: DeploymentUnitOutlined,
-  // },
-  // {
-  //   url: '/discover',
-  //   label: 'Discover',
-  //   icon: SearchOutlined,
-  // },
-]
 
 const subMenu = [
   {
@@ -85,6 +43,61 @@ const SideMenu = () => {
     agent?.context?.name &&
     GRAVATAR_URI + md5(agent?.context?.name) + '?s=200&d=retro'
 
+  const availableMethods = agent?.availableMethods() || []
+
+  const mainMenu = [
+    {
+      url: '/',
+      label: 'Dashboard',
+      icon: EyeOutlined,
+    },
+  
+    // {
+    //   url: '/network',
+    //   label: 'Network',
+    //   icon: DeploymentUnitOutlined,
+    // },
+    // {
+    //   url: '/discover',
+    //   label: 'Discover',
+    //   icon: SearchOutlined,
+    // },
+  ]
+
+  if (availableMethods.includes('dataStoreORMGetIdentifiers')) {
+    mainMenu.push({
+      url: '/identifiers',
+      label: 'Identifiers',
+      icon: UserOutlined,
+    })
+  }
+
+  if (availableMethods.includes('dataStoreORMGetVerifiableCredentials')) {
+    mainMenu.push({
+      url: '/credentials',
+      label: 'Credentials',
+      icon: SafetyOutlined,
+    })
+  }
+
+  if (availableMethods.includes('dataStoreORMGetMessages')) {
+    mainMenu.push({
+      url: '/activity',
+      label: 'Activity',
+      icon: BarsOutlined,
+    })
+    mainMenu.push({
+      url: '/requests',
+      label: 'Requests',
+      icon: InteractionOutlined,
+    })
+    mainMenu.push({
+      url: '/chats/threads/new-thread',
+      label: 'DID Chats',
+      icon: MessageOutlined,
+    })
+  }
+  
   return (
     <Sider
       breakpoint="sm"
