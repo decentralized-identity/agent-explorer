@@ -5,7 +5,7 @@
     "access": "public"
   },
   "engines": {
-    "node": "16.x"
+    "node": "> 16.x"
   },
   "license": "Apache-2.0",
   "files": [
@@ -18,7 +18,7 @@
     "agent-explore": "./bin/bin.js"
   },
   "scripts": {
-    "dev": "craco start",
+    "dev": "cross-env NODE_OPTIONS=\"--experimental-vm-modules --experimental-json-modules\" craco start",
     "build": "craco build",
     "test": "craco test --watchAll=false",
     "release": "semantic-release",
@@ -88,6 +88,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-syntax-import-assertions": "7.18.6",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@craco/craco": "^6.4.3",
@@ -111,23 +112,23 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/uuid": "^8.3.1",
     "@veramo-community/veramo-react": "^1.0.79",
-    "@veramo/core": "^4.0.0",
-    "@veramo/credential-eip712": "^4.0.2",
-    "@veramo/credential-w3c": "^4.0.2",
-    "@veramo/data-store": "^4.0.2",
-    "@veramo/data-store-json": "^4.0.2",
-    "@veramo/did-comm": "^4.0.2",
-    "@veramo/did-discovery": "^4.0.0",
-    "@veramo/did-jwt": "^4.0.0",
-    "@veramo/did-manager": "^4.0.0",
-    "@veramo/did-provider-ethr": "^4.0.0",
-    "@veramo/did-resolver": "^4.0.2",
-    "@veramo/key-manager": "^4.0.2",
-    "@veramo/kms-web3": "^4.0.2",
-    "@veramo/message-handler": "^4.0.0",
-    "@veramo/remote-client": "^4.0.0",
-    "@veramo/selective-disclosure": "^4.0.2",
-    "@veramo/utils": "^4.0.2",
+    "@veramo/core": "4.0.1-unstable.4",
+    "@veramo/credential-eip712": "4.0.1-unstable.4",
+    "@veramo/credential-w3c": "4.0.1-unstable.4",
+    "@veramo/data-store": "4.0.1-unstable.4",
+    "@veramo/data-store-json": "4.0.1-unstable.4",
+    "@veramo/did-comm": "4.0.1-unstable.4",
+    "@veramo/did-discovery": "4.0.1-unstable.4",
+    "@veramo/did-jwt": "4.0.1-unstable.4",
+    "@veramo/did-manager": "4.0.1-unstable.4",
+    "@veramo/did-provider-ethr": "4.0.1-unstable.4",
+    "@veramo/did-resolver": "4.0.1-unstable.4",
+    "@veramo/key-manager": "4.0.1-unstable.4",
+    "@veramo/kms-web3": "4.0.1-unstable.4",
+    "@veramo/message-handler": "4.0.1-unstable.4",
+    "@veramo/remote-client": "4.0.1-unstable.4",
+    "@veramo/selective-disclosure": "4.0.1-unstable.4",
+    "@veramo/utils": "4.0.1-unstable.4",
     "@web3-react/core": "^8.0.33-beta.0",
     "@web3-react/metamask": "^8.0.26-beta.0",
     "@web3-react/types": "^8.0.19-beta.0",
@@ -138,6 +139,7 @@
     "chart.js": "^2.9.4",
     "commander": "^7.0.0",
     "craco-less": "^2.0.0",
+    "cross-env": "7.0.3",
     "crypto": "npm:crypto-browserify",
     "date-fns": "^2.16.1",
     "did-resolver": "^4.0.0",
@@ -167,5 +169,6 @@
     "@types/react": "17.0.1",
     "@types/react-dom": "17.0.1",
     "react-error-overlay": "6.0.9"
-  }
+  },
+  "type": "module"
 }
