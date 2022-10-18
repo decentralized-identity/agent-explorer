@@ -38,14 +38,25 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
     ['identifiers', { id: agent?.context.id }],
     () => agent?.didManagerFind(),
     {
-      onSuccess: (data: IIdentifier[]) => {
-        if (data) {
-          const didsWithDIDComm = data.filter((did) =>
-            did.services.some((service) => service.type === 'DIDCommMessaging'),
-          )
-          setAgentChatIdentifiers(didsWithDIDComm)
-          setSelectedDid(didsWithDIDComm[0].did)
+      onSuccess: async (data: IIdentifier[]) => {
+        console.log('found identifiers: ', data)
+        let didsWithDIDComm = []
+        for (var id of data) {
+          console.log('id.did: ', id.did)
+          const didDoc = await agent?.resolveDid({ didUrl: id.did })
+          console.log('didDoc: ', didDoc)
+          if (didDoc.didDocument.service.length > 0) {
+            didsWithDIDComm.push(didDoc.didDocument)
+            setSelectedDid(id.did)
+          }
         }
+        // if (data) {
+        //   const didsWithDIDComm = await data.filter(async (did) =>
+        //     did.services.some((service) => service.type === 'DIDCommMessaging'),
+        //   )
+        //   setAgentChatIdentifiers(didsWithDIDComm)
+        //   setSelectedDid(didsWithDIDComm[0].did)
+        // }
       },
     },
   )

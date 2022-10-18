@@ -62,6 +62,50 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
     setIsEnabled(true)
   }
 
+  const handleLibp2pQuickSetup = async () => {
+    setIsEnabled(false)
+    // if (!data || !(data.length > 0)) {
+    //   setErrorMessage(
+    //     "No DID Found with provider 'did:web'. Must have at least one did:web with DIDCommMessaging endpoint setup to use this feature.",
+    //   )
+    //   setIsEnabled(true)
+    //   return
+    // }
+    try {
+      const multiAddr = (await agent?.getListenerMultiAddrs())[0].toString()
+      console.log('multiAddr: ', multiAddr)
+      // const serviceEndpoint = data[0].services.find(
+      //   (e: any) => e.type === 'DIDCommMessaging',
+      // ).serviceEndpoint
+      const key = await agent?.keyManagerCreate({
+        kms: 'local',
+        type: 'Ed25519',
+      })
+      await agent?.didManagerAddKey({
+        did: identifier,
+        // @ts-ignore
+        key,
+      })
+      await agent?.didManagerAddService({
+        did: identifier,
+        service: {
+          id: `${identifier}-didcomm-messaging`,
+          type: 'DIDCommMessaging',
+          serviceEndpoint: {
+            transportType: 'libp2p',
+            multiAddr,
+          },
+        },
+      })
+    } catch (err) {
+      console.log('err: ', err)
+      setErrorMessage(
+        'Unable to setup DIDCommMessaging service. If this is a did:ethr, make sure the controlling blockchain account has enough funds to update the DID Document.',
+      )
+    }
+    setIsEnabled(true)
+  }
+
   return (
     <Card
       size="small"
@@ -71,6 +115,9 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
       actions={[
         <Button disabled={!enabled} onClick={() => handleQuickSetup()}>
           Quick DIDComm Setup
+        </Button>,
+        <Button disabled={!enabled} onClick={() => handleLibp2pQuickSetup()}>
+          Quick Libp2p DIDComm Setup
         </Button>,
       ]}
     >

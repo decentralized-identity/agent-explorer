@@ -4,6 +4,7 @@ const ChatContext = createContext<any>({})
 
 const ChatProvider = (props: any) => {
   const [selectedDid, setSelectedDid] = useState()
+  console.log('selectedDid: ', selectedDid)
   const [composing, setComposing] = useState(false)
   const [newRecipient, setNewRecipient] = useState()
   return (

@@ -5,6 +5,8 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useChat } from '../../context/ChatProvider'
 import { v4 } from 'uuid'
 import { useNavigate } from 'react-router-dom'
+import { IDIDComm } from '@veramo/did-comm'
+import { IKeyManager, IResolver } from '@veramo/core'
 
 const { TextArea } = Input
 
@@ -21,7 +23,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
 }) => {
   const [message, setMessage] = useState<string>()
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDIDComm & IKeyManager & IResolver>()
   const { composing, setComposing, newRecipient, setNewRecipient } = useChat()
   const recipient = existingRecipient || newRecipient
   const navigate = useNavigate()
@@ -39,8 +41,16 @@ const ChatInput: React.FC<ChatInputProps> = ({
     }
     let packedMessage
     try {
+      // const resolvedSender = await agent?.resolveDid({ didUrl: viewer as string })
+      // const verificationMethodIds = resolvedSender?.didDocument?.verificationMethod?.filter((v) => {
+      //   return v.type == 'X25519KeyAgreementKey2019'
+      // })
+      // console.log("verificationMethoIds: ", verificationMethodIds)
+      // const keyRef = ((verificationMethodIds && verificationMethodIds.length > 0) && (verificationMethodIds[0].id))
+      // console.log("keyRef:", keyRef)
       packedMessage = await agent?.packDIDCommMessage({
-        packing: 'jws',
+        // keyRef: "6d2b08b0fbe39e40d966fa0300f95a051c75d3d8b51efc752224fa3f75af8f0e",
+        packing: 'authcrypt',
         message,
       })
     } catch (err) {
@@ -49,12 +59,13 @@ const ChatInput: React.FC<ChatInputProps> = ({
     }
     if (packedMessage) {
       try {
-        await agent?.sendDIDCommMessage({
+        console.log('go send. threadId: ', _threadId)
+        const res = await agent?.sendDIDCommMessage({
           packedMessage,
           messageId,
           recipientDidUrl: recipient,
         })
-
+        console.log('finished send. res: ', res)
         setMessage('')
 
         if (composing) {

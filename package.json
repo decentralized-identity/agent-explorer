@@ -62,9 +62,11 @@
     ]
   },
   "dependencies": {
+    "@libp2p/peer-id-factory": "^1.0.19",
     "commander": "^7.0.0",
     "express": "^4.17.1",
-    "express-favicon": "^2.0.1"
+    "express-favicon": "^2.0.1",
+    "peer-id": "^0.16.0"
   },
   "release": {
     "branches": [
@@ -92,6 +94,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@craco/craco": "^6.4.3",
+    "@libp2p/interface-keys": "^1.0.3",
     "@rjsf/antd": "^4.2.0",
     "@rjsf/core": "^4.2.0",
     "@semantic-release/commit-analyzer": "^8.0.1",
@@ -124,7 +127,10 @@
     "@veramo/did-provider-ethr": "4.0.1-unstable.4",
     "@veramo/did-resolver": "4.0.1-unstable.4",
     "@veramo/key-manager": "4.0.1-unstable.4",
+    "@veramo/kms-local": "4.0.1-unstable.4",
     "@veramo/kms-web3": "4.0.1-unstable.4",
+    "@veramo/libp2p-client": "4.0.1-unstable.4",
+    "@veramo/libp2p-utils-browser": "4.0.1-unstable.4",
     "@veramo/message-handler": "4.0.1-unstable.4",
     "@veramo/remote-client": "4.0.1-unstable.4",
     "@veramo/selective-disclosure": "4.0.1-unstable.4",
