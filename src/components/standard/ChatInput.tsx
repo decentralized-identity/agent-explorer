@@ -50,7 +50,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
       // console.log("keyRef:", keyRef)
       packedMessage = await agent?.packDIDCommMessage({
         // keyRef: "6d2b08b0fbe39e40d966fa0300f95a051c75d3d8b51efc752224fa3f75af8f0e",
-        packing: 'authcrypt',
+        packing: 'jws',
         message,
       })
     } catch (err) {

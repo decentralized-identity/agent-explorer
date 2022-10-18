@@ -103,7 +103,7 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
       let packedMessage
       try {
         packedMessage = await agent?.packDIDCommMessage({
-          packing: 'authcrypt',
+          packing: 'jws',
           message,
         })
       } catch (err) {

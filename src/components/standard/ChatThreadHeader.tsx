@@ -78,7 +78,7 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
       body: { message: msg },
     }
     const packedMessage = await agent?.packDIDCommMessage({
-      packing: 'authCrypt',
+      packing: 'jws',
       message,
     })!
     await agent?.sendDIDCommMessage({

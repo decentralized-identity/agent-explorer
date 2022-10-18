@@ -112,7 +112,7 @@ const IssueCredential: React.FC<IssueCredentialProps> = ({
         body: body,
       }
       const packedMessage = await agent?.packDIDCommMessage({
-        packing: 'authcrypt',
+        packing: 'jws',
         message,
       })
       if (packedMessage) {

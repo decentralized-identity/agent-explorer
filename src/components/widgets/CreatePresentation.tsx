@@ -128,7 +128,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
         body: body,
       }
       const packedMessage = await agent?.packDIDCommMessage({
-        packing: 'authcrypt',
+        packing: 'jws',
         message: message,
       })
       if (packedMessage) {
