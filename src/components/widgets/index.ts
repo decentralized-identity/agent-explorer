@@ -2,6 +2,11 @@ import React from 'react'
 import { PageWidgetConfig, PageWidgetDefaults } from '../../types'
 
 export const WIDGET_MAP: { [index: string]: PageWidgetConfig } = {
+  STATISTICS: {
+    widgetName: 'Statistics',
+    widgetLabel: 'Statistics',
+    config: {},
+  },
   WIDGET_EXAMPLE: {
     widgetName: 'WidgetExample',
     widgetLabel: 'Widget Example',
@@ -47,7 +52,7 @@ export const WIDGET_MAP: { [index: string]: PageWidgetConfig } = {
 }
 
 export const PAGE_DEFAULT_WIDGETS: PageWidgetDefaults = {
-  dashboard: [WIDGET_MAP.WELCOME],
+  dashboard: [ WIDGET_MAP.STATISTICS, WIDGET_MAP.WELCOME],
 }
 
 export const DYNAMIC_COMPONENTS: {
@@ -73,4 +78,5 @@ export const DYNAMIC_COMPONENTS: {
     () => import('./CreatePresentation'),
   ),
   [WIDGET_MAP.WELCOME.widgetName]: React.lazy(() => import('./Welcome')),
+  [WIDGET_MAP.STATISTICS.widgetName]: React.lazy(() => import('./Statistics')),
 }
