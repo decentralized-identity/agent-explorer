@@ -19,13 +19,13 @@ const Settings = () => {
     >
       <Content style={{ marginBottom: 30 }}>
         <Title level={5}>Version Info</Title>
+        <Title level={5}>Web3</Title>
+        <Web3 />
         <Card>
           <Version />
         </Card>
         <Title level={5}>Viewing Mode</Title>
         <ThemeModule />
-        <Title level={5}>Web3</Title>
-        <Web3 />
       </Content>
     </Page>
   )

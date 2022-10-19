@@ -41,22 +41,16 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
       onSuccess: async (data: IIdentifier[]) => {
         console.log('found identifiers: ', data)
         let didsWithDIDComm = []
-        for (var id of data) {
+        // TODO(nickreynolds): filter out identifiers that are not controlled by this agent in a better way than 'metamask' hack
+        for (var id of data.filter((d) => d.provider === 'metamask')) {
           console.log('id.did: ', id.did)
           const didDoc = await agent?.resolveDid({ didUrl: id.did })
           console.log('didDoc: ', didDoc)
-          if (didDoc.didDocument.service.length > 0) {
-            didsWithDIDComm.push(didDoc.didDocument)
-            setSelectedDid(id.did)
-          }
+          // if (didDoc.didDocument.service?.length > 0) {
+          didsWithDIDComm.push(didDoc.didDocument)
+          setSelectedDid(id.did)
+          // }
         }
-        // if (data) {
-        //   const didsWithDIDComm = await data.filter(async (did) =>
-        //     did.services.some((service) => service.type === 'DIDCommMessaging'),
-        //   )
-        //   setAgentChatIdentifiers(didsWithDIDComm)
-        //   setSelectedDid(didsWithDIDComm[0].did)
-        // }
       },
     },
   )

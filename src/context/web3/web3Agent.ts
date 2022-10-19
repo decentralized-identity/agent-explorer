@@ -90,49 +90,6 @@ export async function createWeb3Agent({
   const peerId = await createFromJSON(peerIdJSON)
   console.log('peerId: ', peerId)
 
-  // const kms = new KeyManagementSystem(new PrivateKeyStoreJson(dataStore))
-  // const tempAgent = createAgent<IKeyManager>({
-  //   plugins: [
-  //     new KeyManager({
-  //       store: new KeyStoreJson(dataStore),
-  //       kms: {
-  //         local: kms
-  //       }
-  //     })
-  //   ]
-  // })
-  // let keys = (await kms.listKeys()).filter(k => k.type == 'Ed25519')
-  // let kid = ""
-  // if ((keys).length < 1) {
-  //   kid = (await tempAgent.keyManagerCreate({ kms: 'local', type: 'Ed25519' })).kid
-  //   // kid = (await kms.createKey({
-  //   //   type: 'Ed25519'
-  //   // })).kid
-  // } else {
-  //   kid = keys[0].kid
-  // }
-  // console.log("kid: ", kid)
-  // console.log("dataStore: ", dataStore)
-  // // const tempAgent = createAgent<IKeyManager>({
-  // //   plugins: [
-  // //     new KeyManager({
-  // //       store: new KeyStoreJson(dataStore),
-  // //       kms: {
-  // //         local: kms
-  // //       }
-  // //     })
-  // //   ]
-  // // })
-
-  // console.log("tempAgent: ", tempAgent)
-  // const key = await tempAgent.keyManagerGet({ kid })
-  // console.log("tempAgent")
-  // const privateKey = key.privateKeyHex
-  // const publicKey = key.publicKeyHex
-  // console.log("key: ", key)
-  // console.log("publicKey: ", publicKey)
-  // console.log("privateKey: ", privateKey)
-  // await tempAgent.
   const libnode = await createBrowserLibp2pNode(peerId)
   const libp2pPlugin = await createLibp2pClientPlugin()
 
@@ -200,41 +157,69 @@ export async function createWeb3Agent({
 
   // This logic will be moved to a separate veramo plugin,
   // and will be executed automatically
-  const identifiers = await agent.didManagerFind()
-  for (const identifier of identifiers) {
-    if (identifier.keys.filter((key) => key.kms !== 'web3').length === 0) {
-      try {
-        await agent.didManagerDelete({ did: identifier.did })
-      } catch (ex) {
-        console.error('ex: ', ex)
-      }
-    }
-  }
+  // const identifiers = await agent.didManagerFind()
+  // for (const identifier of identifiers) {
+  //   if (identifier.keys.filter((key) => key.kms !== 'web3').length === 0) {
+  //     try {
+  //       await agent.didManagerDelete({ did: identifier.did })
+  //     } catch (ex) {
+  //       console.error('ex: ', ex)
+  //     }
+  //   }
+  // }
 
   for (const info of connectors) {
     if (info.accounts) {
       for (const account of info.accounts) {
         const did = `did:ethr:0x${info.chainId.toString(16)}:${account}`
-        // const controllerKeyId = `${did}#controller`
+        let localKey1
+        try {
+          const localKey2 = await agent.keyManagerGetWhere({
+            type: 'Ed25519',
+            did,
+          })
+          localKey1 = await agent.keyManagerGet({ kid: localKey2.kid })
+          // localKey1.
+          console.log('localKey1.publicKeyHex: ', localKey1.publicKeyHex)
+          console.log('localKey2: ', localKey2)
+        } catch (ex) {
+          console.warn(
+            'no local Ed25519 keys, did-comm will be messed up. ex: ',
+            ex,
+          )
+        }
+
         const controllerKeyId = `${info.name}-${account}`
-        await agent.didManagerImport({
+        let keys = [
+          {
+            kid: controllerKeyId,
+            type: 'Secp256k1',
+            kms: 'web3',
+            privateKeyHex: '',
+            meta: {
+              provider: info.name,
+              account: account.toLocaleLowerCase(),
+              algorithms: ['eth_signMessage', 'eth_signTypedData'],
+            },
+          } as MinimalImportableKey,
+        ]
+        if (localKey1) {
+          keys.push({
+            kid: localKey1.kid,
+            type: localKey1.type,
+            kms: 'local',
+            publicKeyHex: localKey1.publicKeyHex,
+            meta: localKey1.meta,
+          } as MinimalImportableKey)
+        }
+        // const controllerKeyId = `${did}#controller`
+        const id = await agent.didManagerImport({
           did,
           provider: info.name,
           controllerKeyId,
-          keys: [
-            {
-              kid: controllerKeyId,
-              type: 'Secp256k1',
-              kms: 'web3',
-              privateKeyHex: '',
-              meta: {
-                provider: info.name,
-                account: account.toLocaleLowerCase(),
-                algorithms: ['eth_signMessage', 'eth_signTypedData'],
-              },
-            } as MinimalImportableKey,
-          ],
+          keys,
         })
+        console.log('imported id: ', id)
       }
     }
   }

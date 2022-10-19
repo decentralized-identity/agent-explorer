@@ -41,22 +41,16 @@ const ChatInput: React.FC<ChatInputProps> = ({
     }
     let packedMessage
     try {
-      // const resolvedSender = await agent?.resolveDid({ didUrl: viewer as string })
-      // const verificationMethodIds = resolvedSender?.didDocument?.verificationMethod?.filter((v) => {
-      //   return v.type == 'X25519KeyAgreementKey2019'
-      // })
-      // console.log("verificationMethoIds: ", verificationMethodIds)
-      // const keyRef = ((verificationMethodIds && verificationMethodIds.length > 0) && (verificationMethodIds[0].id))
-      // console.log("keyRef:", keyRef)
       packedMessage = await agent?.packDIDCommMessage({
-        // keyRef: "6d2b08b0fbe39e40d966fa0300f95a051c75d3d8b51efc752224fa3f75af8f0e",
         packing: 'jws',
         message,
+        section: 'verificationMethod',
       })
     } catch (err) {
       console.error('Error in packDIDCommMessage: ', err)
       setErrorMessage('Error Packing DIDComm Message. Check Logs')
     }
+    console.log('packedMessage: ', packedMessage)
     if (packedMessage) {
       try {
         console.log('go send. threadId: ', _threadId)

@@ -23,6 +23,8 @@ const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did }) => {
     if (did === 'did:web:sun.veramo.io') {
       message.error('please do not remove keys from this DID')
     } else {
+      console.log('go didManagerRemoveKey did: ', did)
+      console.log('go didManagerRemoveKey kid: ', item.id)
       agent?.didManagerRemoveKey({ did, kid: item.id })
     }
     setIsModalVisible(false)
