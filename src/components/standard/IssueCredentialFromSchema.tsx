@@ -96,7 +96,7 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
           placeholder="Proof type"
           defaultActiveFirstOption={true}
         >
-          <Option key={'jwt'} value="jwt">
+          <Option key="jwt" value="jwt">
             jwt
           </Option>
           <Option key="lds" value="lds">

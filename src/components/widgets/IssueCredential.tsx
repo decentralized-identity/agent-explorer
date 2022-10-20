@@ -192,14 +192,20 @@ const IssueCredential: React.FC<IssueCredentialProps> = ({
           <Select
             style={{ width: '60%' }}
             onChange={(e) => setProofFormat(e as string)}
-            placeholder="jwt or lds"
+            placeholder="Proof type"
             defaultActiveFirstOption={true}
           >
-            <Option key={'jwt'} value="jwt">
+            <Option key="jwt" value="jwt">
               jwt
             </Option>
             <Option key="lds" value="lds">
               lds
+            </Option>
+            <Option
+              key="EthereumEip712Signature2021lds"
+              value="EthereumEip712Signature2021"
+            >
+              EthereumEip712Signature2021
             </Option>
           </Select>
         </Form.Item>
