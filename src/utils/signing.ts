@@ -17,7 +17,7 @@ const issueCredential = async (
   type?: string,
   credentialSchemaId?: string,
 ) => {
-  return await agent?.createVerifiableCredential({
+  let credentialObj: any = {
     credential: {
       issuer: { id: iss },
       issuanceDate: new Date().toISOString(),
@@ -26,13 +26,22 @@ const issueCredential = async (
         : ['https://www.w3.org/2018/credentials/v1'],
       type: type ? ['VerifiableCredential', type] : ['VerifiableCredential'],
       credentialSubject: { id: sub, ...claimToObject(claims) },
-      credentialSchema: credentialSchemaId
-        ? { id: credentialSchemaId, type: 'JsonSchemaValidator2018' }
-        : undefined,
     },
     proofFormat,
     save: true,
-  })
+  }
+
+  // adding undefined field was breaking EIP-712 Issuance, so just don't add field at all if undefined
+  if (credentialSchemaId) {
+    credentialObj = {
+      ...credentialObj,
+      credentialSchema: {
+        id: credentialSchemaId,
+        type: 'JsonSchemaValidator2018',
+      },
+    }
+  }
+  return await agent?.createVerifiableCredential(credentialObj)
 }
 
 const signVerifiablePresentation = async (
