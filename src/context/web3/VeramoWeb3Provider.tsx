@@ -87,6 +87,10 @@ export const VeramoWeb3Provider = ({
       createAgents(config)
         .then(setPreConfiguredAgents)
         .then(() => setIsLoading(false))
+        .catch((e) => {
+          console.log(e)
+          setIsLoading(false)
+        })
     } else {
       setIsLoading(false)
     }
