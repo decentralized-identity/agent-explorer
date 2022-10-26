@@ -87,7 +87,7 @@ const CreateResponse: React.FC<CreateResponseProps> = () => {
         }
 
         packedMessage = await agent?.packDIDCommMessage({
-          packing: 'jws',
+          packing: 'authcrypt',
           message: didCommMessage,
         })
       } catch (err) {

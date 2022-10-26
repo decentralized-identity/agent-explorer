@@ -175,16 +175,18 @@ export async function createWeb3Agent({
         let localKey1
         try {
           const localKey2 = await agent.keyManagerGetWhere({
-            type: 'Ed25519',
+            type: 'X25519',
             did,
           })
-          localKey1 = await agent.keyManagerGet({ kid: localKey2.kid })
-          // localKey1.
-          console.log('localKey1.publicKeyHex: ', localKey1.publicKeyHex)
           console.log('localKey2: ', localKey2)
+          if (localKey2) {
+            localKey1 = await agent.keyManagerGet({ kid: localKey2.kid })
+            console.log('localKey1.publicKeyHex: ', localKey1.publicKeyHex)
+            console.log('localKey2: ', localKey2)
+          }
         } catch (ex) {
           console.warn(
-            'no local Ed25519 keys, did-comm will be messed up. ex: ',
+            'no local X25519 keys, did-comm will be messed up. ex: ',
             ex,
           )
         }

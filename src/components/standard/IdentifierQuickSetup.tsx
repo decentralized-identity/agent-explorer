@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Alert, Button, Card } from 'antd'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
+import { DIDResolver } from 'did-resolver'
+import { IDIDManager } from '@veramo/core'
 
 interface IdentifierQuickSetupProps {
   title: string
@@ -14,7 +16,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
   identifier,
   cacheKey,
 }) => {
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<DIDResolver & IDIDManager>()
   const { data, isLoading } = useQuery(
     [cacheKey],
     () => agent?.didManagerFind({ provider: 'did:web' }),
@@ -35,24 +37,28 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
     try {
       const serviceEndpoint = data[0].services.find(
         (e: any) => e.type === 'DIDCommMessaging',
-      ).serviceEndpoint
-      const key = await agent?.keyManagerCreate({
-        kms: 'local',
-        type: 'X25519',
-      })
-      await agent?.didManagerAddKey({
-        did: identifier,
-        // @ts-ignore
-        key,
-      })
-      await agent?.didManagerAddService({
-        did: identifier,
-        service: {
-          id: `${identifier}-didcomm-messaging`,
-          type: 'DIDCommMessaging',
-          serviceEndpoint,
-        },
-      })
+      )?.serviceEndpoint
+      if (serviceEndpoint) {
+        const key = await agent?.keyManagerCreate({
+          kms: 'local',
+          type: 'X25519',
+        })
+        await agent?.didManagerAddKey({
+          did: identifier,
+          // @ts-ignore
+          key,
+        })
+        await agent?.didManagerAddService({
+          did: identifier,
+          service: {
+            id: `${identifier}-didcomm-messaging`,
+            type: 'DIDCommMessaging',
+            serviceEndpoint,
+          },
+        })
+      } else {
+        setErrorMessage('no services.')
+      }
     } catch (err) {
       console.log('err: ', err)
       setErrorMessage(
@@ -77,30 +83,48 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
       // const serviceEndpoint = data[0].services.find(
       //   (e: any) => e.type === 'DIDCommMessaging',
       // ).serviceEndpoint
-      const key = await agent?.keyManagerCreate({
-        kms: 'local',
-        type: 'Ed25519',
-      })
-      await agent?.didManagerAddKey({
+      const xEncryptionKey = await agent?.keyManagerGetWhere({
+        type: 'X25519',
         did: identifier,
-        // @ts-ignore
-        key,
       })
-      await agent?.didManagerAddService({
-        did: identifier,
-        service: {
-          id: `${identifier}-didcomm-messaging`,
-          type: 'DIDCommMessaging',
-          serviceEndpoint: {
-            transportType: 'libp2p',
-            multiAddr,
+
+      // TODO(nickreynolds): should also replace existing key if there is one that doesn't
+      // match DIDDocument
+      if (!xEncryptionKey) {
+        const key = await agent?.keyManagerCreate({
+          kms: 'local',
+          type: 'X25519',
+        })
+        await agent?.didManagerAddKey({
+          did: identifier,
+          key,
+        })
+      } else {
+        console.log("X25519 found, don't need to create new one.")
+      }
+
+      const existingService = (await agent?.resolveDid({ didUrl: identifier }))
+        .didDocument.service
+      console.log('existingService: ', existingService)
+
+      if (!existingService) {
+        console.log("no existing service. let's add.")
+        await agent?.didManagerAddService({
+          did: identifier,
+          service: {
+            id: `${identifier}-didcomm-messaging`,
+            type: 'DIDCommMessaging',
+            serviceEndpoint: {
+              transportType: 'libp2p',
+              multiAddr,
+            },
           },
-        },
-      })
+        })
+      }
     } catch (err) {
       console.log('err: ', err)
       setErrorMessage(
-        'Unable to setup DIDCommMessaging service. If this is a did:ethr, make sure the controlling blockchain account has enough funds to update the DID Document.',
+        'Unable to setup DIDCommMessaging service. If this is a did:ethr, make sure the controlling blockchain account has enough funds to update the DID Document. This setup also requires an ILibp2pClient in your Veramo agent',
       )
     }
     setIsEnabled(true)

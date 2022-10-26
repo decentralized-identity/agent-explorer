@@ -42,7 +42,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
     let packedMessage
     try {
       packedMessage = await agent?.packDIDCommMessage({
-        packing: 'jws',
+        packing: 'authcrypt',
         message,
         section: 'verificationMethod',
       })
