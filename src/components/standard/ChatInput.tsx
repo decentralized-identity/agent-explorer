@@ -44,7 +44,6 @@ const ChatInput: React.FC<ChatInputProps> = ({
       packedMessage = await agent?.packDIDCommMessage({
         packing: 'authcrypt',
         message,
-        section: 'verificationMethod',
       })
     } catch (err) {
       console.error('Error in packDIDCommMessage: ', err)
