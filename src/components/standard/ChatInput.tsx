@@ -60,6 +60,23 @@ const ChatInput: React.FC<ChatInputProps> = ({
           recipientDidUrl: recipient,
         })
         console.log('finished send. res: ', res)
+        if (res) {
+          console.log('try to save.')
+          // const handledSentMessage = await agent?.handleMessage({ raw: packedMessage })
+          // console.log("handledSentMessage: ", handledSentMessage)
+          const sentMessage = {
+            type: 'veramo.io-chat-v1',
+            to: recipient as string,
+            from: viewer as string,
+            id: messageId,
+            threadId: _threadId,
+            data: { message: msg },
+          }
+          const saveRes = await agent?.dataStoreSaveMessage({
+            message: sentMessage,
+          })
+          console.log('saveRes: ', saveRes)
+        }
         setMessage('')
 
         if (composing) {
