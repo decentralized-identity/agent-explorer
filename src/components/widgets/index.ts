@@ -32,6 +32,11 @@ export const WIDGET_MAP: { [index: string]: PageWidgetConfig } = {
     widgetLabel: 'Select Schema and Issue',
     config: {},
   },
+  CREATE_PROFILE_CREDENTIAL: {
+    widgetName: 'CreateProfileCredential',
+    widgetLabel: 'Create Profile Credential',
+    config: {},
+  },
   CREATE_PRESENTATION: {
     widgetName: 'CreatePresentation',
     widgetLabel: 'Create Presentation',
@@ -52,7 +57,7 @@ export const WIDGET_MAP: { [index: string]: PageWidgetConfig } = {
 }
 
 export const PAGE_DEFAULT_WIDGETS: PageWidgetDefaults = {
-  dashboard: [ WIDGET_MAP.STATISTICS, WIDGET_MAP.WELCOME],
+  dashboard: [WIDGET_MAP.STATISTICS, WIDGET_MAP.WELCOME],
 }
 
 export const DYNAMIC_COMPONENTS: {
@@ -73,6 +78,9 @@ export const DYNAMIC_COMPONENTS: {
   ),
   [WIDGET_MAP.SELECT_SCHEMA_AND_ISSUE.widgetName]: React.lazy(
     () => import('./SelectSchemaAndIssue'),
+  ),
+  [WIDGET_MAP.CREATE_PROFILE_CREDENTIAL.widgetName]: React.lazy(
+    () => import('./CreateProfileCredential'),
   ),
   [WIDGET_MAP.CREATE_PRESENTATION.widgetName]: React.lazy(
     () => import('./CreatePresentation'),

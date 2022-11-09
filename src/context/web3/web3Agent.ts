@@ -24,6 +24,7 @@ import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { MinimalImportableKey } from '@veramo/core'
+import { DIDComm, DIDCommHttpTransport } from '@veramo/did-comm'
 import { Web3Provider } from '@ethersproject/providers'
 
 const dataStore = BrowserLocalStorageStore.fromLocalStorage('veramo-state')
@@ -92,6 +93,7 @@ export async function createWeb3Agent({
           new SdrMessageHandler(),
         ],
       }),
+      new DIDComm([new DIDCommHttpTransport()]),
     ],
   })
 
