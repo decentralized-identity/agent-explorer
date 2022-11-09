@@ -119,7 +119,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
   }
 
   useEffect(() => {
-    setIdentifierProvider('did:ethr:rinkeby')
+    setIdentifierProvider('did:ethr:goerli')
   }, [setIdentifierProvider])
 
   return (
@@ -155,7 +155,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
             <Form.Item label="Provider">
               <Select
                 onSelect={(value: string) => setIdentifierProvider(value)}
-                defaultValue="did:ethr:rinkeby"
+                defaultValue="did:ethr:goerli"
               >
                 {providers?.map((provider: string) => {
                   return (
