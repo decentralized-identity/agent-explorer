@@ -6,6 +6,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { IIdentifier } from '@veramo/core'
 import { issueCredential } from '../../utils/signing'
+import { v4 } from 'uuid'
 const { TextArea } = Input
 const { Option } = Select
 
@@ -27,6 +28,7 @@ const CreateProfileCredential: React.FC<CreateProfileCredentialProps> = ({
   const [proofFormat, setProofFormat] = useState('')
   const [name, setName] = useState('')
   const [bio, setBio] = useState('')
+  const [recipient, setRecipient] = useState('')
   const [inFlight, setInFlight] = useState(false)
 
   return (
@@ -75,13 +77,19 @@ const CreateProfileCredential: React.FC<CreateProfileCredentialProps> = ({
           </Option>
         </Select>
         <br />
+        <Input
+          placeholder="Recipient DID"
+          onChange={(e) => setRecipient(e.target.value)}
+        />
+        <br />
+        <br />
         <Button
           type="primary"
           disabled={inFlight || !proofFormat || !issuer}
           onClick={async () => {
             try {
               setInFlight(true)
-              await issueCredential(
+              const cred = await issueCredential(
                 agent,
                 issuer,
                 issuer,
@@ -94,8 +102,27 @@ const CreateProfileCredential: React.FC<CreateProfileCredentialProps> = ({
                 'ProfileCredentialSchema',
                 'did:web:veramo.io;id=62a8ca5d-7e78-4e7b-a2c1-0bf2d37437ad;version=1.0',
               )
+              console.log('cred: ', cred)
+              if (recipient) {
+                const packedMessage = await agent?.packDIDCommMessage({
+                  packing: 'none',
+                  message: {
+                    from: issuer,
+                    to: recipient,
+                    id: v4(),
+                    body: { message: cred },
+                  },
+                })
+                console.log('packedMessage: ', packedMessage)
+                const res = await agent?.sendDIDCommMessage({
+                  packedMessage,
+                  recipientDidUrl: recipient,
+                })
+                console.log('res: ', res)
+              }
               setInFlight(false)
             } catch (ex) {
+              console.error('ex: ', ex)
               setInFlight(false)
             }
           }}
