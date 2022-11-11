@@ -110,11 +110,13 @@ const CreateProfileCredential: React.FC<CreateProfileCredentialProps> = ({
                     from: issuer,
                     to: recipient,
                     id: v4(),
-                    body: { message: cred },
+                    type: 'w3c.vc',
+                    body: cred,
                   },
                 })
                 console.log('packedMessage: ', packedMessage)
                 const res = await agent?.sendDIDCommMessage({
+                  messageId: v4(),
                   packedMessage,
                   recipientDidUrl: recipient,
                 })
