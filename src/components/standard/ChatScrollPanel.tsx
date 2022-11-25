@@ -2,6 +2,7 @@ import React from 'react'
 import { Col } from 'antd'
 
 interface ChatScrollPanelProps {
+  children: React.ReactNode
   reverse?: boolean
   id?: string
 }

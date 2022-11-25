@@ -6,6 +6,7 @@ import { usePageModules } from '../context/WidgetProvider'
 import { PageWidgetConfig, PageWidgetProps } from '../types'
 
 interface PageProps {
+  children?: React.ReactNode
   name?: string
   header: any
   rightContent?: any
