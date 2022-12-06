@@ -7,15 +7,20 @@ import { SelectProps } from 'antd/es/select'
 
 interface DIDDiscoveryBarProps {
   handleSelect: any
+  placeholder?: string
 }
 
-const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({ handleSelect }) => {
+const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({
+  handleSelect,
+  placeholder,
+}) => {
   const { agent } = useVeramo<IDIDDiscovery>()
   const { newRecipient } = useChat()
   const [options, setOptions] = useState<SelectProps<object>['options']>([])
 
   const searchResult = async (query: string) => {
     const response = await agent?.discoverDid({ query })
+    console.log('response: ', response)
     const selectOptions: Array<{ value: string; label: any }> = []
     response?.results.forEach((r) => {
       r.matches.forEach((m) => {
@@ -59,6 +64,7 @@ const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({ handleSelect }) => {
           paddingTop: 10,
           paddingBottom: 10,
         }}
+        placeholder={placeholder}
       />
     </AutoComplete>
   )

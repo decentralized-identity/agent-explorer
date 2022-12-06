@@ -62,7 +62,7 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
   }
 
   return (
-    <Card>
+    <Card style={{ maxWidth: '800px' }}>
       <JsonSchemaForm
         schema={schema.schema}
         formData={formData}
@@ -75,6 +75,7 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
           handleSelect={(e: any) => {
             setSubject(e)
           }}
+          placeholder="Subject DID"
         />
         <Select
           style={{ width: '60%' }}
@@ -90,11 +91,12 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
               </Option>
             ))}
         </Select>
+        <br />
         <Select
-          style={{ width: '60%' }}
           onChange={(e) => setProofFormat(e as string)}
           placeholder="Proof type"
           defaultActiveFirstOption={true}
+          style={{ minWidth: '240px' }}
         >
           <Option key="jwt" value="jwt">
             jwt
