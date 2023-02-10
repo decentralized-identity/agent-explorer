@@ -4,6 +4,7 @@ import { usePageModules } from '../context/WidgetProvider'
 import '../theme/splitpage.less'
 
 interface PageProps {
+  children?: React.ReactNode
   name?: string
   header: any
   rightContent?: any

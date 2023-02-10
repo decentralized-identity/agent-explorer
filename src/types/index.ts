@@ -36,6 +36,7 @@ export interface PageWidgetDefaults {
 }
 
 export interface PageWidgetProps {
+  children?: React.ReactNode
   /**
    * A unique identifier for this module
    */

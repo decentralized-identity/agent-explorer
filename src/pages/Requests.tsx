@@ -69,7 +69,7 @@ const Requests = () => {
                     <Card.Meta
                       style={{ marginBottom: 15 }}
                       title="Issuer"
-                      description={vc.issuer}
+                      description={<>vc.issuer</>}
                       avatar={
                         <Avatar
                           size="large"
