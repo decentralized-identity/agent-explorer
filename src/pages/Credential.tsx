@@ -6,6 +6,9 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import JsonBlock from '../components/standard/Json'
 import CredentialInfo from '../components/standard/CredentialInfo'
+import { VerifiableCredential } from '@veramo-community/react-components'
+
+import '@veramo-community/react-components/dist/cjs/index.css'
 
 const { Title } = Typography
 
@@ -27,18 +30,21 @@ const Credential = () => {
         </Layout>
       }
     >
-      <Tabs>
-        <Tabs.TabPane tab="Info" key="0">
+      {!credentialLoading && <Tabs>
+        <Tabs.TabPane tab="Pretty" key="0">
+          <VerifiableCredential credential={credential} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Info" key="1">
           <CredentialInfo credential={credential} />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="Data" key="1">
+        <Tabs.TabPane tab="Data" key="2">
           <JsonBlock
             title="Raw JSON"
             data={credential}
             isLoading={credentialLoading}
           />
         </Tabs.TabPane>
-      </Tabs>
+      </Tabs>}
     </Page>
   )
 }
