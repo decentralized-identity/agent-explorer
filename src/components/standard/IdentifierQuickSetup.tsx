@@ -28,15 +28,15 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
     setIsEnabled(false)
     try {
       // TODO: check if this key already exists and is managed by this agent
-      // const key = await agent?.keyManagerCreate({
-      //   kms: 'local',
-      //   type: 'X25519',
-      // })
-      // await agent?.didManagerAddKey({
-      //   did: identifier,
-      //   // @ts-ignore
-      //   key,
-      // })
+      const key = await agent?.keyManagerCreate({
+        kms: 'local',
+        type: 'X25519',
+      })
+      await agent?.didManagerAddKey({
+        did: identifier,
+        // @ts-ignore
+        key,
+      })
 
       if (!data || !(data.length > 0)) {
         // no did:web found, probably using a web3 wallet, set them up with a mediator
