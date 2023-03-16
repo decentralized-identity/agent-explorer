@@ -13,7 +13,9 @@ const ChatProvider = (props: any) => {
   const MINUTE_MS = 6000
   const { agent } = useVeramo<IDIDManager>()
   const checkMyDIDs = async () => {
+    console.log('agent: ', agent)
     const knownDIDs = await agent?.didManagerFind()
+    console.log('knownDIDs: ', knownDIDs)
     const myDIDs = knownDIDs?.filter((d) => d.keys.length > 0)
     console.log('myDIDs: ', myDIDs)
     if (myDIDs && myDIDs.length > 0) {
