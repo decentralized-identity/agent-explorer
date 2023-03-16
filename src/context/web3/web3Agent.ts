@@ -111,12 +111,11 @@ export async function createWeb3Agent({
     ],
   })
 
-  // This logic will be moved to a separate veramo plugin,
-  // and will be executed automatically
+  // commented out in https://github.com/veramolabs/agent-explorer/pull/115/files
+  // was causing locally-managed X25519 keys to be deleted on page refresh
   // const identifiers = await agent.didManagerFind()
   // for (const identifier of identifiers) {
   //   if (identifier.keys.filter((key) => key.kms !== 'web3').length === 0) {
-  //     console.log("whahahahahah")
   //     await agent.didManagerDelete({ did: identifier.did })
   //   }
   // }

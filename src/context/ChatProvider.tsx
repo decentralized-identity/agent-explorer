@@ -29,7 +29,7 @@ const ChatProvider = (props: any) => {
   useEffect(() => {
     const interval = setInterval(() => checkMyDIDs(), MINUTE_MS)
     return () => clearInterval(interval)
-  }, [])
+  }, [checkMyDIDs])
 
   return (
     <ChatContext.Provider
