@@ -41,7 +41,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
       onSuccess: (data: IIdentifier[]) => {
         if (data) {
           const didsWithDIDComm = data.filter((did) =>
-            did.services.some((service) => service.type === 'DIDCommMessaging'),
+            did.keys.some((key) => key.type === 'X25519'),
           )
           setAgentChatIdentifiers(didsWithDIDComm)
           setSelectedDid(didsWithDIDComm[0].did)

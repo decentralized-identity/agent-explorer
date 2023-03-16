@@ -17,6 +17,7 @@ import {
   DIDStoreJson,
   KeyStoreJson,
   BrowserLocalStorageStore,
+  PrivateKeyStoreJson,
 } from '@veramo/data-store-json'
 
 import { Resolver } from 'did-resolver'
@@ -24,8 +25,16 @@ import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { MinimalImportableKey } from '@veramo/core'
-import { DIDComm, DIDCommHttpTransport } from '@veramo/did-comm'
+import {
+  DIDComm,
+  DIDCommHttpTransport,
+  DIDCommMessageHandler,
+  CoordinateMediationRecipientMessageHandler,
+  PickupRecipientMessageHandler,
+} from '@veramo/did-comm'
 import { Web3Provider } from '@ethersproject/providers'
+import { KeyManagementSystem } from '@veramo/kms-local'
+import { SaveMessageHandler } from './saveMessageHandler'
 
 const dataStore = BrowserLocalStorageStore.fromLocalStorage('veramo-state')
 const infuraProjectId = '3586660d179141e3801c3895de1c2eba'
@@ -75,6 +84,7 @@ export async function createWeb3Agent({
       new KeyManager({
         store: new KeyStoreJson(dataStore),
         kms: {
+          local: new KeyManagementSystem(new PrivateKeyStoreJson(dataStore)),
           web3: new Web3KeyManagementSystem(web3Providers),
         },
       }),
@@ -88,6 +98,10 @@ export async function createWeb3Agent({
       new DataStoreJson(dataStore),
       new MessageHandler({
         messageHandlers: [
+          new DIDCommMessageHandler(),
+          new SaveMessageHandler(),
+          new PickupRecipientMessageHandler(),
+          new CoordinateMediationRecipientMessageHandler(),
           new JwtMessageHandler(),
           new W3cMessageHandler(),
           new SdrMessageHandler(),
@@ -97,19 +111,37 @@ export async function createWeb3Agent({
     ],
   })
 
-  // This logic will be moved to a separate veramo plugin,
-  // and will be executed automatically
-  const identifiers = await agent.didManagerFind()
-  for (const identifier of identifiers) {
-    if (identifier.keys.filter((key) => key.kms !== 'web3').length === 0) {
-      await agent.didManagerDelete({ did: identifier.did })
-    }
-  }
+  // commented out in https://github.com/veramolabs/agent-explorer/pull/115/files
+  // was causing locally-managed X25519 keys to be deleted on page refresh
+  // const identifiers = await agent.didManagerFind()
+  // for (const identifier of identifiers) {
+  //   if (identifier.keys.filter((key) => key.kms !== 'web3').length === 0) {
+  //     await agent.didManagerDelete({ did: identifier.did })
+  //   }
+  // }
 
   for (const info of connectors) {
     if (info.accounts) {
       for (const account of info.accounts) {
         const did = `did:ethr:0x${info.chainId.toString(16)}:${account}`
+
+        let extraManagedKeys = []
+        for (const keyId in dataStore.keys) {
+          if (
+            dataStore.keys[keyId].meta?.did === did &&
+            dataStore.keys[keyId].kms === 'local'
+          ) {
+            extraManagedKeys.push(dataStore.keys[keyId])
+          }
+        }
+        extraManagedKeys = extraManagedKeys.map((k) => {
+          const privateKeyHex = dataStore.privateKeys[k.kid].privateKeyHex
+          return {
+            ...k,
+            privateKeyHex,
+          }
+        })
+
         // const controllerKeyId = `${did}#controller`
         const controllerKeyId = `${info.name}-${account}`
         await agent.didManagerImport({
@@ -128,6 +160,7 @@ export async function createWeb3Agent({
                 algorithms: ['eth_signMessage', 'eth_signTypedData'],
               },
             } as MinimalImportableKey,
+            ...extraManagedKeys,
           ],
         })
       }

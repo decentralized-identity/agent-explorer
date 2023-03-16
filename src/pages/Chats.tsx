@@ -29,7 +29,6 @@ const ChatView = () => {
         where: [{ column: 'type', value: ['veramo.io-chat-v1'] }],
         order: [{ column: 'createdAt', direction: 'DESC' }],
       })
-
       // TODO: should be able to do this filter in the query instead of here
       const applicableMessages = (messages as IMessage[])?.filter(
         (message) => message.from === selectedDid || message.to === selectedDid,

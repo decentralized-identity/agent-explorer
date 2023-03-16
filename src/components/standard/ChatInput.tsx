@@ -22,17 +22,22 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const [message, setMessage] = useState<string>()
   const [errorMessage, setErrorMessage] = useState<string>('')
   const { agent } = useVeramo()
-  const { composing, setComposing, newRecipient, setNewRecipient } = useChat()
+  const {
+    selectedDid,
+    composing,
+    setComposing,
+    newRecipient,
+    setNewRecipient,
+  } = useChat()
   const recipient = existingRecipient || newRecipient
   const navigate = useNavigate()
   const _threadId = threadId === 'new-thread' ? v4() : threadId
-
   const messageId = v4()
   const sendMessage = async (msg: string) => {
     const message = {
       type: 'veramo.io-chat-v1',
       to: recipient as string,
-      from: viewer as string,
+      from: selectedDid as string,
       id: messageId,
       thid: _threadId,
       body: { message: msg },
@@ -40,7 +45,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
     let packedMessage
     try {
       packedMessage = await agent?.packDIDCommMessage({
-        packing: 'jws',
+        packing: 'authcrypt',
         message,
       })
     } catch (err) {
@@ -54,6 +59,17 @@ const ChatInput: React.FC<ChatInputProps> = ({
           messageId,
           recipientDidUrl: recipient,
         })
+
+        const msgToSave = {
+          type: message.type,
+          to: message.to,
+          from: message.from,
+          id: message.id,
+          threadId: message.thid,
+          data: message.body,
+        }
+
+        await agent?.dataStoreSaveMessage({ message: msgToSave })
 
         setMessage('')
 
