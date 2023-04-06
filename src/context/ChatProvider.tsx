@@ -15,15 +15,20 @@ const ChatProvider = (props: any) => {
 
   useEffect(() => {
     const checkMyDIDs = async () => {
-      console.log('agent: ', agent)
-      const knownDIDs = await agent?.didManagerFind()
-      console.log('knownDIDs: ', knownDIDs)
-      const myDIDs = knownDIDs?.filter((d) => d.keys.length > 0)
-      console.log('myDIDs: ', myDIDs)
-      if (myDIDs && myDIDs.length > 0) {
-        for (let d in myDIDs) {
-          const did = myDIDs[d].did
-          pickup(agent, did, 'did:web:dev-didcomm-mediator.herokuapp.com')
+      if (
+        agent?.availableMethods().includes('packDIDCommMessage') &&
+        agent?.availableMethods().includes('sendDIDCommMessage')
+      ) {
+        console.log('agent: ', agent)
+        const knownDIDs = await agent?.didManagerFind()
+        console.log('knownDIDs: ', knownDIDs)
+        const myDIDs = knownDIDs?.filter((d) => d.keys.length > 0)
+        console.log('myDIDs: ', myDIDs)
+        if (myDIDs && myDIDs.length > 0) {
+          for (let d in myDIDs) {
+            const did = myDIDs[d].did
+            pickup(agent, did, 'did:web:dev-didcomm-mediator.herokuapp.com')
+          }
         }
       }
     }
