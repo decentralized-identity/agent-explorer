@@ -1,6 +1,6 @@
 import React from 'react'
 import { Layout, Menu, Avatar, Typography, Row, Button } from 'antd'
-import Version from '../components/standard/Version'
+import type { MenuProps } from 'antd'
 import {
   EyeOutlined,
   UserOutlined,
@@ -11,93 +11,123 @@ import {
   CheckCircleOutlined,
   CloudServerOutlined,
   MessageOutlined,
+  SettingOutlined,
 } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
 
 const { Sider } = Layout
-const { SubMenu } = Menu
 const { Title, Text } = Typography
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
-
-
-const subMenu = [
+const subMenu: MenuProps['items'] = [
   {
-    url: '/connect',
-    label: 'Connect Agent',
-    icon: PlusOutlined,
+    type: 'divider',
   },
   {
-    url: '/agents',
+    key: '/connect',
+    label: 'Connect Agent',
+    icon: <PlusOutlined />,
+  },
+  {
+    key: '/agents',
     label: 'Manage Agents',
-    icon: CloudServerOutlined,
+    icon: <CloudServerOutlined />,
   },
 ]
 
 const SideMenu = () => {
   const { agent, agents, setActiveAgentId, activeAgentId } = useVeramo()
+  const navigate = useNavigate()
+  const location = useLocation()
+
   const uri =
     agent?.context?.name &&
     GRAVATAR_URI + md5(agent?.context?.name) + '?s=200&d=retro'
 
   const availableMethods = agent?.availableMethods() || []
+  const currentAgentName = agent?.context?.name || 'No Agent Connected'
 
-  const mainMenu = [
+  const mainMenuItems: MenuProps['items'] = [
     {
-      url: '/',
-      label: 'Dashboard',
-      icon: EyeOutlined,
+      key: 'connected-agents',
+      icon: <Avatar size="large" style={{ marginRight: 15 }} src={uri} />,
+      label: currentAgentName,
+      className: 'agent-selector',
+      children: [
+        ...agents.map((_agent: any, index: number) => {
+          return {
+            key: index,
+            onClick: () => setActiveAgentId(_agent.context?.id),
+            icon: (
+              <CheckCircleOutlined
+                style={{
+                  fontSize: '17px',
+                  opacity: _agent.context?.id === activeAgentId ? 1 : 0.1,
+                }}
+              />
+            ),
+            label: _agent.context?.name,
+          }
+        }),
+        ...subMenu,
+      ],
     },
-  
-    // {
-    //   url: '/network',
-    //   label: 'Network',
-    //   icon: DeploymentUnitOutlined,
-    // },
-    // {
-    //   url: '/discover',
-    //   label: 'Discover',
-    //   icon: SearchOutlined,
-    // },
+    {
+      key: '/',
+      label: 'Dashboard',
+      icon: <EyeOutlined />,
+    },
   ]
 
   if (availableMethods.includes('dataStoreORMGetIdentifiers')) {
-    mainMenu.push({
-      url: '/identifiers',
+    mainMenuItems.push({
+      key: '/identifiers',
       label: 'Identifiers',
-      icon: UserOutlined,
+      icon: <UserOutlined />,
     })
   }
 
   if (availableMethods.includes('dataStoreORMGetVerifiableCredentials')) {
-    mainMenu.push({
-      url: '/credentials',
+    mainMenuItems.push({
+      key: '/credentials',
       label: 'Credentials',
-      icon: SafetyOutlined,
+      icon: <SafetyOutlined />,
     })
   }
 
   if (availableMethods.includes('dataStoreORMGetMessages')) {
-    mainMenu.push({
-      url: '/activity',
+    mainMenuItems.push({
+      key: '/activity',
       label: 'Activity',
-      icon: BarsOutlined,
+      icon: <BarsOutlined />,
     })
-    mainMenu.push({
-      url: '/requests',
+    mainMenuItems.push({
+      key: '/requests',
       label: 'Requests',
-      icon: InteractionOutlined,
-    })
-    mainMenu.push({
-      url: '/chats/threads/new-thread',
-      label: 'DID Chats',
-      icon: MessageOutlined,
+      icon: <InteractionOutlined />,
     })
   }
-  
+
+  if (
+    availableMethods.includes('packDIDCommMessage') &&
+    availableMethods.includes('sendDIDCommMessage')
+  ) {
+    mainMenuItems.push({
+      key: '/chats/threads/new-thread',
+      label: 'DID Chats',
+      icon: <MessageOutlined />,
+    })
+  }
+
+  const onClick = (e: any) => {
+    if (e.key.startsWith('/')) {
+      navigate(e.key)
+    }
+  }
+
   return (
     <Sider
       breakpoint="sm"
@@ -136,90 +166,33 @@ const SideMenu = () => {
           </Button>
         </Row>
       )}
+
       {agent && (
         <Menu
           className="main-menu"
           mode="inline"
-          defaultSelectedKeys={['4']}
           style={{ width: 250 }}
-        >
-          <SubMenu
-            key="connected-agents"
-            icon={<Avatar size="large" style={{ marginRight: 15 }} src={uri} />}
-            title={agent.context?.name}
-            className="agent-selector"
-          >
-            {agents.map((_agent: any, index: number) => {
-              return (
-                <Menu.Item
-                  key={index}
-                  onClick={() => setActiveAgentId(_agent.context?.id)}
-                  icon={
-                    <CheckCircleOutlined
-                      style={{
-                        fontSize: '17px',
-                        opacity: _agent.context?.id === activeAgentId ? 1 : 0.1,
-                      }}
-                    />
-                  }
-                >
-                  {_agent.context?.name}
-                </Menu.Item>
-              )
-            })}
-            <Menu.Divider></Menu.Divider>
-            {subMenu.map((menuItem) => {
-              return (
-                <Menu.Item key={menuItem.label}>
-                  <Link to={menuItem.url}>{menuItem.label}</Link>
-                </Menu.Item>
-              )
-            })}
-            <Menu.Divider></Menu.Divider>
-          </SubMenu>
-          {mainMenu.map((menuItem) => {
-            return (
-              <Menu.Item
-                key={menuItem.label}
-                icon={
-                  <menuItem.icon
-                    style={{ fontSize: '17px' }}
-                    key={'menuItem' + menuItem.url}
-                  />
-                }
-              >
-                <Link to={menuItem.url}>{menuItem.label}</Link>
-              </Menu.Item>
-            )
-          })}
-        </Menu>
+          onClick={onClick}
+          selectedKeys={[location.pathname]}
+          items={mainMenuItems}
+        />
       )}
+
       <Menu
         className="secondary-menu"
         mode="inline"
-        defaultSelectedKeys={['4']}
+        selectedKeys={[location.pathname]}
         style={{
           width: 250,
           position: 'absolute',
           bottom: 0,
           marginBottom: 50,
         }}
-      >
-        <Menu.Item key="blankItem"></Menu.Item>
-        <Menu.Item key="settings">
-          <Link to="/settings">Settings</Link>
-          (<Version versionOnly />)
-        </Menu.Item>
-        <Menu.Item key="githublink">
-          <a
-            target="_blank"
-            rel="noreferrer"
-            href="https://github.com/veramolabs"
-          >
-            Contribute
-          </a>
-        </Menu.Item>
-      </Menu>
+        items={[
+          { key: '/settings', label: 'Settings', icon: <SettingOutlined /> },
+        ]}
+        onClick={onClick}
+      />
     </Sider>
   )
 }

@@ -22,14 +22,9 @@ const Page: React.FC<PageProps> = ({
   fullWidth,
   renderModulesBefore,
 }) => {
-  const {
-    modules,
-    addModule,
-    removeModule,
-    saveConfig,
-    setPageName,
-  } = usePageModules()
-  const [visible, toggleVisible] = useState(false)
+  const { modules, addModule, removeModule, saveConfig, setPageName } =
+    usePageModules()
+  const [open, toggleOpen] = useState(false)
 
   const base = { padding: 20 }
   const style = fullWidth ? { ...base } : { ...base, margin: '0 auto' }
@@ -40,7 +35,7 @@ const Page: React.FC<PageProps> = ({
 
   const addPageModule = (pageName: string, widgetKeyName: string) => {
     addModule(pageName, widgetKeyName)
-    toggleVisible((s) => !s)
+    toggleOpen((s) => !s)
   }
 
   const renderPageWidget = () => {
@@ -88,8 +83,8 @@ const Page: React.FC<PageProps> = ({
         }
         title="Widgets"
         trigger="click"
-        visible={visible}
-        onVisibleChange={() => toggleVisible((s) => !s)}
+        open={open}
+        onOpenChange={() => toggleOpen((s) => !s)}
       >
         <Button style={{ marginBottom: 20 }} icon={<FundViewOutlined />} />
       </Popover>

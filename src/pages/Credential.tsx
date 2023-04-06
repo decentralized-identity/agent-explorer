@@ -30,21 +30,33 @@ const Credential = () => {
         </Layout>
       }
     >
-      {!credentialLoading && <Tabs>
-        <Tabs.TabPane tab="Pretty" key="0">
-          <VerifiableCredential credential={credential} />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Info" key="1">
-          <CredentialInfo credential={credential} />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="Data" key="2">
-          <JsonBlock
-            title="Raw JSON"
-            data={credential}
-            isLoading={credentialLoading}
-          />
-        </Tabs.TabPane>
-      </Tabs>}
+      {!credentialLoading && (
+        <Tabs
+          items={[
+            {
+              key: '0',
+              label: 'Pretty',
+              children: <VerifiableCredential credential={credential} />,
+            },
+            {
+              key: '1',
+              label: 'Info',
+              children: <CredentialInfo credential={credential} />,
+            },
+            {
+              key: '2',
+              label: 'Data',
+              children: (
+                <JsonBlock
+                  title="Raw JSON"
+                  data={credential}
+                  isLoading={credentialLoading}
+                />
+              ),
+            },
+          ]}
+        />
+      )}
     </Page>
   )
 }
