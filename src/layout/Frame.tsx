@@ -1,7 +1,6 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { Layout } from 'antd'
-import '../theme/base.less'
 import { useVeramo } from '@veramo-community/veramo-react'
 
 import Sidemenu from '../layout/SideMenu'
@@ -21,7 +20,7 @@ import Agents from '../pages/Agents'
 import Agent from '../pages/Agent'
 import Chats from '../pages/Chats'
 
-const { Header, Content } = Layout
+const { Content } = Layout
 
 const Frame = () => {
   const { agent } = useVeramo()
@@ -30,7 +29,6 @@ const Frame = () => {
     <Layout style={{ height: '100%' }}>
       <Sidemenu />
       <Layout>
-        <Header style={{ padding: 0 }} className="mobile-header"></Header>
         <Content className="main-content-container">
           <Routes>
             <Route path="/connect" element={<Connect />} />

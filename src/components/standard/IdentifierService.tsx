@@ -52,7 +52,7 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
         description={item.description}
       />
       <Modal
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         okType="danger"

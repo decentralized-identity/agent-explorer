@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Layout, Col, Row } from 'antd'
 import { usePageModules } from '../context/WidgetProvider'
-import '../theme/splitpage.less'
 
 interface PageProps {
   children?: React.ReactNode

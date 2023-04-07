@@ -122,6 +122,13 @@ const SideMenu = () => {
     })
   }
 
+  mainMenuItems.push({ type: 'divider' })
+  mainMenuItems.push({
+    key: '/settings',
+    label: 'Settings',
+    icon: <SettingOutlined />,
+  })
+
   const onClick = (e: any) => {
     if (e.key.startsWith('/')) {
       navigate(e.key)
@@ -129,17 +136,7 @@ const SideMenu = () => {
   }
 
   return (
-    <Sider
-      breakpoint="sm"
-      collapsedWidth="0"
-      width="250"
-      style={{
-        height: '100vh',
-        position: 'fixed',
-        left: 0,
-        zIndex: 100,
-      }}
-    >
+    <Sider breakpoint="sm" collapsedWidth="0" width="250">
       {!agent && (
         <Row style={{ justifyContent: 'center', padding: '30px 5px' }}>
           <Title
@@ -169,7 +166,6 @@ const SideMenu = () => {
 
       {agent && (
         <Menu
-          className="main-menu"
           mode="inline"
           style={{ width: 250 }}
           onClick={onClick}
@@ -177,22 +173,6 @@ const SideMenu = () => {
           items={mainMenuItems}
         />
       )}
-
-      <Menu
-        className="secondary-menu"
-        mode="inline"
-        selectedKeys={[location.pathname]}
-        style={{
-          width: 250,
-          position: 'absolute',
-          bottom: 0,
-          marginBottom: 50,
-        }}
-        items={[
-          { key: '/settings', label: 'Settings', icon: <SettingOutlined /> },
-        ]}
-        onClick={onClick}
-      />
     </Sider>
   )
 }

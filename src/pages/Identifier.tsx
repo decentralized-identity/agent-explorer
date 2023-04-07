@@ -11,7 +11,7 @@ import IdentifierQuickSetup from '../components/standard/IdentifierQuickSetup'
 import IdentifierReceivedCredentials from '../components/standard/IdentifierReceivedCredentials'
 import IdentifierIssuedCredentials from '../components/standard/IdentifierIssuedCredentials'
 
-const { Title } = Typography
+const { Title, Text } = Typography
 const { TabPane } = Tabs
 
 const Identifier = () => {
@@ -38,7 +38,7 @@ const Identifier = () => {
       header={
         <Layout>
           <Title style={{ fontWeight: 'bold' }}>Identifier</Title>
-          <code>{id}</code>
+          <Text>{id}</Text>
         </Layout>
       }
     >

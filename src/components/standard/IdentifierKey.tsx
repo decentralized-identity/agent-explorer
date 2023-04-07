@@ -58,7 +58,7 @@ const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did }) => {
       />
       {/*item.publicKeyHex*/}
       <Modal
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         okType="danger"

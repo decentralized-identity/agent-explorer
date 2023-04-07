@@ -32,7 +32,7 @@ const CreateAndAddKeyModalForm: React.FC<CreateAndAddKeyModalFormProps> = ({
   }
   return (
     <Modal
-      visible={visible}
+      open={visible}
       title="Create New Key and add to this DID"
       okText="Create"
       cancelText="Cancel"

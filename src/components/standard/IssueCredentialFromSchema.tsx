@@ -7,6 +7,7 @@ import { IIdentifier } from '@veramo/core'
 
 import { withTheme } from '@rjsf/core'
 import { Theme as AntDTheme } from '@rjsf/antd'
+import validator from '@rjsf/validator-ajv8'
 import { VCJSONSchema } from '../../types'
 import DIDDiscoveryBar from './DIDDiscoveryBar'
 const JsonSchemaForm = withTheme(AntDTheme)
@@ -65,6 +66,7 @@ const IssueCredentialFromSchema: React.FC<IssueCredentialFromSchemaProps> = ({
     <Card style={{ maxWidth: '800px' }}>
       <JsonSchemaForm
         schema={schema.schema}
+        validator={validator}
         formData={formData}
         onChange={(e) => {
           setFormData(e.formData)

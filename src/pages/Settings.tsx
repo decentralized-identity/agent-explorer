@@ -3,6 +3,7 @@ import { Typography, Card, Layout } from 'antd'
 import Page from '../layout/Page'
 import Version from '../components/standard/Version'
 import Web3 from '../components/standard/Web3'
+import ThemeModule from '../components/standard/ThemeSwitch'
 
 const { Title } = Typography
 const { Content } = Layout
@@ -21,6 +22,8 @@ const Settings = () => {
         <Card>
           <Version />
         </Card>
+        <Title level={5}>Viewing Mode</Title>
+        <ThemeModule />
         <Title level={5}>Web3</Title>
         <Web3 />
       </Content>
