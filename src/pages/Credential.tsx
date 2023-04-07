@@ -22,14 +22,9 @@ const Credential = () => {
   )
 
   return (
-    <Page
-      name="credential"
-      header={
-        <Layout>
-          <Title style={{ fontWeight: 'bold' }}>Verifiable Credential</Title>
-        </Layout>
-      }
-    >
+    <Layout style={{ marginLeft: 24, marginRight: 24 }}>
+      <Title>Verifiable Credential</Title>
+
       {!credentialLoading && (
         <Tabs
           items={[
@@ -57,7 +52,7 @@ const Credential = () => {
           ]}
         />
       )}
-    </Page>
+    </Layout>
   )
 }
 

@@ -26,10 +26,10 @@ const Frame = () => {
   const { agent } = useVeramo()
 
   return (
-    <Layout style={{ height: '100%' }}>
+    <Layout style={{ minHeight: '100%' }}>
       <Sidemenu />
       <Layout>
-        <Content className="main-content-container">
+        <Content>
           <Routes>
             <Route path="/connect" element={<Connect />} />
             {agent ? (

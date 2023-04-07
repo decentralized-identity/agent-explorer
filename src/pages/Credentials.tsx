@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Table, Tag } from 'antd'
+import { Typography, Table, Tag, Layout } from 'antd'
 import Page from '../layout/Page'
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
@@ -80,7 +80,8 @@ const Credentials = () => {
   )
 
   return (
-    <Page header={<Title style={{ fontWeight: 'bold' }}>Credentials</Title>}>
+    <Layout style={{ marginLeft: 24, marginRight: 24 }}>
+      <Title>Credentials</Title>
       <Table
         loading={isLoading}
         rowKey={(record) => record.hash}
@@ -94,7 +95,7 @@ const Credentials = () => {
         // @ts-ignore
         columns={columns}
       />
-    </Page>
+    </Layout>
   )
 }
 
