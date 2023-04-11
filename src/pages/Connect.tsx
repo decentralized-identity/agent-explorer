@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Typography, Form, Input, Button, List } from 'antd'
-import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
-
-const { Title } = Typography
+import { PageContainer } from '@ant-design/pro-components'
 
 const Connect = () => {
   const navigate = useNavigate()
@@ -75,7 +73,7 @@ const Connect = () => {
   }, [schema])
 
   return (
-    <Page header={<Title style={{ fontWeight: 'bold' }}>Connect</Title>}>
+    <PageContainer title="Connect">
       <Form layout={'vertical'}>
         <Form.Item
           hasFeedback
@@ -150,7 +148,7 @@ const Connect = () => {
         )}
       </Form>
       {/* <Card title="Deploy agent">Deploy an agent to heroku</Card> */}
-    </Page>
+    </PageContainer>
   )
 }
 

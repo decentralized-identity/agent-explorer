@@ -1,6 +1,5 @@
 import React from 'react'
-import { Typography, Card, Layout, Tabs } from 'antd'
-import Page from '../layout/Page'
+import { Card, Layout, Tabs } from 'antd'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -10,8 +9,8 @@ import IdentifierServices from '../components/standard/IdentifierServices'
 import IdentifierQuickSetup from '../components/standard/IdentifierQuickSetup'
 import IdentifierReceivedCredentials from '../components/standard/IdentifierReceivedCredentials'
 import IdentifierIssuedCredentials from '../components/standard/IdentifierIssuedCredentials'
+import { PageContainer } from '@ant-design/pro-components'
 
-const { Title, Text } = Typography
 const { TabPane } = Tabs
 
 const Identifier = () => {
@@ -34,14 +33,7 @@ const Identifier = () => {
   const resolved = resolutionResult?.didResolutionMetadata.error === undefined
 
   return (
-    <Page
-      header={
-        <Layout>
-          <Title style={{ fontWeight: 'bold' }}>Identifier</Title>
-          <Text>{id}</Text>
-        </Layout>
-      }
-    >
+    <PageContainer title={id}>
       <Tabs>
         <TabPane tab="Credentials" key="0">
           <IdentifierReceivedCredentials identifier={id} />
@@ -78,7 +70,7 @@ const Identifier = () => {
           </Card>
         </TabPane>
       </Tabs>
-    </Page>
+    </PageContainer>
   )
 }
 

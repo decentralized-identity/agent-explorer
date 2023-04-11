@@ -20,7 +20,7 @@ const themes = [
 const ThemeSwitcher = () => {
   const { theme, switchTheme, isCompact, setIsCompact } = useTheme()
   return (
-    <Card>
+    <Card title="Theme">
       <Radio.Group value={theme} onChange={(e) => switchTheme(e.target.value)}>
         {themes.map((themeOptions) => {
           console.log(themeOptions, theme)

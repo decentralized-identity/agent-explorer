@@ -1,21 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Select } from 'antd'
-import PageWidget from '../../layout/PageWidget'
-import { VCJSONSchema, PageWidgetProps } from '../../types'
-import IssueCredentialFromSchema from '../standard/IssueCredentialFromSchema'
+import { VCJSONSchema } from '../../types'
+import IssueCredentialFromSchema from '../../components/standard/IssueCredentialFromSchema'
+import { PageContainer } from '@ant-design/pro-components'
 
 const { Option } = Select
 
 const schemasRepositoryUrlBase = 'https://veramolabs.github.io/vc-json-schemas'
 
-interface SelectSchemaAndIssueProps extends PageWidgetProps {}
-
-const SelectSchemaAndIssue: React.FC<SelectSchemaAndIssueProps> = ({
-  title,
-  isLoading,
-  remove,
-  removeDisabled,
-}) => {
+const SelectSchemaAndIssue: React.FC = () => {
   const [schemaUrlsList, setSchemaUrlsList] = useState<string[]>([])
   const [selectedSchemaUrl, setSelectedSchemaUrl] = useState<string>('')
   const [schemasLoading, setSchemasLoading] = useState(true)
@@ -55,12 +48,7 @@ const SelectSchemaAndIssue: React.FC<SelectSchemaAndIssueProps> = ({
   }, [selectedSchemaUrl])
 
   return (
-    <PageWidget
-      title={title}
-      isLoading={isLoading}
-      remove={remove}
-      removeDisabled={removeDisabled}
-    >
+    <PageContainer>
       <Select
         style={{ width: '60%' }}
         loading={schemasLoading}
@@ -76,7 +64,7 @@ const SelectSchemaAndIssue: React.FC<SelectSchemaAndIssueProps> = ({
           ))}
       </Select>
       {selectedSchema && <IssueCredentialFromSchema schema={selectedSchema} />}
-    </PageWidget>
+    </PageContainer>
   )
 }
 

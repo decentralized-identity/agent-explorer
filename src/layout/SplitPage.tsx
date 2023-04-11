@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Layout, Col, Row } from 'antd'
-import { usePageModules } from '../context/WidgetProvider'
 
 interface PageProps {
   children?: React.ReactNode
@@ -19,12 +18,6 @@ const Page: React.FC<PageProps> = ({
   rightContent,
   leftContent,
 }) => {
-  const { setPageName } = usePageModules()
-
-  useEffect(() => {
-    setPageName(name)
-  }, [name, setPageName])
-
   return (
     <Layout
       style={{

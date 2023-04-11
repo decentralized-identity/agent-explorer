@@ -1,13 +1,11 @@
 import React from 'react'
-import { Typography, Table, Button, Form, Select, Input, Card } from 'antd'
-import Page from '../layout/Page'
+import { Table, Button, Form, Select, Input, Card } from 'antd'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import * as generatorUtils from '../utils/dataGenerator'
 import { useGenerator } from '../hooks/useGenerator'
-
-const { Title } = Typography
+import { PageContainer } from '@ant-design/pro-components'
 
 const columns = [
   {
@@ -74,10 +72,7 @@ const Identifiers = () => {
     .includes('didManagerCreate')
 
   return (
-    <Page
-      renderModulesBefore
-      header={<Title style={{ fontWeight: 'bold' }}>Identifiers</Title>}
-    >
+    <PageContainer>
       <Table
         loading={isLoading}
         rowKey={(record) => record.did as string}
@@ -138,7 +133,7 @@ const Identifiers = () => {
           </Form>
         </Card>
       )}
-    </Page>
+    </PageContainer>
   )
 }
 

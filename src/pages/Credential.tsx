@@ -1,6 +1,5 @@
 import React from 'react'
-import { Typography, Layout, Tabs } from 'antd'
-import Page from '../layout/Page'
+import { Tabs } from 'antd'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -9,8 +8,7 @@ import CredentialInfo from '../components/standard/CredentialInfo'
 import { VerifiableCredential } from '@veramo-community/react-components'
 
 import '@veramo-community/react-components/dist/cjs/index.css'
-
-const { Title } = Typography
+import { PageContainer } from '@ant-design/pro-components'
 
 const Credential = () => {
   const { id } = useParams<{ id: string }>()
@@ -22,9 +20,7 @@ const Credential = () => {
   )
 
   return (
-    <Layout style={{ marginLeft: 24, marginRight: 24 }}>
-      <Title>Verifiable Credential</Title>
-
+    <PageContainer title="Verifiable Credential">
       {!credentialLoading && (
         <Tabs
           items={[
@@ -52,7 +48,7 @@ const Credential = () => {
           ]}
         />
       )}
-    </Layout>
+    </PageContainer>
   )
 }
 

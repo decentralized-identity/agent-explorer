@@ -14,20 +14,12 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery, useQueryClient } from 'react-query'
 import * as generatorUtils from '../../utils/dataGenerator'
 import { useGenerator } from '../../hooks/useGenerator'
-import PageWidget from '../../layout/PageWidget'
-import { PageWidgetProps } from '../../types'
+import { PageContainer } from '@ant-design/pro-components'
 
 const { Title, Text } = Typography
 const { Panel } = Collapse
 
-interface IDataGenerator extends PageWidgetProps {}
-
-const DataGenerator: React.FC<IDataGenerator> = ({
-  title,
-  remove,
-  removeDisabled,
-  isLoading,
-}) => {
+const DataGenerator: React.FC = () => {
   const queryClient = useQueryClient()
   const { agent } = useVeramo()
   const { data: identifiers } = useQuery(
@@ -123,13 +115,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
   }, [setIdentifierProvider])
 
   return (
-    <PageWidget
-      title={title}
-      remove={remove}
-      removeDisabled={removeDisabled}
-      isLoading={isLoading}
-      noPadding
-    >
+    <PageContainer>
       <Collapse bordered={false}>
         <Panel header={`Identifiers (${identifiers?.length})`} key="1">
           <Form
@@ -299,7 +285,7 @@ const DataGenerator: React.FC<IDataGenerator> = ({
           <Text>Generate presentations between identifiers</Text>
         </Panel> */}
       </Collapse>
-    </PageWidget>
+    </PageContainer>
   )
 }
 
