@@ -49,6 +49,25 @@ export async function createIdentifiers(
         const generatedAlias =
           provider === 'did:web' ? domain + ':' + _alias : _alias
 
+        if (provider === 'did:peer') {
+          // TODO: use local endpoint if one is available (if this is a cloud agent, most likely)
+          return await createIdentifer({
+            provider,
+            alias: generatedAlias,
+            options: {
+              num_algo: 2,
+              service: {
+                id: '1234',
+                type: 'DIDCommMessaging',
+                serviceEndpoint: 'did:web:dev-didcomm-mediator.herokuapp.com',
+                description: 'a DIDComm endpoint',
+              },
+            },
+          })
+
+          // TODO: if using mediator, send Mediation Request immediately (currently user must go to identifier page and click "quick DIDComm setup" button)
+        }
+
         return await createIdentifer({
           provider,
           alias:

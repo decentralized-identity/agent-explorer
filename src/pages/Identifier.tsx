@@ -50,7 +50,7 @@ const Identifier = () => {
         {resolved && (
           <TabPane tab="DID Document" key="1">
             <Layout>
-              {isManaged && !hasDIDCommSetup && (
+              {isManaged && (
                 <IdentifierQuickSetup
                   title="Quick Setup"
                   identifier={id}
