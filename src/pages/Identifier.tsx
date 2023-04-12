@@ -28,9 +28,9 @@ const Identifier = () => {
   )
 
   const isManaged = !!managedDID?.provider
-  const hasDIDCommSetup = !!resolutionResult?.didDocument?.service?.find(
-    (s) => s.type === 'DIDCommMessaging',
-  )
+  // const hasDIDCommSetup = !!resolutionResult?.didDocument?.service?.find(
+  //   (s) => s.type === 'DIDCommMessaging',
+  // )
   const resolved = resolutionResult?.didResolutionMetadata.error === undefined
 
   return (
@@ -50,7 +50,7 @@ const Identifier = () => {
         {resolved && (
           <TabPane tab="DID Document" key="1">
             <Layout>
-              {isManaged && !hasDIDCommSetup && (
+              {isManaged && (
                 <IdentifierQuickSetup
                   title="Quick Setup"
                   identifier={id}
