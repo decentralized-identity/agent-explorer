@@ -24,6 +24,10 @@ import { Resolver } from 'did-resolver'
 import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
+import {
+  PeerDIDProvider,
+  getResolver as peerDidResolver,
+} from '@veramo/did-provider-peer'
 import { MinimalImportableKey } from '@veramo/core'
 import {
   DIDComm,
@@ -63,6 +67,7 @@ export async function createWeb3Agent({
     })
     web3Providers[info.name] = info.provider
   })
+  didProviders['did:peer'] = new PeerDIDProvider({ defaultKms: 'local' })
 
   const id = 'web3Agent'
   const agent = createAgent<
@@ -79,6 +84,7 @@ export async function createWeb3Agent({
             infuraProjectId,
           }).ethr,
           web: webDidResolver().web,
+          peer: peerDidResolver().peer,
         }),
       }),
       new KeyManager({
@@ -100,8 +106,8 @@ export async function createWeb3Agent({
         messageHandlers: [
           new DIDCommMessageHandler(),
           new SaveMessageHandler(),
-          new PickupRecipientMessageHandler(),
           new CoordinateMediationRecipientMessageHandler(),
+          new PickupRecipientMessageHandler(),
           new JwtMessageHandler(),
           new W3cMessageHandler(),
           new SdrMessageHandler(),

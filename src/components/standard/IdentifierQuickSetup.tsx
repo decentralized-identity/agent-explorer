@@ -26,59 +26,82 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
 
   const handleQuickSetup = async () => {
     setIsEnabled(false)
-    try {
-      // TODO: check if this key already exists and is managed by this agent
-      const key = await agent?.keyManagerCreate({
-        kms: 'local',
-        type: 'X25519',
-      })
-      await agent?.didManagerAddKey({
-        did: identifier,
-        // @ts-ignore
-        key,
-      })
-
-      if (!data || !(data.length > 0)) {
-        // no did:web found, probably using a web3 wallet, set them up with a mediator
-        const message = createMediateRequestMessage(
-          identifier,
-          'did:web:dev-didcomm-mediator.herokuapp.com',
-        )
-
-        const what = await agent?.dataStoreSaveMessage({ message })
-        console.log('what?: ', what)
-
-        const packedMessage = await agent?.packDIDCommMessage({
-          packing: 'authcrypt',
-          message,
-        })
-
-        // requests mediation, and then message handler adds service to DID
-        const result = await agent?.sendDIDCommMessage({
-          packedMessage,
-          messageId: message.id,
-          recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
-        })
-        console.log('result: ', result)
-        // const handled = await agent?.handleMessage({ me})
-      } else {
-        const serviceEndpoint = data[0].services.find(
-          (e: any) => e.type === 'DIDCommMessaging',
-        ).serviceEndpoint
-        await agent?.didManagerAddService({
-          did: identifier,
-          service: {
-            id: `${identifier}-didcomm-messaging`,
-            type: 'DIDCommMessaging',
-            serviceEndpoint,
-          },
-        })
-      }
-    } catch (err) {
-      console.log('err: ', err)
-      setErrorMessage(
-        'Unable to setup DIDCommMessaging service. If this is a did:ethr, make sure the controlling blockchain account has enough funds to update the DID Document.',
+    if (identifier.startsWith('did:peer')) {
+      const message = createMediateRequestMessage(
+        identifier,
+        'did:web:dev-didcomm-mediator.herokuapp.com',
       )
+
+      const stored = await agent?.dataStoreSaveMessage({ message })
+      console.log('stored?: ', stored)
+
+      const packedMessage = await agent?.packDIDCommMessage({
+        packing: 'authcrypt',
+        message,
+      })
+
+      // requests mediation, and then message handler adds service to DID
+      const result = await agent?.sendDIDCommMessage({
+        packedMessage,
+        messageId: message.id,
+        recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
+      })
+      console.log('result: ', result)
+    } else {
+      try {
+        // TODO: check if this key already exists and is managed by this agent
+        const key = await agent?.keyManagerCreate({
+          kms: 'local',
+          type: 'X25519',
+        })
+        await agent?.didManagerAddKey({
+          did: identifier,
+          // @ts-ignore
+          key,
+        })
+
+        if (!data || !(data.length > 0)) {
+          // no did:web found, probably using a web3 wallet, set them up with a mediator
+          const message = createMediateRequestMessage(
+            identifier,
+            'did:web:dev-didcomm-mediator.herokuapp.com',
+          )
+
+          const stored = await agent?.dataStoreSaveMessage({ message })
+          console.log('stored?: ', stored)
+
+          const packedMessage = await agent?.packDIDCommMessage({
+            packing: 'authcrypt',
+            message,
+          })
+
+          // requests mediation, and then message handler adds service to DID
+          const result = await agent?.sendDIDCommMessage({
+            packedMessage,
+            messageId: message.id,
+            recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
+          })
+          console.log('result: ', result)
+          // const handled = await agent?.handleMessage({ me})
+        } else {
+          const serviceEndpoint = data[0].services.find(
+            (e: any) => e.type === 'DIDCommMessaging',
+          ).serviceEndpoint
+          await agent?.didManagerAddService({
+            did: identifier,
+            service: {
+              id: `${identifier}-didcomm-messaging`,
+              type: 'DIDCommMessaging',
+              serviceEndpoint,
+            },
+          })
+        }
+      } catch (err) {
+        console.log('err: ', err)
+        setErrorMessage(
+          'Unable to setup DIDCommMessaging service. If this is a did:ethr, make sure the controlling blockchain account has enough funds to update the DID Document.',
+        )
+      }
     }
     setIsEnabled(true)
   }
