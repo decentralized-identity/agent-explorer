@@ -5,19 +5,11 @@ import {
   SafetyOutlined,
   BarsOutlined,
   InteractionOutlined,
-  CheckCircleOutlined,
   MessageOutlined,
   SettingOutlined,
   CodeOutlined,
 } from '@ant-design/icons'
-import {
-  Routes,
-  Route,
-  useLocation,
-  Link,
-  useNavigate,
-  Navigate,
-} from 'react-router-dom'
+import { Routes, Route, useLocation, Link, Navigate } from 'react-router-dom'
 import Connect from '../pages/Connect'
 import Identifiers from '../pages/Identifiers'
 import Identifier from '../pages/Identifier'
@@ -37,15 +29,14 @@ import SelectSchemaAndIssue from '../pages/DevTools/SelectSchemaAndIssue'
 import CreateProfileCredential from '../pages/DevTools/CreateProfileCredential'
 import IssueCredential from '../pages/DevTools/IssueCredential'
 import CreatePresentation from '../pages/DevTools/CreatePresentation'
-import { Dropdown } from 'antd'
 import md5 from 'md5'
+import AvatarDropdown from '../components/AvatarDropdown'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 const Layout = () => {
-  const { agent, agents, setActiveAgentId, activeAgentId } = useVeramo()
+  const { agent } = useVeramo()
   const location = useLocation()
-  const navigate = useNavigate()
 
   const availableMethods = agent?.availableMethods() || []
   const currentAgentName = agent?.context?.name || 'No Agent Connected'
@@ -169,9 +160,6 @@ const Layout = () => {
           }
           return defaultDom
         }}
-        menu={{
-          hideMenuWhenCollapsed: true,
-        }}
         route={{
           routes: mainMenuItems,
         }}
@@ -180,47 +168,9 @@ const Layout = () => {
           src: uri,
           size: 'small',
           title: currentAgentName,
-          render: (props, dom) => {
-            return (
-              <Dropdown
-                menu={{
-                  items: [
-                    ...agents.map((_agent: any, index: number) => {
-                      return {
-                        key: index,
-                        onClick: () => setActiveAgentId(_agent.context?.id),
-                        icon: (
-                          <CheckCircleOutlined
-                            style={{
-                              fontSize: '17px',
-                              opacity:
-                                _agent.context?.id === activeAgentId ? 1 : 0.1,
-                            }}
-                          />
-                        ),
-                        label: _agent.context?.name,
-                      }
-                    }),
-                    ...[
-                      { type: 'divider' as const },
-                      {
-                        key: 'manage',
-                        label: 'Magage',
-                        onClick: () => navigate('/agents'),
-                      },
-                      {
-                        key: 'connect',
-                        label: 'Connect',
-                        onClick: () => navigate('/connect'),
-                      },
-                    ],
-                  ],
-                }}
-              >
-                {dom}
-              </Dropdown>
-            )
-          },
+          render: (props, children) => (
+            <AvatarDropdown>{children}</AvatarDropdown>
+          ),
         }}
       >
         <Routes>
