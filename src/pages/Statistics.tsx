@@ -20,7 +20,7 @@ const Statistics: React.FC = () => {
   )
 
   return (
-    <PageContainer title={'Statisctics'} loading={loading1 || loading2}>
+    <PageContainer title={'Statistics'} loading={loading1 || loading2}>
       <Row gutter={16}>
         <Col span={12}>
           <Statistic
