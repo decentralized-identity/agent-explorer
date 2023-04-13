@@ -1,11 +1,9 @@
 import React from 'react'
-import { Row } from 'antd'
-import { useChat } from '../../context/ChatProvider'
-import { v4 } from 'uuid'
+import { Row, theme } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
-import { signVerifiablePresentation } from '../../utils/signing'
 import ChatThreadProfileHeader from './ChatThreadProfileHeader'
+const { useToken } = theme
 
 interface ChatThreadHeaderProps {
   counterParty: CounterParty
@@ -20,28 +18,8 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
   counterParty,
   threadId,
 }) => {
-  const { selectedDid } = useChat()
+  const { token } = useToken()
   const { agent } = useVeramo()
-  const { data: selectedDidProfileCredentials } = useQuery(
-    [
-      'selectedDidProfileCredentials',
-      { agentId: agent?.context.name, selectedDid },
-    ],
-    () =>
-      agent?.dataStoreORMGetVerifiableCredentials({
-        where: [
-          { column: 'issuer', value: [selectedDid], op: 'Equal' },
-          {
-            column: 'type',
-            value: ['VerifiableCredential,ProfileCredentialSchema'],
-            op: 'Equal',
-          },
-        ],
-        order: [{ column: 'issuanceDate', direction: 'DESC' }],
-      }),
-  )
-  const selectedDidProfileCredential =
-    selectedDidProfileCredentials?.[0]?.verifiableCredential
 
   const { data: counterPartyProfileCredentials } = useQuery(
     [
@@ -67,36 +45,14 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
     counterPartyProfileCredentials.length > 0 &&
     counterPartyProfileCredentials[0].verifiableCredential
 
-  const messageId = v4()
-  const sendMessage = async (msg: string, attachment?: any) => {
-    const message = {
-      type: 'veramo.io-chat-v1',
-      to: counterParty.did as string,
-      from: selectedDid as string,
-      id: messageId,
-      thid: threadId,
-      body: { message: msg },
-    }
-    const packedMessage = await agent?.packDIDCommMessage({
-      packing: 'jws',
-      message,
-    })!
-    await agent?.sendDIDCommMessage({
-      packedMessage,
-      messageId,
-      recipientDidUrl: counterParty.did,
-    })
-  }
-
   if (!counterParty || !counterParty.did) {
     return (
       <Row
         style={{
           cursor: 'pointer',
           padding: 20,
-          backgroundColor: '#f7f7f7',
+          backgroundColor: token.colorBgTextHover,
           alignItems: 'center',
-          borderBottom: '1px solid white',
         }}
       >
         Loading
@@ -109,26 +65,6 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
         did={counterParty?.did}
         profileCredential={counterPartyProfileCredential}
       />
-      <button
-        onClick={async () => {
-          try {
-            const signedPresentation = await signVerifiablePresentation(
-              agent,
-              selectedDid,
-              [],
-              selectedDidProfileCredential
-                ? [selectedDidProfileCredential]
-                : [],
-              'jwt',
-            )
-            sendMessage('Attached Profile', signedPresentation)
-          } catch (err) {
-            console.error('err: ', err)
-          }
-        }}
-      >
-        share profile
-      </button>
     </div>
   )
 }

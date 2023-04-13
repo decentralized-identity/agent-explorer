@@ -89,23 +89,22 @@ const ChatInput: React.FC<ChatInputProps> = ({
   return (
     <Col
       style={{
-        background: '#eaeaea',
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        minHeight: 120,
+        // minHeight: 120,
       }}
     >
       <Row
         style={{
           flexFlow: 'nowrap',
-          padding: 20,
-          height: 120,
+          padding: 10,
+          // height: 120,
         }}
       >
         <TextArea
-          style={{ marginRight: 20 }}
+          style={{ marginRight: 20, borderRadius: 20 }}
           placeholder={`Sending from ` + viewer}
           autoSize
           value={message}
@@ -117,7 +116,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
         <Button
           disabled={!message || !recipient}
           type="link"
-          icon={<SendOutlined style={{ fontSize: 28 }} />}
+          icon={<SendOutlined style={{ fontSize: 24 }} />}
           onClick={() => message && sendMessage(message)}
         />
       </Row>

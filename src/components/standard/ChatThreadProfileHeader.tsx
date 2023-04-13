@@ -1,7 +1,7 @@
 import React from 'react'
-import { Row, Typography, Avatar, Col } from 'antd'
+import { Row, Typography, Avatar, Col, theme } from 'antd'
 import { identiconUri } from '../../utils/identicon'
-
+const { useToken } = theme
 const { Text } = Typography
 
 interface ChatThreadProfileHeaderProps {
@@ -17,15 +17,16 @@ const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
   onRowClick,
   selected,
 }) => {
+  const { token } = useToken()
   return (
     <Row
       onClick={onRowClick}
       style={{
         cursor: 'pointer',
         padding: 20,
-        backgroundColor: selected ? `#cef0ef` : '#f7f7f7',
+        backgroundColor: selected ? token.colorPrimaryBg : 'transparent',
         alignItems: 'center',
-        borderBottom: '1px solid white',
+        borderRadius: token.borderRadius,
       }}
     >
       <Col>

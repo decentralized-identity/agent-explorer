@@ -89,7 +89,7 @@ const Layout = () => {
     availableMethods.includes('sendDIDCommMessage')
   ) {
     mainMenuItems.push({
-      path: '/chats/threads/new-thread',
+      path: '/chats/threads/:threadId',
       name: 'DID Chats',
       icon: <MessageOutlined />,
     })
@@ -171,6 +171,12 @@ const Layout = () => {
           render: (props, children) => (
             <AvatarDropdown>{children}</AvatarDropdown>
           ),
+        }}
+        token={{
+          pageContainer: {
+            paddingBlockPageContainerContent: 15,
+            paddingInlinePageContainerContent: 15,
+          },
         }}
       >
         <Routes>

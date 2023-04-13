@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tag, List, Card, Avatar } from 'antd'
-import { formatDistanceToNow, format } from 'date-fns'
+import { format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
@@ -52,9 +52,7 @@ const Messages = () => {
               description={
                 (isManaged(item.from || '') ? 'Created a ' : 'Received a ') +
                 messageType(item.type) +
-                ' message • ' +
-                formatDistanceToNow(new Date(item.createdAt as string)) +
-                ' ago'
+                ' message '
               }
             ></Card.Meta>
             {item?.credentials &&

@@ -1,5 +1,6 @@
 import { ConfigProvider, theme as antdTheme } from 'antd'
 import React, { createContext, useState, useEffect, useContext } from 'react'
+import en_US from 'antd/es/locale/en_US'
 
 const ThemeContext = createContext<any>({})
 
@@ -78,6 +79,7 @@ const ThemeProvider = (props: any) => {
       value={{ theme, switchTheme, isCompact, setIsCompact }}
     >
       <ConfigProvider
+        locale={en_US}
         theme={{
           token: {
             colorPrimary: '#1DA57A',

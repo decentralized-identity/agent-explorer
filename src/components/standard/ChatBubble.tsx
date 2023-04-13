@@ -1,5 +1,6 @@
 import React from 'react'
-import { Row } from 'antd'
+import { Row, theme } from 'antd'
+const { useToken } = theme
 
 interface ChatBubbleProps {
   text: string
@@ -7,20 +8,25 @@ interface ChatBubbleProps {
 }
 
 const ChatBubble: React.FC<ChatBubbleProps> = ({ text, isSender }) => {
+  const { token } = useToken()
   return (
     <Row
       style={{
         justifyContent: isSender ? 'flex-end' : 'flex-start',
-        padding: 20,
+        paddingRight: 15,
+        paddingLeft: 15,
+        marginBottom: 10,
       }}
     >
       <div
         style={{
-          background: isSender ? '#5e9dff' : '#fff',
-          color: isSender ? '#fff' : '#000',
+          background: isSender
+            ? token.colorPrimaryBorderHover
+            : token.colorBgContainer,
           padding: '10px 20px',
-          borderRadius: 5,
-          boxShadow: '2px 2px 1px rgba(0,0,0,0.2)',
+          borderRadius: 20,
+          boxShadow: '1px 1px 1px rgba(0,0,0,0.1)',
+          color: token.colorText,
         }}
       >
         {text}

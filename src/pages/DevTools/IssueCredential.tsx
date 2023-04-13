@@ -197,7 +197,7 @@ const IssueCredential: React.FC = () => {
           </Select>
         </Form.Item>
 
-        <Form.Item style={{ backgroundColor: '#eaeaea', padding: 15 }}>
+        <Form.Item style={{ padding: 15 }}>
           <Form.Item>
             <Input
               placeholder="claim type e.g. 'name'"
