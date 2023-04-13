@@ -4260,16 +4260,6 @@
   dependencies:
     uuid "^8.3.2"
 
-"@veramo/core-types@^5.1.2":
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/@veramo/core-types/-/core-types-5.1.2.tgz#c8e6771780ba8b32fc1a582ed012def807a3117c"
-  integrity sha512-IVmbcn9yBE8v/x29nGvScCT9sIKu/iYJ8+dqN3jIVL2t//HRvNhrHsxw83Wb6DGqr46r0ebM+kEnPfZAAxdk/w==
-  dependencies:
-    credential-status "^2.0.5"
-    debug "^4.3.3"
-    did-jwt-vc "^3.1.0"
-    did-resolver "^4.0.1"
-
 "@veramo/core-types@^5.1.5-next.11+e9474e28":
   version "5.1.5-next.11"
   resolved "https://registry.yarnpkg.com/@veramo/core-types/-/core-types-5.1.5-next.11.tgz#8893ef215569344246549487f6d1e3ee39d86e91"
@@ -4460,21 +4450,6 @@
     debug "^4.3.3"
     did-resolver "^4.0.1"
 
-"@veramo/key-manager@^5.1.2":
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/@veramo/key-manager/-/key-manager-5.1.2.tgz#4d0a978d175c4f478f385770125ac25daeeecee1"
-  integrity sha512-o7sNQfDjdJO0MkV+wwUL5wQwZXBG6hMXdbaTqwZgdA0btE9267anx9Cy7dpLnfsRWvHM3EsLFTuZdL9mytMIgQ==
-  dependencies:
-    "@ethersproject/bytes" "^5.7.0"
-    "@ethersproject/strings" "^5.7.0"
-    "@ethersproject/transactions" "^5.7.0"
-    "@stablelib/ed25519" "^1.0.3"
-    "@veramo/core-types" "^5.1.2"
-    debug "^4.3.4"
-    did-jwt "^6.9.0"
-    uint8arrays "^3.0.0"
-    uuid "^9.0.0"
-
 "@veramo/key-manager@^5.1.5-next.11", "@veramo/key-manager@^5.1.5-next.11+e9474e28":
   version "5.1.5-next.11"
   resolved "https://registry.yarnpkg.com/@veramo/key-manager/-/key-manager-5.1.5-next.11.tgz#285af3de3234a7288cc0c922a47d833bdb0acf22"
@@ -4490,10 +4465,10 @@
     uint8arrays "^3.0.0"
     uuid "^9.0.0"
 
-"@veramo/kms-local@^5.1.2":
-  version "5.1.2"
-  resolved "https://registry.yarnpkg.com/@veramo/kms-local/-/kms-local-5.1.2.tgz#c724918270ef6a3ca3066bc5c62fe83d93719bd3"
-  integrity sha512-YJBh9n+cxVoa/bUfa/weV0nd0ik+GgRxaO4NZQS9rJF50vI8XHV1+FOZeKm38LKVbvB4/nupTSzkmQb4nFQNcg==
+"@veramo/kms-local@^5.1.5-next.11":
+  version "5.1.5-next.11"
+  resolved "https://registry.yarnpkg.com/@veramo/kms-local/-/kms-local-5.1.5-next.11.tgz#9ae7f9a718c90eb8fa30201b9ece6a3838be2f05"
+  integrity sha512-yCjsdCGzQ5KgppC7mHwB5pSCXmwRgYnIbOLHTJNvmx0KRp9GxnkMcRJ/MSnweZexv11gFNVKa3r6wz8UBrG5yQ==
   dependencies:
     "@ethersproject/abstract-provider" "^5.7.0"
     "@ethersproject/bytes" "^5.7.0"
@@ -4506,8 +4481,8 @@
     "@stablelib/nacl" "^1.0.4"
     "@stablelib/random" "^1.0.2"
     "@stablelib/x25519" "^1.0.3"
-    "@veramo/core-types" "^5.1.2"
-    "@veramo/key-manager" "^5.1.2"
+    "@veramo/core-types" "^5.1.5-next.11+e9474e28"
+    "@veramo/key-manager" "^5.1.5-next.11+e9474e28"
     base-58 "^0.0.1"
     debug "^4.3.3"
     did-jwt "^6.9.0"
