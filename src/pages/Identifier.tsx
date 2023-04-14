@@ -43,6 +43,7 @@ const Identifier = () => {
       title={shortId(id)}
       extra={[
         <Button
+          key={'copy'}
           icon={<CopyOutlined />}
           title="Copy DID to clipboard"
           onClick={() => navigator.clipboard.writeText(id)}

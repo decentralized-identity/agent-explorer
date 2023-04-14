@@ -29,7 +29,7 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
   const handleCancel = () => {
     setIsModalVisible(false)
   }
-
+  const serviceEndpoint = item.serviceEndpoint[0]?.uri || item.serviceEndpoint
   return (
     <List.Item
       key={i}
@@ -49,7 +49,7 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
       <List.Item.Meta
         avatar={<CloudServerOutlined />}
         title={item.type}
-        description={item.serviceEndpoint}
+        description={serviceEndpoint}
       />
       <Modal
         open={isModalVisible}
