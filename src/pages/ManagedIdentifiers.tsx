@@ -10,7 +10,7 @@ import NewIdentifierModalForm, {
 } from '../components/standard/NewIdentifierModalForm'
 import { shortId } from '../utils/did'
 import { createMediateRequestMessage } from '../utils/didcomm-mediation'
-import { DeleteOutlined } from '@ant-design/icons'
+import { DeleteOutlined, CopyOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
 
 const ManagedIdentifiers = () => {
@@ -54,19 +54,27 @@ const ManagedIdentifiers = () => {
       responsive: ['sm'],
     },
     {
-      title: 'Delete',
+      title: 'Actions',
       key: 'did',
       render: (did: IIdentifier) => (
-        <Button
-          icon={<DeleteOutlined />}
-          danger
-          onClick={() => {
-            if (window.confirm(`Delete ${shortId(did.did)}`)) {
-              agent?.didManagerDelete({ did: did.did })
-              refetch()
-            }
-          }}
-        ></Button>
+        <Space>
+          <Button
+            key={'copy'}
+            icon={<CopyOutlined />}
+            title="Copy DID to clipboard"
+            onClick={() => navigator.clipboard.writeText(did.did)}
+          />
+          <Button
+            icon={<DeleteOutlined />}
+            danger
+            onClick={() => {
+              if (window.confirm(`Delete ${shortId(did.did)}`)) {
+                agent?.didManagerDelete({ did: did.did })
+                refetch()
+              }
+            }}
+          ></Button>
+        </Space>
       ),
     },
   ]
