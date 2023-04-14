@@ -45,7 +45,7 @@ const identifierDataStore =
   BrowserLocalStorageStore.fromLocalStorage('veramo-id-state')
 const infuraProjectId = '3586660d179141e3801c3895de1c2eba'
 
-interface ConnectorInfo {
+export interface ConnectorInfo {
   provider: Web3Provider
   chainId: number
   accounts: string[]
@@ -77,7 +77,7 @@ export async function createWeb3Agent({
   >({
     context: {
       id,
-      name: `Web3`,
+      name: `Browser`,
     },
     plugins: [
       new DIDResolverPlugin({

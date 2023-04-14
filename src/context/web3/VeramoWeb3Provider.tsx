@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { VeramoProvider } from '@veramo-community/veramo-react'
 import { createAgent, IAgentPlugin, IResolver, TAgent } from '@veramo/core'
-import { createWeb3Agent } from './web3Agent'
+import { ConnectorInfo, createWeb3Agent } from './web3Agent'
 import { hooks as metamaskHooks, metaMask } from './metaMask'
 import { AgentRestClient } from '@veramo/remote-client'
 
@@ -31,24 +31,22 @@ export const VeramoWeb3Provider = ({
   }, [])
 
   useEffect(() => {
+    const connectors: ConnectorInfo[] = []
     if (
       metaMaskProvider &&
       metaMaskChainId &&
       metaMaskAccounts &&
       metaMaskIsActive
     ) {
-      const connectors = [
-        {
-          chainId: metaMaskChainId,
-          accounts: metaMaskAccounts,
-          provider: metaMaskProvider,
-          isActive: metaMaskIsActive,
-          name: 'metamask',
-        },
-      ]
-
-      void createWeb3Agent({ connectors }).then(setWeb3Agent)
+      connectors.push({
+        chainId: metaMaskChainId,
+        accounts: metaMaskAccounts,
+        provider: metaMaskProvider,
+        isActive: metaMaskIsActive,
+        name: 'metamask',
+      })
     }
+    void createWeb3Agent({ connectors }).then(setWeb3Agent)
 
     return () => {
       setWeb3Agent(undefined)
