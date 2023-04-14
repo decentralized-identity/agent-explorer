@@ -8,10 +8,10 @@ import {
   MessageOutlined,
   SettingOutlined,
   CodeOutlined,
+  GlobalOutlined,
 } from '@ant-design/icons'
 import { Routes, Route, useLocation, Link, Navigate } from 'react-router-dom'
 import Connect from '../pages/Connect'
-import Identifiers from '../pages/Identifiers'
 import Identifier from '../pages/Identifier'
 import Credentials from '../pages/Credentials'
 import Credential from '../pages/Credential'
@@ -31,6 +31,8 @@ import IssueCredential from '../pages/DevTools/IssueCredential'
 import CreatePresentation from '../pages/DevTools/CreatePresentation'
 import md5 from 'md5'
 import AvatarDropdown from '../components/AvatarDropdown'
+import KnownIdentifiers from '../pages/KnownIdentifiers'
+import ManagedIdentifiers from '../pages/ManagedIdentifiers'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -54,11 +56,10 @@ const Layout = () => {
       icon: <EyeOutlined />,
     })
   }
-
-  if (availableMethods.includes('dataStoreORMGetIdentifiers')) {
+  if (availableMethods.includes('didManagerFind')) {
     mainMenuItems.push({
-      path: '/identifiers',
-      name: 'Identifiers',
+      path: '/managed-identifiers',
+      name: 'Managed identifiers',
       icon: <UserOutlined />,
     })
   }
@@ -92,6 +93,14 @@ const Layout = () => {
       path: '/chats/threads/:threadId',
       name: 'DID Chats',
       icon: <MessageOutlined />,
+    })
+  }
+
+  if (availableMethods.includes('dataStoreORMGetIdentifiers')) {
+    mainMenuItems.push({
+      path: '/known-identifiers',
+      name: 'Known identifiers',
+      icon: <GlobalOutlined />,
     })
   }
 
@@ -175,7 +184,7 @@ const Layout = () => {
         token={{
           pageContainer: {
             paddingBlockPageContainerContent: 15,
-            paddingInlinePageContainerContent: 15,
+            paddingInlinePageContainerContent: 20,
           },
         }}
       >
@@ -185,7 +194,8 @@ const Layout = () => {
           <Route path="/agent/:id" element={<Agent />} />
           <Route path="/chats/threads/:threadId" element={<Chats />} />
           <Route path="/statistics" element={<Statistics />} />
-          <Route path="/identifiers" element={<Identifiers />} />
+          <Route path="/known-identifiers" element={<KnownIdentifiers />} />
+          <Route path="/managed-identifiers" element={<ManagedIdentifiers />} />
           <Route path="/identifier/:id" element={<Identifier />} />
           <Route path="/credentials" element={<Credentials />} />
           <Route path="/credential/:id" element={<Credential />} />

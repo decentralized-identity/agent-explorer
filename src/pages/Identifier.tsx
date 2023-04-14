@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, Layout, Tabs } from 'antd'
+import React, { useState } from 'react'
+import { Button, Card, Layout, Tabs } from 'antd'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -10,6 +10,8 @@ import IdentifierQuickSetup from '../components/standard/IdentifierQuickSetup'
 import IdentifierReceivedCredentials from '../components/standard/IdentifierReceivedCredentials'
 import IdentifierIssuedCredentials from '../components/standard/IdentifierIssuedCredentials'
 import { PageContainer } from '@ant-design/pro-components'
+import { shortId } from '../utils/did'
+import { CopyOutlined } from '@ant-design/icons'
 
 const { TabPane } = Tabs
 
@@ -27,13 +29,26 @@ const Identifier = () => {
   )
 
   const isManaged = !!managedDID?.provider
-  // const hasDIDCommSetup = !!resolutionResult?.didDocument?.service?.find(
-  //   (s) => s.type === 'DIDCommMessaging',
-  // )
+
+  const hasDIDCommSetup =
+    !!managedDID?.services?.find((s) => s.type === 'DIDCommMessaging') &&
+    !!managedDID?.keys?.find(
+      (key) => key.type === 'X25519' || key.type === 'Ed25519',
+    )
+
   const resolved = resolutionResult?.didResolutionMetadata.error === undefined
 
   return (
-    <PageContainer title={id}>
+    <PageContainer
+      title={shortId(id)}
+      extra={[
+        <Button
+          icon={<CopyOutlined />}
+          title="Copy DID to clipboard"
+          onClick={() => navigator.clipboard.writeText(id)}
+        />,
+      ]}
+    >
       <Tabs>
         <TabPane tab="Credentials" key="0">
           <IdentifierReceivedCredentials identifier={id} />
@@ -42,9 +57,9 @@ const Identifier = () => {
         {resolved && (
           <TabPane tab="DID Document" key="1">
             <Layout>
-              {isManaged && (
+              {!hasDIDCommSetup && (
                 <IdentifierQuickSetup
-                  title="Quick Setup"
+                  title="DIDComm mediator setup"
                   identifier={id}
                   cacheKey={`identifier-quicksetup-${id}`}
                 />

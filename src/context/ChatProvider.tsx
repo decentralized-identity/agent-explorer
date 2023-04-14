@@ -19,11 +19,16 @@ const ChatProvider = (props: any) => {
         agent?.availableMethods().includes('packDIDCommMessage') &&
         agent?.availableMethods().includes('sendDIDCommMessage')
       ) {
-        console.log('agent: ', agent)
-        const knownDIDs = await agent?.didManagerFind()
-        console.log('knownDIDs: ', knownDIDs)
-        const myDIDs = knownDIDs?.filter((d) => d.keys.length > 0)
-        console.log('myDIDs: ', myDIDs)
+        const myDIDs = (await agent?.didManagerFind())
+          .filter((did) =>
+            did.keys.some(
+              (key) => key.type === 'X25519' || key.type === 'Ed25519',
+            ),
+          )
+          .filter((did) =>
+            did.services.some((service) => service.type === 'DIDCommMessaging'),
+          )
+
         if (myDIDs && myDIDs.length > 0) {
           for (let d in myDIDs) {
             const did = myDIDs[d].did

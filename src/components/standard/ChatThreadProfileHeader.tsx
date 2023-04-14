@@ -1,6 +1,9 @@
 import React from 'react'
 import { Row, Typography, Avatar, Col, theme } from 'antd'
 import { identiconUri } from '../../utils/identicon'
+import { shortId } from '../../utils/did'
+import { IMessage } from '@veramo/core'
+import { useChat } from '../../context/ChatProvider'
 const { useToken } = theme
 const { Text } = Typography
 
@@ -9,6 +12,7 @@ interface ChatThreadProfileHeaderProps {
   profileCredential?: any
   onRowClick?: any
   selected?: boolean
+  lastMessage?: IMessage
 }
 
 const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
@@ -16,8 +20,11 @@ const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
   profileCredential,
   onRowClick,
   selected,
+  lastMessage,
 }) => {
   const { token } = useToken()
+  const { selectedDid } = useChat()
+
   return (
     <Row
       onClick={onRowClick}
@@ -49,15 +56,21 @@ const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
               </Text>
             </Row>
             <Row>
-              <Text>{did}</Text>
+              <Text>{shortId(did)}</Text>
             </Row>
           </Col>
         ) : (
           <div>
             <Text style={{ marginBottom: 0 }} strong>
-              {did}
+              {shortId(did)}
             </Text>
           </div>
+        )}
+        {lastMessage && lastMessage.type === 'veramo.io-chat-v1' && (
+          <Text style={{ color: token.colorTextSecondary }}>
+            {lastMessage.from === selectedDid && 'You: '}
+            {(lastMessage.data as any).message}
+          </Text>
         )}
       </Col>
     </Row>

@@ -72,7 +72,7 @@ async function pickup(
     packedMessage: packedStatusMessage,
     recipientDidUrl: mediatorDidUrl,
   })
-  console.log('status: ', status)
+  // console.log('status: ', status)
 
   const deliveryMessage = deliveryRequestMessage(
     recipientDidUrl,
@@ -88,7 +88,7 @@ async function pickup(
     packedMessage,
     recipientDidUrl: mediatorDidUrl,
   })
-  console.log('result: ', result)
+  // console.log('result: ', result)
 }
 
 export { createMediateRequestMessage, createStatusRequestMessage, pickup }

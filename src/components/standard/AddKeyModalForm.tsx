@@ -80,7 +80,11 @@ const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
             allowClear
           >
             {kmsOptions?.map((kms) => {
-              return <Option value={kms}>{kms}</Option>
+              return (
+                <Option value={kms} key={kms}>
+                  {kms}
+                </Option>
+              )
             })}
           </Select>
         </Form.Item>
@@ -96,11 +100,21 @@ const AddKeyModalForm: React.FC<AddKeyModalFormProps> = ({
             onChange={onTypeChange}
             allowClear
           >
-            <Option value="Ed25519">Ed25519</Option>
-            <Option value="Secp256k1">Secp256k1</Option>
-            <Option value="X25519">X25519</Option>
-            <Option value="Bls12381G1">Bls12381G1</Option>
-            <Option value="Bls12381G2">Bls12381G2</Option>
+            <Option key="Ed25519" value="Ed25519">
+              Ed25519
+            </Option>
+            <Option key="Secp256k1" value="Secp256k1">
+              Secp256k1
+            </Option>
+            <Option key="X25519" value="X25519">
+              X25519
+            </Option>
+            <Option key="Bls12381G1" value="Bls12381G1">
+              Bls12381G1
+            </Option>
+            <Option key="Bls12381G2" value="Bls12381G2">
+              Bls12381G2
+            </Option>
           </Select>
         </Form.Item>
         <Form.Item

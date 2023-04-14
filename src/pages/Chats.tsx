@@ -6,7 +6,7 @@ import ChatHeader from '../components/standard/ChatHeader'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useChat } from '../context/ChatProvider'
-import { IMessage } from '@veramo/core'
+import { IDataStoreORM, IMessage } from '@veramo/core'
 import { useEffect } from 'react'
 import { Col, Row, theme } from 'antd'
 const { useToken } = theme
@@ -18,9 +18,13 @@ const groupBy = (arr: any[], property: string) => {
   }, {})
 }
 
+interface IsSenderTaggedMessage extends IMessage {
+  isSender: boolean
+}
+
 const ChatView = () => {
   const { token } = useToken()
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDataStoreORM>()
   const { selectedDid } = useChat()
   const { threadId } = useParams<{ threadId: string }>()
   const { data: threads, refetch } = useQuery(
@@ -35,12 +39,14 @@ const ChatView = () => {
         (message) => message.from === selectedDid || message.to === selectedDid,
       )
 
-      const senderTagged = applicableMessages?.map((message: any) => {
-        return {
-          ...message,
-          isSender: message.from === selectedDid,
-        }
-      })
+      const senderTagged: IsSenderTaggedMessage[] = applicableMessages?.map(
+        (message: any) => {
+          return {
+            ...message,
+            isSender: message.from === selectedDid,
+          }
+        },
+      )
 
       if (senderTagged) {
         const grouped = groupBy(senderTagged, 'threadId')

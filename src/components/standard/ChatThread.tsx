@@ -55,6 +55,7 @@ const ChatThread: React.FC<ChatThreadProps> = ({
       profileCredential={profileCredential}
       onRowClick={viewThread}
       selected={threadSelected}
+      lastMessage={lastMessage}
     />
   )
 }

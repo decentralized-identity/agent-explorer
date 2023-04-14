@@ -116,7 +116,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
                 {agentChatIdentifiers.map((identifier) => {
                   return (
                     <Option value={identifier.did} key={identifier.did}>
-                      {identifier.did}
+                      {identifier.alias} - {identifier.did}
                     </Option>
                   )
                 })}

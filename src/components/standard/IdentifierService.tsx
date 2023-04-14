@@ -49,7 +49,7 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
       <List.Item.Meta
         avatar={<CloudServerOutlined />}
         title={item.type}
-        description={item.description}
+        description={item.serviceEndpoint}
       />
       <Modal
         open={isModalVisible}

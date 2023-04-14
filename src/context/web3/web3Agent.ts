@@ -41,6 +41,8 @@ import { KeyManagementSystem } from '@veramo/kms-local'
 import { SaveMessageHandler } from './saveMessageHandler'
 
 const dataStore = BrowserLocalStorageStore.fromLocalStorage('veramo-state')
+const identifierDataStore =
+  BrowserLocalStorageStore.fromLocalStorage('veramo-id-state')
 const infuraProjectId = '3586660d179141e3801c3895de1c2eba'
 
 interface ConnectorInfo {
@@ -88,14 +90,16 @@ export async function createWeb3Agent({
         }),
       }),
       new KeyManager({
-        store: new KeyStoreJson(dataStore),
+        store: new KeyStoreJson(identifierDataStore),
         kms: {
-          local: new KeyManagementSystem(new PrivateKeyStoreJson(dataStore)),
+          local: new KeyManagementSystem(
+            new PrivateKeyStoreJson(identifierDataStore),
+          ),
           web3: new Web3KeyManagementSystem(web3Providers),
         },
       }),
       new DIDManager({
-        store: new DIDStoreJson(dataStore),
+        store: new DIDStoreJson(identifierDataStore),
         defaultProvider: connectors[0]?.name,
         providers: didProviders,
       }),

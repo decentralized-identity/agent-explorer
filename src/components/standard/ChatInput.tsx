@@ -5,6 +5,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useChat } from '../../context/ChatProvider'
 import { v4 } from 'uuid'
 import { useNavigate } from 'react-router-dom'
+import { shortId } from '../../utils/did'
 
 const { TextArea } = Input
 
@@ -105,7 +106,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
       >
         <TextArea
           style={{ marginRight: 20, borderRadius: 20 }}
-          placeholder={`Sending from ` + viewer}
+          placeholder={`Sending from ` + shortId(viewer)}
           autoSize
           value={message}
           onChange={(e) => {

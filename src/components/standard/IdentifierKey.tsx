@@ -3,6 +3,7 @@ import { Button, Modal, List, message } from 'antd'
 import { DeleteOutlined, LockOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
+import { shortId } from '../../utils/did'
 
 interface IdentifierModuleProps {
   item: any
@@ -49,12 +50,8 @@ const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did }) => {
     >
       <List.Item.Meta
         avatar={<LockOutlined />}
-        title={
-          <Link to={'/identifiers/' + item.controller}>
-            <code>{item.controller}</code>
-          </Link>
-        }
-        description={item.type}
+        title={item.type}
+        description={shortId(item.controller)}
       />
       {/*item.publicKeyHex*/}
       <Modal
