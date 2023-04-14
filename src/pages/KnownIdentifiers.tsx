@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Input, Button, Space } from 'antd'
+import { Table, Input, Button } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'

@@ -9,6 +9,7 @@ import {
   SettingOutlined,
   CodeOutlined,
   GlobalOutlined,
+  FileProtectOutlined,
 } from '@ant-design/icons'
 import { Routes, Route, useLocation, Link, Navigate } from 'react-router-dom'
 import Connect from '../pages/Connect'
@@ -33,6 +34,7 @@ import md5 from 'md5'
 import AvatarDropdown from '../components/AvatarDropdown'
 import KnownIdentifiers from '../pages/KnownIdentifiers'
 import ManagedIdentifiers from '../pages/ManagedIdentifiers'
+import CredentialVerifier from '../pages/CredentialVerifier'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -101,6 +103,14 @@ const Layout = () => {
       path: '/known-identifiers',
       name: 'Known identifiers',
       icon: <GlobalOutlined />,
+    })
+  }
+
+  if (availableMethods.includes('verifyCredential')) {
+    mainMenuItems.push({
+      path: '/credential-verifier',
+      name: 'Credential verifier',
+      icon: <FileProtectOutlined />,
     })
   }
 
@@ -200,6 +210,7 @@ const Layout = () => {
           <Route path="/credentials" element={<Credentials />} />
           <Route path="/credential/:id" element={<Credential />} />
           <Route path="/activity" element={<Activity />} />
+          <Route path="/credential-verifier" element={<CredentialVerifier />} />
           <Route path="/requests" element={<Requests />} />
           <Route path="/requests/sdr/:messageId" element={<CreateResponse />} />
           <Route path="/developer/data-generator" element={<DataGenerator />} />

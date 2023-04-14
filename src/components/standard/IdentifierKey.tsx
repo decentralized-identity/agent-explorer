@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Modal, List, message } from 'antd'
 import { DeleteOutlined, LockOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { shortId } from '../../utils/did'
 
