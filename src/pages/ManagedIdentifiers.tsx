@@ -59,6 +59,7 @@ const ManagedIdentifiers = () => {
       render: (did: IIdentifier) => (
         <Button
           icon={<DeleteOutlined />}
+          danger
           onClick={() => {
             if (window.confirm(`Delete ${shortId(did.did)}`)) {
               agent?.didManagerDelete({ did: did.did })
