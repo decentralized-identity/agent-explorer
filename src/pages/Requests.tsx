@@ -1,16 +1,13 @@
 import React from 'react'
-import { Typography, Tag, List, Card, Avatar } from 'antd'
-import Page from '../layout/Page'
+import { Tag, List, Card, Avatar } from 'antd'
 import { formatDistanceToNow, format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CreateRequest from '../components/standard/CreateRequest'
-import CreateResponse from '../components/standard/CreateResponse'
 import { IMessage } from '@veramo/core'
-
-const { Title } = Typography
+import { PageContainer } from '@ant-design/pro-components'
 
 // Move
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
@@ -30,19 +27,8 @@ const Requests = () => {
       }),
   )
 
-  const RightContent = () => {
-    return (
-      <Routes>
-        <Route path="/requests/sdr/:messageId" element={<CreateResponse />} />
-      </Routes>
-    )
-  }
-
   return (
-    <Page
-      header={<Title style={{ fontWeight: 'bold' }}>Requests</Title>}
-      rightContent={<RightContent />}
-    >
+    <PageContainer>
       <CreateRequest />
 
       <List
@@ -116,7 +102,7 @@ const Requests = () => {
           </Card>
         )}
       ></List>
-    </Page>
+    </PageContainer>
   )
 }
 

@@ -10,8 +10,6 @@ import {
   Table,
   Tag,
 } from 'antd'
-import PageWidget from '../../layout/PageWidget'
-import { PageWidgetProps } from '../../types'
 import { signVerifiablePresentation } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 
@@ -21,6 +19,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { IDIDManager, ProofFormat } from '@veramo/core'
 import { ICredentialIssuer } from '@veramo/credential-w3c'
 import { ISelectiveDisclosure } from '@veramo/selective-disclosure'
+import { PageContainer } from '@ant-design/pro-components'
 
 const { Option } = Select
 
@@ -39,8 +38,6 @@ interface DataType {
   hash: string
   verifiableCredential: any
 }
-
-interface BarChartProps extends PageWidgetProps {}
 
 const historyColumns = [
   {
@@ -67,12 +64,7 @@ const historyColumns = [
   },
 ]
 
-const CreatePresentation: React.FC<BarChartProps> = ({
-  title,
-  isLoading,
-  remove,
-  removeDisabled,
-}) => {
+const CreatePresentation: React.FC = () => {
   const { agent } = useVeramo<
     ICredentialIssuer & IDIDManager & ISelectiveDisclosure,
     any
@@ -145,13 +137,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
   }
 
   return (
-    <PageWidget
-      noPadding
-      title={title}
-      isLoading={isLoading}
-      remove={remove}
-      removeDisabled={removeDisabled}
-    >
+    <PageContainer>
       <Card bordered={false}>
         <Typography.Text>
           Select credentials to create presentation
@@ -244,7 +230,7 @@ const CreatePresentation: React.FC<BarChartProps> = ({
           </div>
         </Form.Item>
       </Form>
-    </PageWidget>
+    </PageContainer>
   )
 }
 

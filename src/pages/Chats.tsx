@@ -1,15 +1,15 @@
 import { useParams } from 'react-router-dom'
-import Page from '../layout/SplitPage'
 import ChatThread from '../components/standard/ChatThread'
 import ChatScrollPanel from '../components/standard/ChatScrollPanel'
 import ChatWindow from '../components/standard/ChatWindow'
 import ChatHeader from '../components/standard/ChatHeader'
-import Layout from 'antd/lib/layout/layout'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useChat } from '../context/ChatProvider'
-import { IMessage } from '@veramo/core'
+import { IDataStoreORM, IMessage } from '@veramo/core'
 import { useEffect } from 'react'
+import { Col, Row, theme } from 'antd'
+const { useToken } = theme
 
 const groupBy = (arr: any[], property: string) => {
   return arr.reduce((acc, cur) => {
@@ -18,8 +18,13 @@ const groupBy = (arr: any[], property: string) => {
   }, {})
 }
 
+interface IsSenderTaggedMessage extends IMessage {
+  isSender: boolean
+}
+
 const ChatView = () => {
-  const { agent } = useVeramo()
+  const { token } = useToken()
+  const { agent } = useVeramo<IDataStoreORM>()
   const { selectedDid } = useChat()
   const { threadId } = useParams<{ threadId: string }>()
   const { data: threads, refetch } = useQuery(
@@ -34,12 +39,14 @@ const ChatView = () => {
         (message) => message.from === selectedDid || message.to === selectedDid,
       )
 
-      const senderTagged = applicableMessages?.map((message: any) => {
-        return {
-          ...message,
-          isSender: message.from === selectedDid,
-        }
-      })
+      const senderTagged: IsSenderTaggedMessage[] = applicableMessages?.map(
+        (message: any) => {
+          return {
+            ...message,
+            isSender: message.from === selectedDid,
+          }
+        },
+      )
 
       if (senderTagged) {
         const grouped = groupBy(senderTagged, 'threadId')
@@ -55,39 +62,54 @@ const ChatView = () => {
   }, [selectedDid, refetch, threadId])
 
   return (
-    <Page
-      name="chats"
-      header={<ChatHeader />}
-      leftContent={
-        <Layout>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'flex-end',
-            }}
-          >
-            <ChatScrollPanel>
-              {threads &&
-                Object.keys(threads).map((index: any) => {
-                  return (
-                    <ChatThread
-                      thread={threads[index]}
-                      threadId={index}
-                      key={index}
-                      threadSelected={index === threadId}
-                    />
-                  )
-                })}
-            </ChatScrollPanel>
-          </div>
-        </Layout>
-      }
-      rightContent={
-        <Layout>
+    <div
+      style={{
+        height: 'calc(100vh - 86px)',
+        display: 'flex',
+        flexDirection: 'column',
+        border: `1px solid ${token.colorBorder}`,
+        borderRadius: token.borderRadius,
+      }}
+    >
+      <Row>
+        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+          <ChatHeader />
+        </Col>
+      </Row>
+      <Row style={{ flexGrow: 1 }}>
+        <Col
+          xs={10}
+          sm={10}
+          md={10}
+          lg={10}
+          xl={8}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: 1,
+            height: 'calc(100vh - 167px)',
+            backgroundColor: token.colorFillContent,
+          }}
+        >
+          <ChatScrollPanel>
+            {threads &&
+              Object.keys(threads).map((index: any) => {
+                return (
+                  <ChatThread
+                    thread={threads[index]}
+                    threadId={index}
+                    key={index}
+                    threadSelected={index === threadId}
+                  />
+                )
+              })}
+          </ChatScrollPanel>
+        </Col>
+        <Col xs={14} sm={14} md={14} lg={14} xl={16}>
           <ChatWindow />
-        </Layout>
-      }
-    ></Page>
+        </Col>
+      </Row>
+    </div>
   )
 }
 

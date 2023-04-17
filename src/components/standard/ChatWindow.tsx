@@ -3,7 +3,6 @@ import ChatScrollPanel from '../../components/standard/ChatScrollPanel'
 import ChatBubble from '../../components/standard/ChatBubble'
 import ChatInput from '../../components/standard/ChatInput'
 import { useParams } from 'react-router'
-import tile from '../../static/img/tile.png'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { scrollMessages } from '../../utils/scroll'
@@ -62,10 +61,10 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${tile})`,
-        backgroundRepeat: 'repeat',
+        display: 'flex',
+        flexDirection: 'column',
         flexGrow: 1,
-        height: 'calc(100vh - 80px)',
+        height: 'calc(100vh - 220px)',
       }}
     >
       <ChatThreadHeader counterParty={counterParty} threadId={threadId} />

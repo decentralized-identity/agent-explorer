@@ -1,26 +1,26 @@
 import React from 'react'
-import { Card, Radio } from 'antd'
+import { Card, Checkbox, Radio } from 'antd'
 import { useTheme } from '../../context/ThemeProvider'
 
 const themes = [
   {
-    name: 'light-theme',
+    name: 'light',
     label: 'Light',
   },
   {
-    name: 'dark-theme',
+    name: 'dark',
     label: 'Dark',
   },
-  // {
-  //   name: 'system-theme',
-  //   label: 'System',
-  // },
+  {
+    name: 'system',
+    label: 'System',
+  },
 ]
 
 const ThemeSwitcher = () => {
-  const { theme, switchTheme } = useTheme()
+  const { theme, switchTheme, isCompact, setIsCompact } = useTheme()
   return (
-    <Card>
+    <Card title="Theme">
       <Radio.Group value={theme} onChange={(e) => switchTheme(e.target.value)}>
         {themes.map((themeOptions) => {
           console.log(themeOptions, theme)
@@ -32,6 +32,14 @@ const ThemeSwitcher = () => {
           )
         })}
       </Radio.Group>
+      <div>
+        <Checkbox
+          onChange={(e) => setIsCompact(e.target.checked)}
+          checked={isCompact}
+        >
+          Compact
+        </Checkbox>
+      </div>
     </Card>
   )
 }

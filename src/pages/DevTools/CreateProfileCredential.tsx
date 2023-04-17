@@ -1,23 +1,15 @@
 import React, { useState } from 'react'
 import { Button, Card, Input, Select } from 'antd'
-import PageWidget from '../../layout/PageWidget'
-import { PageWidgetProps } from '../../types'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { IIdentifier } from '@veramo/core'
 import { issueCredential } from '../../utils/signing'
 import { v4 } from 'uuid'
+import { PageContainer } from '@ant-design/pro-components'
 const { TextArea } = Input
 const { Option } = Select
 
-interface CreateProfileCredentialProps extends PageWidgetProps {}
-
-const CreateProfileCredential: React.FC<CreateProfileCredentialProps> = ({
-  title,
-  isLoading,
-  remove,
-  removeDisabled,
-}) => {
+const CreateProfileCredential: React.FC = () => {
   const { agent } = useVeramo()
 
   const { data: identifiers, isLoading: identifiersLoading } = useQuery(
@@ -32,12 +24,7 @@ const CreateProfileCredential: React.FC<CreateProfileCredentialProps> = ({
   const [inFlight, setInFlight] = useState(false)
 
   return (
-    <PageWidget
-      title={title}
-      isLoading={isLoading}
-      remove={remove}
-      removeDisabled={removeDisabled}
-    >
+    <PageContainer>
       <Card>
         <Select
           style={{ width: '60%' }}
@@ -132,7 +119,7 @@ const CreateProfileCredential: React.FC<CreateProfileCredentialProps> = ({
           Create Profile
         </Button>
       </Card>
-    </PageWidget>
+    </PageContainer>
   )
 }
 

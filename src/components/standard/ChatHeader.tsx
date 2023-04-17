@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Row, Col, Avatar, Button, Select } from 'antd'
+import { Row, Col, Avatar, Button, Select, theme } from 'antd'
 import { useChat } from '../../context/ChatProvider'
 import { identiconUri } from '../../utils/identicon'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -10,12 +10,13 @@ import { useNavigate } from 'react-router-dom'
 import { IIdentifier } from '@veramo/core'
 import Title from 'antd/lib/typography/Title'
 import DIDDiscoveryBar from './DIDDiscoveryBar'
-
+const { useToken } = theme
 const { Option } = Select
 
 interface ChatHeaderProps {}
 
 const ChatHeader: React.FC<ChatHeaderProps> = () => {
+  const { token } = useToken()
   const { agent } = useVeramo<IDIDDiscovery>()
   const {
     selectedDid,
@@ -80,8 +81,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
   return (
     <Row
       style={{
-        backgroundColor: '#eaeaea',
-        borderBottom: '1px solid white',
+        borderBottom: `1px solid ${token.colorBorder}`,
         height: 80,
         alignItems: 'center',
       }}
@@ -90,23 +90,22 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
         <Row
           style={{
             alignItems: 'center',
+            display: 'flex',
           }}
         >
-          <Col>
-            <Row style={{ alignItems: 'center' }}>
-              {uri ? (
-                <Avatar size={35} src={uri} style={{ marginLeft: 27 }} />
-              ) : (
-                <Avatar size={50} />
-              )}
-              <Title level={5}>{name}</Title>
-            </Row>
-          </Col>
+          <div style={{ alignItems: 'center', flexShrink: 1, display: 'flex' }}>
+            {uri ? (
+              <Avatar size={35} src={uri} style={{ marginLeft: 27 }} />
+            ) : (
+              <Avatar size={50} />
+            )}
+            <Title level={5}>{name}</Title>
+          </div>
           <Col style={{ marginLeft: 24, flex: 1 }}>
             {agentChatIdentifiers.length > 0 && (
               <Select
                 defaultValue={selectedDid}
-                style={{ width: 480 }}
+                style={{ width: '160px' }}
                 onChange={(value) => {
                   const id = agentChatIdentifiers.filter(
                     (id) => id.did === value,
@@ -117,19 +116,21 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
                 {agentChatIdentifiers.map((identifier) => {
                   return (
                     <Option value={identifier.did} key={identifier.did}>
-                      {identifier.did}
+                      {identifier.alias} - {identifier.did}
                     </Option>
                   )
                 })}
               </Select>
             )}
           </Col>
-          <Button
-            onClick={() => composeNewThread()}
-            style={{ marginRight: 20 }}
-            icon={<FormOutlined style={{ fontSize: 20 }} />}
-            type={'text'}
-          />
+          <Col>
+            <Button
+              onClick={() => composeNewThread()}
+              style={{ marginRight: 20 }}
+              icon={<FormOutlined style={{ fontSize: 20 }} />}
+              type={'text'}
+            />
+          </Col>
         </Row>
       </Col>
       <Col xs={14} sm={14} md={14} lg={14} xl={16}>

@@ -1,9 +1,8 @@
-const CracoLessPlugin = require('craco-less')
 const webpack = require('webpack')
 
 module.exports = {
   babel: {
-    plugins: ["@babel/plugin-syntax-import-assertions"]
+    plugins: ['@babel/plugin-syntax-import-assertions'],
   },
   webpack: {
     plugins: [
@@ -12,16 +11,4 @@ module.exports = {
       }),
     ],
   },
-  plugins: [
-    {
-      plugin: CracoLessPlugin,
-      options: {
-        lessLoaderOptions: {
-          lessOptions: {
-            javascriptEnabled: true,
-          },
-        },
-      },
-    },
-  ],
 }

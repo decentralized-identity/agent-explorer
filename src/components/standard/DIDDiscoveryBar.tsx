@@ -60,7 +60,6 @@ const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({
         onChange={(e) => handleSelect(e.target.value)}
         style={{
           flex: 1,
-          backgroundColor: 'transparent',
           paddingTop: 10,
           paddingBottom: 10,
         }}

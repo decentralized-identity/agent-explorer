@@ -1,13 +1,12 @@
 import React from 'react'
-import { Typography, Tag, List, Card, Avatar } from 'antd'
-import Page from '../layout/Page'
-import { formatDistanceToNow, format } from 'date-fns'
+import { Tag, List, Card, Avatar } from 'antd'
+import { format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
 import { IIdentifier, IMessage } from '@veramo/core'
+import { PageContainer } from '@ant-design/pro-components'
 
-const { Title } = Typography
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 const messageType = (type: string) => {
@@ -42,7 +41,7 @@ const Messages = () => {
   }
 
   return (
-    <Page header={<Title style={{ fontWeight: 'bold' }}>Activity</Title>}>
+    <PageContainer>
       <List
         dataSource={messages}
         renderItem={(item: IMessage, index: number) => (
@@ -53,9 +52,7 @@ const Messages = () => {
               description={
                 (isManaged(item.from || '') ? 'Created a ' : 'Received a ') +
                 messageType(item.type) +
-                ' message • ' +
-                formatDistanceToNow(new Date(item.createdAt as string)) +
-                ' ago'
+                ' message '
               }
             ></Card.Meta>
             {item?.credentials &&
@@ -112,7 +109,7 @@ const Messages = () => {
           </Card>
         )}
       ></List>
-    </Page>
+    </PageContainer>
   )
 }
 

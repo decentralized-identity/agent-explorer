@@ -67,12 +67,12 @@ async function pickup(
     message: statusMessage,
   })
   // console.log("packedStatusMessage: ", packedStatusMessage)
-  const status = await agent.sendDIDCommMessage({
+  await agent.sendDIDCommMessage({
     messageId: statusMessage.id,
     packedMessage: packedStatusMessage,
     recipientDidUrl: mediatorDidUrl,
   })
-  console.log('status: ', status)
+  // console.log('status: ', status)
 
   const deliveryMessage = deliveryRequestMessage(
     recipientDidUrl,
@@ -83,12 +83,12 @@ async function pickup(
     packing: 'authcrypt',
     message: deliveryMessage,
   })
-  const result = await agent.sendDIDCommMessage({
+  await agent.sendDIDCommMessage({
     messageId: deliveryMessage.id,
     packedMessage,
     recipientDidUrl: mediatorDidUrl,
   })
-  console.log('result: ', result)
+  // console.log('result: ', result)
 }
 
 export { createMediateRequestMessage, createStatusRequestMessage, pickup }

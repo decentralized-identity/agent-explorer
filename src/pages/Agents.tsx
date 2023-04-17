@@ -1,6 +1,5 @@
 import React from 'react'
 import { Typography, Card, Button, Row, Space, Tag } from 'antd'
-import Page from '../layout/Page'
 import { useVeramo } from '@veramo-community/veramo-react'
 import {
   DeleteOutlined,
@@ -8,6 +7,7 @@ import {
   EditOutlined,
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
+import { PageContainer } from '@ant-design/pro-components'
 
 const { Title } = Typography
 
@@ -16,7 +16,7 @@ const Agents = () => {
   const { agents, removeAgent, activeAgentId, setActiveAgentId } = useVeramo()
 
   return (
-    <Page header={<Title style={{ fontWeight: 'bold' }}>Agents</Title>}>
+    <PageContainer title="Agents">
       {agents.map((agent) => {
         return (
           <Card key={agent.context.id}>
@@ -36,7 +36,6 @@ const Agents = () => {
             <Space>
               <Button
                 icon={<DeleteOutlined />}
-                disabled={activeAgentId === agent.context.id}
                 danger
                 onClick={() =>
                   agent.context.id && removeAgent(agent.context.id)
@@ -63,7 +62,7 @@ const Agents = () => {
           </Card>
         )
       })}
-    </Page>
+    </PageContainer>
   )
 }
 

@@ -1,13 +1,9 @@
 import React, { useState } from 'react'
-import { Typography, Card, Button, Layout, Input, Form } from 'antd'
-import Page from '../layout/Page'
+import { Card, Button, Input, Form } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PushpinOutlined } from '@ant-design/icons'
 import { useParams } from 'react-router-dom'
-import Chart from '../components/standard/Chart'
-import { chart1 } from '../stubbs/chart'
-
-const { Title } = Typography
+import { PageContainer } from '@ant-design/pro-components'
 
 const Agents = () => {
   const {
@@ -34,21 +30,7 @@ const Agents = () => {
   }
 
   return (
-    <Page
-      name="agent"
-      rightContent={
-        <Layout>
-          <Card title="Example chart">
-            <Chart type="line" data={chart1}></Chart>
-          </Card>
-        </Layout>
-      }
-      header={
-        <Layout>
-          <Title style={{ fontWeight: 'bold' }}>{agent.context.name}</Title>
-        </Layout>
-      }
-    >
+    <PageContainer title={agent.context.name}>
       <Card
         title="Agent info"
         actions={[
@@ -74,7 +56,7 @@ const Agents = () => {
           <Button onClick={() => updateAgentName(agentName)}>Update</Button>
         </Form>
       </Card>
-    </Page>
+    </PageContainer>
   )
 }
 

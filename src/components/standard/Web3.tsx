@@ -6,7 +6,7 @@ const Web3: React.FC = () => {
   const metaMaskIsActive = metamaskHooks.useIsActive()
 
   return (
-    <Card>
+    <Card title="Web3">
       <Typography>Metamask</Typography>
       {!metaMaskIsActive && (
         <Button onClick={() => metaMask.activate()}>Connect</Button>

@@ -114,7 +114,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
       loading={isLoading}
       actions={[
         <Button disabled={!enabled} onClick={() => handleQuickSetup()}>
-          Quick DIDComm Setup
+          Setup DIDComm
         </Button>,
       ]}
     >

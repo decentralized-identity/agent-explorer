@@ -14,7 +14,6 @@ const ChatScrollPanel: React.FC<ChatScrollPanelProps> = ({
 }) => {
   const reverseStyles = reverse
     ? {
-        paddingBottom: 200,
         flexDirection: 'row-reverse',
       }
     : {
@@ -23,8 +22,8 @@ const ChatScrollPanel: React.FC<ChatScrollPanelProps> = ({
 
   return (
     <Col
-      className={'hide-scroll'}
       id={id}
+      className={'hide-scroll'}
       // @ts-ignore
       style={{
         ...(reverse ? reverseStyles : {}),

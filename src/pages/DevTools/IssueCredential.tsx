@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { Typography, Form, Input, Button, Select, Row } from 'antd'
-import PageWidget from '../../layout/PageWidget'
-import { PageWidgetProps } from '../../types'
 import { issueCredential, claimToObject } from '../../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { v4 as uuidv4 } from 'uuid'
 import { IIdentifier } from '@veramo/core'
+import { PageContainer } from '@ant-design/pro-components'
 
 const { Option } = Select
 
@@ -26,14 +25,7 @@ interface Field {
   value: any
 }
 
-interface IssueCredentialProps extends PageWidgetProps {}
-
-const IssueCredential: React.FC<IssueCredentialProps> = ({
-  title,
-  isLoading,
-  remove,
-  removeDisabled,
-}) => {
+const IssueCredential: React.FC = () => {
   const { agent } = useVeramo()
   const [claimType, setClaimType] = useState<string>('')
   const [claimValue, setClaimValue] = useState<string>('')
@@ -131,12 +123,7 @@ const IssueCredential: React.FC<IssueCredentialProps> = ({
   }
 
   return (
-    <PageWidget
-      title={title}
-      isLoading={isLoading}
-      remove={remove}
-      removeDisabled={removeDisabled}
-    >
+    <PageContainer>
       <Typography.Text>Credential preview</Typography.Text>
       <br />
       <br />
@@ -210,7 +197,7 @@ const IssueCredential: React.FC<IssueCredentialProps> = ({
           </Select>
         </Form.Item>
 
-        <Form.Item style={{ backgroundColor: '#eaeaea', padding: 15 }}>
+        <Form.Item style={{ padding: 15 }}>
           <Form.Item>
             <Input
               placeholder="claim type e.g. 'name'"
@@ -267,7 +254,7 @@ const IssueCredential: React.FC<IssueCredentialProps> = ({
           </Row>
         </Form.Item>
       </Form>
-    </PageWidget>
+    </PageContainer>
   )
 }
 

@@ -1,12 +1,10 @@
 import React from 'react'
-import { Typography, Table, Tag } from 'antd'
-import Page from '../layout/Page'
+import { Table, Tag } from 'antd'
 import { format } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-
-const { Title } = Typography
+import { PageContainer } from '@ant-design/pro-components'
 
 const columns = [
   // {
@@ -80,7 +78,7 @@ const Credentials = () => {
   )
 
   return (
-    <Page header={<Title style={{ fontWeight: 'bold' }}>Credentials</Title>}>
+    <PageContainer>
       <Table
         loading={isLoading}
         rowKey={(record) => record.hash}
@@ -94,7 +92,7 @@ const Credentials = () => {
         // @ts-ignore
         columns={columns}
       />
-    </Page>
+    </PageContainer>
   )
 }
 

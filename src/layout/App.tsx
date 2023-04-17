@@ -1,9 +1,8 @@
 import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import Frame from './Frame'
+import Layout from './Layout'
 import { ThemeProvider } from '../context/ThemeProvider'
 import { QueryClientProvider, QueryClient } from 'react-query'
-import { PageModuleProvider } from '../context/WidgetProvider'
 import { ChatProvider } from '../context/ChatProvider'
 import { VeramoWeb3Provider } from '../context/web3/VeramoWeb3Provider'
 
@@ -22,11 +21,9 @@ const App = () => {
         {
           <VeramoWeb3Provider>
             <ChatProvider>
-              <PageModuleProvider>
-                <BrowserRouter>
-                  <Frame />
-                </BrowserRouter>
-              </PageModuleProvider>
+              <BrowserRouter>
+                <Layout />
+              </BrowserRouter>
             </ChatProvider>
           </VeramoWeb3Provider>
         }
