@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Layout, Tabs } from 'antd'
+import { Button, Card, Layout, Space, Tabs, Input } from 'antd'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -12,20 +12,27 @@ import IdentifierIssuedCredentials from '../components/standard/IdentifierIssued
 import { PageContainer } from '@ant-design/pro-components'
 import { shortId } from '../utils/did'
 import { CopyOutlined } from '@ant-design/icons'
+import { IIdentifierProfilePlugin } from '../context/plugins/IdentifierProfile'
 
+const { TextArea } = Input
 const { TabPane } = Tabs
 
 const Identifier = () => {
   const { id } = useParams<{ id: string }>()
   if (!id) throw Error('id is missing')
 
-  const { agent } = useVeramo<IDIDManager & IResolver>()
+  const { agent } = useVeramo<
+    IDIDManager & IResolver & IIdentifierProfilePlugin
+  >()
   const { data: resolutionResult, isLoading } = useQuery(
     ['identifier', id],
     () => agent?.resolveDid({ didUrl: id }),
   )
   const { data: managedDID } = useQuery(['managedDid', id], () =>
     agent?.didManagerGet({ did: id }),
+  )
+  const { data: profile } = useQuery(['profile', id, agent?.context.id], () =>
+    agent?.getIdentifierProfile({ did: id }),
   )
 
   const isManaged = !!managedDID?.provider
@@ -38,9 +45,16 @@ const Identifier = () => {
 
   const resolved = resolutionResult?.didResolutionMetadata.error === undefined
 
+  const title =
+    profile?.name && profile?.name !== shortId(id) ? profile.name : shortId(id)
+  const subTitle =
+    profile?.name && profile?.name !== shortId(id) ? shortId(id) : undefined
+
   return (
     <PageContainer
-      title={shortId(id)}
+      title={title}
+      subTitle={subTitle}
+      avatar={{ src: profile?.picture }}
       extra={[
         <Button
           key={'copy'}
@@ -52,37 +66,46 @@ const Identifier = () => {
     >
       <Tabs>
         <TabPane tab="Credentials" key="0">
-          <IdentifierReceivedCredentials identifier={id} />
-          <IdentifierIssuedCredentials identifier={id} />
+          <Space direction="vertical" style={{ width: '100%' }}>
+            <IdentifierReceivedCredentials identifier={id} />
+            <IdentifierIssuedCredentials identifier={id} />
+          </Space>
         </TabPane>
         {resolved && (
           <TabPane tab="DID Document" key="1">
             <Layout>
-              {!hasDIDCommSetup && (
-                <IdentifierQuickSetup
-                  title="DIDComm mediator setup"
+              <Space direction="vertical" style={{ width: '100%' }}>
+                {!hasDIDCommSetup && (
+                  <IdentifierQuickSetup
+                    title="DIDComm mediator setup"
+                    identifier={id}
+                    cacheKey={`identifier-quicksetup-${id}`}
+                  />
+                )}
+                <IdentifierKeys
+                  title="Keys"
                   identifier={id}
-                  cacheKey={`identifier-quicksetup-${id}`}
+                  cacheKey={`identifier-keys-${id}`}
+                  isManaged={isManaged}
                 />
-              )}
-              <IdentifierKeys
-                title="Keys"
-                identifier={id}
-                cacheKey={`identifier-keys-${id}`}
-                isManaged={isManaged}
-              />
-              <IdentifierServices
-                title="Services"
-                identifier={id}
-                cacheKey={`identifier-services-${id}`}
-                isManaged={isManaged}
-              />
+                <IdentifierServices
+                  title="Services"
+                  identifier={id}
+                  cacheKey={`identifier-services-${id}`}
+                  isManaged={isManaged}
+                />
+              </Space>
             </Layout>
           </TabPane>
         )}
         <TabPane tab="Resolution Result" key="2">
           <Card loading={isLoading} size="small">
-            <pre>{JSON.stringify(resolutionResult, null, 2)}</pre>
+            <TextArea
+              autoSize
+              readOnly
+              style={{ width: '100%', height: '100%' }}
+              value={JSON.stringify(resolutionResult, null, 2)}
+            />
           </Card>
         </TabPane>
       </Tabs>
