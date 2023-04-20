@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { useChat } from '../../context/ChatProvider'
+import { useChat } from '../context/ChatProvider'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import ChatThreadProfileHeader from './ChatThreadProfileHeader'

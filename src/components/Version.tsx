@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, Space } from 'antd'
-import packageJson from '../../../package.json'
+import packageJson from '../../package.json'
 
 const Version: React.FC<{
   versionOnly?: boolean

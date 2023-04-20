@@ -1,6 +1,6 @@
 import React from 'react'
 import { Card, Checkbox, Radio } from 'antd'
-import { useTheme } from '../../context/ThemeProvider'
+import { useTheme } from '../context/ThemeProvider'
 
 const themes = [
   {

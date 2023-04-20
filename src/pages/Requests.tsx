@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
 import { useNavigate } from 'react-router-dom'
-import CreateRequest from '../components/standard/CreateRequest'
+import CreateRequest from '../components/CreateRequest'
 import { IMessage } from '@veramo/core'
 import { PageContainer } from '@ant-design/pro-components'
 

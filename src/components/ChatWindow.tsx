@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import ChatScrollPanel from '../../components/standard/ChatScrollPanel'
-import ChatBubble from '../../components/standard/ChatBubble'
-import ChatInput from '../../components/standard/ChatInput'
+import ChatScrollPanel from './ChatScrollPanel'
+import ChatBubble from './ChatBubble'
+import ChatInput from './ChatInput'
 import { useParams } from 'react-router'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { scrollMessages } from '../../utils/scroll'
-import { useChat } from '../../context/ChatProvider'
+import { scrollMessages } from '../utils/scroll'
+import { useChat } from '../context/ChatProvider'
 import ChatThreadHeader from './ChatThreadHeader'
 
 interface ChatWindowProps {}

@@ -7,7 +7,7 @@ import { PageContainer } from '@ant-design/pro-components'
 import { IDIDManager } from '@veramo/core-types'
 import NewIdentifierModalForm, {
   NewIdentifierModalValues,
-} from '../components/standard/NewIdentifierModalForm'
+} from '../components/NewIdentifierModalForm'
 import { shortId } from '../utils/did'
 import { createMediateRequestMessage } from '../utils/didcomm-mediation'
 import { DeleteOutlined, CopyOutlined } from '@ant-design/icons'

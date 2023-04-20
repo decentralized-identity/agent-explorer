@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Select } from 'antd'
 import { VCJSONSchema } from '../../types'
-import IssueCredentialFromSchema from '../../components/standard/IssueCredentialFromSchema'
+import IssueCredentialFromSchema from '../../components/IssueCredentialFromSchema'
 import { PageContainer } from '@ant-design/pro-components'
 
 const { Option } = Select
