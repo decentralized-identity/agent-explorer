@@ -12,6 +12,7 @@ import { shortId } from '../utils/did'
 import { createMediateRequestMessage } from '../utils/didcomm-mediation'
 import { DeleteOutlined, CopyOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
+import IdentifierProfile from '../components/IdentifierProfile'
 
 const ManagedIdentifiers = () => {
   const { agent } = useVeramo<IDIDManager>()
@@ -37,7 +38,7 @@ const ManagedIdentifiers = () => {
       key: 'did',
       render: (did: string) => (
         <Link to={'/identifier/' + encodeURIComponent(did)}>
-          {shortId(did)}
+          <IdentifierProfile did={did} />
         </Link>
       ),
     },
@@ -45,13 +46,13 @@ const ManagedIdentifiers = () => {
       title: 'Alias',
       dataIndex: 'alias',
       key: 'alias',
-      responsive: ['sm'],
+      responsive: ['md'],
     },
     {
       title: 'Provider',
       dataIndex: 'provider',
       key: 'provider',
-      responsive: ['sm'],
+      responsive: ['md'],
     },
     {
       title: 'Actions',

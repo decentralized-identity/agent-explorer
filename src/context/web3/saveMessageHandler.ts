@@ -17,7 +17,7 @@ export class SaveMessageHandler extends AbstractMessageHandler {
    * -
    */
   async handle(message: Message, context: IContext): Promise<Message> {
-    console.log('message received: ', message)
+    // console.log('message received: ', message)
     if (message.type === 'veramo.io-chat-v1') {
       await context.agent.dataStoreSaveMessage({ message })
     }

@@ -7,7 +7,6 @@ import md5 from 'md5'
 export interface IdentifierProfile {
   did: string
   name?: string
-  nickname?: string
   picture?: string
 }
 
@@ -47,7 +46,6 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
       return {
         did: args.did,
         name: parsed.hostname,
-        nickname: parsed.pathname,
         picture: fallBackPictureUrl,
       }
     }
@@ -58,30 +56,36 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
         .availableMethods()
         .includes('dataStoreORMGetVerifiableCredentials')
     ) {
-      const result = await context.agent.dataStoreORMGetVerifiableCredentials({
-        where: [
-          { column: 'type', value: ['VerifiableCredential,Profile'] },
-          { column: 'subject', value: [args.did] },
-        ],
-        order: [{ column: 'issuanceDate', direction: 'DESC' }],
-      })
-      if (result.length > 0) {
-        const { name, nickname, picture } =
-          result[0].verifiableCredential.credentialSubject
-        return { did: args.did, name, nickname, picture }
-      }
+      try {
+        const result = await context.agent.dataStoreORMGetVerifiableCredentials(
+          {
+            where: [
+              { column: 'type', value: ['VerifiableCredential,Profile'] },
+              { column: 'subject', value: [args.did] },
+            ],
+            order: [{ column: 'issuanceDate', direction: 'DESC' }],
+          },
+        )
+        if (result.length > 0) {
+          const { name, picture } =
+            result[0].verifiableCredential.credentialSubject
+          return { did: args.did, name, picture }
+        }
+      } catch (e) {}
     }
 
     // Try to use alias from the DID Manager
     if (context.agent.availableMethods().includes('didManagerGet')) {
-      const identifier = await context.agent.didManagerGet({ did: args.did })
-      if (identifier) {
-        return {
-          did: args.did,
-          name: identifier.alias,
-          picture: fallBackPictureUrl,
+      try {
+        const identifier = await context.agent.didManagerGet({ did: args.did })
+        if (identifier) {
+          return {
+            did: args.did,
+            name: identifier.alias,
+            picture: fallBackPictureUrl,
+          }
         }
-      }
+      } catch (e) {}
     }
 
     return {
