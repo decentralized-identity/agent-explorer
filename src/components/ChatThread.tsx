@@ -27,32 +27,19 @@ const ChatThread: React.FC<ChatThreadProps> = ({
 
   const counterPartyDid =
     lastMessage.from === selectedDid ? lastMessage.to : lastMessage.from
-  const { data: counterPartyProfileCredentials } = useQuery(
-    [
-      'counterPartyProfileCredentials',
-      { agentId: agent?.context.name, counterPartyDid },
-    ],
+
+  const { data: profile } = useQuery(
+    ['profile', counterPartyDid, agent?.context.id],
     () =>
-      agent?.dataStoreORMGetVerifiableCredentials({
-        where: [
-          { column: 'issuer', value: [counterPartyDid], op: 'Equal' },
-          {
-            column: 'type',
-            value: ['VerifiableCredential,ProfileCredentialSchema'],
-            op: 'Equal',
-          },
-        ],
-        order: [{ column: 'issuanceDate', direction: 'DESC' }],
-      }),
+      counterPartyDid
+        ? agent?.getIdentifierProfile({ did: counterPartyDid })
+        : undefined,
   )
-  const profileCredential =
-    counterPartyProfileCredentials &&
-    counterPartyProfileCredentials.length > 0 &&
-    counterPartyProfileCredentials[0].verifiableCredential
+
   return (
     <ChatThreadProfileHeader
       did={counterPartyDid}
-      profileCredential={profileCredential}
+      profile={profile}
       onRowClick={viewThread}
       selected={threadSelected}
       lastMessage={lastMessage}

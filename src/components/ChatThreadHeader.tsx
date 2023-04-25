@@ -21,29 +21,13 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
   const { token } = useToken()
   const { agent } = useVeramo()
 
-  const { data: counterPartyProfileCredentials } = useQuery(
-    [
-      'counterPartyProfileCredentials',
-      { agentId: agent?.context.name, counterPartyDid: counterParty?.did },
-    ],
+  const { data: profile } = useQuery(
+    ['profile', counterParty.did, agent?.context.id],
     () =>
-      agent?.dataStoreORMGetVerifiableCredentials({
-        where: [
-          { column: 'issuer', value: [counterParty?.did], op: 'Equal' },
-          {
-            column: 'type',
-            value: ['VerifiableCredential,ProfileCredentialSchema'],
-            op: 'Equal',
-          },
-        ],
-        order: [{ column: 'issuanceDate', direction: 'DESC' }],
-      }),
+      counterParty.did
+        ? agent?.getIdentifierProfile({ did: counterParty.did })
+        : undefined,
   )
-
-  const counterPartyProfileCredential =
-    counterPartyProfileCredentials &&
-    counterPartyProfileCredentials.length > 0 &&
-    counterPartyProfileCredentials[0].verifiableCredential
 
   if (!counterParty || !counterParty.did) {
     return (
@@ -61,10 +45,7 @@ const ChatThreadHeader: React.FC<ChatThreadHeaderProps> = ({
   }
   return (
     <div>
-      <ChatThreadProfileHeader
-        did={counterParty?.did}
-        profileCredential={counterPartyProfileCredential}
-      />
+      <ChatThreadProfileHeader did={counterParty?.did} profile={profile} />
     </div>
   )
 }

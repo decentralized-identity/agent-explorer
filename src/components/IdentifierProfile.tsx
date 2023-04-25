@@ -15,17 +15,17 @@ const IdentifierProfile: React.FC<IdentifierProfileProps> = ({ did }) => {
 
   const { data, isLoading } = useQuery(
     ['profile', did, agent?.context.id],
-    () => agent?.getIdentifierProfile({ did }),
+    () => (did ? agent?.getIdentifierProfile({ did }) : undefined),
   )
 
   return (
-    <Row>
-      <Col style={{ marginRight: token.margin }}>
+    <Row align="middle">
+      <Col style={{ marginRight: token.padding }}>
         {!isLoading && <Avatar src={data?.picture} />}
         {isLoading && <Skeleton.Avatar active />}
       </Col>
       <Col>
-        <div>
+        <div style={{ justifyItems: 'flex-start', display: 'flex' }}>
           {!isLoading && <Typography.Text>{data?.name}</Typography.Text>}
           {isLoading && <Skeleton.Input style={{ width: 100 }} active />}
         </div>

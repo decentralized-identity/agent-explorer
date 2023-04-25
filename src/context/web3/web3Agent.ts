@@ -49,6 +49,9 @@ import {
   IdentifierProfilePlugin,
   IIdentifierProfilePlugin,
 } from '../plugins/IdentifierProfile'
+import { DIDDiscovery } from '@veramo/did-discovery'
+import { DataStoreDiscoveryProvider } from '@veramo/data-store'
+import { AliasDiscoveryProvider } from '../plugins/AliasDiscoveryProvider'
 
 const dataStore = BrowserLocalStorageStore.fromLocalStorage('veramo-state')
 const identifierDataStore =
@@ -88,7 +91,8 @@ export async function createWeb3Agent({
       IResolver &
       ICredentialIssuerEIP712 &
       ICredentialPlugin &
-      IIdentifierProfilePlugin
+      IIdentifierProfilePlugin &
+      DIDDiscovery
   >({
     context: {
       id,
@@ -134,6 +138,12 @@ export async function createWeb3Agent({
       }),
       new DIDComm([new DIDCommHttpTransport()]),
       new IdentifierProfilePlugin(),
+      new DIDDiscovery({
+        providers: [
+          new AliasDiscoveryProvider(),
+          new DataStoreDiscoveryProvider(),
+        ],
+      }),
     ],
   })
 

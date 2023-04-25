@@ -1,27 +1,26 @@
 import React, { useState } from 'react'
-import { Input, AutoComplete } from 'antd'
-import { useChat } from '../context/ChatProvider'
+import { Modal, Input, SelectProps, AutoComplete } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
-import { SelectProps } from 'antd/es/select'
 import { shortId } from '../utils/did'
 
-interface DIDDiscoveryBarProps {
-  handleSelect: any
-  placeholder?: string
+interface NewChatThreadModalProps {
+  visible: boolean
+  onCreate: (did: string) => void
+  onCancel: () => void
 }
 
-const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({
-  handleSelect,
-  placeholder,
+const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
+  visible,
+  onCreate,
+  onCancel,
 }) => {
   const { agent } = useVeramo<IDIDDiscovery>()
-  const { newRecipient } = useChat()
   const [options, setOptions] = useState<SelectProps<object>['options']>([])
+  const [did, setDid] = useState<string>('')
 
   const searchResult = async (query: string) => {
     const response = await agent?.discoverDid({ query })
-    console.log('response: ', response)
     const selectOptions: Array<{ value: string; label: any }> = []
     response?.results.forEach((r) => {
       r.matches.forEach((m) => {
@@ -47,27 +46,36 @@ const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({
   const handleSearch = async (value: string) => {
     setOptions(value ? await searchResult(value) : [])
   }
-
   return (
-    <AutoComplete
-      dropdownMatchSelectWidth={true}
-      style={{ width: '100%', paddingRight: 20 }}
-      options={options}
-      onSelect={handleSelect}
-      onSearch={handleSearch}
+    <Modal
+      open={visible}
+      title="Start new thread"
+      okText="Create"
+      cancelText="Cancel"
+      onCancel={onCancel}
+      onOk={() => {
+        onCreate(did)
+      }}
     >
-      <Input
-        value={newRecipient}
-        onChange={(e) => handleSelect(e.target.value)}
-        style={{
-          flex: 1,
-          paddingTop: 10,
-          paddingBottom: 10,
-        }}
-        placeholder={placeholder}
-      />
-    </AutoComplete>
+      <AutoComplete
+        dropdownMatchSelectWidth={true}
+        style={{ width: '100%' }}
+        options={options}
+        onSelect={(e) => setDid(e)}
+        onSearch={handleSearch}
+      >
+        <Input
+          value={did}
+          onChange={(e) => setDid(e.target.value)}
+          style={{
+            flex: 1,
+            paddingTop: 10,
+            paddingBottom: 10,
+          }}
+        />
+      </AutoComplete>
+    </Modal>
   )
 }
 
-export default DIDDiscoveryBar
+export default NewChatThreadModal

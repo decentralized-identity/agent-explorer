@@ -85,6 +85,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
         </Col>
         <Col>
           <Button
+            type="text"
             icon={<InfoCircleOutlined />}
             onClick={() => navigate('/identifier/' + counterParty.did)}
           />

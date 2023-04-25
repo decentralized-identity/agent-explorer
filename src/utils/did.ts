@@ -1,4 +1,6 @@
 export function shortId(id: string) {
+  if (!id) return ''
+
   function shortDotSeparatedString(str: string) {
     const parts = str.split('.')
     return parts

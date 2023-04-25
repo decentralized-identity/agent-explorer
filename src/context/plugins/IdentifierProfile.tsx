@@ -4,7 +4,7 @@ import parse from 'url-parse'
 import { shortId } from '../../utils/did'
 import md5 from 'md5'
 
-export interface IdentifierProfile {
+export interface IIdentifierProfile {
   did: string
   name?: string
   picture?: string
@@ -23,7 +23,7 @@ export interface IIdentifierProfilePlugin extends IPluginMethodMap {
   getIdentifierProfile(
     args: IGetIdentifierProfileArgs,
     context: IContext,
-  ): Promise<IdentifierProfile>
+  ): Promise<IIdentifierProfile>
 }
 
 export class IdentifierProfilePlugin implements IAgentPlugin {
@@ -34,7 +34,7 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
   private async getIdentifierProfile(
     args: IGetIdentifierProfileArgs,
     context: IContext,
-  ): Promise<IdentifierProfile> {
+  ): Promise<IIdentifierProfile> {
     if (!args.did) return Promise.reject('DID Required')
 
     const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'

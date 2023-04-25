@@ -1,38 +1,44 @@
-import React, { useState } from 'react'
-import { Row, Col, Avatar, Button, Select, theme } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Row, Button, theme, Dropdown, Space } from 'antd'
+import { DownOutlined } from '@ant-design/icons'
 import { useChat } from '../context/ChatProvider'
-import { identiconUri } from '../utils/identicon'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { useQuery } from 'react-query'
 import { FormOutlined } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { IIdentifier } from '@veramo/core'
-import Title from 'antd/lib/typography/Title'
-import DIDDiscoveryBar from './DIDDiscoveryBar'
+import IdentifierProfile from './IdentifierProfile'
+import {
+  IIdentifierProfile,
+  IIdentifierProfilePlugin,
+} from '../context/plugins/IdentifierProfile'
+import NewChatThreadModal from './NewChatThreadModal'
 const { useToken } = theme
-const { Option } = Select
 
 interface ChatHeaderProps {}
 
 const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const { token } = useToken()
-  const { agent } = useVeramo<IDIDDiscovery>()
-  const {
-    selectedDid,
-    setSelectedDid,
-    composing,
-    setComposing,
-    setNewRecipient,
-  } = useChat()
+  const { agent } = useVeramo<IDIDDiscovery & IIdentifierProfilePlugin>()
+  const { selectedDid, setSelectedDid, setComposing, setNewRecipient } =
+    useChat()
   const navigate = useNavigate()
   const [agentChatIdentifiers, setAgentChatIdentifiers] = useState<
     IIdentifier[]
   >([])
+  const [
+    agentChatIdentifiersWithProfiles,
+    setAgentChatIdentifiersWithProfiles,
+  ] = useState<IIdentifierProfile[]>([])
+
+  const [newThreadModalVisible, setNewThreadModalVisible] =
+    useState<boolean>(false)
 
   const composeNewThread = () => {
     navigate('/chats/threads/new-thread')
     setComposing(true)
+    setNewThreadModalVisible(true)
   }
 
   useQuery(
@@ -53,111 +59,69 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
     },
   )
 
-  const { data: selectedDidProfiles } = useQuery(
-    ['selectedDidProfileCredentials', { id: agent?.context.id, selectedDid }],
-    () =>
-      agent?.dataStoreORMGetVerifiableCredentials({
-        where: [
-          { column: 'issuer', value: [selectedDid], op: 'Equal' },
-          {
-            column: 'type',
-            value: ['VerifiableCredential,ProfileCredentialSchema'],
-            op: 'Equal',
-          },
-        ],
-        order: [{ column: 'issuanceDate', direction: 'DESC' }],
-      }),
-  )
-  const name =
-    selectedDidProfiles &&
-    selectedDidProfiles.length > 0 &&
-    selectedDidProfiles[0].verifiableCredential.credentialSubject.name
-  const avatar =
-    selectedDidProfiles &&
-    selectedDidProfiles.length > 0 &&
-    selectedDidProfiles[0].verifiableCredential.credentialSubject.avatar
-  const uri = avatar || (selectedDid && identiconUri(selectedDid))
+  useEffect(() => {
+    if (agent) {
+      Promise.all(
+        agentChatIdentifiers.map((identifier) => {
+          console.log({ identifier })
+          return agent.getIdentifierProfile({ did: identifier.did })
+        }),
+      )
+        .then((profiles) => {
+          setAgentChatIdentifiersWithProfiles(profiles)
+        })
+        .catch(console.log)
+    }
+  }, [agentChatIdentifiers, agent])
 
   return (
-    <Row
-      style={{
-        borderBottom: `1px solid ${token.colorBorder}`,
-        height: 80,
-        alignItems: 'center',
-      }}
-    >
-      <Col xs={10} sm={10} md={10} lg={10} xl={8}>
-        <Row
-          style={{
-            alignItems: 'center',
-            display: 'flex',
-          }}
-        >
-          <div style={{ alignItems: 'center', flexShrink: 1, display: 'flex' }}>
-            {uri ? (
-              <Avatar size={35} src={uri} style={{ marginLeft: 27 }} />
-            ) : (
-              <Avatar size={50} />
-            )}
-            <Title level={5}>{name}</Title>
-          </div>
-          <Col style={{ marginLeft: 24, flex: 1 }}>
-            {agentChatIdentifiers.length > 0 && (
-              <Select
-                defaultValue={selectedDid}
-                style={{ width: '160px' }}
-                onChange={(value) => {
-                  const id = agentChatIdentifiers.filter(
-                    (id) => id.did === value,
-                  )[0]
-                  setSelectedDid(id.did)
-                }}
-              >
-                {agentChatIdentifiers.map((identifier) => {
-                  return (
-                    <Option value={identifier.did} key={identifier.did}>
-                      {identifier.alias} - {identifier.did}
-                    </Option>
-                  )
-                })}
-              </Select>
-            )}
-          </Col>
-          <Col>
-            <Button
-              onClick={() => composeNewThread()}
-              style={{ marginRight: 20 }}
-              icon={<FormOutlined style={{ fontSize: 20 }} />}
-              type={'text'}
-            />
-          </Col>
-        </Row>
-      </Col>
-      <Col xs={14} sm={14} md={14} lg={14} xl={16}>
-        {composing && (
-          <Row
-            style={{
-              alignItems: 'center',
+    <>
+      <Row align={'top'} justify={'space-between'}>
+        {agentChatIdentifiersWithProfiles.length > 0 && (
+          <Dropdown
+            overlayStyle={{ width: '160px', height: '50px' }}
+            menu={{
+              items: [
+                ...agentChatIdentifiersWithProfiles.map((profile) => {
+                  return {
+                    key: profile.did,
+                    onClick: () => setSelectedDid(profile.did),
+                    label: <IdentifierProfile did={profile.did} />,
+                  }
+                }),
+              ],
+              selectable: true,
+              defaultSelectedKeys: [selectedDid],
             }}
           >
-            <Col>
-              <Avatar size={50} />
-            </Col>
-            <Col
-              flex={1}
-              style={{
-                paddingLeft: 15,
-                paddingRight: 24,
-              }}
-            >
-              <DIDDiscoveryBar
-                handleSelect={(value: any) => setNewRecipient(value)}
-              />
-            </Col>
-          </Row>
+            <Button style={{ height: 'auto', border: 0 }} type={'text'}>
+              <Space>
+                {selectedDid && <IdentifierProfile did={selectedDid} />}
+                <DownOutlined />
+              </Space>
+            </Button>
+          </Dropdown>
         )}
-      </Col>
-    </Row>
+        <Button
+          style={{ margin: token.margin }}
+          onClick={() => composeNewThread()}
+          icon={<FormOutlined style={{ fontSize: 20 }} />}
+          type={'text'}
+        />
+      </Row>
+
+      <NewChatThreadModal
+        visible={newThreadModalVisible}
+        onCancel={() => {
+          setNewThreadModalVisible(false)
+          setComposing(false)
+        }}
+        onCreate={(did) => {
+          setNewRecipient(did)
+          setNewThreadModalVisible(false)
+        }}
+      />
+    </>
   )
 }
 
