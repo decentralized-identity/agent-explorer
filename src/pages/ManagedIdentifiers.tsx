@@ -104,26 +104,28 @@ const ManagedIdentifiers = () => {
     })
     if (!identifier) return
 
-    const message = createMediateRequestMessage(
-      identifier.did,
-      'did:web:dev-didcomm-mediator.herokuapp.com',
-    )
+    if (provider === 'did:peer') {
+      const message = createMediateRequestMessage(
+        identifier.did,
+        'did:web:dev-didcomm-mediator.herokuapp.com',
+      )
 
-    const stored = await agent?.dataStoreSaveMessage({ message })
-    console.log('stored?: ', stored)
+      const stored = await agent?.dataStoreSaveMessage({ message })
+      console.log('stored?: ', stored)
 
-    const packedMessage = await agent?.packDIDCommMessage({
-      packing: 'authcrypt',
-      message,
-    })
+      const packedMessage = await agent?.packDIDCommMessage({
+        packing: 'authcrypt',
+        message,
+      })
 
-    // requests mediation, and then message handler adds service to DID
-    const result = await agent?.sendDIDCommMessage({
-      packedMessage,
-      messageId: message.id,
-      recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
-    })
-    console.log('result: ', result)
+      // requests mediation, and then message handler adds service to DID
+      const result = await agent?.sendDIDCommMessage({
+        packedMessage,
+        messageId: message.id,
+        recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
+      })
+      console.log('result: ', result)
+    }
 
     setIsNewIdentifierModalVisible(false)
     refetch()
