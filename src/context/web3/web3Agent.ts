@@ -50,7 +50,9 @@ import {
   IIdentifierProfilePlugin,
 } from '../plugins/IdentifierProfile'
 import { DIDDiscovery } from '@veramo/did-discovery'
-import { DataStoreDiscoveryProvider } from '@veramo/data-store'
+// FIXME: This import causes an error: Module not found: Error: Can't resolve 'react-native-sqlite-storage' in '[...]/node_modules/typeorm/browser/driver/react-native'
+// import { DataStoreDiscoveryProvider } from '@veramo/data-store'
+import { DataStoreDiscoveryProvider } from '../plugins/did-discovery-provider'
 import { AliasDiscoveryProvider } from '../plugins/AliasDiscoveryProvider'
 
 const dataStore = BrowserLocalStorageStore.fromLocalStorage('veramo-state')
