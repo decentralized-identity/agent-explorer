@@ -23,7 +23,7 @@ import Agents from '../pages/Agents'
 import Agent from '../pages/Agent'
 import Chats from '../pages/Chats'
 import { useVeramo } from '@veramo-community/veramo-react'
-import CreateResponse from '../components/standard/CreateResponse'
+import CreateResponse from '../components/CreateResponse'
 import Statistics from '../pages/Statistics'
 import DataGenerator from '../pages/DevTools/DataGenerator'
 import SelectSchemaAndIssue from '../pages/DevTools/SelectSchemaAndIssue'
@@ -31,7 +31,7 @@ import CreateProfileCredential from '../pages/DevTools/CreateProfileCredential'
 import IssueCredential from '../pages/DevTools/IssueCredential'
 import CreatePresentation from '../pages/DevTools/CreatePresentation'
 import md5 from 'md5'
-import AvatarDropdown from '../components/AvatarDropdown'
+import AgentDropdown from '../components/AgentDropdown'
 import KnownIdentifiers from '../pages/KnownIdentifiers'
 import ManagedIdentifiers from '../pages/ManagedIdentifiers'
 import CredentialVerifier from '../pages/CredentialVerifier'
@@ -188,7 +188,7 @@ const Layout = () => {
           size: 'small',
           title: currentAgentName,
           render: (props, children) => (
-            <AvatarDropdown>{children}</AvatarDropdown>
+            <AgentDropdown>{children}</AgentDropdown>
           ),
         }}
         token={{

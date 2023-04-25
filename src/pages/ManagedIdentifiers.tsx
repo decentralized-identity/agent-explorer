@@ -7,11 +7,12 @@ import { PageContainer } from '@ant-design/pro-components'
 import { IDIDManager } from '@veramo/core-types'
 import NewIdentifierModalForm, {
   NewIdentifierModalValues,
-} from '../components/standard/NewIdentifierModalForm'
+} from '../components/NewIdentifierModalForm'
 import { shortId } from '../utils/did'
 import { createMediateRequestMessage } from '../utils/didcomm-mediation'
 import { DeleteOutlined, CopyOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
+import IdentifierProfile from '../components/IdentifierProfile'
 
 const ManagedIdentifiers = () => {
   const { agent } = useVeramo<IDIDManager>()
@@ -37,7 +38,7 @@ const ManagedIdentifiers = () => {
       key: 'did',
       render: (did: string) => (
         <Link to={'/identifier/' + encodeURIComponent(did)}>
-          {shortId(did)}
+          <IdentifierProfile did={did} />
         </Link>
       ),
     },
@@ -45,13 +46,13 @@ const ManagedIdentifiers = () => {
       title: 'Alias',
       dataIndex: 'alias',
       key: 'alias',
-      responsive: ['sm'],
+      responsive: ['md'],
     },
     {
       title: 'Provider',
       dataIndex: 'provider',
       key: 'provider',
-      responsive: ['sm'],
+      responsive: ['md'],
     },
     {
       title: 'Actions',
@@ -103,26 +104,28 @@ const ManagedIdentifiers = () => {
     })
     if (!identifier) return
 
-    const message = createMediateRequestMessage(
-      identifier.did,
-      'did:web:dev-didcomm-mediator.herokuapp.com',
-    )
+    if (provider === 'did:peer') {
+      const message = createMediateRequestMessage(
+        identifier.did,
+        'did:web:dev-didcomm-mediator.herokuapp.com',
+      )
 
-    const stored = await agent?.dataStoreSaveMessage({ message })
-    console.log('stored?: ', stored)
+      const stored = await agent?.dataStoreSaveMessage({ message })
+      console.log('stored?: ', stored)
 
-    const packedMessage = await agent?.packDIDCommMessage({
-      packing: 'authcrypt',
-      message,
-    })
+      const packedMessage = await agent?.packDIDCommMessage({
+        packing: 'authcrypt',
+        message,
+      })
 
-    // requests mediation, and then message handler adds service to DID
-    const result = await agent?.sendDIDCommMessage({
-      packedMessage,
-      messageId: message.id,
-      recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
-    })
-    console.log('result: ', result)
+      // requests mediation, and then message handler adds service to DID
+      const result = await agent?.sendDIDCommMessage({
+        packedMessage,
+        messageId: message.id,
+        recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
+      })
+      console.log('result: ', result)
+    }
 
     setIsNewIdentifierModalVisible(false)
     refetch()

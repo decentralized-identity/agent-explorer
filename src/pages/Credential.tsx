@@ -5,7 +5,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 
 import '@veramo-community/react-components/dist/cjs/index.css'
 import { PageContainer } from '@ant-design/pro-components'
-import CredentialTabs from '../components/standard/CredentialTabs'
+import CredentialTabs from '../components/CredentialTabs'
 
 const Credential = () => {
   const { id } = useParams<{ id: string }>()

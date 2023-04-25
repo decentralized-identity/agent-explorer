@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { Input, AutoComplete } from 'antd'
-import { useChat } from '../../context/ChatProvider'
+import { useChat } from '../context/ChatProvider'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { SelectProps } from 'antd/es/select'
+import { shortId } from '../utils/did'
 
 interface DIDDiscoveryBarProps {
   handleSelect: any
@@ -33,7 +34,7 @@ const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({
                 justifyContent: 'space-between',
               }}
             >
-              <span>{m.did}</span>
+              <span>{shortId(m.did)}</span>
               <span>{r.provider}</span>
             </div>
           ),

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Select, Card, Alert } from 'antd'
-import { issueCredential } from '../../utils/signing'
+import { issueCredential } from '../utils/signing'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { IIdentifier } from '@veramo/core'
@@ -8,7 +8,7 @@ import { IIdentifier } from '@veramo/core'
 import { withTheme } from '@rjsf/core'
 import { Theme as AntDTheme } from '@rjsf/antd'
 import validator from '@rjsf/validator-ajv8'
-import { VCJSONSchema } from '../../types'
+import { VCJSONSchema } from '../types'
 import DIDDiscoveryBar from './DIDDiscoveryBar'
 const JsonSchemaForm = withTheme(AntDTheme)
 

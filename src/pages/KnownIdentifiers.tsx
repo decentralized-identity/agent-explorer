@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PageContainer } from '@ant-design/pro-components'
-import { shortId } from '../utils/did'
 import { IIdentifier } from '@veramo/core'
 import { CopyOutlined } from '@ant-design/icons'
+import IdentifierProfile from '../components/IdentifierProfile'
 
 const { Search } = Input
 
@@ -26,7 +26,7 @@ const KnownIdentifiers = () => {
       key: 'did',
       render: (did: string) => (
         <Link to={'/identifier/' + encodeURIComponent(did)}>
-          {shortId(did)}
+          <IdentifierProfile did={did} />
         </Link>
       ),
     },

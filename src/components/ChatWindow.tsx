@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react'
-import ChatScrollPanel from '../../components/standard/ChatScrollPanel'
-import ChatBubble from '../../components/standard/ChatBubble'
-import ChatInput from '../../components/standard/ChatInput'
-import { useParams } from 'react-router'
+import { InfoCircleOutlined } from '@ant-design/icons'
+import ChatScrollPanel from './ChatScrollPanel'
+import ChatBubble from './ChatBubble'
+import ChatInput from './ChatInput'
+import { useNavigate, useParams } from 'react-router'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { scrollMessages } from '../../utils/scroll'
-import { useChat } from '../../context/ChatProvider'
-import ChatThreadHeader from './ChatThreadHeader'
+import { scrollMessages } from '../utils/scroll'
+import { useChat } from '../context/ChatProvider'
+import IdentifierProfile from './IdentifierProfile'
+import { Button, Col, Row, theme } from 'antd'
 
 interface ChatWindowProps {}
 const ChatWindow: React.FC<ChatWindowProps> = () => {
@@ -15,6 +17,8 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
   const { selectedDid, newRecipient } = useChat()
   const newThread = threadId === 'new-thread'
   const { agent } = useVeramo()
+  const { token } = theme.useToken()
+  const navigate = useNavigate()
 
   const { data: messages, refetch } = useQuery(
     ['chats', { id: agent?.context.id, threadId: threadId }],
@@ -67,7 +71,26 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
         height: 'calc(100vh - 220px)',
       }}
     >
-      <ChatThreadHeader counterParty={counterParty} threadId={threadId} />
+      <Row
+        style={{
+          width: '100%',
+          padding: token.padding,
+          borderBottom: '1px solid ' + token.colorBorder,
+          marginBottom: token.margin,
+        }}
+        justify={'space-between'}
+      >
+        <Col>
+          <IdentifierProfile did={counterParty.did} />
+        </Col>
+        <Col>
+          <Button
+            type="text"
+            icon={<InfoCircleOutlined />}
+            onClick={() => navigate('/identifier/' + counterParty.did)}
+          />
+        </Col>
+      </Row>
       <ChatScrollPanel reverse id="chat-window">
         {messages?.map((message: any) => {
           return (

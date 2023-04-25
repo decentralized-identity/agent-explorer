@@ -1,5 +1,11 @@
-import { createAgent, IDIDManager, IKeyManager, IResolver } from '@veramo/core'
-import { CredentialIssuer, W3cMessageHandler } from '@veramo/credential-w3c'
+import {
+  createAgent,
+  ICredentialPlugin,
+  IDIDManager,
+  IKeyManager,
+  IResolver,
+} from '@veramo/core'
+import { CredentialPlugin, W3cMessageHandler } from '@veramo/credential-w3c'
 import {
   CredentialIssuerEIP712,
   ICredentialIssuerEIP712,
@@ -39,6 +45,15 @@ import {
 import { Web3Provider } from '@ethersproject/providers'
 import { KeyManagementSystem } from '@veramo/kms-local'
 import { SaveMessageHandler } from './saveMessageHandler'
+import {
+  IdentifierProfilePlugin,
+  IIdentifierProfilePlugin,
+} from '../plugins/IdentifierProfile'
+import { DIDDiscovery } from '@veramo/did-discovery'
+// FIXME: This import causes an error: Module not found: Error: Can't resolve 'react-native-sqlite-storage' in '[...]/node_modules/typeorm/browser/driver/react-native'
+// import { DataStoreDiscoveryProvider } from '@veramo/data-store'
+import { DataStoreDiscoveryProvider } from '../plugins/did-discovery-provider'
+import { AliasDiscoveryProvider } from '../plugins/AliasDiscoveryProvider'
 
 const dataStore = BrowserLocalStorageStore.fromLocalStorage('veramo-state')
 const identifierDataStore =
@@ -73,7 +88,13 @@ export async function createWeb3Agent({
 
   const id = 'web3Agent'
   const agent = createAgent<
-    IDIDManager & IKeyManager & IResolver & ICredentialIssuerEIP712
+    IDIDManager &
+      IKeyManager &
+      IResolver &
+      ICredentialIssuerEIP712 &
+      ICredentialPlugin &
+      IIdentifierProfilePlugin &
+      DIDDiscovery
   >({
     context: {
       id,
@@ -103,7 +124,7 @@ export async function createWeb3Agent({
         defaultProvider: connectors[0]?.name,
         providers: didProviders,
       }),
-      new CredentialIssuer(),
+      new CredentialPlugin(),
       new CredentialIssuerEIP712(),
       new DataStoreJson(dataStore),
       new MessageHandler({
@@ -118,6 +139,13 @@ export async function createWeb3Agent({
         ],
       }),
       new DIDComm([new DIDCommHttpTransport()]),
+      new IdentifierProfilePlugin(),
+      new DIDDiscovery({
+        providers: [
+          new AliasDiscoveryProvider(),
+          new DataStoreDiscoveryProvider(),
+        ],
+      }),
     ],
   })
 

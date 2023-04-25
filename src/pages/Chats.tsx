@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom'
-import ChatThread from '../components/standard/ChatThread'
-import ChatScrollPanel from '../components/standard/ChatScrollPanel'
-import ChatWindow from '../components/standard/ChatWindow'
-import ChatHeader from '../components/standard/ChatHeader'
+import ChatThread from '../components/ChatThread'
+import ChatScrollPanel from '../components/ChatScrollPanel'
+import ChatWindow from '../components/ChatWindow'
+import ChatHeader from '../components/ChatHeader'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useChat } from '../context/ChatProvider'
@@ -62,54 +62,52 @@ const ChatView = () => {
   }, [selectedDid, refetch, threadId])
 
   return (
-    <div
-      style={{
-        height: 'calc(100vh - 86px)',
-        display: 'flex',
-        flexDirection: 'column',
-        border: `1px solid ${token.colorBorder}`,
-        borderRadius: token.borderRadius,
-      }}
-    >
-      <Row>
-        <Col xs={24} sm={24} md={24} lg={24} xl={24}>
-          <ChatHeader />
-        </Col>
-      </Row>
-      <Row style={{ flexGrow: 1 }}>
-        <Col
-          xs={10}
-          sm={10}
-          md={10}
-          lg={10}
-          xl={8}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            flexGrow: 1,
-            height: 'calc(100vh - 167px)',
-            backgroundColor: token.colorFillContent,
-          }}
-        >
-          <ChatScrollPanel>
-            {threads &&
-              Object.keys(threads).map((index: any) => {
-                return (
-                  <ChatThread
-                    thread={threads[index]}
-                    threadId={index}
-                    key={index}
-                    threadSelected={index === threadId}
-                  />
-                )
-              })}
-          </ChatScrollPanel>
-        </Col>
-        <Col xs={14} sm={14} md={14} lg={14} xl={16}>
-          <ChatWindow />
-        </Col>
-      </Row>
-    </div>
+    <>
+      <ChatHeader />
+      <div
+        style={{
+          height: 'calc(100vh - 160px)',
+          display: 'flex',
+          flexDirection: 'column',
+          border: `1px solid ${token.colorBorder}`,
+          borderRadius: token.borderRadius,
+        }}
+      >
+        <Row style={{ flexGrow: 1 }}>
+          <Col
+            xs={10}
+            sm={10}
+            md={10}
+            lg={10}
+            xl={8}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              flexGrow: 1,
+              height: 'calc(100vh - 161 px)',
+              backgroundColor: token.colorFillContent,
+            }}
+          >
+            <ChatScrollPanel>
+              {threads &&
+                Object.keys(threads).map((index: any) => {
+                  return (
+                    <ChatThread
+                      thread={threads[index]}
+                      threadId={index}
+                      key={index}
+                      threadSelected={index === threadId}
+                    />
+                  )
+                })}
+            </ChatScrollPanel>
+          </Col>
+          <Col xs={14} sm={14} md={14} lg={14} xl={16}>
+            <ChatWindow />
+          </Col>
+        </Row>
+      </div>
+    </>
   )
 }
 

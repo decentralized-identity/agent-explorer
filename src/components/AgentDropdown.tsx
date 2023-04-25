@@ -4,7 +4,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useNavigate } from 'react-router-dom'
 import { CheckCircleOutlined } from '@ant-design/icons'
 
-const AvatarDropdown: React.FC<{ children: React.ReactNode }> = ({
+const AgentDropdown: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { agents, setActiveAgentId, activeAgentId } = useVeramo()
@@ -49,4 +49,4 @@ const AvatarDropdown: React.FC<{ children: React.ReactNode }> = ({
     </Dropdown>
   )
 }
-export default AvatarDropdown
+export default AgentDropdown

@@ -1,15 +1,15 @@
 import React from 'react'
 import { Row, Typography, Avatar, Col, theme } from 'antd'
-import { identiconUri } from '../../utils/identicon'
-import { shortId } from '../../utils/did'
+import { shortId } from '../utils/did'
 import { IMessage } from '@veramo/core'
-import { useChat } from '../../context/ChatProvider'
+import { useChat } from '../context/ChatProvider'
+import { IIdentifierProfile } from '../context/plugins/IdentifierProfile'
 const { useToken } = theme
 const { Text } = Typography
 
 interface ChatThreadProfileHeaderProps {
   did: string
-  profileCredential?: any
+  profile?: IIdentifierProfile
   onRowClick?: any
   selected?: boolean
   lastMessage?: IMessage
@@ -17,7 +17,7 @@ interface ChatThreadProfileHeaderProps {
 
 const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
   did,
-  profileCredential,
+  profile,
   onRowClick,
   selected,
   lastMessage,
@@ -37,27 +37,21 @@ const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
       }}
     >
       <Col>
-        <Avatar
-          src={
-            profileCredential
-              ? profileCredential.credentialSubject.avatar
-              : identiconUri(did)
-          }
-          size={50}
-          style={{ marginRight: 15 }}
-        />
+        <Avatar src={profile?.picture} size={50} style={{ marginRight: 15 }} />
       </Col>
       <Col style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        {profileCredential ? (
+        {profile ? (
           <Col>
             <Row>
               <Text style={{ marginBottom: 0 }} strong>
-                {profileCredential.credentialSubject.name}
+                {profile.name}
               </Text>
             </Row>
-            <Row>
-              <Text>{shortId(did)}</Text>
-            </Row>
+            {profile.name !== shortId(did) && (
+              <Row>
+                <Text>{shortId(did)}</Text>
+              </Row>
+            )}
           </Col>
         ) : (
           <div>

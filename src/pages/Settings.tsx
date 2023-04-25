@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card } from 'antd'
-import Version from '../components/standard/Version'
-import Web3 from '../components/standard/Web3'
-import ThemeModule from '../components/standard/ThemeSwitch'
+import Version from '../components/Version'
+import Web3 from '../components/Web3'
+import ThemeModule from '../components/ThemeSwitch'
 import { PageContainer } from '@ant-design/pro-components'
 
 const Settings = () => {
