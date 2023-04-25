@@ -1,6 +1,5 @@
 import React from 'react'
 import { Row, Typography, Avatar, Col, theme } from 'antd'
-import { identiconUri } from '../utils/identicon'
 import { shortId } from '../utils/did'
 import { IMessage } from '@veramo/core'
 import { useChat } from '../context/ChatProvider'
