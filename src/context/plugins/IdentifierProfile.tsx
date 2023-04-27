@@ -1,4 +1,9 @@
-import { IAgentPlugin, IPluginMethodMap, IAgentContext } from '@veramo/core'
+import {
+  IAgentPlugin,
+  IPluginMethodMap,
+  IAgentContext,
+  IDIDManager,
+} from '@veramo/core'
 import { IDataStoreORM } from '@veramo/data-store'
 import parse from 'url-parse'
 import { shortId } from '../../utils/did'
@@ -10,7 +15,7 @@ export interface IIdentifierProfile {
   picture?: string
 }
 
-type IContext = IAgentContext<IDataStoreORM>
+type IContext = IAgentContext<IDataStoreORM & IDIDManager>
 
 export interface IGetIdentifierProfileArgs {
   /**
@@ -40,16 +45,6 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
     const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
     const fallBackPictureUrl = GRAVATAR_URI + md5(args.did) + '?s=200&d=retro'
 
-    // If the DID is not a DID, then it is a URL
-    if (args.did.substr(0, 3) !== 'did') {
-      const parsed = parse(args.did)
-      return {
-        did: args.did,
-        name: parsed.hostname,
-        picture: fallBackPictureUrl,
-      }
-    }
-
     // Try to get the profile from Verifiable Credentials in the data store
     if (
       context.agent
@@ -69,7 +64,32 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
         if (result.length > 0) {
           const { name, picture } =
             result[0].verifiableCredential.credentialSubject
-          return { did: args.did, name, picture }
+          return { did: args.did, name, picture: picture || fallBackPictureUrl }
+        }
+      } catch (e) {}
+    }
+
+    // Try to get the profile from Kudos Credentials in the data store
+    // TODO: This should be a separate Profile provider plugin
+    if (
+      context.agent
+        .availableMethods()
+        .includes('dataStoreORMGetVerifiableCredentials')
+    ) {
+      try {
+        const result = await context.agent.dataStoreORMGetVerifiableCredentials(
+          {
+            where: [
+              { column: 'type', value: ['VerifiableCredential,Kudos'] },
+              { column: 'subject', value: [args.did] },
+            ],
+            order: [{ column: 'issuanceDate', direction: 'DESC' }],
+          },
+        )
+        if (result.length > 0) {
+          const { name, avatar } =
+            result[0].verifiableCredential.credentialSubject
+          return { did: args.did, name, picture: avatar || fallBackPictureUrl }
         }
       } catch (e) {}
     }
@@ -78,7 +98,7 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
     if (context.agent.availableMethods().includes('didManagerGet')) {
       try {
         const identifier = await context.agent.didManagerGet({ did: args.did })
-        if (identifier) {
+        if (identifier && identifier.provider) {
           return {
             did: args.did,
             name: identifier.alias,
@@ -86,6 +106,16 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
           }
         }
       } catch (e) {}
+    }
+
+    // If it's a URL, use the hostname as the name
+    if (args.did.substr(0, 4) === 'http') {
+      const parsed = parse(args.did)
+      return {
+        did: args.did,
+        name: parsed.hostname,
+        picture: fallBackPictureUrl,
+      }
     }
 
     return {

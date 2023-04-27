@@ -14,24 +14,29 @@ const IdentifierProfile: React.FC<IdentifierProfileProps> = ({ did }) => {
   const { token } = theme.useToken()
 
   const { data, isLoading } = useQuery(
-    ['profile', did, agent?.context.id],
+    ['identifierProfile', did, agent?.context.id],
     () => (did ? agent?.getIdentifierProfile({ did }) : undefined),
   )
 
   return (
-    <Row align="middle">
+    <Row align="middle" wrap={false}>
       <Col style={{ marginRight: token.padding }}>
         {!isLoading && <Avatar src={data?.picture} />}
         {isLoading && <Skeleton.Avatar active />}
       </Col>
       <Col>
         <div style={{ justifyItems: 'flex-start', display: 'flex' }}>
-          {!isLoading && <Typography.Text>{data?.name}</Typography.Text>}
+          {!isLoading && (
+            <Typography.Text ellipsis>{data?.name}</Typography.Text>
+          )}
           {isLoading && <Skeleton.Input style={{ width: 100 }} active />}
         </div>
         {data?.name && data?.name !== shortId(did) && (
           <div>
-            <Typography.Text style={{ color: token.colorTextSecondary }}>
+            <Typography.Text
+              ellipsis
+              style={{ color: token.colorTextSecondary }}
+            >
               {shortId(did)}
             </Typography.Text>
           </div>
