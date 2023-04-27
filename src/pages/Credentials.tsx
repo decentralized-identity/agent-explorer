@@ -1,96 +1,77 @@
 import React from 'react'
-import { Table, Tag } from 'antd'
-import { format } from 'date-fns'
+import { formatRelative } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { PageContainer } from '@ant-design/pro-components'
-
-const columns = [
-  // {
-  //   title: 'Explore',
-  //   dataIndex: 'hash',
-  //   render: (hash: any) => (
-  //     <Button
-  //       icon={
-  //         <Link to={'/credential/' + hash}>
-  //           <FundViewOutlined />
-  //         </Link>
-  //       }
-  //     />
-  //   ),
-  //   width: 100,
-  // },
-  {
-    title: 'Issuer',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => verifiableCredential.issuer.id,
-    ellipsis: {
-      showTitle: false,
-    },
-  },
-  {
-    title: 'Subject',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) =>
-      verifiableCredential.credentialSubject.id,
-    ellipsis: {
-      showTitle: false,
-    },
-  },
-  {
-    title: 'Proof Type',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) => (
-      <Tag>{verifiableCredential.proof.type}</Tag>
-    ),
-    responsive: ['xl'],
-    width: 200,
-  },
-  {
-    title: 'Type',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) =>
-      verifiableCredential.type.map((type: string, i: number) => (
-        <Tag color="geekblue" key={i}>
-          {type}
-        </Tag>
-      )),
-    responsive: ['lg'],
-    width: 200,
-  },
-  {
-    title: 'Issuance Date',
-    dataIndex: 'verifiableCredential',
-    render: (verifiableCredential: any) =>
-      format(new Date(verifiableCredential.issuanceDate), 'PPP'),
-    responsive: ['lg'],
-    width: 200,
-  },
-]
+import { PageContainer, ProList } from '@ant-design/pro-components'
+import { VerifiableCredential } from '@veramo-community/react-components'
+import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
+import { EllipsisOutlined } from '@ant-design/icons'
+import IdentifierProfile from '../components/IdentifierProfile'
+import { getIssuerDID } from '../utils/did'
+import CredentialActionsDropdown from '../components/CredentialActionsDropdown'
 
 const Credentials = () => {
   const navigate = useNavigate()
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDataStoreORM>()
   const { data: credentials, isLoading } = useQuery(
     ['credentials', { agentId: agent?.context.name }],
-    () => agent?.dataStoreORMGetVerifiableCredentials(),
+    () =>
+      agent?.dataStoreORMGetVerifiableCredentials({
+        order: [{ column: 'issuanceDate', direction: 'DESC' }],
+      }),
   )
 
   return (
     <PageContainer>
-      <Table
+      <ProList
+        ghost
         loading={isLoading}
-        rowKey={(record) => record.hash}
-        onRow={(record, rowIndex) => {
+        pagination={{
+          defaultPageSize: 20,
+          showSizeChanger: true,
+        }}
+        grid={{ column: 1, lg: 2, xxl: 2, xl: 2 }}
+        onItem={(record: any) => {
           return {
-            onClick: (e) => navigate('/credential/' + record.hash),
+            onClick: () => {
+              navigate('/credential/' + record.hash)
+            },
           }
         }}
-        dataSource={credentials}
-        // bordered
-        // @ts-ignore
-        columns={columns}
+        metas={{
+          title: {},
+          content: {},
+          actions: {
+            cardActionProps: 'extra',
+          },
+        }}
+        dataSource={credentials?.map((item: UniqueVerifiableCredential) => {
+          return {
+            title: (
+              <IdentifierProfile
+                did={getIssuerDID(item.verifiableCredential)}
+              />
+            ),
+            actions: [
+              <div>
+                {formatRelative(
+                  new Date(item.verifiableCredential.issuanceDate),
+                  new Date(),
+                )}
+              </div>,
+              <CredentialActionsDropdown credential={item.verifiableCredential}>
+                <EllipsisOutlined />
+              </CredentialActionsDropdown>,
+            ],
+            content: (
+              <div style={{ width: '100%' }}>
+                <VerifiableCredential credential={item.verifiableCredential} />
+              </div>
+            ),
+            hash: item.hash,
+          }
+        })}
       />
     </PageContainer>
   )
