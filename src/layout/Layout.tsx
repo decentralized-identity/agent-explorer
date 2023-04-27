@@ -160,6 +160,7 @@ const Layout = () => {
     >
       <ProLayout
         locale="en-US"
+        contentWidth="Fixed"
         title="Agent explorer"
         logo={false}
         menuItemRender={(menuItemProps, defaultDom) => {

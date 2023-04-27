@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Card, Layout, Space, Tabs, Input } from 'antd'
+import { Button, Card, Layout, Space, Tabs, Input, notification } from 'antd'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -59,8 +59,14 @@ const Identifier = () => {
         <Button
           key={'copy'}
           icon={<CopyOutlined />}
+          type="text"
           title="Copy DID to clipboard"
-          onClick={() => navigator.clipboard.writeText(id)}
+          onClick={() => {
+            navigator.clipboard.writeText(id)
+            notification.success({
+              message: 'Copied identifier to clipboard',
+            })
+          }}
         />,
       ]}
     >

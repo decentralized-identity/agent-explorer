@@ -62,14 +62,9 @@
     ]
   },
   "dependencies": {
-    "@ant-design/pro-components": "^2.4.4",
-    "@rjsf/utils": "^5.5.2",
-    "@rjsf/validator-ajv8": "^5.5.2",
     "commander": "^7.0.0",
     "express": "^4.17.1",
-    "express-favicon": "^2.0.1",
-    "react-error-overlay": "^6.0.11",
-    "url-parse": "^1.5.10"
+    "express-favicon": "^2.0.1"
   },
   "release": {
     "branches": [
@@ -93,12 +88,15 @@
     ]
   },
   "devDependencies": {
+    "@ant-design/pro-components": "^2.4.4",
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@craco/craco": "^7.0.0",
     "@rjsf/antd": "^5.5.2",
     "@rjsf/core": "^5.5.2",
+    "@rjsf/utils": "^5.5.2",
+    "@rjsf/validator-ajv8": "^5.5.2",
     "@semantic-release/commit-analyzer": "^8.0.1",
     "@semantic-release/git": "^9.0.0",
     "@semantic-release/npm": "^7.1.3",
@@ -160,6 +158,8 @@
     "random-words": "^1.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
+    "react-error-overlay": "^6.0.11",
     "react-query": "^3.39.2",
     "react-router-dom": "^6.10.0",
     "react-scripts": "^5.0.1",
@@ -167,6 +167,7 @@
     "stream": "npm:stream-browserify",
     "stream-browserify": "^3.0.0",
     "typescript": "^4.0.3",
+    "url-parse": "^1.5.10",
     "util": "^0.12.4",
     "uuid": "^8.3.2",
     "web-did-resolver": "^2.0.20",

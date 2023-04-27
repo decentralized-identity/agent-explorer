@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Button, Row, Space } from 'antd'
+import { Table, Button, Row, Space, notification } from 'antd'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -61,17 +61,27 @@ const ManagedIdentifiers = () => {
         <Space>
           <Button
             key={'copy'}
+            type="text"
             icon={<CopyOutlined />}
             title="Copy DID to clipboard"
-            onClick={() => navigator.clipboard.writeText(did.did)}
+            onClick={() => {
+              navigator.clipboard.writeText(did.did)
+              notification.success({
+                message: 'Copied identifier to clipboard',
+              })
+            }}
           />
           <Button
             icon={<DeleteOutlined />}
             danger
+            type="text"
             onClick={() => {
               if (window.confirm(`Delete ${shortId(did.did)}`)) {
                 agent?.didManagerDelete({ did: did.did })
                 refetch()
+                notification.success({
+                  message: 'Identifier deleted',
+                })
               }
             }}
           ></Button>

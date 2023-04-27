@@ -1,3 +1,5 @@
+import { VerifiableCredential } from '@veramo/core'
+
 export function shortId(id: string) {
   if (!id) return ''
 
@@ -26,4 +28,12 @@ export function shortId(id: string) {
       }
     })
     .join(':')
+}
+
+export function getIssuerDID(credential: VerifiableCredential): string {
+  if (typeof credential.issuer === 'string') {
+    return credential.issuer
+  } else {
+    return credential.issuer.id
+  }
 }
