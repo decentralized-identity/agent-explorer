@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Input, Button } from 'antd'
+import { Table, Input, Button, notification } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -21,7 +21,7 @@ const KnownIdentifiers = () => {
 
   const columns = [
     {
-      title: 'DID',
+      title: 'Identifier',
       dataIndex: 'did',
       key: 'did',
       render: (did: string) => (
@@ -36,9 +36,15 @@ const KnownIdentifiers = () => {
       render: (did: IIdentifier) => (
         <Button
           key={'copy'}
+          type="text"
           icon={<CopyOutlined />}
           title="Copy DID to clipboard"
-          onClick={() => navigator.clipboard.writeText(did.did)}
+          onClick={() => {
+            navigator.clipboard.writeText(did.did)
+            notification.success({
+              message: 'Copied identifier to clipboard',
+            })
+          }}
         />
       ),
     },
