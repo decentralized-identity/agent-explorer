@@ -8,7 +8,7 @@ export function shortId(id: string) {
     return parts
       .map((part) => {
         if (part.length > 10) {
-          return part.substring(0, 3) + '...' + part.substring(part.length - 3)
+          return part.substring(0, 1) + '.' + part.substring(part.length - 1)
         } else {
           return part
         }
