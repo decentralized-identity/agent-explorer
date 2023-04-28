@@ -6,7 +6,6 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { useQuery } from 'react-query'
 import { FormOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
 import { IIdentifier } from '@veramo/core'
 import IdentifierProfile from './IdentifierProfile'
 import {
@@ -23,7 +22,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const { agent } = useVeramo<IDIDDiscovery & IIdentifierProfilePlugin>()
   const { selectedDid, setSelectedDid, setComposing, setNewRecipient } =
     useChat()
-  const navigate = useNavigate()
   const [agentChatIdentifiers, setAgentChatIdentifiers] = useState<
     IIdentifier[]
   >([])
@@ -36,7 +34,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
     useState<boolean>(false)
 
   const composeNewThread = () => {
-    navigate('/chats/threads/new-thread')
     setComposing(true)
     setNewThreadModalVisible(true)
   }
@@ -63,7 +60,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
     if (agent) {
       Promise.all(
         agentChatIdentifiers.map((identifier) => {
-          console.log({ identifier })
           return agent.getIdentifierProfile({ did: identifier.did })
         }),
       )
