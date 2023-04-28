@@ -140,6 +140,7 @@
     "@web3-react/metamask": "^8.0.26-beta.0",
     "@web3-react/types": "^8.0.19-beta.0",
     "@web3-react/walletconnect": "^8.0.34-beta.0",
+    "@yudiel/react-qr-scanner": "^1.1.8",
     "antd": "5.x",
     "assert": "npm:assert-browserify",
     "buffer": "^6.0.3",

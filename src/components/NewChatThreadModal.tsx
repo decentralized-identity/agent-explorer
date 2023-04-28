@@ -1,7 +1,18 @@
 import React, { useState } from 'react'
-import { Modal, Input, SelectProps, AutoComplete } from 'antd'
+import {
+  Modal,
+  Input,
+  SelectProps,
+  AutoComplete,
+  Row,
+  Button,
+  Col,
+  notification,
+} from 'antd'
+import { QrcodeOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
+import { QrScanner } from '@yudiel/react-qr-scanner'
 import { shortId } from '../utils/did'
 
 interface NewChatThreadModalProps {
@@ -18,6 +29,7 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
   const { agent } = useVeramo<IDIDDiscovery>()
   const [options, setOptions] = useState<SelectProps<object>['options']>([])
   const [did, setDid] = useState<string>('')
+  const [showQrCodeScanner, setShowQrCodeScanner] = useState<boolean>(false)
 
   const searchResult = async (query: string) => {
     const response = await agent?.discoverDid({ query })
@@ -52,28 +64,55 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
       title="Start new thread"
       okText="Create"
       cancelText="Cancel"
-      onCancel={onCancel}
+      onCancel={() => {
+        setShowQrCodeScanner(false)
+        onCancel()
+      }}
       onOk={() => {
         onCreate(did)
       }}
     >
-      <AutoComplete
-        dropdownMatchSelectWidth={true}
-        style={{ width: '100%' }}
-        options={options}
-        onSelect={(e) => setDid(e)}
-        onSearch={handleSearch}
-      >
-        <Input
-          value={did}
-          onChange={(e) => setDid(e.target.value)}
-          style={{
-            flex: 1,
-            paddingTop: 10,
-            paddingBottom: 10,
-          }}
-        />
-      </AutoComplete>
+      {!showQrCodeScanner && (
+        <Row>
+          <AutoComplete
+            dropdownMatchSelectWidth={true}
+            options={options}
+            onSelect={(e) => setDid(e)}
+            onSearch={handleSearch}
+            style={{ flex: 1 }}
+          >
+            <Input
+              value={did}
+              placeholder="Enter a DID"
+              onChange={(e) => setDid(e.target.value)}
+              style={{
+                flex: 1,
+                paddingTop: 10,
+                paddingBottom: 10,
+              }}
+            />
+          </AutoComplete>
+          <Button onClick={() => setShowQrCodeScanner(true)} size="large">
+            <QrcodeOutlined />
+          </Button>
+        </Row>
+      )}
+
+      {showQrCodeScanner && (
+        <Col>
+          <QrScanner
+            onDecode={(result) => {
+              setShowQrCodeScanner(false)
+              setTimeout(() => {
+                onCreate(result)
+              }, 125)
+            }}
+            onError={(error) => {
+              notification.error({ message: error.message })
+            }}
+          />
+        </Col>
+      )}
     </Modal>
   )
 }
