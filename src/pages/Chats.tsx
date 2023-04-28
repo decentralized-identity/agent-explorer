@@ -99,11 +99,9 @@ const ChatView = () => {
                 })}
             </ChatScrollPanel>
           </Col>
-          {threadId && (
-            <Col xs={24} sm={14} md={14} lg={14} xl={16}>
-              <ChatWindow />
-            </Col>
-          )}
+          <Col xs={24} sm={14} md={14} lg={14} xl={16}>
+            <ChatWindow />
+          </Col>
         </Row>
       </div>
     </>

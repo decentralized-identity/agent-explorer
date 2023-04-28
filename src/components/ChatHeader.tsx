@@ -13,6 +13,7 @@ import {
   IIdentifierProfilePlugin,
 } from '../context/plugins/IdentifierProfile'
 import NewChatThreadModal from './NewChatThreadModal'
+import { useNavigate } from 'react-router-dom'
 const { useToken } = theme
 
 interface ChatHeaderProps {}
@@ -22,6 +23,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
   const { agent } = useVeramo<IDIDDiscovery & IIdentifierProfilePlugin>()
   const { selectedDid, setSelectedDid, setComposing, setNewRecipient } =
     useChat()
+  const navigate = useNavigate()
   const [agentChatIdentifiers, setAgentChatIdentifiers] = useState<
     IIdentifier[]
   >([])
@@ -72,10 +74,10 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
 
   return (
     <>
-      <Row align={'top'} justify={'space-between'}>
+      <Row align={'middle'} justify={'space-between'} wrap={false}>
         {agentChatIdentifiersWithProfiles.length > 0 && (
           <Dropdown
-            overlayStyle={{ width: '160px', height: '50px' }}
+            overlayStyle={{ height: '50px' }}
             menu={{
               items: [
                 ...agentChatIdentifiersWithProfiles.map((profile) => {
@@ -92,7 +94,9 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
           >
             <Button style={{ height: 'auto', border: 0 }} type={'text'}>
               <Space>
-                {selectedDid && <IdentifierProfile did={selectedDid} />}
+                {selectedDid && (
+                  <IdentifierProfile did={selectedDid} showShortId={false} />
+                )}
                 <DownOutlined />
               </Space>
             </Button>
@@ -115,6 +119,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
         onCreate={(did) => {
           setNewRecipient(did)
           setNewThreadModalVisible(false)
+          navigate('/chats/threads/new-thread')
         }}
       />
     </>

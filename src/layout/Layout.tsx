@@ -195,7 +195,7 @@ const Layout = () => {
         token={{
           pageContainer: {
             paddingBlockPageContainerContent: 15,
-            paddingInlinePageContainerContent: 20,
+            paddingInlinePageContainerContent: 15,
           },
         }}
       >
