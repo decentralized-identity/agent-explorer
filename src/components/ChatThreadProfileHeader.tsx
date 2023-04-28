@@ -47,11 +47,6 @@ const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
                 {profile.name}
               </Text>
             </Row>
-            {profile.name !== shortId(did) && (
-              <Row>
-                <Text>{shortId(did)}</Text>
-              </Row>
-            )}
           </Col>
         ) : (
           <div>

@@ -81,7 +81,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
         justify={'space-between'}
         wrap={false}
       >
-        <Col xs={1} sm={{ span: 0 }}>
+        <Col xs={3} sm={{ span: 0 }}>
           <Button
             type="text"
             onClick={() => navigate('/chats/threads')}
@@ -90,10 +90,10 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
             <LeftOutlined />
           </Button>
         </Col>
-        <Col>
-          <IdentifierProfile did={counterParty.did} />
+        <Col xs={19}>
+          <IdentifierProfile did={counterParty.did} showShortId={false} />
         </Col>
-        <Col>
+        <Col xs={2}>
           <Button
             type="text"
             icon={<InfoCircleOutlined />}
