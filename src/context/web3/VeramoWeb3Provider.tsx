@@ -76,6 +76,7 @@ export const VeramoWeb3Provider = ({
                   enabledMethods: Object.keys(schema['x-methods']),
                   schema: schema,
                 }),
+                new IdentifierProfilePlugin(),
               ],
             })
           },
