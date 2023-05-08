@@ -75,15 +75,12 @@ const ChatView = () => {
       >
         <Row style={{ flexGrow: 1 }}>
           <Col
-            xs={10}
+            xs={{ span: threadId === undefined ? 24 : 0 }}
             sm={10}
             md={10}
             lg={10}
             xl={8}
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              flexGrow: 1,
               height: 'calc(100vh - 161 px)',
               backgroundColor: token.colorFillContent,
             }}
@@ -102,7 +99,7 @@ const ChatView = () => {
                 })}
             </ChatScrollPanel>
           </Col>
-          <Col xs={14} sm={14} md={14} lg={14} xl={16}>
+          <Col xs={24} sm={14} md={14} lg={14} xl={16}>
             <ChatWindow />
           </Col>
         </Row>

@@ -4,8 +4,9 @@ import { format } from 'date-fns'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
-import { IIdentifier, IMessage } from '@veramo/core'
+import { IMessage } from '@veramo/core'
 import { PageContainer } from '@ant-design/pro-components'
+import { shortId } from '../utils/did'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -17,6 +18,8 @@ const messageType = (type: string) => {
       return 'verifiable presentation'
     case 'sdr':
       return 'SDR'
+    default:
+      return type
   }
 }
 
@@ -32,28 +35,19 @@ const Messages = () => {
         order: [{ column: 'createdAt', direction: 'DESC' }],
       }),
   )
-  const { data: managedIdentifiers } = useQuery(
-    ['managedIdentifiers', { agentId: agent?.context.id }],
-    () => agent?.didManagerFind(),
-  )
-  const isManaged = (did: string) => {
-    return managedIdentifiers?.find((i: IIdentifier) => i.did === did)
-  }
 
   return (
     <PageContainer>
       <List
         dataSource={messages}
         renderItem={(item: IMessage, index: number) => (
-          <Card key={index}>
+          <Card key={index} style={{ marginBottom: 10 }}>
             <Card.Meta
               avatar={<Avatar size="large" src={uri(item.from || '')} />}
-              title={item.from}
-              description={
-                (isManaged(item.from || '') ? 'Created a ' : 'Received a ') +
-                messageType(item.type) +
-                ' message '
-              }
+              title={shortId(item.from as string)}
+              description={`To: ${shortId(item.to as string)} - ${messageType(
+                item.type,
+              )}`}
             ></Card.Meta>
             {item?.credentials &&
               item?.credentials.map((vc) => {

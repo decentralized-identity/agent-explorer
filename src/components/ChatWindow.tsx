@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { InfoCircleOutlined } from '@ant-design/icons'
+import { InfoCircleOutlined, LeftOutlined } from '@ant-design/icons'
 import ChatScrollPanel from './ChatScrollPanel'
 import ChatBubble from './ChatBubble'
 import ChatInput from './ChatInput'
@@ -40,7 +40,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
     },
   )
   const lastMessage =
-    messages && messages.length > 0 && messages[messages.length - 1]
+    threadId && messages && messages.length > 0 && messages[messages.length - 1]
   const counterParty = lastMessage
     ? {
         did:
@@ -79,11 +79,21 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
           marginBottom: token.margin,
         }}
         justify={'space-between'}
+        wrap={false}
       >
-        <Col>
-          <IdentifierProfile did={counterParty.did} />
+        <Col xs={3} sm={{ span: 0 }}>
+          <Button
+            type="text"
+            onClick={() => navigate('/chats/threads')}
+            size={'large'}
+          >
+            <LeftOutlined />
+          </Button>
         </Col>
-        <Col>
+        <Col xs={19}>
+          <IdentifierProfile did={counterParty.did} showShortId={false} />
+        </Col>
+        <Col xs={2}>
           <Button
             type="text"
             icon={<InfoCircleOutlined />}

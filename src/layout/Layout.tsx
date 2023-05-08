@@ -92,7 +92,7 @@ const Layout = () => {
     availableMethods.includes('sendDIDCommMessage')
   ) {
     mainMenuItems.push({
-      path: '/chats/threads/:threadId',
+      path: '/chats/threads',
       name: 'DID Chats',
       icon: <MessageOutlined />,
     })
@@ -195,7 +195,7 @@ const Layout = () => {
         token={{
           pageContainer: {
             paddingBlockPageContainerContent: 15,
-            paddingInlinePageContainerContent: 20,
+            paddingInlinePageContainerContent: 15,
           },
         }}
       >
@@ -204,6 +204,7 @@ const Layout = () => {
           <Route path="/agents" element={<Agents />} />
           <Route path="/agent/:id" element={<Agent />} />
           <Route path="/chats/threads/:threadId" element={<Chats />} />
+          <Route path="/chats/threads" element={<Chats />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/known-identifiers" element={<KnownIdentifiers />} />
           <Route path="/managed-identifiers" element={<ManagedIdentifiers />} />

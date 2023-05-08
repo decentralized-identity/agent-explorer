@@ -1,5 +1,14 @@
 import React from 'react'
-import { Button, Card, Layout, Space, Tabs, Input, notification } from 'antd'
+import {
+  Button,
+  Card,
+  Layout,
+  Space,
+  Tabs,
+  Input,
+  notification,
+  QRCode,
+} from 'antd'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -113,6 +122,9 @@ const Identifier = () => {
               value={JSON.stringify(resolutionResult, null, 2)}
             />
           </Card>
+        </TabPane>
+        <TabPane tab="QR Code">
+          <QRCode value={id} size={320} />
         </TabPane>
       </Tabs>
     </PageContainer>

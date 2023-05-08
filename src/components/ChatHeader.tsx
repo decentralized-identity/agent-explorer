@@ -6,7 +6,6 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { useQuery } from 'react-query'
 import { FormOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
 import { IIdentifier } from '@veramo/core'
 import IdentifierProfile from './IdentifierProfile'
 import {
@@ -14,6 +13,7 @@ import {
   IIdentifierProfilePlugin,
 } from '../context/plugins/IdentifierProfile'
 import NewChatThreadModal from './NewChatThreadModal'
+import { useNavigate } from 'react-router-dom'
 const { useToken } = theme
 
 interface ChatHeaderProps {}
@@ -36,7 +36,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
     useState<boolean>(false)
 
   const composeNewThread = () => {
-    navigate('/chats/threads/new-thread')
     setComposing(true)
     setNewThreadModalVisible(true)
   }
@@ -63,7 +62,6 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
     if (agent) {
       Promise.all(
         agentChatIdentifiers.map((identifier) => {
-          console.log({ identifier })
           return agent.getIdentifierProfile({ did: identifier.did })
         }),
       )
@@ -76,10 +74,10 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
 
   return (
     <>
-      <Row align={'top'} justify={'space-between'}>
+      <Row align={'middle'} justify={'space-between'} wrap={false}>
         {agentChatIdentifiersWithProfiles.length > 0 && (
           <Dropdown
-            overlayStyle={{ width: '160px', height: '50px' }}
+            overlayStyle={{ height: '50px' }}
             menu={{
               items: [
                 ...agentChatIdentifiersWithProfiles.map((profile) => {
@@ -96,7 +94,9 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
           >
             <Button style={{ height: 'auto', border: 0 }} type={'text'}>
               <Space>
-                {selectedDid && <IdentifierProfile did={selectedDid} />}
+                {selectedDid && (
+                  <IdentifierProfile did={selectedDid} showShortId={false} />
+                )}
                 <DownOutlined />
               </Space>
             </Button>
@@ -119,6 +119,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
         onCreate={(did) => {
           setNewRecipient(did)
           setNewThreadModalVisible(false)
+          navigate('/chats/threads/new-thread')
         }}
       />
     </>

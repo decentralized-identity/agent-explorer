@@ -7,9 +7,13 @@ import { shortId } from '../utils/did'
 
 interface IdentifierProfileProps {
   did: string
+  showShortId?: boolean
 }
 
-const IdentifierProfile: React.FC<IdentifierProfileProps> = ({ did }) => {
+const IdentifierProfile: React.FC<IdentifierProfileProps> = ({
+  did,
+  showShortId = true,
+}) => {
   const { agent } = useVeramo<IIdentifierProfilePlugin>()
   const { token } = theme.useToken()
 
@@ -31,7 +35,7 @@ const IdentifierProfile: React.FC<IdentifierProfileProps> = ({ did }) => {
           )}
           {isLoading && <Skeleton.Input style={{ width: 100 }} active />}
         </div>
-        {data?.name && data?.name !== shortId(did) && (
+        {showShortId && data?.name && data?.name !== shortId(did) && (
           <div>
             <Typography.Text
               ellipsis
