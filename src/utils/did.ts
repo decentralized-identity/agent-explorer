@@ -5,6 +5,9 @@ export function shortId(id: string) {
 
   function shortDotSeparatedString(str: string) {
     const parts = str.split('.')
+    if (parts.length === 1) {
+      return str
+    }
     return parts
       .map((part) => {
         if (part.length > 10) {
