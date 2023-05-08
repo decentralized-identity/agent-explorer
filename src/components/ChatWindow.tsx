@@ -40,7 +40,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
     },
   )
   const lastMessage =
-    messages && messages.length > 0 && messages[messages.length - 1]
+    threadId && messages && messages.length > 0 && messages[messages.length - 1]
   const counterParty = lastMessage
     ? {
         did:
