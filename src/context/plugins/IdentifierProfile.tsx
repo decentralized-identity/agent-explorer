@@ -101,7 +101,7 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
         if (identifier && identifier.provider) {
           return {
             did: args.did,
-            name: identifier.alias,
+            name: identifier.alias || shortId(args.did),
             picture: fallBackPictureUrl,
           }
         }
