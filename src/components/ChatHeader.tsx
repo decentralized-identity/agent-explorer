@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Row, Button, theme, Dropdown, Space } from 'antd'
+import { Row, Button, theme, Dropdown, Space, Col } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
 import { useChat } from '../context/ChatProvider'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { useQuery } from 'react-query'
-import { FormOutlined } from '@ant-design/icons'
+import { FormOutlined, QrcodeOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
 import IdentifierProfile from './IdentifierProfile'
 import {
@@ -14,6 +14,7 @@ import {
 } from '../context/plugins/IdentifierProfile'
 import NewChatThreadModal from './NewChatThreadModal'
 import { useNavigate } from 'react-router-dom'
+import ChatInviteQRCodeModal from './ChatInviteQRCodeModal'
 const { useToken } = theme
 
 interface ChatHeaderProps {}
@@ -34,6 +35,8 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
 
   const [newThreadModalVisible, setNewThreadModalVisible] =
     useState<boolean>(false)
+
+  const [inviteModalVisible, setInviteModalVisible] = useState<boolean>(false)
 
   const composeNewThread = () => {
     setComposing(true)
@@ -102,12 +105,20 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
             </Button>
           </Dropdown>
         )}
-        <Button
-          style={{ margin: token.margin }}
-          onClick={() => composeNewThread()}
-          icon={<FormOutlined style={{ fontSize: 20 }} />}
-          type={'text'}
-        />
+        <Col>
+          <Button
+            style={{ margin: token.margin }}
+            onClick={() => setInviteModalVisible(true)}
+            icon={<QrcodeOutlined style={{ fontSize: 20 }} />}
+            type={'text'}
+          />
+          <Button
+            style={{ margin: token.margin }}
+            onClick={() => composeNewThread()}
+            icon={<FormOutlined style={{ fontSize: 20 }} />}
+            type={'text'}
+          />
+        </Col>
       </Row>
 
       <NewChatThreadModal
@@ -120,6 +131,17 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
           setNewRecipient(did)
           setNewThreadModalVisible(false)
           navigate('/chats/threads/new-thread')
+        }}
+      />
+
+      <ChatInviteQRCodeModal
+        visible={inviteModalVisible}
+        did={selectedDid}
+        onCancel={() => {
+          setInviteModalVisible(false)
+        }}
+        onOk={() => {
+          setInviteModalVisible(false)
         }}
       />
     </>

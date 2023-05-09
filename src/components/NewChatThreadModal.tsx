@@ -13,7 +13,9 @@ import { QrcodeOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { QrScanner } from '@yudiel/react-qr-scanner'
+import parse from 'url-parse'
 import { shortId } from '../utils/did'
+import { decodeBase64url } from '@veramo/utils'
 
 interface NewChatThreadModalProps {
   visible: boolean
@@ -57,6 +59,24 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
 
   const handleSearch = async (value: string) => {
     setOptions(value ? await searchResult(value) : [])
+  }
+
+  const handleQrCodeResult = async (result: string) => {
+    const parsed = parse(result, true)
+    if ((parsed?.query as any)?._oob) {
+      const decoded = decodeBase64url((parsed?.query as any)?._oob)
+      try {
+        const message = JSON.parse(decoded)
+        if (
+          message.from &&
+          message.type === 'https://didcomm.org/out-of-band/2.0/invitation'
+        ) {
+          onCreate(message.from)
+        }
+      } catch (e) {}
+    } else {
+      onCreate(result)
+    }
   }
   return (
     <Modal
@@ -104,7 +124,7 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
             onDecode={(result) => {
               setShowQrCodeScanner(false)
               setTimeout(() => {
-                onCreate(result)
+                handleQrCodeResult(result)
               }, 125)
             }}
             onError={(error) => {
