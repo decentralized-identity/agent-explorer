@@ -11,21 +11,24 @@ jobs:
       GH_TOKEN: ${{secrets.GH_TOKEN}}
       GH_USER: ${{secrets.GH_USER}}
       GH_EMAIL: ${{secrets.GH_EMAIL}}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
-      - name: 'Setup node with cache'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Use Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
-
-      - run: yarn install --frozen-lockfile
-      - run: yarn test
-      - run: yarn build
+          cache: 'pnpm'
+      - run: pnpm add -g pnpm
+      - run: pnpm install
+      - run: pnpm test
+      - run: pnpm build
 
       - name: 'setup git coordinates'
         run: |
@@ -41,4 +44,4 @@ jobs:
 
       - name: 'publish'
         if: github.ref == 'refs/heads/main'
-        run: yarn release
+        run: pnpm release

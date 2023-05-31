@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Row, Tabs } from 'antd'
+import { Button, Row, Tabs, Card } from 'antd'
 import { VerifiableCredential as Vcred } from '@veramo/core'
 import { VerifiableCredential } from '@veramo-community/react-components'
 import CredentialInfo from './CredentialInfo'
@@ -8,7 +8,6 @@ import { getIssuerDID } from '../utils/did'
 import IdentifierProfile from './IdentifierProfile'
 import { EllipsisOutlined } from '@ant-design/icons'
 import { formatRelative } from 'date-fns'
-import { ProCard } from '@ant-design/pro-components'
 import CredentialActionsDropdown from './CredentialActionsDropdown'
 
 interface CredentialTabsProps {
@@ -23,7 +22,7 @@ const CredentialTabs: React.FC<CredentialTabsProps> = ({ credential }) => {
           key: '0',
           label: 'Pretty',
           children: (
-            <ProCard
+            <Card
               title={<IdentifierProfile did={getIssuerDID(credential)} />}
               extra={
                 <Row align={'middle'}>
@@ -42,7 +41,7 @@ const CredentialTabs: React.FC<CredentialTabsProps> = ({ credential }) => {
               }
             >
               <VerifiableCredential credential={credential} />
-            </ProCard>
+            </Card>
           ),
         },
         {
