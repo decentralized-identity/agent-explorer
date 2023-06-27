@@ -2,6 +2,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDManager } from '@veramo/core'
 import React, { createContext, useState, useContext, useEffect } from 'react'
 import { pickup } from '../utils/didcomm-mediation'
+import { IDIDComm } from '@veramo/did-comm'
 
 const ChatContext = createContext<any>({})
 
@@ -11,7 +12,7 @@ const ChatProvider = (props: any) => {
   const [newRecipient, setNewRecipient] = useState()
 
   const MINUTE_MS = 6000
-  const { agent } = useVeramo<IDIDManager>()
+  const { agent } = useVeramo<IDIDManager & IDIDComm>()
 
   useEffect(() => {
     const checkMyDIDs = async () => {

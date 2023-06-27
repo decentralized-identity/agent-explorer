@@ -9,10 +9,10 @@ import NewIdentifierModalForm, {
   NewIdentifierModalValues,
 } from '../components/NewIdentifierModalForm'
 import { shortId } from '../utils/did'
-import { createMediateRequestMessage } from '../utils/didcomm-mediation'
 import { DeleteOutlined, CopyOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
 import IdentifierProfile from '../components/IdentifierProfile'
+import { createMediateRequestMessage } from '@veramo/did-comm'
 
 const ManagedIdentifiers = () => {
   const { agent } = useVeramo<IDIDManager>()
