@@ -9,6 +9,7 @@ import { useChat } from '../context/ChatProvider'
 import { IDataStoreORM, IMessage } from '@veramo/core'
 import { useEffect } from 'react'
 import { Col, Row, theme } from 'antd'
+import { ML_TEXT_GENERATION_QUESTION_MESSAGE_TYPE, ML_TEXT_GENERATION_RESPONSE_MESSAGE_TYPE } from 'ml-veramo-message-handler'
 const { useToken } = theme
 
 const groupBy = (arr: any[], property: string) => {
@@ -22,7 +23,7 @@ interface IsSenderTaggedMessage extends IMessage {
   isSender: boolean
 }
 
-const ChatView = () => {
+const StarChatView = () => {
   const { token } = useToken()
   const { agent } = useVeramo<IDataStoreORM>()
   const { selectedDid } = useChat()
@@ -31,9 +32,10 @@ const ChatView = () => {
     ['threads', { id: agent?.context.id, selectedDid, threadId }],
     async () => {
       const messages = await agent?.dataStoreORMGetMessages({
-        where: [{ column: 'type', value: ['veramo.io-chat-v1'] }],
+        where: [{ column: 'type', value: [ ML_TEXT_GENERATION_QUESTION_MESSAGE_TYPE, ML_TEXT_GENERATION_RESPONSE_MESSAGE_TYPE] }],
         order: [{ column: 'createdAt', direction: 'DESC' }],
       })
+      console.log("messages: ", messages)
       // TODO: should be able to do this filter in the query instead of here
       const applicableMessages = (messages as IMessage[])?.filter(
         (message) => message.from === selectedDid || message.to === selectedDid,
@@ -64,7 +66,7 @@ const ChatView = () => {
   return (
     <>
       <ChatHeader 
-        msgType='chat'
+        msgType='starchat'
       />
       <div
         style={{
@@ -92,7 +94,7 @@ const ChatView = () => {
                 Object.keys(threads).map((index: any) => {
                   return (
                     <ChatThread
-                      msgType='chat'
+                    msgType='starchat'
                       thread={threads[index]}
                       threadId={index}
                       key={index}
@@ -103,8 +105,8 @@ const ChatView = () => {
             </ChatScrollPanel>
           </Col>
           <Col xs={24} sm={14} md={14} lg={14} xl={16}>
-          <ChatWindow 
-              msgType='chat'
+            <ChatWindow 
+              msgType='starchat'
             />
           </Col>
         </Row>
@@ -113,4 +115,4 @@ const ChatView = () => {
   )
 }
 
-export default ChatView
+export default StarChatView

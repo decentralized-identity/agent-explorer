@@ -17,9 +17,11 @@ import { useNavigate } from 'react-router-dom'
 import ChatInviteQRCodeModal from './ChatInviteQRCodeModal'
 const { useToken } = theme
 
-interface ChatHeaderProps {}
+interface ChatHeaderProps {
+  msgType: string
+}
 
-const ChatHeader: React.FC<ChatHeaderProps> = () => {
+const ChatHeader: React.FC<ChatHeaderProps> = ({ msgType }) => {
   const { token } = useToken()
   const { agent } = useVeramo<IDIDDiscovery & IIdentifierProfilePlugin>()
   const { selectedDid, setSelectedDid, setComposing, setNewRecipient } =
@@ -54,8 +56,10 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
               (key) => key.type === 'X25519' || key.type === 'Ed25519',
             ),
           )
-          setAgentChatIdentifiers(didsWithDIDComm)
-          setSelectedDid(didsWithDIDComm[0].did)
+          if (didsWithDIDComm.length > 0) {
+            setAgentChatIdentifiers(didsWithDIDComm)
+            setSelectedDid(didsWithDIDComm[0].did)
+          }
         }
       },
     },
@@ -130,7 +134,11 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
         onCreate={(did) => {
           setNewRecipient(did)
           setNewThreadModalVisible(false)
-          navigate('/chats/threads/new-thread')
+          if (msgType === 'starchat') {
+            navigate('/starchats/threads/new-thread')
+          } else {
+            navigate('/chats/threads/new-thread')
+          }
         }}
       />
 

@@ -9,12 +9,14 @@ interface ChatThreadProps {
   thread: any
   threadId: string
   threadSelected: boolean
+  msgType: string
 }
 
 const ChatThread: React.FC<ChatThreadProps> = ({
   thread,
   threadId,
   threadSelected,
+  msgType
 }) => {
   const { agent } = useVeramo()
   const { selectedDid, setComposing } = useChat()
@@ -22,7 +24,11 @@ const ChatThread: React.FC<ChatThreadProps> = ({
   const lastMessage = thread[thread.length - 1]
   const viewThread = () => {
     setComposing(false)
-    navigate(`/chats/threads/${threadId}`)
+    if (msgType === 'starchat') {
+      navigate(`/starchats/threads/${threadId}`)
+    } else {
+      navigate(`/chats/threads/${threadId}`)
+    }
   }
 
   const counterPartyDid =

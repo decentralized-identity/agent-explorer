@@ -22,6 +22,7 @@ import Settings from '../pages/Settings'
 import Agents from '../pages/Agents'
 import Agent from '../pages/Agent'
 import Chats from '../pages/Chats'
+import Starchats from '../pages/Starchats'
 import { useVeramo } from '@veramo-community/veramo-react'
 import CreateResponse from '../components/CreateResponse'
 import Statistics from '../pages/Statistics'
@@ -94,6 +95,11 @@ const Layout = () => {
     mainMenuItems.push({
       path: '/chats/threads',
       name: 'DID Chats',
+      icon: <MessageOutlined />,
+    })
+    mainMenuItems.push({
+      path: '/starchats/threads',
+      name: 'Star Chats',
       icon: <MessageOutlined />,
     })
   }
@@ -205,6 +211,8 @@ const Layout = () => {
           <Route path="/agent/:id" element={<Agent />} />
           <Route path="/chats/threads/:threadId" element={<Chats />} />
           <Route path="/chats/threads" element={<Chats />} />
+          <Route path="/starchats/threads/:threadId" element={<Starchats />} />
+          <Route path="/starchats/threads" element={<Starchats />} />
           <Route path="/statistics" element={<Statistics />} />
           <Route path="/known-identifiers" element={<KnownIdentifiers />} />
           <Route path="/managed-identifiers" element={<ManagedIdentifiers />} />

@@ -1,5 +1,6 @@
 import { IAgentContext, IDataStore } from '@veramo/core-types'
 import { AbstractMessageHandler, Message } from '@veramo/message-handler'
+import { ML_TEXT_GENERATION_RESPONSE_MESSAGE_TYPE } from 'ml-veramo-message-handler'
 // import Debug from 'debug'
 // const debug = Debug('veramo:did-comm:message-handler')
 
@@ -18,7 +19,7 @@ export class SaveMessageHandler extends AbstractMessageHandler {
    */
   async handle(message: Message, context: IContext): Promise<Message> {
     // console.log('message received: ', message)
-    if (message.type === 'veramo.io-chat-v1') {
+    if (message.type === 'veramo.io-chat-v1' || message.type === ML_TEXT_GENERATION_RESPONSE_MESSAGE_TYPE) {
       await context.agent.dataStoreSaveMessage({ message })
     }
     return super.handle(message, context)

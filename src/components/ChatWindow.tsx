@@ -10,9 +10,13 @@ import { scrollMessages } from '../utils/scroll'
 import { useChat } from '../context/ChatProvider'
 import IdentifierProfile from './IdentifierProfile'
 import { Button, Col, Row, theme } from 'antd'
+import ChatCredentialBubble from './ChatCredentialBubble'
+import { ML_TEXT_GENERATION_QUESTION_MESSAGE_TYPE, ML_TEXT_GENERATION_RESPONSE_MESSAGE_TYPE } from 'ml-veramo-message-handler'
 
-interface ChatWindowProps {}
-const ChatWindow: React.FC<ChatWindowProps> = () => {
+interface ChatWindowProps {
+  msgType: string
+}
+const ChatWindow: React.FC<ChatWindowProps> = ({ msgType }) => {
   const { threadId } = useParams<{ threadId: string }>()
   const { selectedDid, newRecipient } = useChat()
   const newThread = threadId === 'new-thread'
@@ -84,7 +88,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
         <Col xs={3} sm={{ span: 0 }}>
           <Button
             type="text"
-            onClick={() => navigate('/chats/threads')}
+            onClick={() => navigate(msgType === 'starchat' ? 'starchats/threads' : '/chats/threads')}
             size={'large'}
           >
             <LeftOutlined />
@@ -103,19 +107,32 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
       </Row>
       <ChatScrollPanel reverse id="chat-window">
         {messages?.map((message: any) => {
-          return (
-            <ChatBubble
-              // @ts-ignore
-              text={message?.data?.message}
+          if (message.type === 'veramo.io-chat-v1' || message.type === ML_TEXT_GENERATION_QUESTION_MESSAGE_TYPE) {
+            return (
+              <ChatBubble
+                // @ts-ignore
+                text={message?.data?.message || message?.data?.queryInput}
+                key={message.id}
+                // @ts-ignore
+                isSender={message.isSender}
+              />
+            )
+          }
+          else if (message.type === ML_TEXT_GENERATION_RESPONSE_MESSAGE_TYPE) {
+            return (
+              <ChatCredentialBubble
+              credential={message?.data}
               key={message.id}
               // @ts-ignore
               isSender={message.isSender}
-            />
-          )
+              />
+            )
+          }
         })}
       </ChatScrollPanel>
       {(messages || newThread) && (
         <ChatInput
+          msgType={msgType}
           threadId={threadId}
           viewer={selectedDid}
           recipient={

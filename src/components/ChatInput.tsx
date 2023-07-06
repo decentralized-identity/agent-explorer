@@ -2,10 +2,12 @@ import React, { useState } from 'react'
 import { Input, Button, Row, Col, Alert } from 'antd'
 import { SendOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
+import { IDIDCommMessage } from '@veramo/did-comm'
 import { useChat } from '../context/ChatProvider'
 import { v4 } from 'uuid'
 import { useNavigate } from 'react-router-dom'
 import { shortId } from '../utils/did'
+import { createMLTextGenerationQuestionMessage } from 'ml-veramo-message-handler'
 
 const { TextArea } = Input
 
@@ -13,12 +15,14 @@ interface ChatInputProps {
   viewer: string
   recipient?: string
   threadId?: string
+  msgType: string
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
   viewer,
   recipient: existingRecipient,
   threadId,
+  msgType
 }) => {
   const [message, setMessage] = useState<string>()
   const [errorMessage, setErrorMessage] = useState<string>('')
@@ -35,13 +39,16 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const _threadId = threadId === 'new-thread' ? v4() : threadId
   const messageId = v4()
   const sendMessage = async (msg: string) => {
-    const message = {
+    let message: IDIDCommMessage = {
       type: 'veramo.io-chat-v1',
       to: recipient as string,
       from: selectedDid as string,
       id: messageId,
-      thid: _threadId,
+      thid: _threadId as string,
       body: { message: msg },
+    }
+    if (msgType === 'starchat') {
+      message = createMLTextGenerationQuestionMessage(msg, selectedDid as string, recipient as string, _threadId as string, true)
     }
     let packedMessage
     try {
@@ -78,7 +85,11 @@ const ChatInput: React.FC<ChatInputProps> = ({
           setNewRecipient('')
           setComposing(false)
 
-          navigate('/chats/threads/' + _threadId)
+          if (msgType === 'starchat') {
+            navigate('/starchats/threads/' + _threadId)
+          } else {
+            navigate('/chats/threads/' + _threadId)
+          }
         }
       } catch (err) {
         console.error('Error in sendDIDCommMessage: ', err)

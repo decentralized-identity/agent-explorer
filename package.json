@@ -167,6 +167,7 @@
     "react-router-dom": "^6.11.2",
     "react-scripts": "^5.0.1",
     "semantic-release": "^21.0.2",
+    "ml-veramo-message-handler": "^1.0.3",
     "stream": "npm:stream-browserify@^3.0.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
