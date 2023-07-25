@@ -10,6 +10,7 @@ import {
   CodeOutlined,
   GlobalOutlined,
   FileProtectOutlined,
+  RobotOutlined,
 } from '@ant-design/icons'
 import { Routes, Route, useLocation, Link, Navigate } from 'react-router-dom'
 import Connect from '../pages/Connect'
@@ -35,6 +36,8 @@ import AgentDropdown from '../components/AgentDropdown'
 import KnownIdentifiers from '../pages/KnownIdentifiers'
 import ManagedIdentifiers from '../pages/ManagedIdentifiers'
 import CredentialVerifier from '../pages/CredentialVerifier'
+import Codyfight from '../pages/Codyfight/Codyfight'
+import CodyfightGame from '../pages/Codyfight/CodyfightGame'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -152,6 +155,14 @@ const Layout = () => {
     icon: <SettingOutlined />,
   })
 
+  if (availableMethods.includes('dataStoreORMGetVerifiableCredentials')) {
+    mainMenuItems.push({
+      path: '/codyfight',
+      name: 'Codyfight',
+      icon: <RobotOutlined />,
+    })
+  }
+
   return (
     <div
       style={{
@@ -233,6 +244,8 @@ const Layout = () => {
             element={<CreatePresentation />}
           />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/codyfight" element={<Codyfight />} />
+          <Route path="/codyfight/game/:id" element={<CodyfightGame />} />
           {!agent && (
             <Route path="/" element={<Navigate replace to="/connect" />} />
           )}
