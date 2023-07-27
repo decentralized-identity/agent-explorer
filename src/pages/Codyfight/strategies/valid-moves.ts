@@ -1,6 +1,6 @@
 import { GameState, GameStrategy } from "../lib/codyfight-game-client/src";
 
-export function getValidMovesStrategyActions(game: GameState): GameStrategy[] {
+export function getValidMovesStrategyActions(game: GameState): GameStrategy {
   let strategies: GameStrategy[] = [];
 
   game.players.bearer.possible_moves.forEach((move) => {
@@ -27,10 +27,10 @@ export function getValidMovesStrategyActions(game: GameState): GameStrategy[] {
       });
     });
   });
-  return [{
+  return {
     name: 'Random',
     description: 'Random',
     actions: [strategies[Math.floor(Math.random() * strategies.length)].actions[0]]
-  }];
+  };
 
 }

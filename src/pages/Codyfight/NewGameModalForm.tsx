@@ -1,36 +1,25 @@
 import React from 'react'
 import { Modal, Form, Input, Select } from 'antd'
-import { IDIDManager } from '@veramo/core-types'
-import { useQuery } from 'react-query'
-import { useVeramo } from '@veramo-community/veramo-react'
-import IdentifierProfile from '../../components/IdentifierProfile'
 const { Option } = Select
 
 export interface NewGameModalValues {
-  ckey: string
   mode: 0 | 1 | 2 | 3
-  identifier: string
+  opponent?: string
 }
 
-interface InitGameModalFormProps {
+interface NewGameModalFormProps {
   visible: boolean
   onNewGame: (values: NewGameModalValues) => void
   onCancel: () => void
 }
 
-const NewGameModalForm: React.FC<InitGameModalFormProps> = ({
+const NewGameModalForm: React.FC<NewGameModalFormProps> = ({
   visible,
   onNewGame,
   onCancel,
 }) => {
   const [form] = Form.useForm()
-  const { agent } = useVeramo<IDIDManager>()
-  
-  const {
-    data: identifiers,
-  } = useQuery(['identifiers', { agentId: agent?.context.id }], () =>
-    agent?.didManagerFind(),
-  )
+  const modeValue = Form.useWatch('mode', form);
 
   const gameModes = [
     { mode: 0, name: 'Sandbox' },
@@ -63,9 +52,7 @@ const NewGameModalForm: React.FC<InitGameModalFormProps> = ({
         name="form_in_modal"
         initialValues={{}}
       >
-        <Form.Item name="ckey" label="CKey">
-          <Input />
-        </Form.Item>
+
         <Form.Item
           name="mode"
           label="Game Mode"
@@ -88,27 +75,9 @@ const NewGameModalForm: React.FC<InitGameModalFormProps> = ({
           </Select>
         </Form.Item>
 
-        <Form.Item
-          name="identifier"
-          label="Managed Identifier"
-          rules={[
-            { required: true, message: 'Please select managed identifier!' },
-          ]}
-        >
-          <Select
-            placeholder="Identifier"
-            onChange={(value) => form.setFieldsValue({ identifier: value })}
-            allowClear
-          >
-            {identifiers?.map((item) => {
-              return (
-                <Option value={item.did} key={item.did}>
-                  <IdentifierProfile did={item.did} />
-                </Option>
-              )
-            })}
-          </Select>
-        </Form.Item>
+        {modeValue === 1 && <Form.Item name="opponent" label="Opponent">
+          <Input />
+        </Form.Item>}
 
 
       </Form>

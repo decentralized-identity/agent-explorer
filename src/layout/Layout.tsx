@@ -36,7 +36,7 @@ import AgentDropdown from '../components/AgentDropdown'
 import KnownIdentifiers from '../pages/KnownIdentifiers'
 import ManagedIdentifiers from '../pages/ManagedIdentifiers'
 import CredentialVerifier from '../pages/CredentialVerifier'
-import Codyfight from '../pages/Codyfight/Codyfight'
+import Operators from '../pages/Codyfight/Operators'
 import Operator from '../pages/Codyfight/Operator'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
@@ -244,7 +244,7 @@ const Layout = () => {
             element={<CreatePresentation />}
           />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/codyfight" element={<Codyfight />} />
+          <Route path="/codyfight" element={<Operators />} />
           <Route path="/codyfight/operator/:id" element={<Operator />} />
           {!agent && (
             <Route path="/" element={<Navigate replace to="/connect" />} />

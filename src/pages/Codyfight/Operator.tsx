@@ -10,17 +10,18 @@ import { GameAPI } from './lib/codyfight-game-client/src/GameApi'
 import { Button, Col, Progress, Row, Segmented, Switch, Tag, Typography, notification } from 'antd'
 import { Stage } from '@pixi/react'
 import { GameMap } from './GameMap'
-import { getKillOpponentStrategyActions } from './strategies/kill-opponent';
-import { getValidMovesStrategyActions } from './strategies/valid-moves';
 import { StrategyMap } from './StrategyMap'
 import { CloudDownloadOutlined, CloudUploadOutlined } from '@ant-design/icons'
-import { useResize } from './utils'
+import { useResize } from './utils/use-resize'
+import NewGameModalForm, { NewGameModalValues } from './NewGameModalForm'
+import { getAllStrategies } from './strategies'
 
 const api = new GameAPI()
 
 
 const Credential = () => {
   const size = useResize()
+  const [isNewGameModalVisible, setIsNewGameModalVisible] = useState(false)
   const { id } = useParams<{ id: string }>()
   const { agent } = useVeramo<IDIDManager & IDataStore & IDataStoreORM>()
   const queryClient = useQueryClient();
@@ -44,10 +45,7 @@ const Credential = () => {
 
   useEffect(() => {
     if (game?.state.status === GAME_STATUS_PLAYING && game?.players?.bearer.is_player_turn) {
-      const strategies: GameStrategy[] = [
-        getKillOpponentStrategyActions(game),
-        ...getValidMovesStrategyActions(game),
-      ]
+      const strategies = getAllStrategies(game)
       setStrategies(strategies)
     } else {
       setStrategies([])
@@ -58,7 +56,7 @@ const Credential = () => {
     const interval = setInterval(async () => {
       try {
         if (game?.state.status === GAME_STATUS_PLAYING) {
-          console.log('refetch')
+          // console.log('refetch')
           refetch()
         } 
       } catch (e) {
@@ -93,10 +91,11 @@ const Credential = () => {
 
   }
 
-  const handleNewGame = async () => {
+  const handleNewGame = async (values: NewGameModalValues) => {
+    setIsNewGameModalVisible(false)
     try {
       const api = new GameAPI()
-      await api.init(credential?.credentialSubject?.ckey, 0)
+      await api.init(credential?.credentialSubject?.ckey, values.mode, values.opponent)
       refetch()
     } catch (e: any) {
       notification.error({
@@ -113,13 +112,14 @@ const Credential = () => {
   const yCount = game.map[0].length;
 
   const tileSize = Math.min((size.width - 30) / xCount, 64)
+  if (selectedStrategyIndex ) console.log(strategies[selectedStrategyIndex])
   return (
     <>
     <Row style={{marginBottom: 4}}>
       <Col span={22}>
       
         <Typography.Paragraph>
-          {game?.state.status === GAME_STATUS_TERMINATED && <Button onClick={handleNewGame} type='primary' size='small' style={{marginRight: 4}}>Start</Button>}
+          {game?.state.status === GAME_STATUS_TERMINATED && <Button onClick={() => setIsNewGameModalVisible(true)} type='primary' size='small' style={{marginRight: 4}}>Start</Button>}
           {game?.state.status !== GAME_STATUS_TERMINATED && <Button onClick={()=>refetch()} disabled={isGameStateLoading} size='small' style={{marginRight: 4}} icon={<CloudDownloadOutlined />}></Button>}
           {game?.state.status === GAME_STATUS_TERMINATED && <Tag color="error">Terminated</Tag>}
           {game?.state.status === GAME_STATUS_TERMINATED && <Tag color="info">{game?.verdict.context}, {game?.verdict.statement}{game?.verdict.winner ? ', winner: ' + game?.verdict.winner : ''}</Tag>}
@@ -168,6 +168,17 @@ const Credential = () => {
         {game && <iframe title='Codyfight widget' src={`https://widget.codyfight.com/?spectate=${game?.players.bearer.name}`} width="100%" height="100%" />}
       </Col>}
     </Row>
+
+    {agent?.availableMethods().includes('createVerifiableCredential') && (
+        <NewGameModalForm
+          visible={isNewGameModalVisible}
+          onNewGame={handleNewGame}
+          onCancel={() => {
+            setIsNewGameModalVisible(false)
+          }}
+        />
+      )}
+
     </>
   )
 }

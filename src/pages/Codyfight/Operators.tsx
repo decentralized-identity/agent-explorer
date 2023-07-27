@@ -15,14 +15,14 @@ import NewOperatorModalForm, {
   NewOperatorModalValues,
 } from './NewOperatorModalForm'
 import { GameAPI } from './lib/codyfight-game-client/src/GameApi'
-import { createOperatorCredential, createProfileCredential } from './credentials'
+import { createOperatorCredential, createProfileCredential } from './utils/credentials'
 import { OperatorSummary } from './OperatorSummary'
 
 
-const Codyfight = () => {
+const Operators = () => {
   const navigate = useNavigate()
   const { agent } = useVeramo<IDataStoreORM & ICredentialIssuer & IDataStoreORM & IDataStore>()
-  const [isNewGameModalVisible, setIsNewGameModalVisible] = useState(false)
+  const [isNewOperatorModalVisible, setIsNewOperatorModalVisible] = useState(false)
 
   
   const { data: credentials, isLoading, refetch } = useQuery(
@@ -37,7 +37,7 @@ const Codyfight = () => {
   )
 
   const handleNewOperatorOk = async (values: NewOperatorModalValues) => {
-    setIsNewGameModalVisible(false)
+    setIsNewOperatorModalVisible(false)
     try {
       if (!agent) { return false }
       const api = new GameAPI()
@@ -89,10 +89,6 @@ const Codyfight = () => {
         description: msg ,
       })
     }
-
-
-
-
   }
 
 
@@ -104,7 +100,7 @@ const Codyfight = () => {
         icon={<RobotOutlined />}
         type="text"
         title="New Game"
-        onClick={() => setIsNewGameModalVisible(true)}
+        onClick={() => setIsNewOperatorModalVisible(true)}
       />,
     ]}
     >
@@ -157,10 +153,10 @@ const Codyfight = () => {
       />
       {agent?.availableMethods().includes('createVerifiableCredential') && (
         <NewOperatorModalForm
-          visible={isNewGameModalVisible}
+          visible={isNewOperatorModalVisible}
           onOk={handleNewOperatorOk}
           onCancel={() => {
-            setIsNewGameModalVisible(false)
+            setIsNewOperatorModalVisible(false)
           }}
         />
       )}
@@ -168,4 +164,4 @@ const Codyfight = () => {
   )
 }
 
-export default Codyfight
+export default Operators

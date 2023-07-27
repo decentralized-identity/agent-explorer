@@ -1,5 +1,5 @@
 import { GameAction, GameState, GameStrategy } from "../lib/codyfight-game-client/src";
-import { dijkstra } from "../strategy";
+import { dijkstra } from "../utils/dijkstra";
 
 export function getKillOpponentStrategyActions(game: GameState): GameStrategy {
   let strategyActions: GameAction[] = []
@@ -17,6 +17,7 @@ export function getKillOpponentStrategyActions(game: GameState): GameStrategy {
     strategyActions = actions
   }
 
+  // TODO: kill opponent
   strategyActions.push({
     type: 'skill',
     skill: game.players.bearer.skills.find(skill => skill.name === 'Blade Strike')!,
