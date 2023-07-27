@@ -8,17 +8,19 @@ import { GAME_STATUS_PLAYING, GAME_STATUS_TERMINATED, GameStrategy } from './lib
 import { IDIDManager, IDataStore, IDataStoreORM } from '@veramo/core-types'
 import { GameAPI } from './lib/codyfight-game-client/src/GameApi'
 import { Button, Col, Progress, Row, Segmented, Switch, Tag, Typography, notification } from 'antd'
-import { TILE_SIZE } from './consts'
 import { Stage } from '@pixi/react'
 import { GameMap } from './GameMap'
 import { getKillOpponentStrategyActions } from './strategies/kill-opponent';
 import { getValidMovesStrategyActions } from './strategies/valid-moves';
 import { StrategyMap } from './StrategyMap'
 import { CloudDownloadOutlined, CloudUploadOutlined } from '@ant-design/icons'
+import { useResize } from './utils'
 
 const api = new GameAPI()
 
+
 const Credential = () => {
+  const size = useResize()
   const { id } = useParams<{ id: string }>()
   const { agent } = useVeramo<IDIDManager & IDataStore & IDataStoreORM>()
   const queryClient = useQueryClient();
@@ -104,10 +106,13 @@ const Credential = () => {
     }
   }
 
-  const xCount = game?.map?.length;
-  const yCount = game?.map[0].length;
-
+  
   if (!agent || !credential || !game) return null
+
+  const xCount = game.map.length;
+  const yCount = game.map[0].length;
+
+  const tileSize = Math.min((size.width - 30) / xCount, 64)
   return (
     <>
     <Row style={{marginBottom: 4}}>
@@ -152,11 +157,11 @@ const Credential = () => {
     <Row style={{height: 'calc(100vh - 200px)'}}>
       <Col sm={24} lg={spectate ? 12 : 24}>
             {game && xCount && yCount && <Stage 
-              width={xCount * TILE_SIZE} 
-              height={yCount * TILE_SIZE} 
+              width={xCount * tileSize} 
+              height={yCount * tileSize} 
               >
-              <GameMap game={game} />
-              {selectedStrategyIndex !== undefined && strategies[selectedStrategyIndex] && <StrategyMap game={game} actions={strategies[selectedStrategyIndex].actions} />}
+              <GameMap game={game} tileSize={tileSize}/>
+              {selectedStrategyIndex !== undefined && strategies[selectedStrategyIndex] && <StrategyMap tileSize={tileSize} game={game} actions={strategies[selectedStrategyIndex].actions} />}
             </Stage>}
       </Col>
       {spectate && <Col sm={24} lg={spectate ? 12 : 24} style={{height: '100%'}}>

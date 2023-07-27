@@ -1,37 +1,37 @@
 import { Container, Sprite } from '@pixi/react';
 import { GameState, MapCellState } from './lib/codyfight-game-client/src';
-import { TILE_SIZE } from './consts';
 
 
 export const GameMap: React.FC<{
-  game: GameState
-}> = ({ game }) => {
+  game: GameState,
+  tileSize: number
+}> = ({ game, tileSize }) => {
   return (
   <Container position={[0, 0]} anchor={0} alpha={0.5}>
-    {game.map.map((row, x) => row.map((cell, y) => <MapTile key={`${x}-${y}`} cell={cell} />))}
+    {game.map.map((row, x) => row.map((cell, y) => <MapTile tileSize={tileSize} key={`${x}-${y}`} cell={cell} />))}
     {game.players.bearer.position !== null && <Sprite 
       anchor={0} 
-      x={game.players.bearer.position.x * TILE_SIZE} 
-      y={game.players.bearer.position.y * TILE_SIZE} 
-      width={TILE_SIZE} 
-      height={TILE_SIZE} 
+      x={game.players.bearer.position.x * tileSize} 
+      y={game.players.bearer.position.y * tileSize} 
+      width={tileSize} 
+      height={tileSize} 
       image={`/assets/codyfighter/${game.players.bearer.codyfighter.type}.png`} 
     />}
     {game.players.opponent.position !== null && <Sprite 
       anchor={0} 
-      x={game.players.opponent.position.x * TILE_SIZE} 
-      y={game.players.opponent.position.y * TILE_SIZE} 
-      width={TILE_SIZE} 
-      height={TILE_SIZE} 
+      x={game.players.opponent.position.x * tileSize} 
+      y={game.players.opponent.position.y * tileSize} 
+      width={tileSize} 
+      height={tileSize} 
       image={`/assets/codyfighter/${game.players.opponent.codyfighter.type}.png`} 
     />}
     {game.special_agents.map((agent, i) => <Sprite 
       key={i} 
       anchor={0} 
-      x={agent.position.x * TILE_SIZE} 
-      y={agent.position.y * TILE_SIZE} 
-      width={TILE_SIZE} 
-      height={TILE_SIZE} 
+      x={agent.position.x * tileSize} 
+      y={agent.position.y * tileSize} 
+      width={tileSize} 
+      height={tileSize} 
       image={`/assets/special-agent/${agent.type}.png`} 
     />)}
   </Container>
@@ -41,14 +41,15 @@ export const GameMap: React.FC<{
 
 export const MapTile: React.FC<{
   cell: MapCellState
-}> = ({ cell }) => {
+  tileSize: number
+}> = ({ cell, tileSize }) => {
   return (
     <Sprite 
       anchor={0} 
-      x={cell.position.x * TILE_SIZE} 
-      y={cell.position.y * TILE_SIZE} 
-      width={TILE_SIZE} 
-      height={TILE_SIZE}
+      x={cell.position.x * tileSize} 
+      y={cell.position.y * tileSize} 
+      width={tileSize} 
+      height={tileSize}
       image={assetUrl(cell)}
       />
   )
