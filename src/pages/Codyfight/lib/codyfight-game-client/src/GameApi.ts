@@ -57,9 +57,11 @@ export class GameAPI {
     if (method === 'GET') {
       config.url = `${this.apiURL}?ckey=${params.ckey}`
     }
-
-    const { data } = await axios(config)
-
-    return data
+    try {
+      const { data } = await axios(config)
+      return data
+    } catch (e: any) {
+      throw new Error(e.response.data.message)
+    }
   }
 }

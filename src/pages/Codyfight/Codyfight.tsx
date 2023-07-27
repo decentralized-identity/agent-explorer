@@ -4,67 +4,82 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PageContainer, ProList } from '@ant-design/pro-components'
-import { VerifiableCredential as VerifiableCredentialCard } from '@veramo-community/react-components'
-import { ICredentialIssuer, IDataStore, IDataStoreORM, UniqueVerifiableCredential, VerifiableCredential } from '@veramo/core'
+import { ICredentialIssuer, IDataStore, IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
 import { EllipsisOutlined } from '@ant-design/icons'
 import IdentifierProfile from '../../components/IdentifierProfile'
 import { getIssuerDID } from '../../utils/did'
 import CredentialActionsDropdown from '../../components/CredentialActionsDropdown'
 import { Button, notification } from 'antd'
 import { RobotOutlined } from '@ant-design/icons'
-import NewGameModalForm, {
-  NewGameModalValues,
-} from './InitGameModalForm'
+import NewOperatorModalForm, {
+  NewOperatorModalValues,
+} from './NewOperatorModalForm'
 import { GameAPI } from './lib/codyfight-game-client/src/GameApi'
+import { createOperatorCredential, createProfileCredential } from './credentials'
+import { OperatorSummary } from './OperatorSummary'
+
 
 const Codyfight = () => {
   const navigate = useNavigate()
   const { agent } = useVeramo<IDataStoreORM & ICredentialIssuer & IDataStoreORM & IDataStore>()
-
   const [isNewGameModalVisible, setIsNewGameModalVisible] = useState(false)
 
+  
   const { data: credentials, isLoading, refetch } = useQuery(
     ['credentials', { agentId: agent?.context.name }],
     () =>
       agent?.dataStoreORMGetVerifiableCredentials({
         where: [{
-          column: 'type', value: ['VerifiableCredential,Codyfight,InitGame']
+          column: 'type', value: ['VerifiableCredential,Codyfight,Operator']
         }],
         order: [{ column: 'issuanceDate', direction: 'DESC' }],
       }),
   )
 
-  const handleNewIdentifierOk = async (values: NewGameModalValues) => {
+  const handleNewOperatorOk = async (values: NewOperatorModalValues) => {
     setIsNewGameModalVisible(false)
     try {
-
+      if (!agent) { return false }
       const api = new GameAPI()
-      const game = await api.init(values.ckey, values.mode)
+      const game = await api.check(values.ckey)
 
-      const credential = await agent?.createVerifiableCredential({
-        credential: {
-          type: ['VerifiableCredential', 'Codyfight', 'InitGame'],
-          issuer: { id: values.identifier },
-          issuanceDate: new Date().toISOString(),
-          credentialSubject: {
-            ckey: values.ckey,
-            mode: values.mode,
-            game,
+
+
+      const identifier = await agent?.didManagerCreate({
+        alias: game.players.bearer.name,
+        provider: 'did:peer',
+        options: {
+          num_algo: 2,
+          service: {
+            id: '1234',
+            type: 'DIDCommMessaging',
+            serviceEndpoint: values.mediator,
+            description: 'a DIDComm endpoint',
           },
         },
-        proofFormat: 'jwt',
       })
+      
+      const profile = {
+        id: identifier.did,
+        name: game.players.bearer.name,
+        picture: `https://codyfight.b-cdn.net/game/codyfighter/${game.players.bearer.codyfighter.type}.png` ,
+      }
+
+      const credential = await createOperatorCredential(agent, {ckey: values.ckey, id: identifier.did})
+      const profileCredential = await createProfileCredential(agent, profile)
   
-      if (credential) {
-        const result = await agent?.dataStoreSaveVerifiableCredential({
+      if (credential && profileCredential) {
+        await agent?.dataStoreSaveVerifiableCredential({
           verifiableCredential: credential,
+        })
+        await agent?.dataStoreSaveVerifiableCredential({
+          verifiableCredential: profileCredential,
         })
           
         refetch()
         notification.success({
-          message: 'Game created',
+          message: 'Operator created',
         })
-        navigate('/codyfight/game/' + result)
   
       }
     } catch (e: any) {
@@ -103,8 +118,8 @@ const Codyfight = () => {
         grid={{ column: 1, lg: 2, xxl: 2, xl: 2 }}
         onItem={(record: any) => {
           return {
-            onClick: () => {
-              navigate('/codyfight/game/' + record.hash)
+            onClick: (a) => {
+              navigate('/codyfight/operator/' + record.hash)
             },
           }
         }}
@@ -133,19 +148,17 @@ const Codyfight = () => {
                 <EllipsisOutlined />
               </CredentialActionsDropdown>,
             ],
-            content: (
-              <div style={{ width: '100%' }}>
-                <VerifiableCredentialCard credential={item.verifiableCredential} />
-              </div>
+            content: (<OperatorSummary credential={item.verifiableCredential} />
             ),
             hash: item.hash,
+            verifiableCredential: item.verifiableCredential,
           }
         })}
       />
       {agent?.availableMethods().includes('createVerifiableCredential') && (
-        <NewGameModalForm
+        <NewOperatorModalForm
           visible={isNewGameModalVisible}
-          onNewGame={handleNewIdentifierOk}
+          onOk={handleNewOperatorOk}
           onCancel={() => {
             setIsNewGameModalVisible(false)
           }}

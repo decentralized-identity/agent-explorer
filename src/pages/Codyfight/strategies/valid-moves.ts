@@ -27,6 +27,10 @@ export function getValidMovesStrategyActions(game: GameState): GameStrategy[] {
       });
     });
   });
+  return [{
+    name: 'Random',
+    description: 'Random',
+    actions: [strategies[Math.floor(Math.random() * strategies.length)].actions[0]]
+  }];
 
-  return strategies;
 }

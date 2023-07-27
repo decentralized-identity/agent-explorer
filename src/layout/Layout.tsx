@@ -37,7 +37,7 @@ import KnownIdentifiers from '../pages/KnownIdentifiers'
 import ManagedIdentifiers from '../pages/ManagedIdentifiers'
 import CredentialVerifier from '../pages/CredentialVerifier'
 import Codyfight from '../pages/Codyfight/Codyfight'
-import CodyfightGame from '../pages/Codyfight/CodyfightGame'
+import Operator from '../pages/Codyfight/Operator'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -158,7 +158,7 @@ const Layout = () => {
   if (availableMethods.includes('dataStoreORMGetVerifiableCredentials')) {
     mainMenuItems.push({
       path: '/codyfight',
-      name: 'Codyfight',
+      name: 'Codyfight operators',
       icon: <RobotOutlined />,
     })
   }
@@ -245,7 +245,7 @@ const Layout = () => {
           />
           <Route path="/settings" element={<Settings />} />
           <Route path="/codyfight" element={<Codyfight />} />
-          <Route path="/codyfight/game/:id" element={<CodyfightGame />} />
+          <Route path="/codyfight/operator/:id" element={<Operator />} />
           {!agent && (
             <Route path="/" element={<Navigate replace to="/connect" />} />
           )}

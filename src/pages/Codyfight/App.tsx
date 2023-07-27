@@ -38,8 +38,9 @@ export const App: React.FC<{
         setGame(game)
         setSelectedStrategy(undefined)
         setStrategies(strategies)
-      } catch (e) {
-        console.error(e)
+      } catch (e: any) {
+        // console.error(e?.message)
+        console.error(e?.response?.data?.message)
       }
     }, 1000)
     return () => clearInterval(interval)

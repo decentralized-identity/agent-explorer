@@ -7,11 +7,12 @@ export const StrategyMap: React.FC<{
   game: GameState
   actions: GameAction[]
 }> = ({ game, actions }) => {
-
+  console.log('actions', actions)
   return (
-  <Container position={[0, 0]} anchor={0} alpha={0.4}>
+  <Container position={[0, 0]} anchor={0} alpha={1}>
     {actions.map((action, i) => <Sprite 
       key={i}
+      alpha={ i === 0 ? 1 : 0.5}
       anchor={0} 
       x={action.position.x * TILE_SIZE} 
       y={action.position.y * TILE_SIZE} 
