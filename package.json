@@ -144,6 +144,7 @@
     "@web3-react/metamask": "^8.2.1",
     "@web3-react/types": "^8.2.0",
     "@web3-react/walletconnect": "^8.2.0",
+    "@xstate/react": "^3.2.2",
     "@yudiel/react-qr-scanner": "^1.1.8",
     "antd": "~5.5.2",
     "assert": "npm:assert-browserify@^2.0.0",
@@ -178,6 +179,7 @@
     "util": "^0.12.5",
     "uuid": "^9.0.0",
     "web-did-resolver": "^2.0.24",
-    "web-vitals": "^3.3.2"
+    "web-vitals": "^3.3.2",
+    "xstate": "^4.38.2"
   }
 }

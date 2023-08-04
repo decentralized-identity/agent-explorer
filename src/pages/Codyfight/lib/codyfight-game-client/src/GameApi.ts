@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { GameState } from './index.js'
 
+
 export const API_URL = 'https://game.codyfight.com/'
 
 export class GameAPI {
@@ -8,13 +9,6 @@ export class GameAPI {
 
   constructor(apiURL: string = API_URL) {
     this.apiURL = apiURL
-  }
-
-  getGameConstants() {
-    return {
-      // Game constant
-      // ...
-    }
   }
 
   async init(
