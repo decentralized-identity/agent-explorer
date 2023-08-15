@@ -27,10 +27,12 @@ interface ConfigureEvent extends AnyEventObject {
 interface CastEvent extends AnyEventObject {
   position?: Position;
   skill?: SkillState;
+  callback?: (data: GameState) => Promise<void>;
 };
 
 interface MoveEvent extends AnyEventObject {
   position?: Position;
+  callback?: (data: GameState) => Promise<void>;
 };
 
 
@@ -211,16 +213,25 @@ export const services = {
     if (!context.ckey) return Promise.reject('Ckey is missing')
     return api.check(context.ckey) 
   },
-  move: (context: GameContext, event: MoveEvent) => {
+  move: async (context: GameContext, event: MoveEvent) => {
     if (!context.ckey) return Promise.reject('Ckey is missing')
     if (event.position === undefined) return Promise.reject('Position is missing')
-    return api.move(context.ckey, event.position.x, event.position.y) 
+    const newState = await api.move(context.ckey, event.position.x, event.position.y);
+    if (event.callback !== undefined) {
+      await event.callback(newState);
+    }
+    return newState;
+
   },
-  cast: (context: GameContext, event: CastEvent) => {
+  cast: async (context: GameContext, event: CastEvent) => {
     if (!context.ckey) return Promise.reject('Ckey is missing')
     if (event.position === undefined) return Promise.reject('Position is missing')
     if (event.skill === undefined) return Promise.reject('Skill is missing')
-    return api.cast(context.ckey, event.skill.id, event.position.x, event.position.y) 
+    const newState = await api.cast(context.ckey, event.skill.id, event.position.x, event.position.y);
+    if (event.callback !== undefined) {
+      await event.callback(newState);
+    }
+    return newState;
   },
 
 };

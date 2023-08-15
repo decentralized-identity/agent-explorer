@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useMachine } from '@xstate/react';
-import { GAME_STATUS_TERMINATED, GameStrategy } from './lib/codyfight-game-client/src'
-import { IDIDManager, IDataStore, IDataStoreORM } from '@veramo/core-types'
+import { GAME_STATUS_TERMINATED, GameState, GameStrategy } from './lib/codyfight-game-client/src'
+import { ICredentialIssuer, IDIDManager, IDataStore, IDataStoreORM } from '@veramo/core-types'
 import { Alert, Button, Col, Row, Segmented, Switch, Typography } from 'antd'
 import { CloudUploadOutlined } from '@ant-design/icons'
 import NewGameModalForm, { NewGameModalValues } from './NewGameModalForm'
@@ -12,10 +12,11 @@ import { getAllStrategies } from './strategies'
 import { stateMachine, services } from './lib/codyfight-game-client/src/state-machine'
 import { GameInfo } from './GameInfo';
 import { GameStage } from './GameStage';
+import { getIssuerDID } from '../../utils/did';
 
-const Credential = () => {
+const Operator = () => {
   const { id } = useParams<{ id: string }>()
-  const { agent } = useVeramo<IDIDManager & IDataStore & IDataStoreORM>()
+  const { agent } = useVeramo<IDIDManager & IDataStore & IDataStoreORM & ICredentialIssuer>()
   const [isNewGameModalVisible, setIsNewGameModalVisible] = useState(false)
   const [selectedStrategyIndex, setSelectedStrategyIndex] = useState<number | undefined>(undefined)
   const [strategies, setStrategies] = useState<GameStrategy[]>([])
@@ -45,12 +46,39 @@ const Credential = () => {
 
   const handleExecuteStrategy = async (strategy: GameStrategy) => {
     const action = strategy.actions[0]    
+
+    const callback = async (newGameState: GameState) => {
+      console.log('callback', newGameState)
+      if (credential) {
+        const actionCredential = await agent?.createVerifiableCredential({
+          credential: {
+            issuer: getIssuerDID(credential),
+            issuanceDate: new Date().toISOString(),
+            type: ['Codyfight', 'GameAction'],
+            credentialSubject: {
+              id: `${newGameState.state.id}`,
+              action,
+              strategy,
+              previousState: game,
+              game: newGameState,
+            },
+          },
+          proofFormat: 'jwt',
+        })
+        if (!actionCredential) throw new Error('Could not create credential')
+        await agent?.dataStoreSaveVerifiableCredential({
+          verifiableCredential: actionCredential,
+        })
+        console.log('actionCredential saved', actionCredential)
+      }
+    }
+
     switch (action.type) {
       case 'move':
-        send('move', {position: action.position})
+        send('move', {position: action.position, callback})
         break;
       case 'skill':
-        send('cast', {position: action.position, skill: action.skill})
+        send('cast', {position: action.position, skill: action.skill, callback})
         break;
     }
   }
@@ -130,4 +158,4 @@ const Credential = () => {
   )
 }
 
-export default Credential
+export default Operator
