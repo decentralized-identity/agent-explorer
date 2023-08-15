@@ -108,7 +108,7 @@ export async function createWeb3Agent({
           }).ethr,
           web: webDidResolver().web,
           peer: peerDidResolver().peer,
-        }),
+        }, { cache: true }),
       }),
       new KeyManager({
         store: new KeyStoreJson(identifierDataStore),

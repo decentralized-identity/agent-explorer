@@ -1,57 +1,6 @@
-import { IDIDCommMessage } from '@veramo/did-comm'
-import { v4 } from 'uuid'
+import { createDeliveryRequestMessage, createStatusRequestMessage } from '@veramo/did-comm'
 
-const MEDIATE_REQUEST_MESSAGE_TYPE =
-  'https://didcomm.org/coordinate-mediation/2.0/mediate-request'
-const STATUS_REQUEST_MESSAGE_TYPE =
-  'https://didcomm.org/messagepickup/3.0/status-request'
-export const DELIVERY_REQUEST_MESSAGE_TYPE =
-  'https://didcomm.org/messagepickup/3.0/delivery-request'
-
-function createMediateRequestMessage(
-  recipientDidUrl: string,
-  mediatorDidUrl: string,
-): IDIDCommMessage {
-  return {
-    type: MEDIATE_REQUEST_MESSAGE_TYPE,
-    from: recipientDidUrl,
-    to: mediatorDidUrl,
-    id: v4(),
-    return_route: 'all',
-    created_time: new Date().toISOString(),
-    body: {},
-  }
-}
-
-function createStatusRequestMessage(
-  recipientDidUrl: string,
-  mediatorDidUrl: string,
-): IDIDCommMessage {
-  return {
-    id: v4(),
-    type: STATUS_REQUEST_MESSAGE_TYPE,
-    to: mediatorDidUrl,
-    from: recipientDidUrl,
-    return_route: 'all',
-    body: {},
-  }
-}
-
-function deliveryRequestMessage(
-  recipientDidUrl: string,
-  mediatorDidUrl: string,
-): IDIDCommMessage {
-  return {
-    id: v4(),
-    type: DELIVERY_REQUEST_MESSAGE_TYPE,
-    to: mediatorDidUrl,
-    from: recipientDidUrl,
-    return_route: 'all',
-    body: { limit: 2 },
-  }
-}
-
-async function pickup(
+export async function pickup(
   agent: any,
   recipientDidUrl: string,
   mediatorDidUrl: string,
@@ -74,7 +23,7 @@ async function pickup(
   })
   // console.log('status: ', status)
 
-  const deliveryMessage = deliveryRequestMessage(
+  const deliveryMessage = createDeliveryRequestMessage(
     recipientDidUrl,
     mediatorDidUrl,
   )
@@ -90,5 +39,3 @@ async function pickup(
   })
   // console.log('result: ', result)
 }
-
-export { createMediateRequestMessage, createStatusRequestMessage, pickup }
