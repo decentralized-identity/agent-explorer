@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Alert, Button, Card } from 'antd'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { createMediateRequestMessage } from '../utils/didcomm-mediation'
+import { createMediateRequestMessage } from '@veramo/did-comm'
 
 interface IdentifierQuickSetupProps {
   title: string

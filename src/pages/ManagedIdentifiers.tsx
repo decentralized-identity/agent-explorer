@@ -9,7 +9,7 @@ import NewIdentifierModalForm, {
   NewIdentifierModalValues,
 } from '../components/NewIdentifierModalForm'
 import { shortId } from '../utils/did'
-import { createMediateRequestMessage } from '../utils/didcomm-mediation'
+import { createMediateRequestMessage } from '@veramo/did-comm'
 import { DeleteOutlined, CopyOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
 import IdentifierProfile from '../components/IdentifierProfile'
