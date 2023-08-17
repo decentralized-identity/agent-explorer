@@ -24,7 +24,7 @@ const ThemeSwitcher = () => {
                 if (window.confirm(`Delete ${item.name}`)) {
                   removePluginConfig(item.config.url)
                   notification.success({
-                    message: 'Identifier deleted',
+                    message: 'Plugin removed',
                   })
                 }
               }}
