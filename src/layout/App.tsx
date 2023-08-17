@@ -5,6 +5,7 @@ import { ThemeProvider } from '../context/ThemeProvider'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { ChatProvider } from '../context/ChatProvider'
 import { VeramoWeb3Provider } from '../context/web3/VeramoWeb3Provider'
+import { PluginProvider } from '../context/PluginProvider'
 
 declare global {
   interface Window {
@@ -18,15 +19,15 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        {
-          <VeramoWeb3Provider>
+        <VeramoWeb3Provider>
+          <PluginProvider>
             <ChatProvider>
               <BrowserRouter>
                 <Layout />
               </BrowserRouter>
             </ChatProvider>
-          </VeramoWeb3Provider>
-        }
+          </PluginProvider>
+        </VeramoWeb3Provider>
       </ThemeProvider>
     </QueryClientProvider>
   )

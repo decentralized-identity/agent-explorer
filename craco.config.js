@@ -2,6 +2,12 @@ const webpack = require('webpack')
 
 module.exports = {
   babel: {
+    presets: [[
+      "@babel/preset-react",
+      {
+        "runtime": "automatic" // defaults to classic
+      }
+    ]],
     plugins: ['@babel/plugin-syntax-import-assertions'],
   },
   webpack: {

@@ -1,8 +1,38 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-
 import App from './layout/App'
 import reportWebVitals from './reportWebVitals'
+import * as antd from 'antd'
+import * as antdPro from '@ant-design/pro-components';
+import * as reactquery from 'react-query';
+import * as veramoreact from '@veramo-community/veramo-react'
+import * as reactrouterdom from 'react-router-dom'
+import * as uuid from 'uuid'
+import * as datefns from 'date-fns'
+import * as reactjsxruntime from 'react/jsx-runtime'
+
+// Global variables for plugins
+declare global {
+  interface Window {
+    antd: any
+    antdPro: any
+    reactquery: any
+    veramoreact: any
+    reactrouterdom: any
+    uuid: any
+    datefns: any
+    reactjsxruntime: any
+  }
+}
+window.React = React
+window.antd = antd
+window.antdPro = antdPro
+window.reactquery = reactquery
+window.veramoreact = veramoreact
+window.reactrouterdom = reactrouterdom
+window.uuid = uuid
+window.datefns = datefns
+window.reactjsxruntime = reactjsxruntime
 
 const container = document.getElementById('app')
 const root = createRoot(container!) // createRoot(container!) if you use TypeScript
