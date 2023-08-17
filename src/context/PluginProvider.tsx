@@ -1,6 +1,10 @@
 import { MenuDataItem } from '@ant-design/pro-components';
-import { useVeramo } from '@veramo-community/veramo-react';
 import React, { createContext, useState, useEffect, useContext } from 'react'
+
+type PluginConfig = {
+  url: string;
+  enabled: boolean;
+}
 
 type RouteComponent = {
   path: string;
@@ -8,28 +12,33 @@ type RouteComponent = {
 }
 
 type AgentPlugin = {
+  config: PluginConfig;
   name: string;
   description: string;
   routes: RouteComponent[];
   menuItems: MenuDataItem[];
 }
 
+
+
 type PluginContextType = {
   plugins: AgentPlugin[]
-  pluginUrls: string[]
-  addPluginUrl: (url: string) => void
-  removePluginUrl: (url: string) => void
+  pluginConfigs: PluginConfig[]
+  addPluginConfig: (config: PluginConfig) => void
+  removePluginConfig: (url: string) => void
+  switchPlugin: (url: string, enabled: boolean) => void
 }
 
 const PluginContext = createContext<PluginContextType>({
   plugins: [],
-  pluginUrls: [],
-  addPluginUrl: () => {},
-  removePluginUrl: () => {},
+  pluginConfigs: [],
+  addPluginConfig: () => {},
+  removePluginConfig: () => {},
+  switchPlugin: () => {},
 })
 
-function getStoredPluginUrls(): string[] {
-  const str = localStorage.getItem('plugins')
+function getStoredPluginConfigs(): PluginConfig[] {
+  const str = localStorage.getItem('pluginConfigs')
   if (str) {
     return JSON.parse(str)
   } else {
@@ -37,15 +46,14 @@ function getStoredPluginUrls(): string[] {
   }
 }
 
-function storePluginUrls(urls: string[]) {
-  localStorage.setItem('plugins', JSON.stringify(urls))
+function storePluginConfigs(configs: PluginConfig[]) {
+  localStorage.setItem('pluginConfigs', JSON.stringify(configs))
 }
 
 const PluginProvider = (props: any) => {
-  const { agent } = useVeramo()
   
-  const [pluginUrls, setPluginUrls] = useState<string[]>(
-    getStoredPluginUrls(),
+  const [pluginConfigs, setPluginConfigs] = useState<PluginConfig[]>(
+    getStoredPluginConfigs(),
   )
   const [plugins, setPlugins] = useState<AgentPlugin[]>([])
 
@@ -53,36 +61,50 @@ const PluginProvider = (props: any) => {
     const loadPlugins = async () => {
       const result: AgentPlugin[] = []
 
-      for (const url of pluginUrls) {
-        const module = await import(/* webpackIgnore: true */ url)
-        const plugin = module.default.init(agent) as AgentPlugin
+      for (const config of pluginConfigs) {
+        const module = await import(/* webpackIgnore: true */ config.url)
+        const plugin = module.default.init() as AgentPlugin
+        plugin.config = config
         result.push(plugin)
       }
       setPlugins(result)
     }
 
     loadPlugins()
-  }, [pluginUrls, setPlugins, agent])
+  }, [pluginConfigs, setPlugins])
 
-  const addPluginUrl = (url: string) => {
-    const urls = [...pluginUrls, url]
-    storePluginUrls(urls)
-    setPluginUrls(urls)
+  const addPluginConfig = (config: PluginConfig) => {
+    const configs = [...pluginConfigs, config]
+    storePluginConfigs(configs)
+    setPluginConfigs(configs)
   }
 
-  const removePluginUrl = (url: string) => {
-    const urls = pluginUrls.filter((u) => u !== url)
-    storePluginUrls(urls)
-    setPluginUrls(urls)
+  const removePluginConfig = (url: string) => {
+    const configs = pluginConfigs.filter((u) => u.url !== url)
+    storePluginConfigs(configs)
+    setPluginConfigs(configs)
+  }
+
+  const switchPlugin = (url: string, enabled: boolean) => {
+    const configs = pluginConfigs.map((c) => {
+      if (c.url === url) {
+        return { ...c, enabled }
+      } else {
+        return c
+      }
+    })
+    storePluginConfigs(configs)
+    setPluginConfigs(configs)
   }
 
   return (
     <PluginContext.Provider
       value={{
         plugins,
-        pluginUrls, 
-        addPluginUrl,
-        removePluginUrl,
+        pluginConfigs, 
+        addPluginConfig,
+        removePluginConfig,
+        switchPlugin,
       }}
     >
         {props.children}

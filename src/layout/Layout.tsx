@@ -111,7 +111,7 @@ const Layout = () => {
   }
 
   plugins.forEach((plugin) => {
-    if (plugin.menuItems) {
+    if (plugin.config.enabled && plugin.menuItems) {
       mainMenuItems.push(...plugin.menuItems)
     }
   })
@@ -195,7 +195,7 @@ const Layout = () => {
             <Route path="/" element={<Navigate replace to="/connect" />} />
           )}
           {plugins.map((plugin) => {
-            if (plugin.routes) {
+            if (plugin.config.enabled && plugin.routes) {
               return plugin.routes.map((route) => {
                 return (
                   <Route
