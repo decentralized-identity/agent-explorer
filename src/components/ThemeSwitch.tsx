@@ -23,8 +23,6 @@ const ThemeSwitcher = () => {
     <Card title="Theme">
       <Radio.Group value={theme} onChange={(e) => switchTheme(e.target.value)}>
         {themes.map((themeOptions) => {
-          console.log(themeOptions, theme)
-
           return (
             <Radio key={themeOptions.name} value={themeOptions.name}>
               {themeOptions.label}

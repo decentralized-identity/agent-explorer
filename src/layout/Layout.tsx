@@ -7,7 +7,6 @@ import {
   InteractionOutlined,
   MessageOutlined,
   SettingOutlined,
-  CodeOutlined,
   GlobalOutlined,
   FileProtectOutlined,
 } from '@ant-design/icons'
@@ -25,21 +24,18 @@ import Chats from '../pages/Chats'
 import { useVeramo } from '@veramo-community/veramo-react'
 import CreateResponse from '../components/CreateResponse'
 import Statistics from '../pages/Statistics'
-import DataGenerator from '../pages/DevTools/DataGenerator'
-import SelectSchemaAndIssue from '../pages/DevTools/SelectSchemaAndIssue'
-import CreateProfileCredential from '../pages/DevTools/CreateProfileCredential'
-import IssueCredential from '../pages/DevTools/IssueCredential'
-import CreatePresentation from '../pages/DevTools/CreatePresentation'
 import md5 from 'md5'
 import AgentDropdown from '../components/AgentDropdown'
 import KnownIdentifiers from '../pages/KnownIdentifiers'
 import ManagedIdentifiers from '../pages/ManagedIdentifiers'
 import CredentialVerifier from '../pages/CredentialVerifier'
+import { usePlugins } from '../context/PluginProvider'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 const Layout = () => {
   const { agent } = useVeramo()
+  const { plugins } = usePlugins()
   const location = useLocation()
 
   const availableMethods = agent?.availableMethods() || []
@@ -114,43 +110,21 @@ const Layout = () => {
     })
   }
 
-  mainMenuItems.push({ type: 'divider' })
+  plugins.forEach((plugin) => {
+    if (plugin.menuItems) {
+      mainMenuItems.push(...plugin.menuItems)
+    }
+  })
 
-  if (agent) {
-    mainMenuItems.push({
-      path: '/developer',
-      name: 'Developer tools',
-      icon: <CodeOutlined />,
-      routes: [
-        {
-          path: '/developer/data-generator',
-          name: 'Data generator',
-        },
-        {
-          path: '/developer/credential-from-schema',
-          name: 'Issue credential from schema',
-        },
-        {
-          path: '/developer/issue-profile-credential',
-          name: 'Issue profile credential',
-        },
-        {
-          path: '/developer/issue-credential',
-          name: 'Issue credential',
-        },
-        {
-          path: '/developer/create-presentation',
-          name: 'Create presentation',
-        },
-      ],
-    })
-  }
+  mainMenuItems.push({ type: 'divider' })
 
   mainMenuItems.push({
     path: '/settings',
     name: 'Settings',
     icon: <SettingOutlined />,
   })
+
+
 
   return (
     <div
@@ -215,27 +189,25 @@ const Layout = () => {
           <Route path="/credential-verifier" element={<CredentialVerifier />} />
           <Route path="/requests" element={<Requests />} />
           <Route path="/requests/sdr/:messageId" element={<CreateResponse />} />
-          <Route path="/developer/data-generator" element={<DataGenerator />} />
-          <Route
-            path="/developer/credential-from-schema"
-            element={<SelectSchemaAndIssue />}
-          />
-          <Route
-            path="/developer/issue-profile-credential"
-            element={<CreateProfileCredential />}
-          />
-          <Route
-            path="/developer/issue-credential"
-            element={<IssueCredential />}
-          />
-          <Route
-            path="/developer/create-presentation"
-            element={<CreatePresentation />}
-          />
+          
           <Route path="/settings" element={<Settings />} />
           {!agent && (
             <Route path="/" element={<Navigate replace to="/connect" />} />
           )}
+          {plugins.map((plugin) => {
+            if (plugin.routes) {
+              return plugin.routes.map((route) => {
+                return (
+                  <Route
+                    key={route.path}
+                    path={route.path}
+                    element={route.element}
+                  />
+                )
+              })
+            }
+            return null
+          })}
         </Routes>
       </ProLayout>
     </div>
