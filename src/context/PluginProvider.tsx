@@ -2,12 +2,12 @@ import { MenuDataItem } from '@ant-design/pro-components';
 import { useVeramo } from '@veramo-community/veramo-react';
 import React, { createContext, useState, useEffect, useContext } from 'react'
 
-export type RouteComponent = {
+type RouteComponent = {
   path: string;
   element: React.JSX.Element;
 }
 
-export type AgentPlugin = {
+type AgentPlugin = {
   name: string;
   description: string;
   routes: RouteComponent[];

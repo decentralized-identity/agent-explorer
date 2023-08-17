@@ -40,18 +40,6 @@ devDependencies:
   '@ethersproject/providers':
     specifier: ^5.7.2
     version: 5.7.2
-  '@rjsf/antd':
-    specifier: ^5.7.3
-    version: 5.7.3(@ant-design/icons@5.1.4)(@rjsf/core@5.7.3)(@rjsf/utils@5.7.3)(antd@5.5.2)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0)
-  '@rjsf/core':
-    specifier: ^5.7.3
-    version: 5.7.3(@rjsf/utils@5.7.3)(react@18.2.0)
-  '@rjsf/utils':
-    specifier: ^5.7.3
-    version: 5.7.3(react@18.2.0)
-  '@rjsf/validator-ajv8':
-    specifier: ^5.7.3
-    version: 5.7.3(@rjsf/utils@5.7.3)
   '@semantic-release/commit-analyzer':
     specifier: ^9.0.2
     version: 9.0.2(semantic-release@21.0.2)
@@ -73,24 +61,15 @@ devDependencies:
   '@testing-library/user-event':
     specifier: ^14.4.3
     version: 14.4.3(@testing-library/dom@9.3.0)
-  '@types/chart.js':
-    specifier: ^2.9.37
-    version: 2.9.37
   '@types/express':
     specifier: ^4.17.17
     version: 4.17.17
   '@types/jest':
     specifier: ^29.5.1
     version: 29.5.1
-  '@types/json-schema':
-    specifier: ^7.0.12
-    version: 7.0.12
   '@types/md5':
     specifier: ^2.3.2
     version: 2.3.2
-  '@types/random-words':
-    specifier: ^1.1.2
-    version: 1.1.2
   '@types/react':
     specifier: ^18.2.7
     version: 18.2.7
@@ -229,9 +208,6 @@ devDependencies:
   pretty-quick:
     specifier: ^3.1.3
     version: 3.1.3(prettier@2.8.8)
-  random-words:
-    specifier: ^1.3.0
-    version: 1.3.0
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -272,14 +248,11 @@ devDependencies:
     specifier: ^4.9.5
     version: 4.9.5
   url:
-    specifier: ^0.11.0
-    version: 0.11.0
+    specifier: ^0.11.1
+    version: 0.11.1
   url-parse:
     specifier: ^1.5.10
     version: 1.5.10
-  util:
-    specifier: ^0.12.5
-    version: 0.12.5
   uuid:
     specifier: ^9.0.0
     version: 9.0.0
@@ -4849,74 +4822,6 @@ packages:
     engines: {node: '>=14'}
     dev: true
 
-  /@rjsf/antd@5.7.3(@ant-design/icons@5.1.4)(@rjsf/core@5.7.3)(@rjsf/utils@5.7.3)(antd@5.5.2)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-5OwuFAlDlddsdmMguPZrx0FfO7UVK7jJqq+ego6PlSUIkvE9C8MMgEAG9fgcTCjdfqecocsKYOSlapCBsf08Bw==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@ant-design/icons': ^4.0.0
-      '@rjsf/core': 5.7.x
-      '@rjsf/utils': 5.7.x
-      antd: ^4.0.0
-      dayjs: ^1.8.0
-      react: ^16.14.0 || >=17
-    dependencies:
-      '@ant-design/icons': 5.1.4(react-dom@18.2.0)(react@18.2.0)
-      '@rjsf/core': 5.7.3(@rjsf/utils@5.7.3)(react@18.2.0)
-      '@rjsf/utils': 5.7.3(react@18.2.0)
-      antd: 5.5.2(date-fns@2.30.0)(react-dom@18.2.0)(react@18.2.0)
-      classnames: 2.3.2
-      dayjs: 1.11.7
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      rc-picker: 2.7.2(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-    transitivePeerDependencies:
-      - react-dom
-    dev: true
-
-  /@rjsf/core@5.7.3(@rjsf/utils@5.7.3)(react@18.2.0):
-    resolution: {integrity: sha512-GebhuCyNK8db+UT2COFmaLsCWjVsZwNXC8jubadqTji5rNCpuB1ywzp+vbqX0vnFPd8phVKbVfHNl2S86fUaIA==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@rjsf/utils': 5.7.x
-      react: ^16.14.0 || >=17
-    dependencies:
-      '@rjsf/utils': 5.7.3(react@18.2.0)
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      markdown-to-jsx: 7.2.0(react@18.2.0)
-      nanoid: 3.3.6
-      prop-types: 15.8.1
-      react: 18.2.0
-    dev: true
-
-  /@rjsf/utils@5.7.3(react@18.2.0):
-    resolution: {integrity: sha512-4bUJE4u1A7/wGupiOIKicm50QJ5iJ+C9Zq27EKnk7TeKKIr2MLdg3ljYSV7aKp2ZiGX6CFtXBX3RpaTjugpKAw==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      react: ^16.14.0 || >=17
-    dependencies:
-      json-schema-merge-allof: 0.8.1
-      jsonpointer: 5.0.1
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      react: 18.2.0
-      react-is: 18.2.0
-    dev: true
-
-  /@rjsf/validator-ajv8@5.7.3(@rjsf/utils@5.7.3):
-    resolution: {integrity: sha512-/lU9Nyx7s/wMLkTyAgv2dMCKz9et183XohmV6YjHRP+slbxHorKObAYlbLezCYc85TSXGWhgHiyn5FWEP0SEXQ==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      '@rjsf/utils': 5.7.x
-    dependencies:
-      '@rjsf/utils': 5.7.3(react@18.2.0)
-      ajv: 8.12.0
-      ajv-formats: 2.1.1(ajv@8.12.0)
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-    dev: true
-
   /@rollup/plugin-babel@5.3.1(@babel/core@7.22.1)(rollup@2.79.1):
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
     engines: {node: '>= 10.0.0'}
@@ -5763,12 +5668,6 @@ packages:
       '@types/node': 20.2.5
     dev: true
 
-  /@types/chart.js@2.9.37:
-    resolution: {integrity: sha512-9bosRfHhkXxKYfrw94EmyDQcdjMaQPkU1fH2tDxu8DWXxf1mjzWQAV4laJF51ZbC2ycYwNDvIm1rGez8Bug0vg==}
-    dependencies:
-      moment: 2.29.4
-    dev: true
-
   /@types/connect-history-api-fallback@1.5.0:
     resolution: {integrity: sha512-4x5FkPpLipqwthjPsF7ZRbOv3uoLUFkTA9G9v583qi4pACvq0uTELrB8OLUzPWUI4IJIyvM85vzkV1nyiI2Lig==}
     dependencies:
@@ -5926,10 +5825,6 @@ packages:
 
   /@types/qs@6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
-    dev: true
-
-  /@types/random-words@1.1.2:
-    resolution: {integrity: sha512-gULpJ68bNovfBWPWNNhwJgd/GcKdfkPpXXQGgACQWffgy6LRiJB4+4s/IslhFJKQvb5wBlnlOwFJ6RawHU5z3A==}
     dev: true
 
   /@types/range-parser@1.2.4:
@@ -8908,23 +8803,6 @@ packages:
       - supports-color
     dev: true
 
-  /compute-gcd@1.2.1:
-    resolution: {integrity: sha512-TwMbxBNz0l71+8Sc4czv13h4kEqnchV9igQZBi6QUaz09dnz13juGnnaWWJTRsP3brxOoxeB4SA2WELLw1hCtg==}
-    dependencies:
-      validate.io-array: 1.0.6
-      validate.io-function: 1.0.2
-      validate.io-integer-array: 1.0.0
-    dev: true
-
-  /compute-lcm@1.1.2:
-    resolution: {integrity: sha512-OFNPdQAXnQhDSKioX8/XYT6sdUlXwpeMjfd6ApxMJfyZ4GxmLR1xvMERctlYhlHwIiz6CSpBc2+qYKjHGZw4TQ==}
-    dependencies:
-      compute-gcd: 1.2.1
-      validate.io-array: 1.0.6
-      validate.io-function: 1.0.2
-      validate.io-integer-array: 1.0.0
-    dev: true
-
   /compute-scroll-into-view@3.0.3:
     resolution: {integrity: sha512-nadqwNxghAGTamwIqQSG433W6OADZx2vCo3UXHNrzTRHK/htu+7+L0zhjEoaeaQVNAi3YgqWDv8+tzf0hRfR+A==}
     dev: true
@@ -10966,7 +10844,7 @@ packages:
     dependencies:
       chalk: 4.1.2
       commander: 7.2.0
-      fast-glob: 3.2.12
+      fast-glob: 3.3.1
       find-up: 5.0.0
       fs-extra: 9.1.0
     dev: true
@@ -13929,12 +13807,6 @@ packages:
     dev: true
     optional: true
 
-  /json-schema-compare@0.2.2:
-    resolution: {integrity: sha512-c4WYmDKyJXhs7WWvAWm3uIYnfyWFoIp+JEoX34rctVvEkMYCPGhXtvmFFXiffBbxfZsvQ0RNnV5H7GvDF5HCqQ==}
-    dependencies:
-      lodash: 4.17.21
-    dev: true
-
   /json-schema-deref-sync@0.13.0:
     resolution: {integrity: sha512-YBOEogm5w9Op337yb6pAT6ZXDqlxAsQCanM3grid8lMWNxRJO/zWEJi3ZzqDL8boWfwhTFym5EFrNgWwpqcBRg==}
     engines: {node: '>=6.0.0'}
@@ -13949,15 +13821,6 @@ packages:
       valid-url: 1.0.9
     dev: true
     optional: true
-
-  /json-schema-merge-allof@0.8.1:
-    resolution: {integrity: sha512-CTUKmIlPJbsWfzRRnOXz+0MjIqvnleIXwFTzz+t9T86HnYX/Rozria6ZVGLktAU9e+NygNljveP+yxqtQp/Q4w==}
-    engines: {node: '>=12.0.0'}
-    dependencies:
-      compute-lcm: 1.1.2
-      json-schema-compare: 0.2.2
-      lodash: 4.17.21
-    dev: true
 
   /json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
@@ -14543,15 +14406,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       object-visit: 1.0.1
-    dev: true
-
-  /markdown-to-jsx@7.2.0(react@18.2.0):
-    resolution: {integrity: sha512-3l4/Bigjm4bEqjCR6Xr+d4DtM1X6vvtGsMGSjJYyep8RjjIvcWtrXBS8Wbfe1/P+atKNMccpsraESIaWVplzVg==}
-    engines: {node: '>= 10'}
-    peerDependencies:
-      react: '>= 0.14.0'
-    dependencies:
-      react: 18.2.0
     dev: true
 
   /marked-terminal@5.2.0(marked@4.3.0):
@@ -15202,10 +15056,6 @@ packages:
   /modify-values@1.0.1:
     resolution: {integrity: sha512-xV2bxeN6F7oYjZWTe/YPAy6MN2M+sL4u/Rlm2AHCIVGfo2p1yGmBHQ6vHehl4bRTZBdHu3TSkWdYgkwpYzAGSw==}
     engines: {node: '>=0.10.0'}
-    dev: true
-
-  /moment@2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
     dev: true
 
   /mri@1.2.0:
@@ -17260,8 +17110,8 @@ packages:
       once: 1.4.0
     dev: true
 
-  /punycode@1.3.2:
-    resolution: {integrity: sha512-RofWgt/7fL5wP1Y7fxE7/EmTLzQVnB0ycyibJ0OOHIlJqTNzglYFxVwETOcIoJqJmpDXJ9xImDv+Fq34F/d4Dw==}
+  /punycode@1.4.1:
+    resolution: {integrity: sha512-jmYNElW7yvO7TV33CjSmvSiE2yco3bV2czu/OzDKdMNVZQWfxCblURLhf+47syQRBntjfLdd/H0egrzIG+oaFQ==}
     dev: true
 
   /punycode@2.3.0:
@@ -17328,12 +17178,6 @@ packages:
       strict-uri-encode: 2.0.0
     dev: true
 
-  /querystring@0.2.0:
-    resolution: {integrity: sha512-X/xY82scca2tau62i9mDyU9K+I+djTMUsvwf7xnUX5GLvVzgJybOJf4Y6o9Zx3oJK/LSXg5tTZBjwzqVPaPO2g==}
-    engines: {node: '>=0.4.x'}
-    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
-    dev: true
-
   /querystringify@2.2.0:
     resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
     dev: true
@@ -17351,12 +17195,6 @@ packages:
     resolution: {integrity: sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==}
     dependencies:
       performance-now: 2.1.0
-    dev: true
-
-  /random-words@1.3.0:
-    resolution: {integrity: sha512-brwCGe+DN9DqZrAQVNj1Tct1Lody6GrYL/7uei5wfjeQdacFyFd2h/51LNlOoBMzIKMS9xohuL4+wlF/z1g/xg==}
-    dependencies:
-      seedrandom: 3.0.5
     dev: true
 
   /randombytes@2.1.0:
@@ -17640,25 +17478,6 @@ packages:
       classnames: 2.3.2
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-    dev: true
-
-  /rc-picker@2.7.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-KbUKgbzgWVN5L+V9xhZDKSmseHIyFneBlmuMtMrZ9fU7Oypw6D+owS5kuUicIEV08Y17oXt8dUqauMeC5IFBPg==}
-    engines: {node: '>=8.x'}
-    peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
-    dependencies:
-      '@babel/runtime': 7.22.3
-      classnames: 2.3.2
-      date-fns: 2.30.0
-      dayjs: 1.11.7
-      moment: 2.29.4
-      rc-trigger: 5.3.4(react-dom@18.2.0)(react@18.2.0)
-      rc-util: 5.32.4(react-dom@18.2.0)(react@18.2.0)
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      shallowequal: 1.1.0
     dev: true
 
   /rc-picker@3.7.6(date-fns@2.30.0)(dayjs@1.11.7)(react-dom@18.2.0)(react@18.2.0):
@@ -18965,10 +18784,6 @@ packages:
       node-gyp-build: 4.6.0
     dev: true
     optional: true
-
-  /seedrandom@3.0.5:
-    resolution: {integrity: sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==}
-    dev: true
 
   /select-hose@2.0.0:
     resolution: {integrity: sha512-mEugaLK+YfkijB4fx0e6kImuJdCIt2LxCRcbEYPqRGCs4F2ogyfZU5IAZRdjCP8JPq2AtdNoC/Dux63d9Kiryg==}
@@ -20773,11 +20588,11 @@ packages:
       requires-port: 1.0.0
     dev: true
 
-  /url@0.11.0:
-    resolution: {integrity: sha512-kbailJa29QrtXnxgq+DdCEGlbTeYM2eJUxsz6vjZavrCYPMIFHMKQmSKYAIuUK2i7hgPm28a8piX5NTUtM/LKQ==}
+  /url@0.11.1:
+    resolution: {integrity: sha512-rWS3H04/+mzzJkv0eZ7vEDGiQbgquI1fGfOad6zKvgYQi1SzMmhl7c/DdRGxhaWrVH6z0qWITo8rpnxK/RfEhA==}
     dependencies:
-      punycode: 1.3.2
-      querystring: 0.2.0
+      punycode: 1.4.1
+      qs: 6.11.0
     dev: true
 
   /use-json-comparison@1.0.6(react@18.2.0):
@@ -20894,31 +20709,6 @@ packages:
       builtins: 1.0.3
     dev: true
     optional: true
-
-  /validate.io-array@1.0.6:
-    resolution: {integrity: sha512-DeOy7CnPEziggrOO5CZhVKJw6S3Yi7e9e65R1Nl/RTN1vTQKnzjfvks0/8kQ40FP/dsjRAOd4hxmJ7uLa6vxkg==}
-    dev: true
-
-  /validate.io-function@1.0.2:
-    resolution: {integrity: sha512-LlFybRJEriSuBnUhQyG5bwglhh50EpTL2ul23MPIuR1odjO7XaMLFV8vHGwp7AZciFxtYOeiSCT5st+XSPONiQ==}
-    dev: true
-
-  /validate.io-integer-array@1.0.0:
-    resolution: {integrity: sha512-mTrMk/1ytQHtCY0oNO3dztafHYyGU88KL+jRxWuzfOmQb+4qqnWmI+gykvGp8usKZOM0H7keJHEbRaFiYA0VrA==}
-    dependencies:
-      validate.io-array: 1.0.6
-      validate.io-integer: 1.0.5
-    dev: true
-
-  /validate.io-integer@1.0.5:
-    resolution: {integrity: sha512-22izsYSLojN/P6bppBqhgUDjCkr5RY2jd+N2a3DCAUey8ydvrZ/OkGvFPR7qfOpwR2LC5p4Ngzxz36g5Vgr/hQ==}
-    dependencies:
-      validate.io-number: 1.0.3
-    dev: true
-
-  /validate.io-number@1.0.3:
-    resolution: {integrity: sha512-kRAyotcbNaSYoDnXvb4MHg/0a1egJdLwS6oJ38TJY7aw9n93Fl/3blIXdyYvPOp55CNxywooG/3BcrwNrBpcSg==}
-    dev: true
 
   /validator@13.9.0:
     resolution: {integrity: sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==}
