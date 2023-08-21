@@ -59,13 +59,12 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v1
-
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
+          ref: main
+
       - uses: pnpm/action-setup@v2
         with:
           version: 7
