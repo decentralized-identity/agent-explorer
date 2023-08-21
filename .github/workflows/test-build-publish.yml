@@ -45,3 +45,49 @@ jobs:
       - name: 'publish'
         if: github.ref == 'refs/heads/main'
         run: pnpm release
+  release-electron:
+    needs: build-test-publish
+    env:
+      NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+      GH_TOKEN: ${{secrets.GH_TOKEN}}
+      GH_USER: ${{secrets.GH_USER}}
+      GH_EMAIL: ${{secrets.GH_EMAIL}}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_TOKEN }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 7
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'pnpm'
+      - run: pnpm add -g pnpm
+      - run: pnpm install
+
+
+      - name: Build/release Electron app
+        uses: paneron/action-electron-builder@v1.8.1
+        with:
+          # GitHub token, automatically provided to the action
+          # (No need to define this secret in the repo settings)
+          github_token: ${{ secrets.GH_TOKEN }}
+
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          build_script_name: build-electron
+          package_manager: pnpm
+      
