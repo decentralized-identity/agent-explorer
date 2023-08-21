@@ -1,6 +1,6 @@
 {
   "name": "agent-explore",
-  "version": "1.17.0",
+  "version": "1.17.1",
   "publishConfig": {
     "access": "public"
   },
@@ -52,7 +52,6 @@
     "lint": "eslint ./src"
   },
   "homepage": "https://explore.veramo.dev",
-
   "prettier": {
     "jsxBracketSameLine": false,
     "trailingComma": "all",
