@@ -19,6 +19,12 @@
     "mac": {
       "category": "your.app.category.type"
     },
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ],
     "files": [
       "build/**/*",
       "node_modules/**/*",
