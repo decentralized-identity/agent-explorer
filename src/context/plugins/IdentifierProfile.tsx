@@ -66,7 +66,9 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
             result[0].verifiableCredential.credentialSubject
           return { did: args.did, name, picture: picture || fallBackPictureUrl }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+      }
     }
 
     // Try to get the profile from Kudos Credentials in the data store
@@ -91,7 +93,9 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
             result[0].verifiableCredential.credentialSubject
           return { did: args.did, name, picture: avatar || fallBackPictureUrl }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+      }
     }
 
     // Try to use alias from the DID Manager
@@ -105,7 +109,9 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
             picture: fallBackPictureUrl,
           }
         }
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+      }
     }
 
     // If it's a URL, use the hostname as the name

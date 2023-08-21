@@ -19,7 +19,7 @@ const ChatProvider = (props: any) => {
         agent?.availableMethods().includes('packDIDCommMessage') &&
         agent?.availableMethods().includes('sendDIDCommMessage')
       ) {
-        const myDIDs = (await agent?.didManagerFind())
+        const myDIDs = (await agent.didManagerFind())
           .filter((did) =>
             did.keys.some(
               (key) => key.type === 'X25519' || key.type === 'Ed25519',
@@ -30,7 +30,7 @@ const ChatProvider = (props: any) => {
           )
 
         if (myDIDs && myDIDs.length > 0) {
-          for (let d in myDIDs) {
+          for (const d in myDIDs) {
             const did = myDIDs[d].did
             pickup(agent, did, 'did:web:dev-didcomm-mediator.herokuapp.com')
           }

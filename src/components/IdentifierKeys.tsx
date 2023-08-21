@@ -3,7 +3,7 @@ import { Button, Card, List, message } from 'antd'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import IdentifierKey from './IdentifierKey'
-import AddKeyModalForm, { AddKeyModalValues } from './AddKeyModalForm'
+import AddKeyModalForm from './AddKeyModalForm'
 import CreateAndAddKeyModalForm, {
   CreateAndAddKeyModalValues,
 } from './CreateAndAddKeyModalForm'
@@ -56,7 +56,7 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
   const showAddModal = () => {
     setIsAddModalVisible(true)
   }
-  const handleAddOk = async (values: AddKeyModalValues) => {
+  const handleAddOk = async () => {
     message.error('not implemented yet')
     setIsAddModalVisible(false)
   }
@@ -100,12 +100,13 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
           data?.didDocument?.verificationMethod || data?.didDocument?.publicKey
         }
         renderItem={(item: any, i: number) => {
+          if (data?.didDocument?.id === undefined) return null
           return (
             <IdentifierKey
               i={i}
               key={i}
               item={item}
-              did={data?.didDocument?.id!}
+              did={data?.didDocument?.id}
             />
           )
         }}

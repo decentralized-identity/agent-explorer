@@ -30,7 +30,9 @@ export class AliasDiscoveryProvider implements AbstractDidDiscoveryProvider {
           alias: identifier.alias,
         },
       }))
-    } catch (e) {}
+    } catch (e) {
+      console.log(e)
+    }
 
     return {
       provider: this.name,
