@@ -19,6 +19,12 @@
     "mac": {
       "category": "your.app.category.type"
     },
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ],
     "files": [
       "build/**/*",
       "node_modules/**/*",
@@ -42,15 +48,11 @@
     "build-electron": "cross-env PUBLIC_URL=./ craco build",
     "electron": "electron .",
     "electron-dev": "cross-env ELECTRON_START_URL=http://localhost:3000 electron .",
-    "electron-dist": "electron-builder"
+    "electron-dist": "electron-builder",
+    "lint": "eslint ./src"
   },
   "homepage": "https://explore.veramo.dev",
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
+
   "prettier": {
     "jsxBracketSameLine": false,
     "trailingComma": "all",
@@ -129,6 +131,8 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/url-parse": "^1.4.8",
     "@types/uuid": "^9.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
     "@veramo-community/react-components": "^1.4.0",
     "@veramo-community/veramo-react": "^1.0.82",
     "@veramo/core": "5.4.2-next.10",
@@ -166,6 +170,7 @@
     "did-resolver": "^4.1.0",
     "electron": "^26.0.0",
     "electron-builder": "^24.6.3",
+    "eslint": "^8.47.0",
     "ethr-did-resolver": "^8.0.0",
     "https-browserify": "^1.0.0",
     "husky": "^8.0.3",

@@ -73,7 +73,9 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
         ) {
           onCreate(message.from)
         }
-      } catch (e) {}
+      } catch (e) {
+        console.log(e)
+      }
     } else {
       onCreate(result)
     }
