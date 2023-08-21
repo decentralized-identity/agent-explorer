@@ -13,7 +13,21 @@
     "bin",
     "lib"
   ],
-  "main": "lib/express-router.js",
+  "main": "build/electron.js",
+  "build": {
+    "appId": "io.veramo.explore",
+    "mac": {
+      "category": "your.app.category.type"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "electron/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
   "bin": {
     "agent-explore": "./bin/bin.js"
   },
@@ -24,7 +38,11 @@
     "release": "semantic-release",
     "agent-explore": "./bin/bin.js",
     "upgrade-veramo": "pnpm add -D @veramo/core @veramo/did-discovery @veramo/credential-w3c @veramo/data-store @veramo/did-comm @veramo/did-jwt @veramo/did-resolver @veramo/message-handler @veramo/remote-client @veramo/selective-disclosure @veramo/credential-eip712 @veramo/data-store-json @veramo/did-manager @veramo/kms-web3 @veramo/key-manager @veramo/did-provider-ethr @veramo/utils @veramo/did-provider-peer @veramo/kms-local",
-    "upgrade-veramo:next": "pnpm add -D @veramo/core@next @veramo/did-discovery@next @veramo/credential-w3c@next @veramo/data-store@next @veramo/did-comm@next @veramo/did-jwt@next @veramo/did-resolver@next @veramo/message-handler@next @veramo/remote-client@next @veramo/selective-disclosure@next @veramo/credential-eip712@next @veramo/data-store-json@next @veramo/did-manager@next @veramo/kms-web3@next @veramo/key-manager@next @veramo/did-provider-ethr@next @veramo/utils@next @veramo/did-provider-peer@next @veramo/kms-local@next"
+    "upgrade-veramo:next": "pnpm add -D @veramo/core@next @veramo/did-discovery@next @veramo/credential-w3c@next @veramo/data-store@next @veramo/did-comm@next @veramo/did-jwt@next @veramo/did-resolver@next @veramo/message-handler@next @veramo/remote-client@next @veramo/selective-disclosure@next @veramo/credential-eip712@next @veramo/data-store-json@next @veramo/did-manager@next @veramo/kms-web3@next @veramo/key-manager@next @veramo/did-provider-ethr@next @veramo/utils@next @veramo/did-provider-peer@next @veramo/kms-local@next",
+    "build-electron": "cross-env PUBLIC_URL=./ craco build",
+    "electron": "electron .",
+    "electron-dev": "cross-env ELECTRON_START_URL=http://localhost:3000 electron .",
+    "electron-dist": "electron-builder"
   },
   "homepage": "https://explore.veramo.dev",
   "eslintConfig": {
@@ -142,9 +160,12 @@
     "assert": "npm:assert-browserify@^2.0.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
+    "cross-env": "^7.0.3",
     "crypto": "npm:crypto-browserify@^3.12.0",
     "date-fns": "^2.30.0",
     "did-resolver": "^4.1.0",
+    "electron": "^26.0.0",
+    "electron-builder": "^24.6.3",
     "ethr-did-resolver": "^8.0.0",
     "https-browserify": "^1.0.0",
     "husky": "^8.0.3",
