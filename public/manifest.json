@@ -1,0 +1,5 @@
+{
+	"name": "Agent Explorer",
+	"scope": "/",
+	"display": "standalone"
+}
