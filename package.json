@@ -41,7 +41,7 @@
     "directories": {
       "buildResources": "assets"
     },
-    "icon": "public/icon-512-maskable.png",
+    "icon": "AppIcon.icns",
     "productName": "Agent Explorer"
   },
   "bin": {

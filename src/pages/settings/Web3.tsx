@@ -1,12 +1,13 @@
 import React from 'react'
-import { Typography, Card, Button } from 'antd'
-import { hooks as metamaskHooks, metaMask } from '../context/web3/metaMask'
+import { Typography, Button } from 'antd'
+import { hooks as metamaskHooks, metaMask } from '../../context/web3/metaMask'
+import { PageContainer } from '@ant-design/pro-components'
 
-const Web3: React.FC = () => {
+export const Web3: React.FC = () => {
   const metaMaskIsActive = metamaskHooks.useIsActive()
 
   return (
-    <Card title="Web3">
+    <PageContainer>
       <Typography>Metamask</Typography>
       {!metaMaskIsActive && (
         <Button onClick={() => metaMask.activate()}>Connect</Button>
@@ -14,8 +15,6 @@ const Web3: React.FC = () => {
       {metaMaskIsActive && (
         <Button onClick={() => metaMask.resetState()}>Disconnect</Button>
       )}
-    </Card>
+    </PageContainer>
   )
 }
-
-export default Web3

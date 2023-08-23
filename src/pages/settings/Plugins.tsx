@@ -1,16 +1,15 @@
 import React from 'react'
-import { Button, Card, Input, List, Space, Switch, notification } from 'antd'
+import { Button, Input, List, Space, Switch, notification } from 'antd'
 import { DeleteOutlined} from '@ant-design/icons'
+import { usePlugins } from '../../context/PluginProvider'
+import { PageContainer } from '@ant-design/pro-components'
 
-import { usePlugins } from '../context/PluginProvider'
-
-
-const ThemeSwitcher = () => {
+export const Plugins = () => {
   const { addPluginConfig, plugins, removePluginConfig, switchPlugin } = usePlugins()
   const [url, setUrl] = React.useState('')
 
   return (
-    <Card title="Plugins">
+    <PageContainer>
       <List
         dataSource={plugins}
         renderItem={(item) => <List.Item
@@ -48,8 +47,7 @@ const ThemeSwitcher = () => {
         }}
         >Add</Button>
     </Space.Compact>
-    </Card>
+    </PageContainer>
   )
 }
 
-export default ThemeSwitcher
