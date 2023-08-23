@@ -1,5 +1,14 @@
 {
   "name": "agent-explore",
+  "description": "Explore data accross multiple DID agents",
+  "author": "Simonas Karuzas <simonas.karuzas@mesh.xyz>",
+  "contributors": [
+    "Mircea Nistor <mircea.nistor@mesh.xyz>",
+    "Nick Reynolds <nick.reynolds@mesh.xyz>",
+    "Jason Healy <jason.healy@mesh.xyz>",
+    "Gregory Bugyis <greg.bugyis@mesh.xyz>"
+  ],
+
   "version": "1.19.0",
   "publishConfig": {
     "access": "public"
@@ -33,7 +42,8 @@
     "directories": {
       "buildResources": "assets"
     },
-    "icon": "public/icon-512-maskable.png"
+    "icon": "AppIcon.icns",
+    "productName": "Agent Explorer"
   },
   "bin": {
     "agent-explore": "./bin/bin.js"
