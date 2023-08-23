@@ -98,7 +98,7 @@ export async function createWeb3Agent({
   >({
     context: {
       id,
-      name: `Browser`,
+      name: `Local`,
     },
     plugins: [
       new DIDResolverPlugin({

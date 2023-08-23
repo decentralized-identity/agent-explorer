@@ -17,7 +17,6 @@ import Credentials from '../pages/Credentials'
 import Credential from '../pages/Credential'
 import Activity from '../pages/Messages'
 import Requests from '../pages/Requests'
-import Settings from '../pages/Settings'
 import Agents from '../pages/Agents'
 import Agent from '../pages/Agent'
 import Chats from '../pages/Chats'
@@ -30,6 +29,10 @@ import KnownIdentifiers from '../pages/KnownIdentifiers'
 import ManagedIdentifiers from '../pages/ManagedIdentifiers'
 import CredentialVerifier from '../pages/CredentialVerifier'
 import { usePlugins } from '../context/PluginProvider'
+import { Appearance } from '../pages/settings/Appearance'
+import { Plugins } from '../pages/settings/Plugins'
+import { Web3 } from '../pages/settings/Web3'
+import { Version } from '../pages/settings/Version'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -122,6 +125,24 @@ const Layout = () => {
     path: '/settings',
     name: 'Settings',
     icon: <SettingOutlined />,
+    routes: [
+      {
+        name: 'Appearance',
+        path: '/settings/appearance',
+      },
+      {
+        name: 'Plugins',
+        path: '/settings/plugins',
+      },
+      {
+        name: 'Web3',
+        path: '/settings/web3',
+      },
+      {
+        name: 'Version',
+        path: '/settings/version',
+      },
+    ]
   })
 
 
@@ -136,7 +157,8 @@ const Layout = () => {
         locale="en-US"
         contentWidth="Fixed"
         title="Agent explorer"
-        logo={false}
+        logo={require('../assets/icon.png')}
+
         menuItemRender={(menuItemProps, defaultDom) => {
           if (menuItemProps.isUrl || menuItemProps.children) {
             return defaultDom
@@ -190,7 +212,10 @@ const Layout = () => {
           <Route path="/requests" element={<Requests />} />
           <Route path="/requests/sdr/:messageId" element={<CreateResponse />} />
           
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/settings/appearance" element={<Appearance />} />
+          <Route path="/settings/plugins" element={<Plugins />} />
+          <Route path="/settings/web3" element={<Web3 />} />
+          <Route path="/settings/version" element={<Version />} />
           {!agent && (
             <Route path="/" element={<Navigate replace to="/connect" />} />
           )}

@@ -1,10 +1,12 @@
 import React from 'react'
 import { Typography, Space } from 'antd'
-import packageJson from '../../package.json'
+import packageJson from '../../../package.json'
+import { PageContainer } from '@ant-design/pro-components'
 
-const Version: React.FC<{
+export const Version: React.FC<{
   versionOnly?: boolean
 }> = ({ versionOnly }) => (
+  <PageContainer>
   <Space direction="vertical">
     <Typography.Text>v{packageJson.version}</Typography.Text>
     {!versionOnly && (
@@ -13,6 +15,6 @@ const Version: React.FC<{
       </Typography.Text>
     )}
   </Space>
+  </PageContainer>
 )
 
-export default Version
