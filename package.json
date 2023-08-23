@@ -8,8 +8,7 @@
     "Jason Healy <jason.healy@mesh.xyz>",
     "Gregory Bugyis <greg.bugyis@mesh.xyz>"
   ],
-
-  "version": "1.19.0",
+  "version": "1.20.0",
   "publishConfig": {
     "access": "public"
   },
@@ -43,7 +42,8 @@
       "buildResources": "assets"
     },
     "icon": "AppIcon.icns",
-    "productName": "Agent Explorer"
+    "productName": "Agent Explorer",
+    "icon": "public/icon-512-maskable.png"
   },
   "bin": {
     "agent-explore": "./bin/bin.js"
