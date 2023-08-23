@@ -32,7 +32,8 @@
     ],
     "directories": {
       "buildResources": "assets"
-    }
+    },
+    "icon": "public/icon-512-maskable.png"
   },
   "bin": {
     "agent-explore": "./bin/bin.js"
