@@ -6,7 +6,7 @@ import {
   Space,
   Tabs,
   Input,
-  notification,
+  App,
   QRCode,
 } from 'antd'
 import { useParams } from 'react-router-dom'
@@ -27,6 +27,7 @@ const { TextArea } = Input
 const { TabPane } = Tabs
 
 const Identifier = () => {
+  const { notification } = App.useApp()
   const { id } = useParams<{ id: string }>()
   if (!id) throw Error('id is missing')
 

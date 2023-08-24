@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Input, Button, notification } from 'antd'
+import { Table, Input, Button, App } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -11,6 +11,7 @@ import IdentifierProfile from '../components/IdentifierProfile'
 const { Search } = Input
 
 const KnownIdentifiers = () => {
+  const { notification } = App.useApp()
   const { agent } = useVeramo()
   const navigate = useNavigate()
 

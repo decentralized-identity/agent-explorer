@@ -118,7 +118,7 @@
   },
   "devDependencies": {
     "@ant-design/icons": "^5.1.4",
-    "@ant-design/pro-components": "^2.5.3",
+    "@ant-design/pro-components": "^2.6.13",
     "@babel/plugin-syntax-import-assertions": "^7.20.0",
     "@babel/preset-react": "^7.22.5",
     "@commitlint/cli": "^17.6.5",
@@ -169,7 +169,7 @@
     "@web3-react/types": "^8.2.0",
     "@web3-react/walletconnect": "^8.2.0",
     "@yudiel/react-qr-scanner": "^1.1.8",
-    "antd": "~5.5.2",
+    "antd": "~5.8.4",
     "assert": "npm:assert-browserify@^2.0.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",

@@ -7,7 +7,7 @@ import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { v4 as uuidv4 } from 'uuid'
 import DIDDiscoveryBar from './DIDDiscoveryBar'
 
-interface CreateRequestProps {}
+
 
 interface SDRArgs {
   issuer: string
@@ -24,7 +24,7 @@ interface AddClaimArgs {
   reason?: string
 }
 
-const CreateRequest: React.FC<CreateRequestProps> = () => {
+const CreateRequest: React.FC = () => {
   const { agent } = useVeramo()
   const query = useQueryClient()
   const [subject, setSubject] = useState<string>('')
@@ -208,7 +208,7 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
                 </Form.Item>
               </Row>
               <Button
-                type="ghost"
+                
                 disabled={!requiredIssuer}
                 onClick={() =>
                   addRequiredIssuer(requiredIssuer, requiredIssuerUrl)
@@ -218,7 +218,7 @@ const CreateRequest: React.FC<CreateRequestProps> = () => {
               </Button>
             </Card>
             <Button
-              type="ghost"
+              
               disabled={!claimType}
               onClick={() =>
                 addClaim({

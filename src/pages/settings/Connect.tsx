@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, Form, Input, Button, List } from 'antd'
+import { Typography, Form, Input, Button, List, Collapse } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
-import { useNavigate } from 'react-router-dom'
-import { PageContainer } from '@ant-design/pro-components'
 
-const Connect = () => {
-  const navigate = useNavigate()
+type Props = {
+  onSuccess: () => void
+}
+
+export const Connect: React.FC<Props> = ({ onSuccess }) => {
   const { addAgentConfig } = useVeramo()
   const [name, setName] = useState<string>()
   const [schemaUrl, setSchemaUrl] = useState<string>()
@@ -24,7 +25,10 @@ const Connect = () => {
         },
       ],
     })
-    navigate('/agents')
+    setSchemaUrl(undefined)
+    setAgentUrl('')
+    setApiKey('')
+    onSuccess()
   }
 
   const {
@@ -45,22 +49,26 @@ const Connect = () => {
   )
 
   const methods = () => {
+
     return (
       schema &&
       schema['x-methods'] && (
-        <div className={'option-list'}>
-          <List
-            header={
-              <Typography.Title level={5}>Available methods</Typography.Title>
-            }
+        <Collapse accordion size='small' items={[
+          {
+            key: '1',
+            label: `Available methods (${Object.keys(schema['x-methods']).length})`,
+            children: <List
+            size='small'
             dataSource={Object.keys(schema['x-methods'])}
             renderItem={(item) => (
               <List.Item>
                 <Typography.Text>{item}</Typography.Text>
               </List.Item>
             )}
-          />
-        </div>
+            />,
+          }
+        ]}>
+        </Collapse>
       )
     )
   }
@@ -72,8 +80,10 @@ const Connect = () => {
     }
   }, [schema])
 
+  const needsApiKey = schema?.components?.securitySchemes?.auth?.scheme === 'bearer'
+
   return (
-    <PageContainer title="Connect">
+    <>
       <Form layout={'vertical'}>
         <Form.Item
           hasFeedback
@@ -96,7 +106,7 @@ const Connect = () => {
             onChange={(e) => setSchemaUrl(e.target.value)}
           />
         </Form.Item>
-        {methods()}
+        
         {schema && (
           <>
             <Form.Item label="Agent name">
@@ -107,22 +117,7 @@ const Connect = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </Form.Item>
-            <Form.Item label="Agent Url">
-              <Input
-                size="large"
-                placeholder="Agent Url"
-                defaultValue={schema.servers[0].url}
-                value={agentUrl}
-                onChange={(e) => setAgentUrl(e.target.value)}
-              />
-            </Form.Item>
-            {/* <Form.Item label="Agent Url">
-              <Select>
-                {schema && schema.servers.map((server: {url: string}) => {
-                    <Select.Option key={server.url} value={server.url}>{server.url}</Select.Option>
-                })}
-              </Select>
-            </Form.Item> */}
+            {needsApiKey && 
             <Form.Item label="API Key">
               <Input
                 size="large"
@@ -131,25 +126,24 @@ const Connect = () => {
                 type="password"
                 onChange={(e) => setApiKey(e.target.value)}
               />
+            </Form.Item>}
+            <Form.Item>
+              {methods()}
             </Form.Item>
             <Form.Item>
               <Button
                 size="large"
                 type="primary"
-                block
-                shape="round"
-                disabled={!name || !schemaUrl || !apiKey || !agentUrl}
+                disabled={!name || !schemaUrl || !agentUrl || (needsApiKey && !apiKey)}
                 onClick={() => newAgentConfig()}
               >
-                Submit
+                Add connection
               </Button>
             </Form.Item>
           </>
         )}
       </Form>
-      {/* <Card title="Deploy agent">Deploy an agent to heroku</Card> */}
-    </PageContainer>
+
+    </>
   )
 }
-
-export default Connect

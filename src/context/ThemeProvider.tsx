@@ -1,4 +1,5 @@
-import { ConfigProvider, theme as antdTheme } from 'antd'
+import { ConfigProvider, theme as antdTheme, App } from 'antd'
+import { ProConfigProvider } from '@ant-design/pro-components'
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import en_US from 'antd/es/locale/en_US'
 
@@ -78,18 +79,25 @@ const ThemeProvider = (props: any) => {
     <ThemeContext.Provider
       value={{ theme, switchTheme, isCompact, setIsCompact }}
     >
-      <ConfigProvider
-        locale={en_US}
-        theme={{
-          token: {
-            colorPrimary: '#1DA57A',
-            borderRadius: 3,
-          },
-          algorithm,
-        }}
+      <ProConfigProvider
+        hashed={false}
+
       >
-        {props.children}
-      </ConfigProvider>
+        <ConfigProvider
+          locale={en_US}
+          theme={{
+            token: {
+              colorPrimary: '#1DA57A',
+              borderRadius: 3,
+            },
+            algorithm,
+          }}
+          >
+          <App>
+            {props.children}
+          </App>
+        </ConfigProvider>
+      </ProConfigProvider>
     </ThemeContext.Provider>
   )
 }
