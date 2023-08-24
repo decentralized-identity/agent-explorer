@@ -1,10 +1,11 @@
 import React from 'react'
-import { Button, Input, List, Space, Switch, notification } from 'antd'
+import { Button, Input, List, Space, Switch, App } from 'antd'
 import { DeleteOutlined} from '@ant-design/icons'
 import { usePlugins } from '../../context/PluginProvider'
 import { PageContainer } from '@ant-design/pro-components'
 
 export const Plugins = () => {
+  const { notification } = App.useApp()
   const { addPluginConfig, plugins, removePluginConfig, switchPlugin } = usePlugins()
   const [url, setUrl] = React.useState('')
 

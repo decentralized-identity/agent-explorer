@@ -1,4 +1,4 @@
-import { Dropdown, notification } from 'antd'
+import { Dropdown, App } from 'antd'
 import React from 'react'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useNavigate } from 'react-router-dom'
@@ -12,6 +12,7 @@ const CredentialActionsDropdown: React.FC<{
 }> = ({ children, credential }) => {
   const { agents, getAgent } = useVeramo<IDataStore>()
   const navigate = useNavigate()
+  const { notification } = App.useApp()
 
   const agentsToCopyTo = agents.filter((agent) =>
     agent.availableMethods().includes('dataStoreSaveVerifiableCredential'),

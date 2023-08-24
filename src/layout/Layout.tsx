@@ -11,14 +11,12 @@ import {
   FileProtectOutlined,
 } from '@ant-design/icons'
 import { Routes, Route, useLocation, Link, Navigate } from 'react-router-dom'
-import Connect from '../pages/Connect'
+
 import Identifier from '../pages/Identifier'
 import Credentials from '../pages/Credentials'
 import Credential from '../pages/Credential'
 import Activity from '../pages/Messages'
 import Requests from '../pages/Requests'
-import Agents from '../pages/Agents'
-import Agent from '../pages/Agent'
 import Chats from '../pages/Chats'
 import { useVeramo } from '@veramo-community/veramo-react'
 import CreateResponse from '../components/CreateResponse'
@@ -33,6 +31,7 @@ import { Appearance } from '../pages/settings/Appearance'
 import { Plugins } from '../pages/settings/Plugins'
 import { Web3 } from '../pages/settings/Web3'
 import { Version } from '../pages/settings/Version'
+import { Agents } from '../pages/settings/Agents'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -42,7 +41,7 @@ const Layout = () => {
   const location = useLocation()
 
   const availableMethods = agent?.availableMethods() || []
-  const currentAgentName = agent?.context?.name || 'No Agent Connected'
+
 
   const uri =
     agent?.context?.name &&
@@ -127,6 +126,10 @@ const Layout = () => {
     icon: <SettingOutlined />,
     routes: [
       {
+        name: 'Agents',
+        path: '/settings/agents',
+      },
+      {
         name: 'Appearance',
         path: '/settings/appearance',
       },
@@ -145,8 +148,6 @@ const Layout = () => {
     ]
   })
 
-
-
   return (
     <div
       style={{
@@ -157,8 +158,7 @@ const Layout = () => {
         locale="en-US"
         contentWidth="Fixed"
         title="Agent explorer"
-        logo={require('../assets/icon.png')}
-
+        logo={false}
         menuItemRender={(menuItemProps, defaultDom) => {
           if (menuItemProps.isUrl || menuItemProps.children) {
             return defaultDom
@@ -169,6 +169,7 @@ const Layout = () => {
               <Link
                 to={menuItemProps.path.replace('/*', '')}
                 target={menuItemProps.target}
+                state={menuItemProps.state}
               >
                 {defaultDom}
               </Link>
@@ -183,22 +184,18 @@ const Layout = () => {
         avatarProps={{
           src: uri,
           size: 'small',
-          title: currentAgentName,
           render: (props, children) => (
             <AgentDropdown>{children}</AgentDropdown>
           ),
         }}
         token={{
           pageContainer: {
-            paddingBlockPageContainerContent: 15,
-            paddingInlinePageContainerContent: 15,
+            paddingBlockPageContainerContent: 20,
+            paddingInlinePageContainerContent: 20,
           },
         }}
       >
         <Routes>
-          <Route path="/connect" element={<Connect />} />
-          <Route path="/agents" element={<Agents />} />
-          <Route path="/agent/:id" element={<Agent />} />
           <Route path="/chats/threads/:threadId" element={<Chats />} />
           <Route path="/chats/threads" element={<Chats />} />
           <Route path="/statistics" element={<Statistics />} />
@@ -212,12 +209,13 @@ const Layout = () => {
           <Route path="/requests" element={<Requests />} />
           <Route path="/requests/sdr/:messageId" element={<CreateResponse />} />
           
+          <Route path="/settings/agents" element={<Agents />} />
           <Route path="/settings/appearance" element={<Appearance />} />
           <Route path="/settings/plugins" element={<Plugins />} />
           <Route path="/settings/web3" element={<Web3 />} />
           <Route path="/settings/version" element={<Version />} />
           {!agent && (
-            <Route path="/" element={<Navigate replace to="/connect" />} />
+            <Route path="/" element={<Navigate replace to="/statistics" />} />
           )}
           {plugins.map((plugin) => {
             if (plugin.config.enabled && plugin.routes) {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Table, Button, Row, Space, notification } from 'antd'
+import { Table, Button, Row, Space, App } from 'antd'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -15,6 +15,7 @@ import { IIdentifier } from '@veramo/core'
 import IdentifierProfile from '../components/IdentifierProfile'
 
 const ManagedIdentifiers = () => {
+  const { notification } = App.useApp()
   const { agent } = useVeramo<IDIDManager>()
   const [isNewIdentifierModalVisible, setIsNewIdentifierModalVisible] =
     useState(false)

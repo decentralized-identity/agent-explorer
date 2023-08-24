@@ -7,7 +7,7 @@ import {
   Row,
   Button,
   Col,
-  notification,
+  App,
 } from 'antd'
 import { QrcodeOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
@@ -28,6 +28,7 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
   onCreate,
   onCancel,
 }) => {
+  const { notification } = App.useApp()
   const { agent } = useVeramo<IDIDDiscovery>()
   const [options, setOptions] = useState<SelectProps<object>['options']>([])
   const [did, setDid] = useState<string>('')
