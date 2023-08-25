@@ -1,7 +1,18 @@
 import React from 'react'
-import { Checkbox, Radio, Space } from 'antd'
+import { Button, Checkbox, Radio, Space, Typography } from 'antd'
 import { useTheme } from '../../context/ThemeProvider'
 import { PageContainer } from '@ant-design/pro-components'
+
+const colors = [
+  '#017AFF',
+  '#A54FA6',
+  '#F74F9E',
+  '#FE5258',
+  '#F7821A',
+  '#FFC600',
+  '#62BA46',
+  '#8C8B8C',
+]
 
 const themes = [
   {
@@ -19,7 +30,7 @@ const themes = [
 ]
 
 export const Appearance = () => {
-  const { theme, switchTheme, isCompact, setIsCompact } = useTheme()
+  const { theme, switchTheme, isCompact, setIsCompact, switchPrimaryColor, primaryColor } = useTheme()
   return (
     <PageContainer>
       <Space direction='vertical'>
@@ -42,7 +53,19 @@ export const Appearance = () => {
           >
           Compact mode
         </Checkbox>
-            </Space>
+
+        <Typography.Title level={5}>Accent color</Typography.Title>
+        <Space>
+          {colors.map((color) => <Button 
+            shape='circle'
+            key={color}
+            type={color === primaryColor ? 'dashed' : 'primary'}
+            onClick={() => switchPrimaryColor(color)}
+            style={{backgroundColor: color}}
+            size='small'
+          />)}
+        </Space>
+      </Space>
     </PageContainer>
   )
 }

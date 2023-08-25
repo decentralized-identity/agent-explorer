@@ -32,6 +32,7 @@ import { Plugins } from '../pages/settings/Plugins'
 import { Web3 } from '../pages/settings/Web3'
 import { Version } from '../pages/settings/Version'
 import { Agents } from '../pages/settings/Agents'
+import { useTheme } from '../context/ThemeProvider'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -39,6 +40,7 @@ const Layout = () => {
   const { agent } = useVeramo()
   const { plugins } = usePlugins()
   const location = useLocation()
+  const { primaryColor } = useTheme()
 
   const availableMethods = agent?.availableMethods() || []
 
@@ -159,6 +161,7 @@ const Layout = () => {
         contentWidth="Fixed"
         title="Agent explorer"
         logo={false}
+        colorPrimary={primaryColor}
         menuItemRender={(menuItemProps, defaultDom) => {
           if (menuItemProps.isUrl || menuItemProps.children) {
             return defaultDom
