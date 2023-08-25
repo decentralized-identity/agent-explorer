@@ -19,9 +19,20 @@ function storeIsCompact(isCompact: boolean) {
   localStorage.setItem('isCompact', isCompact.toString())
 }
 
+function storePrimaryColor(color: string) {
+  localStorage.setItem('primaryColor', color)
+}
+
+function getStoredPrimaryColor(): string {
+  return localStorage.getItem('primaryColor') || '#017AFF'
+}
+
 const ThemeProvider = (props: any) => {
   const [systemTheme, setSystemTheme] = useState<'dark' | 'light'>(
     getSystemTheme(),
+  )
+  const [primaryColor, setPrimaryColor] = useState<string>(
+    getStoredPrimaryColor(),
   )
   const [theme, setTheme] = useState<'dark' | 'light' | 'system'>(systemTheme)
   const [isCompact, setIsCompact] = useState<boolean>(getStoredIsCompact())
@@ -37,6 +48,11 @@ const ThemeProvider = (props: any) => {
   const switchTheme = (theme: 'dark' | 'light' | 'system') => {
     localStorage.setItem('theme', theme)
     setTheme(theme)
+  }
+
+  const switchPrimaryColor = (color: string) => {
+    storePrimaryColor(color)
+    setPrimaryColor(color)
   }
 
   useEffect(() => {
@@ -60,6 +76,7 @@ const ThemeProvider = (props: any) => {
   }, [isCompact])
 
   let algorithm = [antdTheme.defaultAlgorithm]
+  let isDark = false
 
   if (theme === 'system') {
     algorithm = [
@@ -67,8 +84,10 @@ const ThemeProvider = (props: any) => {
         ? antdTheme.darkAlgorithm
         : antdTheme.defaultAlgorithm,
     ]
+    isDark = systemTheme === 'dark'
   } else if (theme === 'dark') {
     algorithm = [antdTheme.darkAlgorithm]
+    isDark = true
   }
 
   if (isCompact) {
@@ -77,17 +96,17 @@ const ThemeProvider = (props: any) => {
 
   return (
     <ThemeContext.Provider
-      value={{ theme, switchTheme, isCompact, setIsCompact }}
+      value={{ theme, switchTheme, isCompact, setIsCompact, primaryColor, switchPrimaryColor }}
     >
       <ProConfigProvider
         hashed={false}
-
+        dark={isDark}
       >
         <ConfigProvider
           locale={en_US}
           theme={{
             token: {
-              colorPrimary: '#1DA57A',
+              colorPrimary: primaryColor,
               borderRadius: 3,
             },
             algorithm,

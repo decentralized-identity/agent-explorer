@@ -98,7 +98,8 @@ export async function createWeb3Agent({
   >({
     context: {
       id,
-      name: `Local`,
+      name: `Private`,
+      schema: 'Data securely stored on the device'
     },
     plugins: [
       new DIDResolverPlugin({
