@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Drawer, Tag, App } from 'antd'
+import { Button, Drawer, App } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import {
   DeleteOutlined,
@@ -8,6 +8,7 @@ import {
 import { PageContainer, ProList } from '@ant-design/pro-components'
 import md5 from 'md5'
 import { Connect } from './Connect'
+
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 export const Agents = () => {
@@ -36,7 +37,6 @@ export const Agents = () => {
           description: agent.context.schema,
           avatar: agent?.context?.name && GRAVATAR_URI + md5(agent?.context?.name) + '?s=200&d=retro',
           title: agent.context.name || 'Empty',
-          subTitle: agent.context.id === activeAgentId ? <Tag color='green'>Active</Tag> : null,
           actions: [
             agent.context.id !== 'web3Agent' && <Button
               icon={<DeleteOutlined />}
@@ -56,12 +56,12 @@ export const Agents = () => {
         metas={{
           id:{},
           title: {
-            render: (text, record) => <a onClick={() => {
+            render: (text, record) => <Button type='primary' size='small' ghost={record.id !== activeAgentId} onClick={() => {
               if (record.id !== activeAgentId) {
                 setActiveAgentId(record.id)
               }
             }
-            }>{text}</a>,
+            }>{text}</Button>,
           },
           description: {},
           avatar: {},
