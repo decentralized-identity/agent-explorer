@@ -10,7 +10,6 @@ const AgentDropdown: React.FC<{ children: React.ReactNode }> = ({
   const navigate = useNavigate()
   return (
     <Dropdown
-      
       menu={{
         selectedKeys: activeAgentId ? [activeAgentId] : [],
         items: [
@@ -25,7 +24,7 @@ const AgentDropdown: React.FC<{ children: React.ReactNode }> = ({
             { type: 'divider' as const },
             {
               key: 'manage',
-              label: 'Magage',
+              label: 'Manage',
               onClick: () => navigate('/settings/agents'),
             },
           ],

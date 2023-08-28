@@ -33,6 +33,10 @@ import { Web3 } from '../pages/settings/Web3'
 import { Version } from '../pages/settings/Version'
 import { Agents } from '../pages/settings/Agents'
 import { useTheme } from '../context/ThemeProvider'
+import { Avatar, Space, Typography } from 'antd'
+import { useState } from 'react'
+import { theme } from 'antd'
+
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -41,6 +45,8 @@ const Layout = () => {
   const { plugins } = usePlugins()
   const location = useLocation()
   const { primaryColor } = useTheme()
+  const [ collapsed, setCollapsed ] = useState(false)
+  const { token } = theme.useToken()
 
   const availableMethods = agent?.availableMethods() || []
 
@@ -162,6 +168,8 @@ const Layout = () => {
         title="Agent explorer"
         logo={false}
         colorPrimary={primaryColor}
+        // collapsed={collapsed}
+        onCollapse={setCollapsed}
         menuItemRender={(menuItemProps, defaultDom) => {
           if (menuItemProps.isUrl || menuItemProps.children) {
             return defaultDom
@@ -184,13 +192,21 @@ const Layout = () => {
           routes: mainMenuItems,
         }}
         layout="mix"
-        avatarProps={{
-          src: uri,
-          size: 'small',
-          render: (props, children) => (
-            <AgentDropdown>{children}</AgentDropdown>
-          ),
-        }}
+
+        menuFooterRender={() => (
+
+          <div style={{
+            borderTop: '1px solid ' + token.colorBorder,
+            paddingRight: token.paddingContentHorizontal,
+            paddingLeft: token.paddingContentHorizontal,
+            paddingTop: token.paddingContentHorizontal,
+          }}>
+
+          <AgentDropdown >
+            <Space><Avatar src={uri} size={'small'}/>{!collapsed && <Typography.Text >{agent?.context.name}</Typography.Text>}</Space>
+          </AgentDropdown>
+          </div>
+        )}
         token={{
           pageContainer: {
             paddingBlockPageContainerContent: 20,
