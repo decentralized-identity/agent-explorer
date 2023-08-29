@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { Input, Button, Row, Col, Alert } from 'antd'
 import { SendOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { useChat } from '../context/ChatProvider'
+import { useChat } from '../../context/ChatProvider'
 import { v4 } from 'uuid'
 import { useNavigate } from 'react-router-dom'
-import { shortId } from '../utils/did'
+import { shortId } from '../../utils/did'
 
 const { TextArea } = Input
 
@@ -78,7 +78,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
           setNewRecipient('')
           setComposing(false)
 
-          navigate('/chats/threads/' + _threadId)
+          navigate('/chats/' + _threadId)
         }
       } catch (err) {
         console.error('Error in sendDIDCommMessage: ', err)

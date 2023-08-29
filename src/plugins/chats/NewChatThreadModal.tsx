@@ -14,7 +14,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { QrScanner } from '@yudiel/react-qr-scanner'
 import parse from 'url-parse'
-import { shortId } from '../utils/did'
+import { shortId } from '../../utils/did'
 import { decodeBase64url } from '@veramo/utils'
 
 interface NewChatThreadModalProps {

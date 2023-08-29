@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Button, Modal, List, message } from 'antd'
 import { DeleteOutlined, LockOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { shortId } from '../utils/did'
+import { shortId } from '../../utils/did'
 
 interface IdentifierModuleProps {
   item: any

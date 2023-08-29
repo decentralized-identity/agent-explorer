@@ -1,29 +1,29 @@
 import React from 'react'
-import { Button } from 'antd'
 import { EllipsisOutlined } from '@ant-design/icons'
-import { formatRelative } from 'date-fns'
 import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
 import { ProList } from '@ant-design/pro-components'
 import { VerifiableCredential } from '@veramo-community/react-components'
-import { getIssuerDID } from '../utils/did'
-import IdentifierProfile from './IdentifierProfile'
-import CredentialActionsDropdown from './CredentialActionsDropdown'
+import { Button } from 'antd'
+import { formatRelative } from 'date-fns'
+import { getIssuerDID } from '../../utils/did'
+import IdentifierProfile from '../../components/IdentifierProfile'
+import CredentialActionsDropdown from '../../components/CredentialActionsDropdown'
 
 interface IdentifierCredentialsProps {
   identifier: string
 }
 
-const IdentifierReceivedCredentials: React.FC<IdentifierCredentialsProps> = ({
+const IdentifierIssuedCredentials: React.FC<IdentifierCredentialsProps> = ({
   identifier,
 }) => {
   const navigate = useNavigate()
   const { agent } = useVeramo<IDataStoreORM>()
   const { data: credentials, isLoading } = useQuery(
     [
-      'identifierReceivedCredentials',
+      'identifierIssuedCredentials',
       identifier,
       { agentId: agent?.context.name },
     ],
@@ -31,7 +31,7 @@ const IdentifierReceivedCredentials: React.FC<IdentifierCredentialsProps> = ({
       agent?.dataStoreORMGetVerifiableCredentials({
         where: [
           {
-            column: 'subject',
+            column: 'issuer',
             value: [identifier],
           },
         ],
@@ -41,7 +41,7 @@ const IdentifierReceivedCredentials: React.FC<IdentifierCredentialsProps> = ({
   return (
     <ProList
       ghost
-      headerTitle="Received Credentials"
+      headerTitle="Issued Credentials"
       loading={isLoading}
       pagination={{
         defaultPageSize: 4,
@@ -91,4 +91,4 @@ const IdentifierReceivedCredentials: React.FC<IdentifierCredentialsProps> = ({
   )
 }
 
-export default IdentifierReceivedCredentials
+export default IdentifierIssuedCredentials

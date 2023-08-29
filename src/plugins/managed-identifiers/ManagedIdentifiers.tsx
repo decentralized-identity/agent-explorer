@@ -7,12 +7,12 @@ import { PageContainer } from '@ant-design/pro-components'
 import { IDIDManager } from '@veramo/core-types'
 import NewIdentifierModalForm, {
   NewIdentifierModalValues,
-} from '../components/NewIdentifierModalForm'
-import { shortId } from '../utils/did'
+} from '../../components/NewIdentifierModalForm'
+import { shortId } from '../../utils/did'
 import { createMediateRequestMessage } from '@veramo/did-comm'
 import { DeleteOutlined, CopyOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
-import IdentifierProfile from '../components/IdentifierProfile'
+import IdentifierProfile from '../../components/IdentifierProfile'
 
 const ManagedIdentifiers = () => {
   const { notification } = App.useApp()
@@ -38,7 +38,7 @@ const ManagedIdentifiers = () => {
       dataIndex: 'did',
       key: 'did',
       render: (did: string) => (
-        <Link to={'/identifier/' + encodeURIComponent(did)}>
+        <Link to={'/managed-identifiers/' + encodeURIComponent(did)}>
           <IdentifierProfile did={did} />
         </Link>
       ),

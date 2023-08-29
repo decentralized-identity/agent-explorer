@@ -6,13 +6,12 @@ import ChatInput from './ChatInput'
 import { useNavigate, useParams } from 'react-router'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { scrollMessages } from '../utils/scroll'
-import { useChat } from '../context/ChatProvider'
-import IdentifierProfile from './IdentifierProfile'
+import { scrollMessages } from './scroll'
+import { useChat } from '../../context/ChatProvider'
+import IdentifierProfile from '../../components/IdentifierProfile'
 import { Button, Col, Row, theme } from 'antd'
 
-interface ChatWindowProps {}
-const ChatWindow: React.FC<ChatWindowProps> = () => {
+const ChatWindow: React.FC = () => {
   const { threadId } = useParams<{ threadId: string }>()
   const { selectedDid, newRecipient } = useChat()
   const newThread = threadId === 'new-thread'
@@ -84,7 +83,7 @@ const ChatWindow: React.FC<ChatWindowProps> = () => {
         <Col xs={3} sm={{ span: 0 }}>
           <Button
             type="text"
-            onClick={() => navigate('/chats/threads')}
+            onClick={() => navigate('/chats')}
             size={'large'}
           >
             <LeftOutlined />

@@ -6,7 +6,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { PageContainer } from '@ant-design/pro-components'
 import { IIdentifier } from '@veramo/core'
 import { CopyOutlined } from '@ant-design/icons'
-import IdentifierProfile from '../components/IdentifierProfile'
+import IdentifierProfile from '../../components/IdentifierProfile'
 
 const { Search } = Input
 
@@ -26,7 +26,7 @@ const KnownIdentifiers = () => {
       dataIndex: 'did',
       key: 'did',
       render: (did: string) => (
-        <Link to={'/identifier/' + encodeURIComponent(did)}>
+        <Link to={'/known-identifiers/' + encodeURIComponent(did)}>
           <IdentifierProfile did={did} />
         </Link>
       ),

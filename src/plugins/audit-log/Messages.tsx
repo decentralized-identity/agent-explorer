@@ -6,7 +6,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
 import { IMessage } from '@veramo/core'
 import { PageContainer } from '@ant-design/pro-components'
-import { shortId } from '../utils/did'
+import { shortId } from '../../utils/did'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 

@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { format } from 'date-fns'
 import md5 from 'md5'
-import useSelectedCredentials from '../hooks/useSelectCredentials'
-import { signVerifiablePresentation } from '../utils/signing'
+import useSelectedCredentials from '../../hooks/useSelectCredentials'
+import { signVerifiablePresentation } from '../../utils/signing'
 import { v4 as uuidv4 } from 'uuid'
 import { ICredentialIssuer } from '@veramo/credential-w3c'
 import { IDIDManager, W3CVerifiableCredential } from '@veramo/core'
@@ -18,9 +18,7 @@ const uri = (did: string) => {
   return GRAVATAR_URI + md5(did) + '?s=200&d=retro'
 }
 
-interface CreateResponseProps {}
-
-const CreateResponse: React.FC<CreateResponseProps> = () => {
+const CreateResponse: React.FC = () => {
   const { agent } = useVeramo<
     ICredentialIssuer & IDIDManager & ISelectiveDisclosure,
     any
