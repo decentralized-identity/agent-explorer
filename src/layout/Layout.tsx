@@ -1,32 +1,11 @@
 import { MenuDataItem, ProLayout } from '@ant-design/pro-components'
-import {
-  EyeOutlined,
-  UserOutlined,
-  SafetyOutlined,
-  BarsOutlined,
-  InteractionOutlined,
-  MessageOutlined,
-  SettingOutlined,
-  GlobalOutlined,
-  FileProtectOutlined,
-} from '@ant-design/icons'
-import { Routes, Route, useLocation, Link, Navigate } from 'react-router-dom'
-
-import Identifier from '../pages/Identifier'
-import Credentials from '../pages/Credentials'
-import Credential from '../pages/Credential'
-import Activity from '../pages/Messages'
-import Requests from '../pages/Requests'
-import Chats from '../pages/Chats'
+import { SettingOutlined } from '@ant-design/icons'
+import { Routes, Route, useLocation, Link } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
-import CreateResponse from '../components/CreateResponse'
-import Statistics from '../pages/Statistics'
 import md5 from 'md5'
 import AgentDropdown from '../components/AgentDropdown'
-import KnownIdentifiers from '../pages/KnownIdentifiers'
-import ManagedIdentifiers from '../pages/ManagedIdentifiers'
-import CredentialVerifier from '../pages/CredentialVerifier'
 import { usePlugins } from '../context/PluginProvider'
+import { Landing } from '../pages/Landing'
 import { Appearance } from '../pages/settings/Appearance'
 import { Plugins } from '../pages/settings/Plugins'
 import { Web3 } from '../pages/settings/Web3'
@@ -36,7 +15,6 @@ import { useTheme } from '../context/ThemeProvider'
 import { Avatar, Space, Typography } from 'antd'
 import { useState } from 'react'
 import { theme } from 'antd'
-
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -57,71 +35,13 @@ const Layout = () => {
 
   const mainMenuItems: MenuDataItem = []
 
-  if (availableMethods.includes('dataStoreORMGetVerifiableCredentials')) {
-    mainMenuItems.push({
-      path: '/statistics',
-      name: 'Statistics',
-      icon: <EyeOutlined />,
-    })
-  }
-  if (availableMethods.includes('didManagerFind')) {
-    mainMenuItems.push({
-      path: '/managed-identifiers',
-      name: 'Managed identifiers',
-      icon: <UserOutlined />,
-    })
-  }
-
-  if (availableMethods.includes('dataStoreORMGetVerifiableCredentials')) {
-    mainMenuItems.push({
-      path: '/credentials',
-      name: 'Credentials',
-      icon: <SafetyOutlined />,
-    })
-  }
-
-  if (availableMethods.includes('dataStoreORMGetMessages')) {
-    mainMenuItems.push({
-      path: '/activity',
-      name: 'Activity',
-      icon: <BarsOutlined />,
-    })
-    mainMenuItems.push({
-      path: '/requests',
-      name: 'Requests',
-      icon: <InteractionOutlined />,
-    })
-  }
-
-  if (
-    availableMethods.includes('packDIDCommMessage') &&
-    availableMethods.includes('sendDIDCommMessage')
-  ) {
-    mainMenuItems.push({
-      path: '/chats/threads',
-      name: 'DID Chats',
-      icon: <MessageOutlined />,
-    })
-  }
-
-  if (availableMethods.includes('dataStoreORMGetIdentifiers')) {
-    mainMenuItems.push({
-      path: '/known-identifiers',
-      name: 'Known identifiers',
-      icon: <GlobalOutlined />,
-    })
-  }
-
-  if (availableMethods.includes('verifyCredential')) {
-    mainMenuItems.push({
-      path: '/credential-verifier',
-      name: 'Credential verifier',
-      icon: <FileProtectOutlined />,
-    })
-  }
-
   plugins.forEach((plugin) => {
-    if (plugin.config.enabled && plugin.menuItems) {
+    if (plugin.config.enabled 
+      && plugin.menuItems 
+      && (
+        !plugin.requiredMethods 
+        || plugin.requiredMethods && plugin.requiredMethods.every(method => availableMethods.includes(method)))
+    ) {
       mainMenuItems.push(...plugin.menuItems)
     }
   })
@@ -215,27 +135,12 @@ const Layout = () => {
         }}
       >
         <Routes>
-          <Route path="/chats/threads/:threadId" element={<Chats />} />
-          <Route path="/chats/threads" element={<Chats />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/known-identifiers" element={<KnownIdentifiers />} />
-          <Route path="/managed-identifiers" element={<ManagedIdentifiers />} />
-          <Route path="/identifier/:id" element={<Identifier />} />
-          <Route path="/credentials" element={<Credentials />} />
-          <Route path="/credential/:id" element={<Credential />} />
-          <Route path="/activity" element={<Activity />} />
-          <Route path="/credential-verifier" element={<CredentialVerifier />} />
-          <Route path="/requests" element={<Requests />} />
-          <Route path="/requests/sdr/:messageId" element={<CreateResponse />} />
-          
+          <Route path="/" element={<Landing />} />
           <Route path="/settings/agents" element={<Agents />} />
           <Route path="/settings/appearance" element={<Appearance />} />
           <Route path="/settings/plugins" element={<Plugins />} />
           <Route path="/settings/web3" element={<Web3 />} />
           <Route path="/settings/version" element={<Version />} />
-          {!agent && (
-            <Route path="/" element={<Navigate replace to="/statistics" />} />
-          )}
           {plugins.map((plugin) => {
             if (plugin.config.enabled && plugin.routes) {
               return plugin.routes.map((route) => {

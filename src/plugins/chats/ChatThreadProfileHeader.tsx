@@ -1,9 +1,9 @@
 import React from 'react'
 import { Row, Typography, Avatar, Col, theme } from 'antd'
-import { shortId } from '../utils/did'
+import { shortId } from '../../utils/did'
 import { IMessage } from '@veramo/core'
-import { useChat } from '../context/ChatProvider'
-import { IIdentifierProfile } from '../context/plugins/IdentifierProfile'
+import { useChat } from '../../context/ChatProvider'
+import { IIdentifierProfile } from '../../context/plugins/IdentifierProfile'
 const { useToken } = theme
 const { Text } = Typography
 

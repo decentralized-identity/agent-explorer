@@ -7,9 +7,9 @@ import { PageContainer, ProList } from '@ant-design/pro-components'
 import { VerifiableCredential } from '@veramo-community/react-components'
 import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
 import { EllipsisOutlined } from '@ant-design/icons'
-import IdentifierProfile from '../components/IdentifierProfile'
-import { getIssuerDID } from '../utils/did'
-import CredentialActionsDropdown from '../components/CredentialActionsDropdown'
+import IdentifierProfile from '../../components/IdentifierProfile'
+import { getIssuerDID } from '../../utils/did'
+import CredentialActionsDropdown from '../../components/CredentialActionsDropdown'
 
 const Credentials = () => {
   const navigate = useNavigate()

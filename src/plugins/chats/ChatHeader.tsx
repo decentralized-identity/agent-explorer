@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { Row, Button, theme, Dropdown, Space, Col } from 'antd'
 import { DownOutlined } from '@ant-design/icons'
-import { useChat } from '../context/ChatProvider'
+import { useChat } from '../../context/ChatProvider'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { useQuery } from 'react-query'
 import { FormOutlined, QrcodeOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
-import IdentifierProfile from './IdentifierProfile'
+import IdentifierProfile from '../../components/IdentifierProfile'
 import {
   IIdentifierProfile,
   IIdentifierProfilePlugin,
-} from '../context/plugins/IdentifierProfile'
+} from '../../context/plugins/IdentifierProfile'
 import NewChatThreadModal from './NewChatThreadModal'
 import { useNavigate } from 'react-router-dom'
 import ChatInviteQRCodeModal from './ChatInviteQRCodeModal'
 const { useToken } = theme
 
-interface ChatHeaderProps {}
-
-const ChatHeader: React.FC<ChatHeaderProps> = () => {
+const ChatHeader: React.FC = () => {
   const { token } = useToken()
   const { agent } = useVeramo<IDIDDiscovery & IIdentifierProfilePlugin>()
   const { selectedDid, setSelectedDid, setComposing, setNewRecipient } =
@@ -130,7 +128,7 @@ const ChatHeader: React.FC<ChatHeaderProps> = () => {
         onCreate={(did) => {
           setNewRecipient(did)
           setNewThreadModalVisible(false)
-          navigate('/chats/threads/new-thread')
+          navigate('/chats/new-thread')
         }}
       />
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router'
-import { useChat } from '../context/ChatProvider'
+import { useChat } from '../../context/ChatProvider'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import ChatThreadProfileHeader from './ChatThreadProfileHeader'
@@ -22,7 +22,7 @@ const ChatThread: React.FC<ChatThreadProps> = ({
   const lastMessage = thread[thread.length - 1]
   const viewThread = () => {
     setComposing(false)
-    navigate(`/chats/threads/${threadId}`)
+    navigate(`/chats/${threadId}`)
   }
 
   const counterPartyDid =

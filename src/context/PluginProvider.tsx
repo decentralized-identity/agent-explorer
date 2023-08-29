@@ -1,25 +1,8 @@
-import { MenuDataItem } from '@ant-design/pro-components';
 import React, { createContext, useState, useEffect, useContext } from 'react'
+import { AgentPlugin, PluginConfig } from '../types'
+import { getcorePlugins } from '../plugins'
 
-type PluginConfig = {
-  url: string;
-  enabled: boolean;
-}
-
-type RouteComponent = {
-  path: string;
-  element: React.JSX.Element;
-}
-
-type AgentPlugin = {
-  config: PluginConfig;
-  name: string;
-  description: string;
-  routes: RouteComponent[];
-  menuItems: MenuDataItem[];
-}
-
-
+const corePlugins = getcorePlugins()
 
 type PluginContextType = {
   plugins: AgentPlugin[]
@@ -32,18 +15,33 @@ type PluginContextType = {
 const PluginContext = createContext<PluginContextType>({
   plugins: [],
   pluginConfigs: [],
-  addPluginConfig: () => {},
-  removePluginConfig: () => {},
-  switchPlugin: () => {},
+  addPluginConfig: () => null,
+  removePluginConfig: () => null,
+  switchPlugin: () => null,
 })
 
 function getStoredPluginConfigs(): PluginConfig[] {
+  let result: PluginConfig[] = []
+
+  const corePluginConfigs = corePlugins.map((p) => (p.config as PluginConfig))
+
   const str = localStorage.getItem('pluginConfigs')
   if (str) {
-    return JSON.parse(str)
+    const storedPluginConfigs = JSON.parse(str) as PluginConfig[]
+
+    result = [...storedPluginConfigs]
+
+    // add system configs that are not stored
+    corePluginConfigs.forEach((c) => {
+      const storedConfig = storedPluginConfigs.find((p) => p.url === c.url)
+      if (!storedConfig) {
+        result.push(c)
+      }
+    })
   } else {
-    return []
+    result = corePluginConfigs
   }
+  return result
 }
 
 function storePluginConfigs(configs: PluginConfig[]) {
@@ -60,12 +58,20 @@ const PluginProvider = (props: any) => {
   useEffect(() => {
     const loadPlugins = async () => {
       const result: AgentPlugin[] = []
-
+      
       for (const config of pluginConfigs) {
-        const module = await import(/* webpackIgnore: true */ config.url)
-        const plugin = module.default.init() as AgentPlugin
-        plugin.config = config
-        result.push(plugin)
+        if (config.url.startsWith('core://')) {
+          const plugin = corePlugins.find((p) => p.config.url === config.url)
+          if (plugin) {
+            plugin.config = config
+            result.push(plugin)
+          }
+        } else {
+          const module = await import(/* webpackIgnore: true */ config.url)
+          const plugin = module.default.init() as AgentPlugin
+          plugin.config = config
+          result.push(plugin)
+        }
       }
       setPlugins(result)
     }
