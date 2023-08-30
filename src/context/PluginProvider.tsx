@@ -7,6 +7,7 @@ const corePlugins = getcorePlugins()
 type PluginContextType = {
   plugins: AgentPlugin[]
   pluginConfigs: PluginConfig[]
+  updatePluginConfigs: (configs: PluginConfig[]) => void
   addPluginConfig: (config: PluginConfig) => void
   removePluginConfig: (url: string) => void
   switchPlugin: (url: string, enabled: boolean) => void
@@ -15,6 +16,7 @@ type PluginContextType = {
 const PluginContext = createContext<PluginContextType>({
   plugins: [],
   pluginConfigs: [],
+  updatePluginConfigs: () => null,
   addPluginConfig: () => null,
   removePluginConfig: () => null,
   switchPlugin: () => null,
@@ -103,11 +105,17 @@ const PluginProvider = (props: any) => {
     setPluginConfigs(configs)
   }
 
+  const updatePluginConfigs = (configs: PluginConfig[]) => {
+    storePluginConfigs(configs)
+    setPluginConfigs(configs)
+  }
+
   return (
     <PluginContext.Provider
       value={{
         plugins,
         pluginConfigs, 
+        updatePluginConfigs,
         addPluginConfig,
         removePluginConfig,
         switchPlugin,

@@ -10,7 +10,7 @@ import * as reactrouterdom from 'react-router-dom'
 import * as uuid from 'uuid'
 import * as datefns from 'date-fns'
 import * as reactjsxruntime from 'react/jsx-runtime'
-
+import './style.css'
 // Global variables for plugins
 declare global {
   interface Window {
