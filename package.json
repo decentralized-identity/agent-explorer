@@ -91,6 +91,7 @@
     ]
   },
   "dependencies": {
+    "@dnd-kit/utilities": "^3.2.1",
     "commander": "^10.0.1",
     "express": "^4.18.2",
     "express-favicon": "^2.0.4"
@@ -124,6 +125,8 @@
     "@commitlint/cli": "^17.6.5",
     "@commitlint/config-conventional": "^17.6.5",
     "@craco/craco": "^7.1.0",
+    "@dnd-kit/core": "^6.0.8",
+    "@dnd-kit/sortable": "^7.0.2",
     "@ethersproject/providers": "^5.7.2",
     "@semantic-release/commit-analyzer": "^10.0.1",
     "@semantic-release/git": "^10.0.1",
