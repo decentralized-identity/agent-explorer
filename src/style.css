@@ -4,3 +4,6 @@
 .draggable-item:active {
   cursor: grabbing;
 }
+.ant-upload {
+  overflow: hidden;
+}

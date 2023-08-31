@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Row, Statistic } from 'antd'
+import { Col, Row, Statistic, Typography } from 'antd'
 
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDataStoreORM } from '@veramo/core'
@@ -19,19 +19,32 @@ const Statistics: React.FC = () => {
     () => agent?.dataStoreORMGetIdentifiersCount(),
   )
 
+  const { data: managedIdentifiersCount, isLoading: loading3 } =  useQuery(['identifiers', { agentId: agent?.context.id }], () =>
+  agent?.didManagerFind().then((identifiers) => identifiers.length),
+)
+
+
   return (
     <PageContainer title={'Statistics'} loading={loading1 || loading2}>
-      <Row gutter={16}>
-        <Col span={12}>
+      <Typography.Title level={3}>{agent?.context.name}</Typography.Title>
+      <Row justify={'space-between'}>
+        <Col>
           <Statistic
-            title="Issued Credentials"
+            title="Managed identifiers"
+            value={managedIdentifiersCount}
+            loading={loading3}
+          />
+        </Col>
+        <Col>
+          <Statistic
+            title="Credentials"
             value={credentialsCount}
             loading={loading1}
           />
         </Col>
-        <Col span={12}>
+        <Col>
           <Statistic
-            title="Known Identifiers"
+            title="Contacts"
             value={identifiersCount}
             loading={loading2}
           />

@@ -35,7 +35,7 @@ const Credentials = () => {
         onItem={(record: any) => {
           return {
             onClick: () => {
-              navigate('/credential/' + record.hash)
+              navigate('/credentials/' + record.hash)
             },
           }
         }}

@@ -2,7 +2,7 @@ import React from 'react';
 import { UserOutlined } from '@ant-design/icons'
 import { IPlugin } from '../../types';
 
-import ManagedIdentifiers from './ManagedIdentifiers';
+import { ManagedIdentifiers } from './ManagedIdentifiers';
 import Identifier from './Identifier';
 
 const Plugin: IPlugin = {
@@ -11,25 +11,25 @@ const Plugin: IPlugin = {
         return {
           config: {
             enabled: true,
-            url: 'core://managed-identifiers',
+            url: 'core://identifiers',
           },
-          name: 'Managed Identifiers',
-          description: 'Manage your identifiers',
+          name: 'Identifiers',
+          description: 'Manage identifiers',
           requiredMethods: ['didManagerFind'],
           routes: [
             {
-              path: '/managed-identifiers',
+              path: '/identifiers',
               element: <ManagedIdentifiers />,
             },
             {
-              path: '/managed-identifiers/:id',
+              path: '/identifiers/:id',
               element: <Identifier />,
             },
           ],
           menuItems: [
             {
-              name: 'Managed identifiers',
-              path: '/managed-identifiers',
+              name: 'Identifiers',
+              path: '/identifiers',
               icon: <UserOutlined />,
             },
           ],

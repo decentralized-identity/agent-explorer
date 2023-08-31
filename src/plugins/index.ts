@@ -1,6 +1,6 @@
 import { AgentPlugin, IPlugin } from '../types'
-import ManagedIdentifiers  from './managed-identifiers'
-import KnownIdentifiers  from './known-identifiers'
+import Identifiers  from './identifiers'
+import Contacts  from './contacts'
 import Statistics  from './statistics'
 import AuditLog  from './audit-log'
 import CredentialVerifier  from './credential-verifier'
@@ -10,10 +10,10 @@ import Chats  from './chats'
 
 const corePlugins: IPlugin[] = [
   Statistics,
-  ManagedIdentifiers,
+  Identifiers,
   Credentials,
   CredentialVerifier,
-  KnownIdentifiers,
+  Contacts,
   Chats,
   AuditLog,
   Requests,

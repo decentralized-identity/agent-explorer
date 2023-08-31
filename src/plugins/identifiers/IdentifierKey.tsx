@@ -1,19 +1,16 @@
 import React, { useState } from 'react'
-import { Button, Modal, List } from 'antd'
-import { CloudServerOutlined, DeleteOutlined } from '@ant-design/icons'
+import { Button, Modal, List, message } from 'antd'
+import { DeleteOutlined, LockOutlined } from '@ant-design/icons'
 import { useVeramo } from '@veramo-community/veramo-react'
+import { shortId } from '../../utils/did'
 
 interface IdentifierModuleProps {
-  i: number
   item: any
+  i: number
   did: string
 }
 
-const IdentifierServices: React.FC<IdentifierModuleProps> = ({
-  i,
-  item,
-  did,
-}) => {
+const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did }) => {
   const { agent } = useVeramo()
   const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -22,45 +19,49 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
   }
 
   const handleOk = () => {
-    agent?.didManagerRemoveService({ did, id: item.id })
+    // simply to prevent this DID from getting messed up accidentally
+    if (did === 'did:web:sun.veramo.io') {
+      message.error('please do not remove keys from this DID')
+    } else {
+      agent?.didManagerRemoveKey({ did, kid: item.id })
+    }
     setIsModalVisible(false)
   }
 
   const handleCancel = () => {
     setIsModalVisible(false)
   }
-  const serviceEndpoint = item.serviceEndpoint[0]?.uri || item.serviceEndpoint
+
   return (
     <List.Item
       key={i}
       actions={[
         <Button
+          type='text'
           icon={<DeleteOutlined />}
           disabled={false /* check if current agent controls this DID */}
           onClick={() => {
-            console.log('remove service')
             showModal()
           }}
-        >
-          Remove Service
-        </Button>,
+        />,
       ]}
     >
       <List.Item.Meta
-        avatar={<CloudServerOutlined />}
+        avatar={<LockOutlined />}
         title={item.type}
-        description={serviceEndpoint}
+        description={shortId(item.controller)}
       />
+      {/*item.publicKeyHex*/}
       <Modal
         open={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
         okType="danger"
       >
-        <p>Are you sure you want to remove this service?</p>
+        <p>Are you sure you want to remove this key? This cannot be undone.</p>
       </Modal>
     </List.Item>
   )
 }
 
-export default IdentifierServices
+export default IdentifierKey

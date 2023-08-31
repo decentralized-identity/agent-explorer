@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Input, List, Space, Switch, App, Drawer } from 'antd'
+import { Button, Input, List, Space, Switch, App, Drawer, Typography } from 'antd'
 import { DeleteOutlined, MenuOutlined, PlusOutlined} from '@ant-design/icons'
 import { usePlugins } from '../../context/PluginProvider'
 import { PageContainer } from '@ant-design/pro-components'
@@ -14,6 +14,31 @@ import { DndContext,
 import { SortableContext, useSortable, verticalListSortingStrategy, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import { AgentPlugin } from '../../types'
+
+const communityPlugins: AgentPlugin[] = [
+  {
+    config: {
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-developer-tools/dist/plugin.js',
+      enabled: true,
+    },
+    name: 'Developer Tools',
+    description: 'Collection of tools for experimenting with verifiable data',
+    requiredMethods: [],
+    routes: [],
+    menuItems: [],
+  },
+  {
+    config: {
+      url: 'https://cdn.jsdelivr.net/gh/simonas-notcat/agent-explorer-plugin-codyfight/dist/plugin.js',
+      enabled: true,
+    },
+    name: 'Codyfight',
+    description: 'AI Bot for Codyfight.com',
+    requiredMethods: [],
+    routes: [],
+    menuItems: [],
+  },
+]
 
 const SortableItem = ({ item }: { item: AgentPlugin}) => {
   const { notification } = App.useApp()
@@ -95,7 +120,7 @@ export const Plugins = () => {
             type="primary"
             title="Add new external plugin"
             onClick={() => setDrawerOpen(true)}
-          />,
+          >Add</Button>,
         ]}
       >
 
@@ -116,21 +141,46 @@ export const Plugins = () => {
           width={500}
           onClose={() => setDrawerOpen(false)}
           open={isDrawerOpen}
-        >        
-          <Space.Compact style={{ width: '100%' }}>
-            <Input 
-              value={url} 
-              onChange={(e) => setUrl(e.target.value)}
+        > 
+          <Space direction='vertical' style={{width: '100%'}}>
+            <Typography.Title level={5}>Community plugins</Typography.Title>
+              <List
+                dataSource={communityPlugins}
+                renderItem={(item) => <List.Item 
+                    actions={[
+                      <Button 
+                      type="primary"
+                      disabled={plugins.find((plugin) => plugin.config.url === item.config.url) !== undefined}
+                      onClick={() => {
+                        setDrawerOpen(false)
+                        addPluginConfig({url: item.config.url, enabled: true})
+                        setUrl('')
+                      }}
+                      >Add</Button>
+                    ]}
+                    ><List.Item.Meta
+                    title={item.name}
+                    description={item.description}
+                />
+              </List.Item>}
               />
-            <Button 
-              type="primary"
-              onClick={() => {
-                setDrawerOpen(false)
-                addPluginConfig({url, enabled: true})
-                setUrl('')
-              }}
-              >Add</Button>
-          </Space.Compact>
+            <Typography.Title level={5}>Custom plugin</Typography.Title>            
+            <Space.Compact style={{ width: '100%' }}>
+              <Input 
+                value={url} 
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://example.com/plugin.js"
+                />
+              <Button 
+                type="primary"
+                onClick={() => {
+                  setDrawerOpen(false)
+                  addPluginConfig({url, enabled: true})
+                  setUrl('')
+                }}
+                >Add</Button>
+            </Space.Compact>
+          </Space>       
         </Drawer>
       </PageContainer>
     </DndContext>

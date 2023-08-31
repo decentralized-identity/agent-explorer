@@ -101,8 +101,8 @@ devDependencies:
     specifier: ^6.4.0
     version: 6.4.0(eslint@8.47.0)(typescript@4.9.5)
   '@veramo-community/react-components':
-    specifier: ^1.4.0
-    version: 1.4.0(react@18.2.0)
+    specifier: ^1.5.0
+    version: 1.5.0(react@18.2.0)
   '@veramo-community/veramo-react':
     specifier: ^1.0.82
     version: 1.0.82(@veramo/core@5.4.2-next.10)(@veramo/remote-client@5.4.2-next.10)(react@18.2.0)
@@ -6566,8 +6566,8 @@ packages:
     dev: true
     optional: true
 
-  /@veramo-community/react-components@1.4.0(react@18.2.0):
-    resolution: {integrity: sha512-DlOTlu6w5uOsd9nACXCwV2Whae9aUDtHuUJ1+LNyO0x1fSK60JjJ1DowVf0vDhiN1GS44O978OZc7vziK3ulYA==}
+  /@veramo-community/react-components@1.5.0(react@18.2.0):
+    resolution: {integrity: sha512-+8q078C3FP8KwlZAxSkZMk7Eb0joyQ8yrcBWnZhabF95AHvSRLpu+qVl1mm0NqawTOpdbeOrJLAi1oKhWaXsBQ==}
     peerDependencies:
       react: ^18.2.0
     dependencies:

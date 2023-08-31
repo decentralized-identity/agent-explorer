@@ -145,7 +145,7 @@
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
-    "@veramo-community/react-components": "^1.4.0",
+    "@veramo-community/react-components": "^1.5.0",
     "@veramo-community/veramo-react": "^1.0.82",
     "@veramo/core": "5.4.2-next.10",
     "@veramo/core-types": "5.2.1-next.5",
