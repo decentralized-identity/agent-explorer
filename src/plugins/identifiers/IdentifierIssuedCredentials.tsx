@@ -50,7 +50,7 @@ const IdentifierIssuedCredentials: React.FC<IdentifierCredentialsProps> = ({
       onItem={(record: any) => {
         return {
           onClick: () => {
-            navigate('/credential/' + record.hash)
+            navigate('/credentials/' + record.hash)
           },
         }
       }}

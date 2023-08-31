@@ -61,6 +61,7 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
             order: [{ column: 'issuanceDate', direction: 'DESC' }],
           },
         )
+        console.log({result})
         if (result.length > 0) {
           const { name, picture } =
             result[0].verifiableCredential.credentialSubject

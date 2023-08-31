@@ -55,7 +55,7 @@ const CredentialInfo: React.FC<CredentialInfoProps> = ({ credential }) => {
       >
         {data.map((i) => (
           <Descriptions.Item label={i.key} key={i.key}>
-            {i.value}
+            {i.value.startsWith('data:image') ? (<img src={i.value} alt={i.key} style={{width: 200}} />) : i.value}
           </Descriptions.Item>
         ))}
       </Descriptions>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { GlobalOutlined } from '@ant-design/icons'
+import { ContactsOutlined } from '@ant-design/icons'
 import { IPlugin } from '../../types';
 
-import KnownIdentifiers from './KnownIdentifiers';
+import { Contacts } from './Contacts';
 import Identifier from './Identifier';
 
 const Plugin: IPlugin = {
@@ -11,26 +11,26 @@ const Plugin: IPlugin = {
         return {
           config: {
             enabled: true,
-            url: 'core://known-identifiers',
+            url: 'core://contacts',
           },
-          name: 'Known Identifiers',
-          description: 'Explore known identifiers',
+          name: 'Contacts',
+          description: 'Explore contacts',
           requiredMethods: ['dataStoreORMGetIdentifiers'],
           routes: [
             {
-              path: '/known-identifiers',
-              element: <KnownIdentifiers />,
+              path: '/Contacts',
+              element: <Contacts />,
             },
             {
-              path: '/known-identifiers/:id',
+              path: '/contacts/:id',
               element: <Identifier />,
             },
           ],
           menuItems: [
             {
-              name: 'Known identifiers',
-              path: '/known-identifiers',
-              icon: <GlobalOutlined />,
+              name: 'Contacts',
+              path: '/contacts',
+              icon: <ContactsOutlined />,
             },
           ],
           

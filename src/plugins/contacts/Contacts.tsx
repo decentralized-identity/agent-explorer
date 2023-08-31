@@ -10,7 +10,7 @@ import IdentifierProfile from '../../components/IdentifierProfile'
 
 const { Search } = Input
 
-const KnownIdentifiers = () => {
+export const Contacts = () => {
   const { notification } = App.useApp()
   const { agent } = useVeramo()
   const navigate = useNavigate()
@@ -26,7 +26,7 @@ const KnownIdentifiers = () => {
       dataIndex: 'did',
       key: 'did',
       render: (did: string) => (
-        <Link to={'/known-identifiers/' + encodeURIComponent(did)}>
+        <Link to={'/contacts/' + encodeURIComponent(did)}>
           <IdentifierProfile did={did} />
         </Link>
       ),
@@ -55,7 +55,7 @@ const KnownIdentifiers = () => {
     <PageContainer>
       <Search
         placeholder="Resolve DID"
-        onSearch={(value) => navigate('/identifier/' + value)}
+        onSearch={(value) => navigate('/contacts/' + value)}
         style={{ width: 400, marginBottom: 20 }}
       />
       <Table
@@ -69,4 +69,3 @@ const KnownIdentifiers = () => {
   )
 }
 
-export default KnownIdentifiers
