@@ -73,6 +73,23 @@ const PluginProvider = (props: any) => {
           const plugin = module.default.init() as AgentPlugin
           plugin.config = config
           result.push(plugin)
+          //try fetching (using fetch) a corresponding css file for the plugin by replacing .js with .css 
+          //and adding it to the head of the document
+          const cssUrl = config.url.replace('.js', '.css')
+          try {
+
+            const cssResponse = await fetch(cssUrl)
+            if (cssResponse.ok) {
+              const css = await cssResponse.text()
+              const style = document.createElement('style')
+              style.type = 'text/css'
+              style.appendChild(document.createTextNode(css))
+              document.head.appendChild(style)
+            }
+          } catch (e) {
+            //do nothing
+          }
+            
         }
       }
       setPlugins(result)
