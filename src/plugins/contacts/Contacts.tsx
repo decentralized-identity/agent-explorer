@@ -16,7 +16,7 @@ export const Contacts = () => {
   const navigate = useNavigate()
 
   const { data: identifiers, isLoading } = useQuery(
-    ['identifiers', { agentId: agent?.context.id }],
+    ['contacts', { agentId: agent?.context.id }],
     () => agent?.dataStoreORMGetIdentifiers(),
   )
 
