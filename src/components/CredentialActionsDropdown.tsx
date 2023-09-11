@@ -54,7 +54,7 @@ const CredentialActionsDropdown: React.FC<{
             key: 'issuer',
             label: 'Issuer',
             icon: <InfoCircleOutlined />,
-            onClick: () => navigate('/identifier/' + getIssuerDID(credential)),
+            onClick: () => navigate('/contacts/' + getIssuerDID(credential)),
           },
           {
             key: 'subject',
@@ -62,7 +62,7 @@ const CredentialActionsDropdown: React.FC<{
             icon: <InfoCircleOutlined />,
             onClick: () =>
               navigate(
-                '/identifier/' +
+                '/contacts/' +
                   encodeURIComponent(credential.credentialSubject.id as string),
               ),
           },
