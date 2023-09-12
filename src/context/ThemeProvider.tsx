@@ -98,25 +98,25 @@ const ThemeProvider = (props: any) => {
     <ThemeContext.Provider
       value={{ theme, switchTheme, isCompact, setIsCompact, primaryColor, switchPrimaryColor }}
     >
-      <ProConfigProvider
-        hashed={false}
-        dark={isDark}
-      >
-        <ConfigProvider
-          locale={en_US}
-          theme={{
-            token: {
-              colorPrimary: primaryColor,
-              borderRadius: 3,
-            },
-            algorithm,
-          }}
-          >
+      <ConfigProvider
+        locale={en_US}
+        theme={{
+          token: {
+            colorPrimary: primaryColor,
+            borderRadius: 3,
+          },
+          algorithm,
+        }}
+        >
+        <ProConfigProvider
+          hashed={false}
+          dark={isDark}
+        >
           <App>
             {props.children}
           </App>
-        </ConfigProvider>
-      </ProConfigProvider>
+        </ProConfigProvider>
+      </ConfigProvider>
     </ThemeContext.Provider>
   )
 }
