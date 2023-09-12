@@ -18,6 +18,17 @@ import { AgentPlugin } from '../../types'
 const communityPlugins: AgentPlugin[] = [
   {
     config: {
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-graph-view/dist/plugin.js',
+      enabled: true,
+    },
+    name: 'Graph View',
+    description: 'Explore contacts and credentials in a graph view',
+    requiredMethods: [],
+    routes: [],
+    menuItems: [],
+  },
+  {
+    config: {
       url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-developer-tools/dist/plugin.js',
       enabled: true,
     },
