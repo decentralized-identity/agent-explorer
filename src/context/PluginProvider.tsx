@@ -73,9 +73,8 @@ const PluginProvider = (props: any) => {
           const plugin = module.default.init() as AgentPlugin
           plugin.config = config
           result.push(plugin)
-          //try fetching (using fetch) a corresponding css file for the plugin by replacing .js with .css 
-          //and adding it to the head of the document
-          const cssUrl = config.url.replace('.js', '.css')
+          //FIXME
+          const cssUrl = config.url.replace('plugin.js', 'plugin.css')
           try {
 
             const cssResponse = await fetch(cssUrl)
