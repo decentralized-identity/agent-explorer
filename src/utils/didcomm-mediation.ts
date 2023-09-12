@@ -5,6 +5,11 @@ export async function pickup(
   recipientDidUrl: string,
   mediatorDidUrl: string,
 ): Promise<void> {
+
+  if (mediatorDidUrl.startsWith('https')) {
+    return
+  }
+
   const statusMessage = createStatusRequestMessage(
     recipientDidUrl,
     mediatorDidUrl,
