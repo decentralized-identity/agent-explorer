@@ -74,21 +74,21 @@ const PluginProvider = (props: any) => {
           plugin.config = config
           result.push(plugin)
           //FIXME
-          const cssUrl = config.url.replace('plugin.js', 'plugin.css')
-          try {
-
-            const cssResponse = await fetch(cssUrl)
-            if (cssResponse.ok) {
-              const css = await cssResponse.text()
-              const style = document.createElement('style')
-              style.type = 'text/css'
-              style.appendChild(document.createTextNode(css))
-              document.head.appendChild(style)
+          if (plugin.hasCss && config.enabled) {
+            const cssUrl = config.url.replace('plugin.js', 'plugin.css')
+            try {
+              const cssResponse = await fetch(cssUrl)
+              if (cssResponse.ok) {
+                const css = await cssResponse.text()
+                const style = document.createElement('style')
+                style.type = 'text/css'
+                style.appendChild(document.createTextNode(css))
+                document.head.appendChild(style)
+              }
+            } catch (e) {
+              //do nothing
             }
-          } catch (e) {
-            //do nothing
           }
-            
         }
       }
       setPlugins(result)
