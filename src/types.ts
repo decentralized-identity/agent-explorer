@@ -17,6 +17,7 @@ export type AgentPlugin = {
   routes: RouteComponent[];
   menuItems: MenuDataItem[];
   requiredMethods: string[];
+  hasCss?: boolean;
 }
 
 export interface IPlugin {
