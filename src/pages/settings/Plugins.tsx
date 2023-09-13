@@ -18,6 +18,17 @@ import { AgentPlugin } from '../../types'
 const communityPlugins: AgentPlugin[] = [
   {
     config: {
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-kudos/dist/plugin.js',
+      enabled: true,
+    },
+    name: 'Kudos',
+    description: 'Explore and give kudos',
+    requiredMethods: [],
+    routes: [],
+    menuItems: [],
+  },
+  {
+    config: {
       url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-graph-view/dist/plugin.js',
       enabled: true,
     },
