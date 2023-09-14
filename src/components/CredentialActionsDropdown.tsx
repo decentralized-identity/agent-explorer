@@ -2,7 +2,7 @@ import { Dropdown, App } from 'antd'
 import React from 'react'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useNavigate } from 'react-router-dom'
-import { DownloadOutlined, InfoCircleOutlined } from '@ant-design/icons'
+import { DownloadOutlined, InfoCircleOutlined, PicLeftOutlined } from '@ant-design/icons'
 import { IDataStore, VerifiableCredential } from '@veramo/core'
 import { getIssuerDID } from '../utils/did'
 
@@ -33,6 +33,19 @@ const CredentialActionsDropdown: React.FC<{
         description: e.message,
       })
     }
+  }
+
+  const handleCopyEmbed = () => {
+    let embed = ''
+    if (credential.proof?.jwt) {
+      embed = `\`\`\`vc+jwt\n${credential.proof.jwt}\n\`\`\``
+    } else {
+      embed = `\`\`\`vc+json\n${JSON.stringify(credential, null, 2)}\n\`\`\``
+    }
+    navigator.clipboard.writeText(embed)
+    notification.success({
+      message: 'Credential embed copied to clipboard',
+    })
   }
 
   const handleDownload = () => {
@@ -71,6 +84,12 @@ const CredentialActionsDropdown: React.FC<{
             label: 'Download',
             icon: <DownloadOutlined />,
             onClick: handleDownload,
+          },
+          {
+            key: 'embed',
+            label: 'Copy embed',
+            icon: <PicLeftOutlined />,
+            onClick: handleCopyEmbed,
           },
           {
             key: 'copy',
