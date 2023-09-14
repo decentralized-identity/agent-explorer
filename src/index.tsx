@@ -1,5 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
+import * as ReactDOMServer from 'react-dom/server';
 import App from './layout/App'
 import reportWebVitals from './reportWebVitals'
 import * as antd from 'antd'
@@ -24,6 +25,7 @@ declare global {
     uuid: any
     datefns: any
     reactjsxruntime: any
+    ReactDOMServer: any
   }
 }
 window.React = React
@@ -36,6 +38,7 @@ window.reactrouterdom = reactrouterdom
 window.uuid = uuid
 window.datefns = datefns
 window.reactjsxruntime = reactjsxruntime
+window.ReactDOMServer = ReactDOMServer
 
 const container = document.getElementById('app')
 const root = createRoot(container!) // createRoot(container!) if you use TypeScript
