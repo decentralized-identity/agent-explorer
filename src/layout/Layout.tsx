@@ -84,8 +84,8 @@ const Layout = () => {
     >
       <ProLayout
         contentWidth="Fixed"
-        title="Agent explorer"
-        logo={false}
+        title={false}
+
         colorPrimary={primaryColor}
         // collapsed={collapsed}
         onCollapse={setCollapsed}
@@ -112,17 +112,17 @@ const Layout = () => {
         }}
         layout="mix"
 
-        menuFooterRender={() => (
+        logo={(
 
           <div style={{
-            borderTop: '1px solid ' + token.colorBorder,
-            paddingRight: token.paddingContentHorizontal,
-            paddingLeft: token.paddingContentHorizontal,
-            paddingTop: token.paddingContentHorizontal,
+            paddingLeft: token.paddingXXS,
           }}>
 
           <AgentDropdown >
-            <Space><Avatar src={uri} size={'small'}/>{!collapsed && <Typography.Text >{agent?.context.name}</Typography.Text>}</Space>
+            <Space>
+              <Avatar size={'small'} src={uri} />
+              {!collapsed && <Typography.Title >{agent?.context.name}</Typography.Title>}
+            </Space>
           </AgentDropdown>
           </div>
         )}

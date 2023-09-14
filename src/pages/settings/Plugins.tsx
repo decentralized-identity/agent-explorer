@@ -18,6 +18,17 @@ import { AgentPlugin } from '../../types'
 const communityPlugins: AgentPlugin[] = [
   {
     config: {
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-social-feed/dist/plugin.js',
+      enabled: true,
+    },
+    name: 'Social Feed',
+    description: 'Decentralized reputation and social feed',
+    requiredMethods: [],
+    routes: [],
+    menuItems: [],
+  },
+  {
+    config: {
       url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-kudos/dist/plugin.js',
       enabled: true,
     },
