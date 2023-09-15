@@ -3,7 +3,7 @@ import { SafetyOutlined } from '@ant-design/icons'
 import { IPlugin } from '../../types';
 
 import Credentials from './Credentials';
-import Credential from './Credential';
+
 
 const Plugin: IPlugin = {
     //@ts-ignore
@@ -22,8 +22,8 @@ const Plugin: IPlugin = {
               element: <Credentials />,
             },
             {
-              path: '/credentials/:id',
-              element: <Credential />,
+              path: '/credentials/:hash',
+              element: <Credentials />,
             },
           ],
           menuItems: [
