@@ -51,7 +51,7 @@ const Credentials = () => {
     <PageContainer
     title="Credentials"
       extra={[
-        <Radio.Group value={listType} onChange={ (e) => setListType(e.target.value) }>
+        <Radio.Group key='1' value={listType} onChange={ (e) => setListType(e.target.value) }>
           <Radio.Button value="table"><UnorderedListOutlined /></Radio.Button>
           <Radio.Button value="card"><AppstoreOutlined /></Radio.Button>
         </Radio.Group>

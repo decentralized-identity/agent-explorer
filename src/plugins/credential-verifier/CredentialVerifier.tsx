@@ -21,14 +21,17 @@ const CredentialVerifier = () => {
 
   const verify = useCallback(
     async (text: string) => {
+      console.log(text)
       setIsVerifying(true)
       setVerificationResult(undefined)
       try {
         const result = await agent?.verifyCredential({
           credential: JSON.parse(text),
         })
+        console.log(result)
         setVerificationResult(result)
       } catch (e: any) {
+        console.log('eeee', e)
         setVerificationResult({
           verified: false,
           error: { message: e.message },
