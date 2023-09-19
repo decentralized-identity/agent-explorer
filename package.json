@@ -12,9 +12,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "engines": {
-    "node": "18.x"
-  },
   "license": "Apache-2.0",
   "files": [
     "build",
@@ -22,6 +19,9 @@
     "lib"
   ],
   "main": "build/electron.js",
+  "exports": {
+    ".": "./lib/express-router.js"
+  },
   "build": {
     "appId": "io.veramo.explore",
     "mac": {
@@ -146,27 +146,27 @@
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
     "@veramo-community/react-components": "^1.5.0",
-    "@veramo-community/veramo-react": "^1.0.82",
-    "@veramo/core": "5.4.2-next.10",
+    "@veramo-community/veramo-react": "^1.1.0",
+    "@veramo/core": "5.4.2-next.27",
     "@veramo/core-types": "5.2.1-next.5",
-    "@veramo/credential-eip712": "5.4.2-next.10",
-    "@veramo/credential-w3c": "5.4.2-next.10",
-    "@veramo/data-store": "5.4.2-next.10",
-    "@veramo/data-store-json": "5.4.2-next.10",
-    "@veramo/did-comm": "5.4.2-next.10",
-    "@veramo/did-discovery": "5.4.2-next.10",
-    "@veramo/did-jwt": "5.4.2-next.10",
-    "@veramo/did-manager": "5.4.2-next.10",
-    "@veramo/did-provider-ethr": "5.4.2-next.10",
-    "@veramo/did-provider-peer": "5.4.2-next.10",
-    "@veramo/did-resolver": "5.4.2-next.10",
-    "@veramo/key-manager": "5.4.2-next.10",
-    "@veramo/kms-local": "5.4.2-next.10",
-    "@veramo/kms-web3": "5.4.2-next.10",
-    "@veramo/message-handler": "5.4.2-next.10",
-    "@veramo/remote-client": "5.4.2-next.10",
-    "@veramo/selective-disclosure": "5.4.2-next.10",
-    "@veramo/utils": "5.4.2-next.10",
+    "@veramo/credential-eip712": "5.4.2-next.27",
+    "@veramo/credential-w3c": "5.4.2-next.27",
+    "@veramo/data-store": "5.4.2-next.27",
+    "@veramo/data-store-json": "5.4.2-next.27",
+    "@veramo/did-comm": "5.4.2-next.27",
+    "@veramo/did-discovery": "5.4.2-next.27",
+    "@veramo/did-jwt": "5.4.2-next.27",
+    "@veramo/did-manager": "5.4.2-next.27",
+    "@veramo/did-provider-ethr": "5.4.2-next.27",
+    "@veramo/did-provider-peer": "5.4.2-next.27",
+    "@veramo/did-resolver": "5.4.2-next.27",
+    "@veramo/key-manager": "5.4.2-next.27",
+    "@veramo/kms-local": "5.4.2-next.27",
+    "@veramo/kms-web3": "5.4.2-next.27",
+    "@veramo/message-handler": "5.4.2-next.27",
+    "@veramo/remote-client": "5.4.2-next.27",
+    "@veramo/selective-disclosure": "5.4.2-next.27",
+    "@veramo/utils": "5.4.2-next.27",
     "@web3-react/core": "^8.2.0",
     "@web3-react/metamask": "^8.2.1",
     "@web3-react/types": "^8.2.0",
