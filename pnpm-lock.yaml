@@ -110,8 +110,8 @@ devDependencies:
     specifier: 5.5.1-next.2
     version: 5.5.1-next.2
   '@veramo/core-types':
-    specifier: 5.2.1-next.5
-    version: 5.2.1-next.5
+    specifier: 5.5.1-next.2
+    version: 5.5.1-next.2
   '@veramo/credential-eip712':
     specifier: 5.5.1-next.2
     version: 5.5.1-next.2
@@ -6535,17 +6535,6 @@ packages:
       uuid: 9.0.0
     dev: true
 
-  /@veramo/core-types@5.2.1-next.5:
-    resolution: {integrity: sha512-af1M5PIJ4+rqsFBb6GpPx6nyyh0sA3bVsg088yMDIaq9s0rgxAlB9g1EIUsGpNCZuDlzmYZVBSUkMv6MnUAcGg==}
-    dependencies:
-      credential-status: 2.0.5
-      debug: 4.3.4
-      did-jwt-vc: 3.2.1
-      did-resolver: 4.1.0
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /@veramo/core-types@5.5.1-next.2:
     resolution: {integrity: sha512-YpCluDk9dZXh9iusl7brPcMywbI1EW9ykxJxlbjaijW808FcU4u+0VMHYtsJh9cxrnNbY/cS4bc+krRetB4GLg==}
     dependencies:
@@ -10273,14 +10262,6 @@ packages:
       debug: 2.6.9
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /did-jwt-vc@3.2.1:
-    resolution: {integrity: sha512-jzYBD9jDqa7Cv/i24HfXNMxQVjH/rYDS/IKXScHj3S/2G1ofqZY17Q4Nr6lGju5BO46FClaho303fD4oh2coCQ==}
-    engines: {node: '>=18'}
-    dependencies:
-      did-jwt: 7.2.5
-      did-resolver: 4.1.0
     dev: true
 
   /did-jwt-vc@3.2.5:
