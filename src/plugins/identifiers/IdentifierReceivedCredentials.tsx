@@ -73,7 +73,7 @@ const IdentifierReceivedCredentials: React.FC<IdentifierCredentialsProps> = ({
                 new Date(),
               )}
             </div>,
-            <CredentialActionsDropdown credential={item.verifiableCredential}>
+            <CredentialActionsDropdown uniqueCredential={item}>
               <Button type="text">
                 <EllipsisOutlined />
               </Button>
