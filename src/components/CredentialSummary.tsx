@@ -29,31 +29,26 @@ export const CredentialSummary: React.FC<CredentialSummaryProps> = ({
 
   return (
     <Row align="top" 
-      onClick={onClick}
-      wrap={false} 
+    wrap={false} 
       style={{
-        cursor: 'pointer',
         width: '100%',
         borderBottom: '1px solid ' + token.colorBorderSecondary,
         padding: token.paddingSM,
         position: 'relative'
       }}
+      justify={'space-between'}
     >
-      <div style={{position: 'absolute', top: token.paddingXXS, right: 0 }}>
-
-      <CredentialActionsDropdown credential={credential.verifiableCredential}>
-        <EllipsisOutlined />
-      </CredentialActionsDropdown>
-      </div>
-      <Col style={{ marginRight: token.padding }}>
-        {!isLoading && <Avatar src={data?.picture} size={'small'} />}
-        {isLoading && <Skeleton.Avatar active />}
-      </Col>
-      <Col>
+      <Col 
+        style={{cursor: 'pointer'}}
+        onClick={onClick}>
         <div style={{ justifyItems: 'flex-start', display: 'flex' }}>
           {!isLoading && (
 
             <Space direction='horizontal' wrap={true}>
+              <div>
+                {!isLoading && <Avatar src={data?.picture} size={'small'} />}
+                {isLoading && <Skeleton.Avatar active />}
+              </div>
               <Popover content={shortId(did)}>
                 <Typography.Text ellipsis>
                   {data?.name} 
@@ -71,6 +66,12 @@ export const CredentialSummary: React.FC<CredentialSummaryProps> = ({
         </div>
         
       </Col>
+      <Col xs={1}>
+        <CredentialActionsDropdown uniqueCredential={credential}>
+          <EllipsisOutlined />
+        </CredentialActionsDropdown>
+      </Col>
+
     </Row>
 
   )

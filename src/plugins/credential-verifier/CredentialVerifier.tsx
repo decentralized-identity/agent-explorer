@@ -5,6 +5,7 @@ import '@veramo-community/react-components/dist/cjs/index.css'
 import { PageContainer } from '@ant-design/pro-components'
 import CredentialTabs from '../../components/CredentialTabs'
 import { ICredentialPlugin, IVerifyResult } from '@veramo/core'
+import { computeEntryHash } from '@veramo/utils'
 import { Alert, Button, Input, Space, Tabs, Typography, theme } from 'antd'
 import { InboxOutlined } from '@ant-design/icons'
 
@@ -21,7 +22,6 @@ const CredentialVerifier = () => {
 
   const verify = useCallback(
     async (text: string) => {
-      console.log(text)
       setIsVerifying(true)
       setVerificationResult(undefined)
       try {
@@ -31,7 +31,6 @@ const CredentialVerifier = () => {
         console.log(result)
         setVerificationResult(result)
       } catch (e: any) {
-        console.log('eeee', e)
         setVerificationResult({
           verified: false,
           error: { message: e.message },
@@ -135,7 +134,10 @@ const CredentialVerifier = () => {
         {verificationResult?.verified &&
           verificationResult?.verifiableCredential && (
             <CredentialTabs
-              credential={verificationResult?.verifiableCredential}
+              uniqueCredential={{
+                hash: computeEntryHash(verificationResult.verifiableCredential), 
+                verifiableCredential: verificationResult.verifiableCredential
+              }}
             />
           )}
       </Space>

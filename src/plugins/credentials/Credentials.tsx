@@ -131,7 +131,7 @@ const Credentials = () => {
                   new Date(),
                 )}
               </div>,
-              <CredentialActionsDropdown credential={item.verifiableCredential}>
+              <CredentialActionsDropdown uniqueCredential={item}>
                 <EllipsisOutlined />
               </CredentialActionsDropdown>,
             ],
@@ -151,7 +151,7 @@ const Credentials = () => {
           onClose={() => navigate('/credentials')}
           open={!!hash}
         >
-          {!isLoadingCredential && credential && <CredentialTabs credential={credential} />}
+          {!isLoadingCredential && hash && credential && <CredentialTabs uniqueCredential={{hash, verifiableCredential: credential}} />}
         </Drawer>
     </PageContainer>
   )

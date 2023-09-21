@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Row, Tabs, Card } from 'antd'
-import { VerifiableCredential as Vcred } from '@veramo/core'
+import { UniqueVerifiableCredential } from '@veramo/core'
 import { VerifiableCredential } from '@veramo-community/react-components'
 import CredentialInfo from './CredentialInfo'
 import JsonBlock from './Json'
@@ -11,10 +11,11 @@ import { formatRelative } from 'date-fns'
 import CredentialActionsDropdown from './CredentialActionsDropdown'
 
 interface CredentialTabsProps {
-  credential: Vcred
+  uniqueCredential: UniqueVerifiableCredential
 }
 
-const CredentialTabs: React.FC<CredentialTabsProps> = ({ credential }) => {
+const CredentialTabs: React.FC<CredentialTabsProps> = ({ uniqueCredential }) => {
+  const { verifiableCredential } = uniqueCredential
   return (
     <Tabs
       items={[
@@ -23,16 +24,16 @@ const CredentialTabs: React.FC<CredentialTabsProps> = ({ credential }) => {
           label: 'Pretty',
           children: (
             <Card
-              title={<IdentifierProfile did={getIssuerDID(credential)} />}
+              title={<IdentifierProfile did={getIssuerDID(verifiableCredential)} />}
               extra={
                 <Row align={'middle'}>
                   <div>
                     {formatRelative(
-                      new Date(credential.issuanceDate),
+                      new Date(verifiableCredential.issuanceDate),
                       new Date(),
                     )}
                   </div>{' '}
-                  <CredentialActionsDropdown credential={credential}>
+                  <CredentialActionsDropdown uniqueCredential={uniqueCredential}>
                     <Button type="text">
                       <EllipsisOutlined />
                     </Button>
@@ -40,19 +41,19 @@ const CredentialTabs: React.FC<CredentialTabsProps> = ({ credential }) => {
                 </Row>
               }
             >
-              <VerifiableCredential credential={credential} />
+              <VerifiableCredential credential={verifiableCredential} />
             </Card>
           ),
         },
         {
           key: '1',
           label: 'Info',
-          children: <CredentialInfo credential={credential} />,
+          children: <CredentialInfo credential={verifiableCredential} />,
         },
         {
           key: '2',
           label: 'Data',
-          children: <JsonBlock title="Raw JSON" data={credential} />,
+          children: <JsonBlock title="Raw JSON" data={verifiableCredential} />,
         },
       ]}
     />
