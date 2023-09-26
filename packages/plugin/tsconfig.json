@@ -11,7 +11,8 @@
     "rootDir": "src",
     "declaration": true,           // Generate corresponding .d.ts file for each output .js file
     "sourceMap": true,              // Generate source maps for easier debugging
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "composite": true,             // Enable project references
   },
   "include": [ "src/**/*" ],
   "exclude": [
