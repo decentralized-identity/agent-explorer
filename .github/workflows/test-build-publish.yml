@@ -75,10 +75,6 @@ jobs:
           cache: 'pnpm'
       - run: pnpm add -g pnpm
       - run: pnpm install
-      - run: pwd
-      - run: cd packages/agent-explorer 
-      - run: pwd
-
 
       - name: Build/release Electron app
         uses: paneron/action-electron-builder@v1.8.1
@@ -90,6 +86,7 @@ jobs:
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
           release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          package_root: "./packages/agent-explorer"
           build_script_name: build-electron
           package_manager: pnpm
       
