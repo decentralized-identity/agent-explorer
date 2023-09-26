@@ -1,3 +1,7 @@
+[build]
+  base = "packages/agent-explorer/"
+  publish = "build/"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
