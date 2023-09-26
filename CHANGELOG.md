@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.39.1](https://github.com/veramolabs/agent-explorer/compare/v1.39.0...v1.39.1) (2023-09-26)
+
+
+### Bug Fixes
+
+* **agent-explore:** rename folder to `agent-explore` ([#162](https://github.com/veramolabs/agent-explorer/issues/162)) ([721ad13](https://github.com/veramolabs/agent-explorer/commit/721ad13e16058a7af20496f3e8cfbdf803372a5e))
+
+
+
+
+
 # [1.39.0](https://github.com/veramolabs/agent-explorer/compare/v1.38.1...v1.39.0) (2023-09-26)
 
 
