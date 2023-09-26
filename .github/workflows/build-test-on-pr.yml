@@ -45,12 +45,12 @@ jobs:
       - run: pnpm add -g pnpm
 
       - run: pnpm install
-      - run: pnpm run -r --filter "agent-explorer^..." build # only the dependencies of agent-explorer
+      - run: pnpm run -r --filter "agent-explore^..." build # only the dependencies of agent-explore
 
       - name: Build Electron app
         uses: paneron/action-electron-builder@v1.8.1
         with:
           github_token: ${{ secrets.GH_TOKEN }}
-          package_root: "./packages/agent-explorer"
+          package_root: "./packages/agent-explore"
           build_script_name: build-electron
           package_manager: pnpm

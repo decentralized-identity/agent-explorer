@@ -1,6 +1,6 @@
 [build]
   base = "./"
-  publish = "packages/agent-explorer/build/"
+  publish = "packages/agent-explore/build/"
 
 [[redirects]]
   from = "/*"

@@ -1,11 +1,11 @@
 {
-  "name": "agent-explorer",
+  "name": "agent-explore",
   "description": "Explore data across multiple DID agents",
   "homepage": "https://explore.veramo.dev",
   "repository": {
     "type": "git",
     "url": "https://github.com/veramolabs/agent-explorer.git",
-    "directory": "packages/agent-explorer"
+    "directory": "packages/agent-explore"
   },
   "author": "Simonas Karuzas <simonas.karuzas@mesh.xyz>",
   "contributors": [
