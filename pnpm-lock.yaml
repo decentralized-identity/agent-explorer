@@ -297,9 +297,39 @@ importers:
 
   packages/plugin:
     devDependencies:
+      '@ant-design/icons':
+        specifier: ^5.1.4
+        version: 5.2.6(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-components':
         specifier: ^2.6.13
         version: 2.6.24(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@types/react':
+        specifier: ^18.2.7
+        version: 18.2.22
+      '@types/react-dom':
+        specifier: ^18.2.4
+        version: 18.2.7
+      '@veramo-community/veramo-react':
+        specifier: ^1.1.0
+        version: 1.2.0(@veramo/core@5.5.2-next.4)(@veramo/remote-client@5.5.2-next.4)(react@18.2.0)
+      '@veramo/core':
+        specifier: 5.5.2-next.4
+        version: 5.5.2-next.4
+      '@veramo/core-types':
+        specifier: 5.5.2-next.4
+        version: 5.5.2-next.4
+      antd:
+        specifier: ~5.8.4
+        version: 5.8.6(date-fns@2.30.0)(react-dom@18.2.0)(react@18.2.0)
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-router-dom:
+        specifier: ^6.11.2
+        version: 6.16.0(react-dom@18.2.0)(react@18.2.0)
       typescript:
         specifier: ^4.9.5
         version: 4.9.5

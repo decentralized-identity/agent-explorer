@@ -1,14 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { AgentPlugin, PluginConfig } from '@veramo-community/agent-explorer-plugin'
-import { getcorePlugins } from '../plugins'
-
-const corePlugins = getcorePlugins()
+import { IAgentExplorerPlugin, IAgentExplorerPluginConfig, IPlugin } from './types.js'
 
 type PluginContextType = {
-  plugins: AgentPlugin[]
-  pluginConfigs: PluginConfig[]
-  updatePluginConfigs: (configs: PluginConfig[]) => void
-  addPluginConfig: (config: PluginConfig) => void
+  plugins: IAgentExplorerPlugin[]
+  pluginConfigs: IAgentExplorerPluginConfig[]
+  updatePluginConfigs: (configs: IAgentExplorerPluginConfig[]) => void
+  addPluginConfig: (config: IAgentExplorerPluginConfig) => void
   removePluginConfig: (url: string) => void
   switchPlugin: (url: string, enabled: boolean) => void
 }
@@ -22,14 +19,14 @@ const PluginContext = createContext<PluginContextType>({
   switchPlugin: () => null,
 })
 
-function getStoredPluginConfigs(): PluginConfig[] {
-  let result: PluginConfig[] = []
+function getStoredPluginConfigs(corePlugins: any[]): IAgentExplorerPluginConfig[] {
+  let result: IAgentExplorerPluginConfig[] = []
 
-  const corePluginConfigs = corePlugins.map((p) => (p.config as PluginConfig))
+  const corePluginConfigs = corePlugins.map((p) => (p.config as IAgentExplorerPluginConfig))
 
   const str = localStorage.getItem('pluginConfigs')
   if (str) {
-    const storedPluginConfigs = JSON.parse(str) as PluginConfig[]
+    const storedPluginConfigs = JSON.parse(str) as IAgentExplorerPluginConfig[]
 
     result = [...storedPluginConfigs]
 
@@ -46,31 +43,36 @@ function getStoredPluginConfigs(): PluginConfig[] {
   return result
 }
 
-function storePluginConfigs(configs: PluginConfig[]) {
+function storePluginConfigs(configs: IAgentExplorerPluginConfig[]) {
   localStorage.setItem('pluginConfigs', JSON.stringify(configs))
 }
 
-const PluginProvider = (props: any) => {
+export type PluginProviderProps = {
+  children: React.ReactNode
+  corePlugins?: IAgentExplorerPlugin[]
+}
+
+const PluginProvider = (props: PluginProviderProps) => {
   
-  const [pluginConfigs, setPluginConfigs] = useState<PluginConfig[]>(
-    getStoredPluginConfigs(),
+  const [pluginConfigs, setPluginConfigs] = useState<IAgentExplorerPluginConfig[]>(
+    getStoredPluginConfigs(props.corePlugins || []),
   )
-  const [plugins, setPlugins] = useState<AgentPlugin[]>([])
+  const [plugins, setPlugins] = useState<IAgentExplorerPlugin[]>([])
 
   useEffect(() => {
     const loadPlugins = async () => {
-      const result: AgentPlugin[] = []
+      const result: IAgentExplorerPlugin[] = []
       
       for (const config of pluginConfigs) {
         if (config.url.startsWith('core://')) {
-          const plugin = corePlugins.find((p) => p.config.url === config.url)
+          const plugin = props.corePlugins?.find((p) => p.config.url === config.url)
           if (plugin) {
             plugin.config = config
             result.push(plugin)
           }
         } else {
           const module = await import(/* webpackIgnore: true */ config.url)
-          const plugin = module.default.init() as AgentPlugin
+          const plugin = module.default.init() as IAgentExplorerPlugin
           plugin.config = config
           result.push(plugin)
           //FIXME
@@ -97,7 +99,7 @@ const PluginProvider = (props: any) => {
     loadPlugins()
   }, [pluginConfigs, setPlugins])
 
-  const addPluginConfig = (config: PluginConfig) => {
+  const addPluginConfig = (config: IAgentExplorerPluginConfig) => {
     const configs = [...pluginConfigs, config]
     storePluginConfigs(configs)
     setPluginConfigs(configs)
@@ -121,7 +123,7 @@ const PluginProvider = (props: any) => {
     setPluginConfigs(configs)
   }
 
-  const updatePluginConfigs = (configs: PluginConfig[]) => {
+  const updatePluginConfigs = (configs: IAgentExplorerPluginConfig[]) => {
     storePluginConfigs(configs)
     setPluginConfigs(configs)
   }

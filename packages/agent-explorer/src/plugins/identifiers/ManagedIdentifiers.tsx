@@ -10,7 +10,7 @@ import {
   NewIdentifierForm,
   NewIdentifierFormValues,
 } from './NewIdentifierForm'
-import { shortId } from '../../utils/did'
+import { shortId } from '@veramo-community/agent-explorer-plugin'
 import { createMediateRequestMessage } from '@veramo/did-comm'
 import { DeleteOutlined, CopyOutlined, PlusOutlined } from '@ant-design/icons'
 import { IDataStore, IIdentifier } from '@veramo/core'

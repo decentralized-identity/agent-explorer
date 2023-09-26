@@ -3,6 +3,7 @@ import { SafetyOutlined } from '@ant-design/icons'
 import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Credentials from './Credentials';
+import { getCredentialContextMenuItems } from './menu';
 
 
 const Plugin: IPlugin = {
@@ -33,6 +34,7 @@ const Plugin: IPlugin = {
               icon: <SafetyOutlined />,
             },
           ],
+          getCredentialContextMenuItems
           
         }
     }

@@ -6,7 +6,7 @@ import {
 } from '@veramo/core'
 import { IDataStoreORM } from '@veramo/data-store'
 import parse from 'url-parse'
-import { shortId } from '../../utils/did'
+import { shortId } from '@veramo-community/agent-explorer-plugin'
 import md5 from 'md5'
 
 export interface IIdentifierProfile {

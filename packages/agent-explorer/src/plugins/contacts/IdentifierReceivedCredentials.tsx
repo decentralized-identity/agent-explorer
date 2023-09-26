@@ -8,9 +8,8 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
 import { ProList } from '@ant-design/pro-components'
 import { VerifiableCredential } from '@veramo-community/react-components'
-import { getIssuerDID } from '../../utils/did'
 import IdentifierProfile from '../../components/IdentifierProfile'
-import CredentialActionsDropdown from '../../components/CredentialActionsDropdown'
+import { CredentialActionsDropdown, getIssuerDID } from '@veramo-community/agent-explorer-plugin'
 
 interface IdentifierCredentialsProps {
   identifier: string

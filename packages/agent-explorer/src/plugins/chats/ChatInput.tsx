@@ -5,7 +5,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { useChat } from '../../context/ChatProvider'
 import { v4 } from 'uuid'
 import { useNavigate } from 'react-router-dom'
-import { shortId } from '../../utils/did'
+import { shortId } from '@veramo-community/agent-explorer-plugin'
 
 const { TextArea } = Input
 
