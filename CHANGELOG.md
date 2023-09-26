@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.39.2](https://github.com/veramolabs/agent-explorer/compare/v1.39.1...v1.39.2) (2023-09-26)
+
+
+### Bug Fixes
+
+* **ci:** flip registry order for npm publish ([69b6ab3](https://github.com/veramolabs/agent-explorer/commit/69b6ab3b58e1bf21d18114fc8069eef55e7d419c))
+* **ci:** typo in script ([6d6969e](https://github.com/veramolabs/agent-explorer/commit/6d6969e63485292ac9e26673182cc13ccb767e94))
+
+
+
+
+
 ## [1.39.1](https://github.com/veramolabs/agent-explorer/compare/v1.39.0...v1.39.1) (2023-09-26)
 
 

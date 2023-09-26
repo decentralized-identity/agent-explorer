@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.39.2](https://github.com/veramolabs/agent-explorer/compare/v1.39.1...v1.39.2) (2023-09-26)
+
+
+### Bug Fixes
+
+* **ci:** typo in script ([6d6969e](https://github.com/veramolabs/agent-explorer/commit/6d6969e63485292ac9e26673182cc13ccb767e94))
+
+
+
+
+
 # [1.39.0](https://github.com/veramolabs/agent-explorer/compare/v1.38.1...v1.39.0) (2023-09-26)
 
 
