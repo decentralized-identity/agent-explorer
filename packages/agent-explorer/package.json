@@ -1,6 +1,12 @@
 {
-  "name": "agent-explore",
-  "description": "Explore data accross multiple DID agents",
+  "name": "agent-explorer",
+  "description": "Explore data across multiple DID agents",
+  "homepage": "https://explore.veramo.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veramolabs/agent-explorer.git",
+    "directory": "packages/agent-explorer"
+  },
   "author": "Simonas Karuzas <simonas.karuzas@mesh.xyz>",
   "contributors": [
     "Mircea Nistor <mircea.nistor@mesh.xyz>",
@@ -22,28 +28,6 @@
   "exports": {
     ".": "./lib/express-router.js"
   },
-  "build": {
-    "appId": "io.veramo.explore",
-    "mac": {
-      "category": "your.app.category.type"
-    },
-    "publish": [
-      {
-        "provider": "github",
-        "releaseType": "release"
-      }
-    ],
-    "files": [
-      "build/**/*",
-      "node_modules/**/*",
-      "electron/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    },
-    "icon": "AppIcon.icns",
-    "productName": "Agent Explorer"
-  },
   "bin": {
     "agent-explore": "./bin/bin.js"
   },
@@ -61,7 +45,6 @@
     "electron-dist": "electron-builder",
     "lint": "eslint ./src"
   },
-  "homepage": "https://explore.veramo.dev",
   "prettier": {
     "jsxBracketSameLine": false,
     "trailingComma": "all",
@@ -96,28 +79,6 @@
     "express": "^4.18.2",
     "express-favicon": "^2.0.4"
   },
-  "release": {
-    "branches": [
-      "main"
-    ],
-    "ci": true,
-    "extends": "semantic-release-monorepo",
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/npm",
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "package.json"
-          ],
-          "message": "chore(release): :rocket: New version ${nextRelease.version} [skip ci] \n\n${nextRelease.notes}"
-        }
-      ],
-      "@semantic-release/github"
-    ]
-  },
   "devDependencies": {
     "@ant-design/icons": "^5.1.4",
     "@ant-design/pro-components": "^2.6.13",
@@ -129,10 +90,6 @@
     "@dnd-kit/core": "^6.0.8",
     "@dnd-kit/sortable": "^7.0.2",
     "@ethersproject/providers": "^5.7.2",
-    "@semantic-release/commit-analyzer": "^10.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/npm": "^10.0.4",
-    "@semantic-release/release-notes-generator": "^11.0.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
@@ -182,8 +139,8 @@
     "crypto": "npm:crypto-browserify@^3.12.0",
     "date-fns": "^2.30.0",
     "did-resolver": "^4.1.0",
-    "electron": "^26.0.0",
-    "electron-builder": "^24.6.3",
+    "electron": "26.2.2",
+    "electron-builder": "24.6.4",
     "eslint": "^8.47.0",
     "ethr-did-resolver": "^8.0.0",
     "https-browserify": "^1.0.0",

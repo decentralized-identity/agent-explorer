@@ -1,6 +1,11 @@
 {
   "name": "@veramo-community/agent-explorer-plugin",
   "description": "Agent explorer types",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/veramolabs/agent-explorer.git",
+    "directory": "packages/plugin"
+  },
   "author": "Simonas Karuzas <simonas.karuzas@mesh.xyz>",
   "version": "1.37.0",
   "type": "module",
@@ -21,34 +26,6 @@
   "types": "./build/index.d.ts",
   "devDependencies": {
     "@ant-design/pro-components": "^2.6.13",
-    "@semantic-release/commit-analyzer": "^10.0.1",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^9.1.0",
-    "@semantic-release/npm": "^10.0.4",
-    "@semantic-release/release-notes-generator": "^11.0.4",
-    "semantic-release-monorepo": "^7.0.5",
     "typescript": "^4.9.5"
-  },
-  "release": {
-    "branches": [
-      "main"
-    ],
-    "ci": true,
-    "extends": "semantic-release-monorepo",
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/npm",
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "package.json"
-          ],
-          "message": "chore(release): :rocket: New version ${nextRelease.version} [skip ci] \n\n${nextRelease.notes}"
-        }
-      ],
-      "@semantic-release/github"
-    ]
   }
 }

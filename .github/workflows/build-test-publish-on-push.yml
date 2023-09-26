@@ -1,38 +1,42 @@
-name: Test, Build and Publish
+name: build-test-publish-on-push
 on:
   workflow_dispatch:
   push:
     branches:
       - 'main'
+      - 'next'
+
 jobs:
   build-test-publish:
     env:
       NPM_TOKEN: ${{secrets.NPM_TOKEN}}
+      NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       GH_TOKEN: ${{secrets.GH_TOKEN}}
+      GITHUB_TOKEN: ${{secrets.GH_TOKEN}}
       GH_USER: ${{secrets.GH_USER}}
       GH_EMAIL: ${{secrets.GH_EMAIL}}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
-      - name: Use Node.js
+          version: 8
+      - run: pnpm add -g pnpm
+      - name: 'Setup Node.js with pnpm cache'
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
       - run: pnpm add -g pnpm
       - run: pnpm install
-      - run: pnpm test
-      - run: pnpm build
-
-      - name: 'setup git coordinates'
+      - run: pnpm run build
+      - run: pnpm run test
+      - name: 'Setup git coordinates'
         run: |
-          git remote set-url origin https://veramolabs:$GH_TOKEN@github.com/veramolabs/agent-explorer.git
+          git remote set-url origin https://${{secrets.GH_USER}}:${{secrets.GH_TOKEN}}@github.com/veramolabs/agent-explorer.git
           git config user.name $GH_USER
           git config user.email $GH_EMAIL
 
@@ -42,9 +46,14 @@ jobs:
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
           npm whoami
 
-      - name: 'publish'
+      - name: 'Publish @latest when on main'
         if: github.ref == 'refs/heads/main'
-        run: pnpm release
+        run: pnpm publish:latest
+
+      - name: 'Publish @next when on next'
+        if: github.ref == 'refs/heads/next'
+        run: pnpm publish:next
+
   release-electron:
     needs: build-test-publish
     env:
@@ -59,28 +68,28 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
-          ref: main
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 7
-      - name: Use Node.js
+          version: 8
+
+      - name: 'Setup Node.js with pnpm cache'
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
       - run: pnpm add -g pnpm
+
       - run: pnpm install
+      - run: pnpm run -r --filter "agent-explorer^..." build # only the dependencies of agent-explorer
 
       - name: Build/release Electron app
         uses: paneron/action-electron-builder@v1.8.1
         with:
-          # GitHub token, automatically provided to the action
-          # (No need to define this secret in the repo settings)
           github_token: ${{ secrets.GH_TOKEN }}
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
@@ -89,4 +98,3 @@ jobs:
           package_root: "./packages/agent-explorer"
           build_script_name: build-electron
           package_manager: pnpm
-      

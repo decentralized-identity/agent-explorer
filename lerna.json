@@ -1,0 +1,20 @@
+{
+  "version": "1.37.0",
+  "npmClient": "pnpm",
+  "changelog": {
+    "repo": "veramolabs/agent-explorer",
+    "cacheDir": ".changelog"
+  },
+  "command": {
+    "publish": {
+      "allowBranch": [
+        "main",
+        "next",
+        "unstable"
+      ],
+      "conventionalCommits": true,
+      "gitRemote": "origin",
+      "message": "chore(release): %s [skip ci]"
+    }
+  }
+}

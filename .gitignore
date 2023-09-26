@@ -10,7 +10,8 @@ coverage
 .eslintcache
 
 # production
-build
+build/
+dist/
 
 # misc
 .DS_Store
@@ -24,3 +25,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea/
+tsconfig.tsbuildinfo
