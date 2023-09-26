@@ -162,7 +162,7 @@
     "stream": "npm:stream-browserify@^3.0.0",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
-    "typescript": "^4.9.5",
+    "typescript": "4.9.5",
     "url": "^0.11.1",
     "url-parse": "^1.5.10",
     "uuid": "^9.0.0",
