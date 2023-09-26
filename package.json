@@ -1,7 +1,13 @@
 {
+  "private": true,
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",
-    "release": "pnpm -r --workspace-concurrency=1 exec -- npx --no-install semantic-release -e semantic-release-monorepo"
+    "publish:latest": "lerna publish --conventional-commits --include-merged-tags --create-release github --yes --dist-tag latest --registry \"https://registry.npmjs.org/:_authToken=${NPM_TOKEN}\"",
+    "publish:next": "lerna publish --conventional-prerelease --force-publish --canary --no-git-tag-version --include-merged-tags --preid next --pre-dist-tag next --yes --registry \"https://registry.npmjs.org/:_authToken=${NPM_TOKEN}\""
+  },
+  "devDependencies": {
+    "lerna": "7.3.0",
+    "lerna-changelog": "2.2.0"
   }
 }
