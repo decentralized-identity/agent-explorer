@@ -3,6 +3,7 @@
   "description": "Agent explorer types",
   "author": "Simonas Karuzas <simonas.karuzas@mesh.xyz>",
   "version": "1.37.0",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
