@@ -8,7 +8,7 @@ import { PageContainer } from '@ant-design/pro-components'
 import CredentialTabs from '../../components/CredentialTabs'
 import { IDataStore } from '@veramo/core'
 import { computeEntryHash } from '@veramo/utils'
-import CredentialActionsDropdown from '../../components/CredentialActionsDropdown'
+import { CredentialActionsDropdown } from '@veramo-community/agent-explorer-plugin'
 import { EllipsisOutlined } from '@ant-design/icons'
 
 const Credential = () => {

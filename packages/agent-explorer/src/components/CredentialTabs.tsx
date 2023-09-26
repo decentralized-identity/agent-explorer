@@ -4,11 +4,10 @@ import { UniqueVerifiableCredential } from '@veramo/core'
 import { VerifiableCredential } from '@veramo-community/react-components'
 import CredentialInfo from './CredentialInfo'
 import JsonBlock from './Json'
-import { getIssuerDID } from '../utils/did'
+import { getIssuerDID, CredentialActionsDropdown } from '@veramo-community/agent-explorer-plugin'
 import IdentifierProfile from './IdentifierProfile'
 import { EllipsisOutlined } from '@ant-design/icons'
 import { formatRelative } from 'date-fns'
-import CredentialActionsDropdown from './CredentialActionsDropdown'
 
 interface CredentialTabsProps {
   uniqueCredential: UniqueVerifiableCredential

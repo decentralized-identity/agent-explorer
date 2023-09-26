@@ -3,7 +3,7 @@ import { Row, Avatar, Col, Typography, theme, Skeleton } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
 import { IIdentifierProfilePlugin } from '../context/plugins/IdentifierProfile'
-import { shortId } from '../utils/did'
+import { shortId } from '@veramo-community/agent-explorer-plugin'
 
 interface IdentifierProfileProps {
   did: string

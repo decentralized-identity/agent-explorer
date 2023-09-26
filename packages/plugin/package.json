@@ -14,7 +14,8 @@
   },
   "license": "Apache-2.0",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc -w"
   },
   "files": [
     "build",
@@ -28,6 +29,7 @@
     "@ant-design/pro-components": "^2.6.13",
     "@veramo/core": "5.5.2-next.4",
     "@veramo/core-types": "5.5.2-next.4",
+    "antd": "~5.8.4",
     "typescript": "^4.9.5"
   }
 }

@@ -1,3 +1,4 @@
+import { MenuProps } from 'antd';
 import { MenuDataItem } from '@ant-design/pro-components';
 import { UniqueVerifiableCredential } from '@veramo/core-types'
 import { IAgentPlugin } from '@veramo/core'
@@ -20,8 +21,8 @@ export type IAgentExplorerPlugin = {
   menuItems: MenuDataItem[];
   requiredMethods: string[];
   hasCss?: boolean;
-  credentialContextMenuItems?: MenuDataItem[];
-  identifierContextMenuItems?: MenuDataItem[];
+  getCredentialContextMenuItems?: (credential: UniqueVerifiableCredential) => MenuProps['items'];
+  identifierContextMenuItems?: MenuProps['items'];
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.JSX.Element;
   agentPlugins?: IAgentPlugin[];
 }

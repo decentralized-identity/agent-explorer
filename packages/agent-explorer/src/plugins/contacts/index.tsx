@@ -4,6 +4,7 @@ import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import { Contacts } from './Contacts';
 import Identifier from './Identifier';
+import { getCredentialContextMenuItems } from './menu';
 
 const Plugin: IPlugin = {
     //@ts-ignore
@@ -33,7 +34,7 @@ const Plugin: IPlugin = {
               icon: <ContactsOutlined />,
             },
           ],
-          
+          getCredentialContextMenuItems
         }
     }
 };
