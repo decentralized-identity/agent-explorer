@@ -1,4 +1,4 @@
-import { AgentPlugin, IPlugin } from '../types'
+import { AgentPlugin, IPlugin } from '@veramo-community/agent-explorer-plugin'
 import Identifiers  from './identifiers'
 import Contacts  from './contacts'
 import Statistics  from './statistics'

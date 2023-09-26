@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafetyOutlined } from '@ant-design/icons'
-import { IPlugin } from '../../types';
+import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Credentials from './Credentials';
 
