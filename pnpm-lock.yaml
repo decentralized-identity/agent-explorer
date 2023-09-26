@@ -60,18 +60,6 @@ importers:
       '@ethersproject/providers':
         specifier: ^5.7.2
         version: 5.7.2
-      '@semantic-release/commit-analyzer':
-        specifier: ^10.0.1
-        version: 10.0.4(semantic-release@21.1.2)
-      '@semantic-release/git':
-        specifier: ^10.0.1
-        version: 10.0.1(semantic-release@21.1.2)
-      '@semantic-release/npm':
-        specifier: ^10.0.4
-        version: 10.0.6(semantic-release@21.1.2)
-      '@semantic-release/release-notes-generator':
-        specifier: ^11.0.4
-        version: 11.0.7(semantic-release@21.1.2)
       '@testing-library/jest-dom':
         specifier: ^5.16.5
         version: 5.17.0
@@ -220,10 +208,10 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       electron:
-        specifier: ^26.0.0
+        specifier: 26.2.2
         version: 26.2.2
       electron-builder:
-        specifier: ^24.6.3
+        specifier: 24.6.4
         version: 24.6.4
       eslint:
         specifier: ^8.47.0
@@ -312,24 +300,6 @@ importers:
       '@ant-design/pro-components':
         specifier: ^2.6.13
         version: 2.6.24(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
-      '@semantic-release/commit-analyzer':
-        specifier: ^10.0.1
-        version: 10.0.4(semantic-release@21.1.2)
-      '@semantic-release/git':
-        specifier: ^10.0.1
-        version: 10.0.1(semantic-release@21.1.2)
-      '@semantic-release/github':
-        specifier: ^9.1.0
-        version: 9.1.0(semantic-release@21.1.2)
-      '@semantic-release/npm':
-        specifier: ^10.0.4
-        version: 10.0.6(semantic-release@21.1.2)
-      '@semantic-release/release-notes-generator':
-        specifier: ^11.0.4
-        version: 11.0.7(semantic-release@21.1.2)
-      semantic-release-monorepo:
-        specifier: ^7.0.5
-        version: 7.0.5(semantic-release@21.1.2)
       typescript:
         specifier: ^4.9.5
         version: 4.9.5
@@ -5508,33 +5478,9 @@ packages:
       - supports-color
     dev: true
 
-  /@semantic-release/error@3.0.0:
-    resolution: {integrity: sha512-5hiM4Un+tpl4cKw3lV4UgzJj+SmfNIDCLLw0TepzQxz9ZGV5ixnqkzIVF+3tp0ZHgcMKE+VNGHJjEeyFG2dcSw==}
-    engines: {node: '>=14.17'}
-    dev: true
-
   /@semantic-release/error@4.0.0:
     resolution: {integrity: sha512-mgdxrHTLOjOddRVYIYDo0fR3/v61GNN1YGkfbrjuIKg/uMgCd+Qzo3UAXJ+woLQQpos4pl5Esuw5A7AoNlzjUQ==}
     engines: {node: '>=18'}
-    dev: true
-
-  /@semantic-release/git@10.0.1(semantic-release@21.1.2):
-    resolution: {integrity: sha512-eWrx5KguUcU2wUPaO6sfvZI0wPafUKAMNC18aXY4EnNcrZL86dEmpNVnC9uMpGZkmZJ9EfCVJBQx4pV4EMGT1w==}
-    engines: {node: '>=14.17'}
-    peerDependencies:
-      semantic-release: '>=18.0.0'
-    dependencies:
-      '@semantic-release/error': 3.0.0
-      aggregate-error: 3.1.0
-      debug: 4.3.4
-      dir-glob: 3.0.1
-      execa: 5.1.1
-      lodash: 4.17.21
-      micromatch: 4.0.5
-      p-reduce: 2.1.0
-      semantic-release: 21.1.2(typescript@4.9.5)
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /@semantic-release/github@9.1.0(semantic-release@21.1.2):
@@ -6304,7 +6250,7 @@ packages:
     dependencies:
       '@types/http-cache-semantics': 4.0.2
       '@types/keyv': 3.1.4
-      '@types/node': 18.18.0
+      '@types/node': 20.7.0
       '@types/responselike': 1.0.0
     dev: true
 
@@ -6435,7 +6381,7 @@ packages:
   /@types/keyv@3.1.4:
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
     dependencies:
-      '@types/node': 18.18.0
+      '@types/node': 20.7.0
     dev: true
 
   /@types/md5@2.3.2:
@@ -6549,7 +6495,7 @@ packages:
   /@types/responselike@1.0.0:
     resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
     dependencies:
-      '@types/node': 18.18.0
+      '@types/node': 20.7.0
     dev: true
 
   /@types/retry@0.12.0:
@@ -6651,7 +6597,7 @@ packages:
     resolution: {integrity: sha512-CHzgNU3qYBnp/O4S3yv2tXPlvMTq0YWSTVg2/JYLqWZGHwwgJGAwd00poay/11asPq8wLFwHzubyInqHIFmmiw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.18.0
+      '@types/node': 20.7.0
     dev: true
     optional: true
 
