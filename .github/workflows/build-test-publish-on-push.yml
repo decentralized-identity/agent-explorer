@@ -40,9 +40,10 @@ jobs:
           git config user.name $GH_USER
           git config user.email $GH_EMAIL
 
-      - name: 'setup npm registry'
+      - name: 'Setup npm registry'
         run: |
-          echo "registry=https://registry.npmjs.org/" > .npmrc
+          echo "@veramo-community:registry=https://registry.npmjs.org/" > .npmrc
+          echo "registry=https://registry.npmjs.org/" >> .npmrc
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> .npmrc
           npm whoami
 

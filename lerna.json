@@ -14,7 +14,7 @@
       ],
       "conventionalCommits": true,
       "gitRemote": "origin",
-      "message": "chore(release): %s [skip ci]"
+      "message": "chore(release): :rocket: New version %s [skip ci]"
     }
   }
 }
