@@ -85,7 +85,7 @@ jobs:
       - run: pnpm add -g pnpm
 
       - run: pnpm install
-      - run: pnpm run build
+      - run: pnpm run -r --filter "agent-explorer^..." build # only the dependencies of agent-explorer
 
       - name: Build/release Electron app
         uses: paneron/action-electron-builder@v1.8.1

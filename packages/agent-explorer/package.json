@@ -1,5 +1,5 @@
 {
-  "name": "agent-explore",
+  "name": "agent-explorer",
   "description": "Explore data across multiple DID agents",
   "homepage": "https://explore.veramo.dev",
   "repository": {
