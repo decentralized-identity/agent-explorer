@@ -31,7 +31,10 @@
   "build": {
     "appId": "io.veramo.explore",
     "mac": {
-      "category": "your.app.category.type"
+      "category": "public.app-category.developer-tools"
+    },
+    "linux": {
+      "category": "Development"
     },
     "publish": [
       {
