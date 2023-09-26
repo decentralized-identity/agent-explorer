@@ -300,6 +300,12 @@ importers:
       '@ant-design/pro-components':
         specifier: ^2.6.13
         version: 2.6.24(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@veramo/core':
+        specifier: 5.5.2-next.4
+        version: 5.5.2-next.4
+      '@veramo/core-types':
+        specifier: 5.5.2-next.4
+        version: 5.5.2-next.4
       typescript:
         specifier: ^4.9.5
         version: 4.9.5

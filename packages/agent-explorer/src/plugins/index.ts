@@ -1,4 +1,4 @@
-import { AgentPlugin, IPlugin } from '@veramo-community/agent-explorer-plugin'
+import { IAgentExplorerPlugin, IPlugin } from '@veramo-community/agent-explorer-plugin'
 import Identifiers  from './identifiers'
 import Contacts  from './contacts'
 import Statistics  from './statistics'
@@ -19,6 +19,6 @@ const corePlugins: IPlugin[] = [
   Requests,
 ]
 
-export function getcorePlugins(): AgentPlugin[] {
+export function getcorePlugins(): IAgentExplorerPlugin[] {
   return corePlugins.map(plugin => plugin.init())
 }

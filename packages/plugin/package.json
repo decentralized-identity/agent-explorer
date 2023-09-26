@@ -26,6 +26,8 @@
   "types": "./build/index.d.ts",
   "devDependencies": {
     "@ant-design/pro-components": "^2.6.13",
+    "@veramo/core": "5.5.2-next.4",
+    "@veramo/core-types": "5.5.2-next.4",
     "typescript": "^4.9.5"
   }
 }

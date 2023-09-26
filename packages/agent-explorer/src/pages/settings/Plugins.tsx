@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Input, List, Space, Switch, App, Drawer, Typography } from 'antd'
 import { DeleteOutlined, MenuOutlined, PlusOutlined} from '@ant-design/icons'
-import { usePlugins } from '../../context/PluginProvider'
+import { usePlugins } from '@veramo-community/agent-explorer-plugin'
 import { PageContainer } from '@ant-design/pro-components'
 import { DndContext,
   closestCenter,
@@ -13,9 +13,9 @@ import { DndContext,
  } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-import { AgentPlugin } from '@veramo-community/agent-explorer-plugin'
+import { IAgentExplorerPlugin } from '@veramo-community/agent-explorer-plugin'
 
-const communityPlugins: AgentPlugin[] = [
+const communityPlugins: IAgentExplorerPlugin[] = [
   {
     config: {
       url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-social-feed/dist/plugin.js',
@@ -73,7 +73,7 @@ const communityPlugins: AgentPlugin[] = [
   },
 ]
 
-const SortableItem = ({ item }: { item: AgentPlugin}) => {
+const SortableItem = ({ item }: { item: IAgentExplorerPlugin}) => {
   const { notification } = App.useApp()
   const { removePluginConfig, switchPlugin } = usePlugins()
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: item.config.url });
