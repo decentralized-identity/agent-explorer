@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { AgentPlugin, PluginConfig } from '../types'
+import { AgentPlugin, PluginConfig } from '@veramo-community/agent-explorer-plugin'
 import { getcorePlugins } from '../plugins'
 
 const corePlugins = getcorePlugins()

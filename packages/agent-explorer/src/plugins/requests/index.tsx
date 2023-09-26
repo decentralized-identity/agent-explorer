@@ -1,6 +1,6 @@
 import React from 'react';
 import { InteractionOutlined } from '@ant-design/icons'
-import { IPlugin } from '../../types';
+import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Requests from './Requests';
 import CreateResponse from './CreateResponse';

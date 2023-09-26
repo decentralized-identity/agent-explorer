@@ -13,7 +13,7 @@ import { DndContext,
  } from '@dnd-kit/core';
 import { SortableContext, useSortable, verticalListSortingStrategy, sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
-import { AgentPlugin } from '../../types'
+import { AgentPlugin } from '@veramo-community/agent-explorer-plugin'
 
 const communityPlugins: AgentPlugin[] = [
   {

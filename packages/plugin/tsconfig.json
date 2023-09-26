@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",             // Target latest ECMAScript version
+    "module": "ESNext",            // Use ESNext module system (for dynamic imports)
+    "moduleResolution": "node",    // Use Node.js-style module resolution
+    "strict": true,                // Enable all strict type-checking options
+    "esModuleInterop": true,       // Enables CommonJS/AMD/UMD module interop
+    "skipLibCheck": true,          // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
+    "outDir": "./build",            // Output directory for compiled files
+    "rootDir": "src",
+    "declaration": true,           // Generate corresponding .d.ts file for each output .js file
+    "sourceMap": true,              // Generate source maps for easier debugging
+    "jsx": "react-jsx",
+    "composite": true,             // Enable project references
+  },
+  "include": [ "src/**/*" ],
+  "exclude": [
+    "node_modules"                 // Exclude node_modules
+  ]
+}

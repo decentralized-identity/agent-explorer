@@ -1,6 +1,6 @@
 import React from 'react';
 import { MessageOutlined } from '@ant-design/icons'
-import { IPlugin } from '../../types';
+import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Chats from './Chats';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { EyeOutlined } from '@ant-design/icons'
-import { IPlugin } from '../../types';
+import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Statistics from './Statistics';
 
