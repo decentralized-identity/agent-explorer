@@ -1,5 +1,5 @@
 name: build-test-on-pr
-on: [pull_request, workflow_dispatch]
+on: [ pull_request, workflow_dispatch ]
 jobs:
   build-test:
     runs-on: ubuntu-latest
@@ -10,13 +10,14 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - run: pnpm add -g pnpm
+
       - name: 'Setup Node.js with pnpm cache'
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
       - run: pnpm add -g pnpm
+
       - run: pnpm install
       - run: pnpm run build
       - run: pnpm run test
@@ -35,13 +36,16 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Use Node.js
+
+      - name: 'Setup Node.js with pnpm cache'
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: 'pnpm'
       - run: pnpm add -g pnpm
+
       - run: pnpm install
+      - run: pnpm run build
 
       - name: Build Electron app
         uses: paneron/action-electron-builder@v1.8.1
