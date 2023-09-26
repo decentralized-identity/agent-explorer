@@ -28,31 +28,6 @@
   "exports": {
     ".": "./lib/express-router.js"
   },
-  "build": {
-    "appId": "io.veramo.explore",
-    "mac": {
-      "category": "public.app-category.developer-tools"
-    },
-    "linux": {
-      "category": "Development"
-    },
-    "publish": [
-      {
-        "provider": "github",
-        "releaseType": "release"
-      }
-    ],
-    "files": [
-      "build/**/*",
-      "node_modules/**/*",
-      "electron/**/*"
-    ],
-    "directories": {
-      "buildResources": "assets"
-    },
-    "icon": "AppIcon.icns",
-    "productName": "Agent Explorer"
-  },
   "bin": {
     "agent-explore": "./bin/bin.js"
   },
