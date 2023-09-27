@@ -73,6 +73,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_TOKEN }}
+          ref: ${{ github.ref }}
 
       - uses: pnpm/action-setup@v2
         with:
@@ -93,8 +94,9 @@ jobs:
         with:
           github_token: ${{ secrets.GH_TOKEN }}
 
-          # release the app after building if matching branch
-          release: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next' }}
+          # If the commit is tagged with a version (e.g. "v1.0.0"),
+          # release the app after building
+          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
           package_root: "./packages/agent-explore"
           build_script_name: build-electron
           package_manager: pnpm
