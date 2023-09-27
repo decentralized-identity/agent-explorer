@@ -135,9 +135,6 @@ export const VerifiableCredentialComponent = (
 
 };
 
-
-
-
 export const Generic: React.FC<IVerifiableComponentProps> = ({ credential }) => {
   return <div>
       <dl>
@@ -148,7 +145,9 @@ export const Generic: React.FC<IVerifiableComponentProps> = ({ credential }) => 
         <>
           <dt style={{fontWeight: 'bold'}}>{key}</dt>
           <dd>
-            {typeof value === 'object' || Array.isArray(value) ? JSON.stringify(value) : value}
+            {typeof value === 'object' || Array.isArray(value) ? JSON.stringify(value) : (
+              key === 'id' ? shortId(value) : value
+            )}
           </dd>
         </>
       )}
