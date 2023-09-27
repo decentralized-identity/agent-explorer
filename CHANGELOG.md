@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.40.0](https://github.com/veramolabs/agent-explorer/compare/v1.39.2...v1.40.0) (2023-09-27)
+
+
+### Features
+
+* ios pwa splash screen ([#163](https://github.com/veramolabs/agent-explorer/issues/163)) ([20d1729](https://github.com/veramolabs/agent-explorer/commit/20d17295393f7c30d9b13c67439e2b3ea5fff34f))
+
+
+
+
+
 ## [1.39.2](https://github.com/veramolabs/agent-explorer/compare/v1.39.1...v1.39.2) (2023-09-26)
 
 
