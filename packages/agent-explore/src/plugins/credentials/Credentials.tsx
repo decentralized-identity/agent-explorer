@@ -7,9 +7,8 @@ import { PageContainer, ProList } from '@ant-design/pro-components'
 import { VerifiableCredential } from '@veramo-community/react-components'
 import { IDataStore, IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
 import { AppstoreOutlined, EllipsisOutlined, UnorderedListOutlined } from '@ant-design/icons'
-import { CredentialActionsDropdown, getIssuerDID, IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
+import { CredentialSummary, CredentialActionsDropdown, getIssuerDID, IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
 import { Drawer, List, Radio } from 'antd'
-import { CredentialSummary } from '../../components/CredentialSummary'
 import CredentialTabs from '../../components/CredentialTabs'
 
 const Credentials = () => {
