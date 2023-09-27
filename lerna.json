@@ -1,5 +1,5 @@
 {
-  "version": "1.40.11",
+  "version": "1.40.12",
   "npmClient": "pnpm",
   "changelog": {
     "repo": "veramolabs/agent-explorer",
