@@ -47,3 +47,4 @@ const Plugin: IPlugin = {
 };
 
 ```
+
