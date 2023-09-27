@@ -47,4 +47,3 @@ const Plugin: IPlugin = {
 };
 
 ```
- 
