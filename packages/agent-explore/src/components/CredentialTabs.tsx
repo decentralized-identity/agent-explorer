@@ -1,10 +1,9 @@
 import React from 'react'
 import { Button, Row, Tabs, Card } from 'antd'
 import { UniqueVerifiableCredential } from '@veramo/core'
-import { VerifiableCredential } from '@veramo-community/react-components'
 import CredentialInfo from './CredentialInfo'
 import JsonBlock from './Json'
-import { getIssuerDID, CredentialActionsDropdown, IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
+import { getIssuerDID, CredentialActionsDropdown, IdentifierProfile, VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
 import { EllipsisOutlined } from '@ant-design/icons'
 import { formatRelative } from 'date-fns'
 
@@ -39,7 +38,7 @@ const CredentialTabs: React.FC<CredentialTabsProps> = ({ uniqueCredential }) => 
                 </Row>
               }
             >
-              <VerifiableCredential credential={verifiableCredential} />
+              <VerifiableCredentialComponent credential={uniqueCredential} />
             </Card>
           ),
         },

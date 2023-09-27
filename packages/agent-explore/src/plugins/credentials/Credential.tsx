@@ -2,8 +2,6 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-
-import '@veramo-community/react-components/dist/cjs/index.css'
 import { PageContainer } from '@ant-design/pro-components'
 import CredentialTabs from '../../components/CredentialTabs'
 import { IDataStore } from '@veramo/core'

@@ -104,7 +104,6 @@
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.4.0",
     "@veramo-community/agent-explorer-plugin": "workspace:*",
-    "@veramo-community/react-components": "^1.5.0",
     "@veramo-community/veramo-react": "^1.1.0",
     "@veramo/core": "5.5.2-next.4",
     "@veramo/core-types": "5.5.2-next.4",

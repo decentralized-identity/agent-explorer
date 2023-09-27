@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useVeramo } from '@veramo-community/veramo-react'
-import '@veramo-community/react-components/dist/cjs/index.css'
 import { PageContainer } from '@ant-design/pro-components'
 import CredentialTabs from '../../components/CredentialTabs'
 import { ICredentialPlugin, IVerifyResult } from '@veramo/core'

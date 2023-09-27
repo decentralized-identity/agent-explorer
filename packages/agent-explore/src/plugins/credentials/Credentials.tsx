@@ -4,10 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PageContainer, ProList } from '@ant-design/pro-components'
-import { VerifiableCredential } from '@veramo-community/react-components'
 import { IDataStore, IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
 import { AppstoreOutlined, EllipsisOutlined, UnorderedListOutlined } from '@ant-design/icons'
-import { CredentialSummary, CredentialActionsDropdown, getIssuerDID, IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
+import { CredentialSummary, CredentialActionsDropdown, getIssuerDID, IdentifierProfile, VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
 import { Drawer, List, Radio } from 'antd'
 import CredentialTabs from '../../components/CredentialTabs'
 
@@ -134,7 +133,7 @@ const Credentials = () => {
             ],
             content: (
               <div style={{ width: '100%' }}>
-                <VerifiableCredential credential={item.verifiableCredential} />
+                <VerifiableCredentialComponent credential={item} />
               </div>
             ),
             hash: item.hash,
