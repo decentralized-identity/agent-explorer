@@ -93,9 +93,8 @@ jobs:
         with:
           github_token: ${{ secrets.GH_TOKEN }}
 
-          # If the commit is tagged with a version (e.g. "v1.0.0"),
-          # release the app after building
-          release: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          # release the app after building if matching branch
+          release: ${{ github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next' }}
           package_root: "./packages/agent-explore"
           build_script_name: build-electron
           package_manager: pnpm
