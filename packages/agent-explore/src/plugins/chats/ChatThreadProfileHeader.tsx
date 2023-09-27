@@ -3,7 +3,7 @@ import { Row, Typography, Avatar, Col, theme } from 'antd'
 import { shortId } from '@veramo-community/agent-explorer-plugin'
 import { IMessage } from '@veramo/core'
 import { useChat } from '../../context/ChatProvider'
-import { IIdentifierProfile } from '../../context/plugins/IdentifierProfile'
+import { IIdentifierProfile } from '@veramo-community/agent-explorer-plugin'
 const { useToken } = theme
 const { Text } = Typography
 

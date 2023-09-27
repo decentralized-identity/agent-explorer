@@ -19,9 +19,8 @@ import IdentifierQuickSetup from './IdentifierQuickSetup'
 import IdentifierReceivedCredentials from './IdentifierReceivedCredentials'
 import IdentifierIssuedCredentials from './IdentifierIssuedCredentials'
 import { PageContainer } from '@ant-design/pro-components'
-import { shortId } from '@veramo-community/agent-explorer-plugin'
+import { shortId, IIdentifierProfilePlugin } from '@veramo-community/agent-explorer-plugin'
 import { CopyOutlined } from '@ant-design/icons'
-import { IIdentifierProfilePlugin } from '../../context/plugins/IdentifierProfile'
 
 const { TextArea } = Input
 const { TabPane } = Tabs

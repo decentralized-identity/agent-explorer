@@ -7,11 +7,10 @@ import { IDIDDiscovery } from '@veramo/did-discovery'
 import { useQuery } from 'react-query'
 import { FormOutlined, QrcodeOutlined } from '@ant-design/icons'
 import { IIdentifier } from '@veramo/core'
-import IdentifierProfile from '../../components/IdentifierProfile'
-import {
-  IIdentifierProfile,
-  IIdentifierProfilePlugin,
-} from '../../context/plugins/IdentifierProfile'
+import { 
+  IdentifierProfile, 
+  IIdentifierProfile, 
+  IIdentifierProfilePlugin } from '@veramo-community/agent-explorer-plugin'
 import NewChatThreadModal from './NewChatThreadModal'
 import { useNavigate } from 'react-router-dom'
 import ChatInviteQRCodeModal from './ChatInviteQRCodeModal'

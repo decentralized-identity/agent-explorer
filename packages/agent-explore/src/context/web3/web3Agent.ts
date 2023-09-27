@@ -48,7 +48,7 @@ import { SaveMessageHandler } from './saveMessageHandler'
 import {
   IdentifierProfilePlugin,
   IIdentifierProfilePlugin,
-} from '../plugins/IdentifierProfile'
+} from '@veramo-community/agent-explorer-plugin'
 import { DIDDiscovery } from '@veramo/did-discovery'
 // FIXME: This import causes an error: Module not found: Error: Can't resolve 'react-native-sqlite-storage' in '[...]/node_modules/typeorm/browser/driver/react-native'
 // import { DataStoreDiscoveryProvider } from '@veramo/data-store'

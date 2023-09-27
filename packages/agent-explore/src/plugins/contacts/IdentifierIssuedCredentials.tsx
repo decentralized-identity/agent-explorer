@@ -8,8 +8,7 @@ import { ProList } from '@ant-design/pro-components'
 import { VerifiableCredential } from '@veramo-community/react-components'
 import { Button } from 'antd'
 import { formatRelative } from 'date-fns'
-import IdentifierProfile from '../../components/IdentifierProfile'
-import { CredentialActionsDropdown, getIssuerDID } from '@veramo-community/agent-explorer-plugin'
+import { CredentialActionsDropdown, getIssuerDID, IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
 
 interface IdentifierCredentialsProps {
   identifier: string

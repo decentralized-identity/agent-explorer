@@ -303,12 +303,18 @@ importers:
       '@ant-design/pro-components':
         specifier: ^2.6.13
         version: 2.6.28(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@types/md5':
+        specifier: ^2.3.2
+        version: 2.3.2
       '@types/react':
         specifier: ^18.2.7
         version: 18.2.23
       '@types/react-dom':
         specifier: ^18.2.4
         version: 18.2.7
+      '@types/url-parse':
+        specifier: ^1.4.8
+        version: 1.4.9
       '@veramo-community/veramo-react':
         specifier: ^1.1.0
         version: 1.2.0(@veramo/core@5.5.2-next.4)(@veramo/remote-client@5.5.2-next.4)(react@18.2.0)
@@ -318,21 +324,33 @@ importers:
       '@veramo/core-types':
         specifier: 5.5.2-next.4
         version: 5.5.2-next.4
+      '@veramo/data-store':
+        specifier: 5.5.2-next.4
+        version: 5.5.2-next.4(ts-node@10.9.1)
       antd:
         specifier: ~5.8.4
         version: 5.8.6(date-fns@2.30.0)(react-dom@18.2.0)(react@18.2.0)
+      md5:
+        specifier: ^2.3.0
+        version: 2.3.0
       react:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-query:
+        specifier: ^3.39.3
+        version: 3.39.3(react-dom@18.2.0)(react-native@0.72.5)(react@18.2.0)
       react-router-dom:
         specifier: ^6.11.2
         version: 6.16.0(react-dom@18.2.0)(react@18.2.0)
       typescript:
         specifier: 4.9.5
         version: 4.9.5
+      url-parse:
+        specifier: ^1.5.10
+        version: 1.5.10
 
 packages:
 
@@ -7765,6 +7783,7 @@ packages:
   /@xmldom/xmldom@0.8.10:
     resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
     engines: {node: '>=10.0.0'}
+    requiresBuild: true
     dev: true
 
   /@xtuc/ieee754@1.2.0:
@@ -24010,6 +24029,7 @@ packages:
   /xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
     engines: {node: '>=8.0'}
+    requiresBuild: true
     dev: true
 
   /xmlchars@2.2.0:
