@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.40.7](https://github.com/veramolabs/agent-explorer/compare/v1.40.6...v1.40.7) (2023-09-27)
+
+
+### Bug Fixes
+
+* **ci:** retry release 5 ([6ce635a](https://github.com/veramolabs/agent-explorer/commit/6ce635a9fb22e62d3fa436b29bccc1d8b5257eac))
+
+
+### Reverts
+
+* Revert "fix(ci): remove NPM config from CI release script" ([340bc44](https://github.com/veramolabs/agent-explorer/commit/340bc44a732ddad40a762929e1a5b93be78383e2))
+
+
+
+
+
 ## [1.40.6](https://github.com/veramolabs/agent-explorer/compare/v1.40.5...v1.40.6) (2023-09-27)
 
 
