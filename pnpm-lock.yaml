@@ -35,7 +35,7 @@ importers:
         version: 5.2.6(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-components':
         specifier: ^2.6.13
-        version: 2.6.27(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 2.6.28(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@babel/plugin-syntax-import-assertions':
         specifier: ^7.20.0
         version: 7.22.5(@babel/core@7.23.0)
@@ -302,7 +302,7 @@ importers:
         version: 5.2.6(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-components':
         specifier: ^2.6.13
-        version: 2.6.27(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+        version: 2.6.28(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@types/react':
         specifier: ^18.2.7
         version: 18.2.23
@@ -425,22 +425,22 @@ packages:
       - react-dom
     dev: true
 
-  /@ant-design/pro-components@2.6.27(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-FJg9jjpoy+YSNS/M9CA1vMDB6MHSLhpPyQNzZFT9msWTIYRS8eiP0RjguK6KTtWaMGVsEKXQXEfFQrQ0tEi0yw==}
+  /@ant-design/pro-components@2.6.28(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Kger5QRxJ4oR8KHH72wKJlwqT/s1psG9G7UW5T2NPKa0xoPRg97WWJnV2zK/KKz4Rou6g0LnzS7VvlexZPi7nQ==}
     peerDependencies:
       antd: '>=4.23.0 || >=5.0.0'
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
     dependencies:
       '@ant-design/pro-card': 2.5.18(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
-      '@ant-design/pro-descriptions': 2.5.12(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/pro-descriptions': 2.5.13(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-field': 2.12.9(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
-      '@ant-design/pro-form': 2.20.1(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/pro-form': 2.21.0(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-layout': 7.17.6(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
-      '@ant-design/pro-list': 2.5.26(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/pro-list': 2.5.27(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-provider': 2.13.1(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-skeleton': 2.1.7(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
-      '@ant-design/pro-table': 3.12.11(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/pro-table': 3.12.12(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-utils': 2.14.6(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@babel/runtime': 7.23.1
       antd: 5.8.6(date-fns@2.30.0)(react-dom@18.2.0)(react@18.2.0)
@@ -451,14 +451,14 @@ packages:
       - rc-field-form
     dev: true
 
-  /@ant-design/pro-descriptions@2.5.12(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-e+pvq6reAR7+fSs6u/vknF3vDs8Brrcl4Qs/ejjtUE4nd8gegBLCZfF7FY95kEr9bdewQ6i/ug2sTBcEwyJ32Q==}
+  /@ant-design/pro-descriptions@2.5.13(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-L49Su1kT3h3umsimC9mxxRXgFMXHo8DxjSp81mMpZEr0O7KIc5C3I2b5R5QE9ktjHqe3LM+3UXrJD1pUq4lm1A==}
     peerDependencies:
       antd: '>=4.23.0 || >=5.0.0'
       react: '>=17.0.0'
     dependencies:
       '@ant-design/pro-field': 2.12.9(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
-      '@ant-design/pro-form': 2.20.1(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/pro-form': 2.21.0(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-skeleton': 2.1.7(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-utils': 2.14.6(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@babel/runtime': 7.23.1
@@ -495,8 +495,8 @@ packages:
       - react-dom
     dev: true
 
-  /@ant-design/pro-form@2.20.1(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-jL4I5PLXSORSKb2GeCKjyH3htvYfXrjjfoHMZ71jDkzF803wEghY+YejG6uDC8gUs5mHYOl9vDZ/Gx6E7ucnOA==}
+  /@ant-design/pro-form@2.21.0(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-3jR0Us7k50Gkxg1hHbnWlZKDzfen8le/XxtK0JqBA2mM7B+y26ieXfaxISD/Dptt4o0Zk57wcquSJHOfhR53wQ==}
     peerDependencies:
       '@types/lodash.merge': ^4.6.7
       antd: '>=4.23.0 || >=5.0.0'
@@ -551,8 +551,8 @@ packages:
       warning: 4.0.3
     dev: true
 
-  /@ant-design/pro-list@2.5.26(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-J8YP70ZdSv8/G7GBYYSMXZ8CuBm+vYdXr3vpW72odBLuaMU5mPOR98dhXGLK0+qjjj3+fgI9WdMVdfdt798Peg==}
+  /@ant-design/pro-list@2.5.27(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Dkl8JLz69+i9hK9z16ckocKqD8ZEzCmaxJ8mS0DVwKjhZKs+82gI/xTZqyDqGXSLyyA12FqYo9q6U88FV9Nt5w==}
     peerDependencies:
       antd: '>=4.23.0 || >=5.0.0'
       react: '>=17.0.0'
@@ -561,7 +561,7 @@ packages:
       '@ant-design/icons': 5.2.6(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-card': 2.5.18(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-field': 2.12.9(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
-      '@ant-design/pro-table': 3.12.11(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/pro-table': 3.12.12(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-utils': 2.14.6(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@babel/runtime': 7.23.1
       antd: 5.8.6(date-fns@2.30.0)(react-dom@18.2.0)(react@18.2.0)
@@ -606,8 +606,8 @@ packages:
       react-dom: 18.2.0(react@18.2.0)
     dev: true
 
-  /@ant-design/pro-table@3.12.11(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-tFeC2BxLlz46yqAObCet04hGRLoca7WrdupD05oJ8ssaR8ieRQDTNv9irUfqS07sKokbXMPK7SYmAGyUmvikgQ==}
+  /@ant-design/pro-table@3.12.12(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-NySv5v3v11n7Ux3t3r41YbHc3xmQjdoGMqzGLg+eslbEhOmUrkrvYpm24eZ7glOStPFwKDrMdd8MupB8hel7RA==}
     peerDependencies:
       antd: '>=4.23.0 || >=5.0.0'
       rc-field-form: ^1.22.0
@@ -617,7 +617,7 @@ packages:
       '@ant-design/icons': 5.2.6(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-card': 2.5.18(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-field': 2.12.9(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
-      '@ant-design/pro-form': 2.20.1(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
+      '@ant-design/pro-form': 2.21.0(antd@5.8.6)(rc-field-form@1.38.2)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-provider': 2.13.1(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@ant-design/pro-utils': 2.14.6(antd@5.8.6)(react-dom@18.2.0)(react@18.2.0)
       '@babel/runtime': 7.23.1
@@ -777,7 +777,7 @@ packages:
     dependencies:
       '@babel/compat-data': 7.22.20
       '@babel/helper-validator-option': 7.22.15
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       lru-cache: 5.1.1
       semver: 6.3.1
     dev: true
@@ -2988,8 +2988,8 @@ packages:
       react: 18.2.0
       tslib: 2.6.2
 
-  /@electron/asar@3.2.6:
-    resolution: {integrity: sha512-g3Qj43/4Fi8EOB7hwVF6TCwPfwWXTYqD6R16cuCWKD3khKIQJT0WOloF55+LzaP92rYovlE6XLlaESitrxSKmg==}
+  /@electron/asar@3.2.7:
+    resolution: {integrity: sha512-8FaSCAIiZGYFWyjeevPQt+0e9xCK9YmJ2Rjg5SXgdsXon6cRnU0Yxnbe6CvJbQn26baifur2Y2G5EBayRIsjyg==}
     engines: {node: '>=10.12.0'}
     hasBin: true
     dependencies:
@@ -3045,7 +3045,7 @@ packages:
     resolution: {integrity: sha512-lE/U3UNw1YHuowNbTmKNs9UlS3En3cPgwM5MI+agIgr/B1hSze9NdOP0qn7boZaI9Lph8IDv3/24g9IxnJP7aQ==}
     engines: {node: '>=8.6'}
     dependencies:
-      '@electron/asar': 3.2.6
+      '@electron/asar': 3.2.7
       '@malept/cross-spawn-promise': 1.1.1
       debug: 4.3.4
       dir-compare: 3.3.0
@@ -3099,8 +3099,8 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@eslint-community/regexpp@4.8.2:
-    resolution: {integrity: sha512-0MGxAVt1m/ZK+LTJp/j0qF7Hz97D9O/FH9Ms3ltnyIdDD57cbb1ACIQTkbHvNXtWDv5TPq7w5Kq56+cNukbo7g==}
+  /@eslint-community/regexpp@4.9.0:
+    resolution: {integrity: sha512-zJmuCWj2VLBt4c25CfBIbMZLGLyhkvs7LznyVX5HfpzeocThgIj5XQK4L+g3U36mMcx8bPMhGyPpwCATamC4jQ==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: true
 
@@ -5513,8 +5513,8 @@ packages:
     engines: {node: '>=18'}
     dev: true
 
-  /@semantic-release/github@9.1.0(semantic-release@21.1.2):
-    resolution: {integrity: sha512-RKhS43OpNnQr9rA9Z72EbG8wM/UmWoCpop2z6G++ulRu7t8MuYS2v6TR2SoOFhcDPa2wY91v5VPouCWtDjz4+Q==}
+  /@semantic-release/github@9.2.0(semantic-release@21.1.2):
+    resolution: {integrity: sha512-Opbivp9zA2VY63OdMZEBH5vs5VawuncQZO1VW6Lffo0e/jlDi165Wi4BKN1j1Z22goqk4scBFoEjvvXoveg/Iw==}
     engines: {node: '>=18'}
     peerDependencies:
       semantic-release: '>=20.1.0'
@@ -6642,7 +6642,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@eslint-community/regexpp': 4.8.2
+      '@eslint-community/regexpp': 4.9.0
       '@typescript-eslint/parser': 5.62.0(eslint@8.50.0)(typescript@4.9.5)
       '@typescript-eslint/scope-manager': 5.62.0
       '@typescript-eslint/type-utils': 5.62.0(eslint@8.50.0)(typescript@4.9.5)
@@ -6670,7 +6670,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@eslint-community/regexpp': 4.8.2
+      '@eslint-community/regexpp': 4.9.0
       '@typescript-eslint/parser': 6.7.3(eslint@8.50.0)(typescript@4.9.5)
       '@typescript-eslint/scope-manager': 6.7.3
       '@typescript-eslint/type-utils': 6.7.3(eslint@8.50.0)(typescript@4.9.5)
@@ -7765,7 +7765,6 @@ packages:
   /@xmldom/xmldom@0.8.10:
     resolution: {integrity: sha512-2WALfTl4xo2SkGCYRt6rDTFfk9R1czmBvUQy12gK2KuRKIpWEhcbbzy8EZXtz/jkRqHX8bFEc6FC1HjX4TUWYw==}
     engines: {node: '>=10.0.0'}
-    requiresBuild: true
     dev: true
 
   /@xtuc/ieee754@1.2.0:
@@ -8519,7 +8518,7 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       caniuse-lite: 1.0.30001539
       fraction.js: 4.3.6
       normalize-range: 0.1.2
@@ -9146,15 +9145,15 @@ packages:
       pako: 1.0.11
     dev: true
 
-  /browserslist@4.21.11:
-    resolution: {integrity: sha512-xn1UXOKUz7DjdGlg9RrUr0GGiWzI97UQJnugHtH0OLDfJB7jMgoIkYvRIEO1l9EeEERVqeqLYOcFBW9ldjypbQ==}
+  /browserslist@4.22.0:
+    resolution: {integrity: sha512-v+Jcv64L2LbfTC6OnRcaxtqJNJuQAVhZKSJfR/6hn7lhnChUXl4amwVviqN1k411BB+3rRoKMitELRn1CojeRA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001539
-      electron-to-chromium: 1.4.530
+      electron-to-chromium: 1.4.531
       node-releases: 2.0.13
-      update-browserslist-db: 1.0.13(browserslist@4.21.11)
+      update-browserslist-db: 1.0.13(browserslist@4.22.0)
     dev: true
 
   /bser@2.1.1:
@@ -9410,7 +9409,7 @@ packages:
   /caniuse-api@3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       caniuse-lite: 1.0.30001539
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
@@ -10077,7 +10076,7 @@ packages:
   /core-js-compat@3.32.2:
     resolution: {integrity: sha512-+GjlguTDINOijtVRUxrQOv3kfu9rl+qPNdX2LTbJ/ZyVTuxK+ksVSAGX1nHstu4hrv1En/uPTtWgq2gI5wt4AQ==}
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
     dev: true
 
   /core-js-pure@3.32.2:
@@ -11243,8 +11242,8 @@ packages:
       - supports-color
     dev: true
 
-  /electron-to-chromium@1.4.530:
-    resolution: {integrity: sha512-rsJ9O8SCI4etS8TBsXuRfHa2eZReJhnGf5MHZd3Vo05PukWHKXhk3VQGbHHnDLa8nZz9woPCpLCMQpLGgkGNRA==}
+  /electron-to-chromium@1.4.531:
+    resolution: {integrity: sha512-H6gi5E41Rn3/mhKlPaT1aIMg/71hTAqn0gYEllSuw9igNWtvQwu185jiCZoZD29n7Zukgh7GVZ3zGf0XvkhqjQ==}
     dev: true
 
   /electron@26.2.2:
@@ -11839,7 +11838,7 @@ packages:
     hasBin: true
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.50.0)
-      '@eslint-community/regexpp': 4.8.2
+      '@eslint-community/regexpp': 4.9.0
       '@eslint/eslintrc': 2.1.2
       '@eslint/js': 8.50.0
       '@humanwhocodes/config-array': 0.11.11
@@ -18345,14 +18344,14 @@ packages:
       postcss-selector-parser: 6.0.13
     dev: true
 
-  /postcss-browser-comments@4.0.0(browserslist@4.21.11)(postcss@8.4.30):
+  /postcss-browser-comments@4.0.0(browserslist@4.22.0)(postcss@8.4.30):
     resolution: {integrity: sha512-X9X9/WN3KIvY9+hNERUqX9gncsgBA25XaeR+jshHz2j8+sYyHktHw1JdKuMjeLpGktXidqDhA7b/qm1mrBDmgg==}
     engines: {node: '>=8'}
     peerDependencies:
       browserslist: '>=4'
       postcss: '>=8'
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       postcss: 8.4.30
     dev: true
 
@@ -18412,7 +18411,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       caniuse-api: 3.0.0
       colord: 2.9.3
       postcss: 8.4.30
@@ -18425,7 +18424,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       postcss: 8.4.30
       postcss-value-parser: 4.2.0
     dev: true
@@ -18690,7 +18689,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       caniuse-api: 3.0.0
       cssnano-utils: 3.1.0(postcss@8.4.30)
       postcss: 8.4.30
@@ -18725,7 +18724,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       cssnano-utils: 3.1.0(postcss@8.4.30)
       postcss: 8.4.30
       postcss-value-parser: 4.2.0
@@ -18868,7 +18867,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       postcss: 8.4.30
       postcss-value-parser: 4.2.0
     dev: true
@@ -18894,7 +18893,7 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /postcss-normalize@10.0.1(browserslist@4.21.11)(postcss@8.4.30):
+  /postcss-normalize@10.0.1(browserslist@4.22.0)(postcss@8.4.30):
     resolution: {integrity: sha512-+5w18/rDev5mqERcG3W5GZNMJa1eoYYNGo8gB7tEwaos0ajk3ZXAI4mHGcNT47NE+ZnZD1pEpUOFLvltIwmeJA==}
     engines: {node: '>= 12'}
     peerDependencies:
@@ -18902,9 +18901,9 @@ packages:
       postcss: '>= 8'
     dependencies:
       '@csstools/normalize.css': 12.0.0
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       postcss: 8.4.30
-      postcss-browser-comments: 4.0.0(browserslist@4.21.11)(postcss@8.4.30)
+      postcss-browser-comments: 4.0.0(browserslist@4.22.0)(postcss@8.4.30)
       sanitize.css: 13.0.0
     dev: true
 
@@ -18977,7 +18976,7 @@ packages:
       '@csstools/postcss-trigonometric-functions': 1.0.2(postcss@8.4.30)
       '@csstools/postcss-unset-value': 1.0.2(postcss@8.4.30)
       autoprefixer: 10.4.16(postcss@8.4.30)
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       css-blank-pseudo: 3.0.3(postcss@8.4.30)
       css-has-pseudo: 3.0.4(postcss@8.4.30)
       css-prefers-color-scheme: 6.0.3(postcss@8.4.30)
@@ -19030,7 +19029,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       caniuse-api: 3.0.0
       postcss: 8.4.30
     dev: true
@@ -20098,7 +20097,7 @@ packages:
     dependencies:
       '@babel/code-frame': 7.22.13
       address: 1.2.2
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       chalk: 4.1.2
       cross-spawn: 7.0.3
       detect-port-alt: 1.1.6
@@ -20317,7 +20316,7 @@ packages:
       babel-plugin-named-asset-import: 0.3.8(@babel/core@7.23.0)
       babel-preset-react-app: 10.0.1
       bfj: 7.1.0
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       camelcase: 6.3.0
       case-sensitive-paths-webpack-plugin: 2.4.0
       css-loader: 6.8.1(webpack@5.88.2)
@@ -20338,7 +20337,7 @@ packages:
       postcss: 8.4.30
       postcss-flexbugs-fixes: 5.0.2(postcss@8.4.30)
       postcss-loader: 6.2.1(postcss@8.4.30)(webpack@5.88.2)
-      postcss-normalize: 10.0.1(browserslist@4.21.11)(postcss@8.4.30)
+      postcss-normalize: 10.0.1(browserslist@4.22.0)(postcss@8.4.30)
       postcss-preset-env: 7.8.3(postcss@8.4.30)
       prompts: 2.4.2
       react: 18.2.0
@@ -21153,7 +21152,7 @@ packages:
     dependencies:
       '@semantic-release/commit-analyzer': 10.0.4(semantic-release@21.1.2)
       '@semantic-release/error': 4.0.0
-      '@semantic-release/github': 9.1.0(semantic-release@21.1.2)
+      '@semantic-release/github': 9.2.0(semantic-release@21.1.2)
       '@semantic-release/npm': 10.0.6(semantic-release@21.1.2)
       '@semantic-release/release-notes-generator': 11.0.7(semantic-release@21.1.2)
       aggregate-error: 5.0.0
@@ -22035,7 +22034,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.15
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       postcss: 8.4.30
       postcss-selector-parser: 6.0.13
     dev: true
@@ -23084,13 +23083,13 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /update-browserslist-db@1.0.13(browserslist@4.21.11):
+  /update-browserslist-db@1.0.13(browserslist@4.22.0):
     resolution: {integrity: sha512-xebP81SNcPuNpPP3uzeW1NYXxI3rxyJzF3pD6sH4jE7o/IX+WtSpwnVU+qIsDPyk0d3hmFQ7mjqc6AtV604hbg==}
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
     dependencies:
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       escalade: 3.1.1
       picocolors: 1.0.0
     dev: true
@@ -23484,7 +23483,7 @@ packages:
       '@webassemblyjs/wasm-parser': 1.11.6
       acorn: 8.10.0
       acorn-import-assertions: 1.9.0(acorn@8.10.0)
-      browserslist: 4.21.11
+      browserslist: 4.22.0
       chrome-trace-event: 1.0.3
       enhanced-resolve: 5.15.0
       es-module-lexer: 1.3.1
@@ -24011,7 +24010,6 @@ packages:
   /xmlbuilder@15.1.1:
     resolution: {integrity: sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==}
     engines: {node: '>=8.0'}
-    requiresBuild: true
     dev: true
 
   /xmlchars@2.2.0:
