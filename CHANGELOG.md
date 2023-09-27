@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.40.4](https://github.com/veramolabs/agent-explorer/compare/v1.40.3...v1.40.4) (2023-09-27)
+
+
+### Bug Fixes
+
+* **ci:** retry release 2 ([7ed4359](https://github.com/veramolabs/agent-explorer/commit/7ed435997284c834a5d1b26457d37703cbb7ec79))
+
+
+
+
+
 ## [1.40.3](https://github.com/veramolabs/agent-explorer/compare/v1.40.2...v1.40.3) (2023-09-27)
 
 
