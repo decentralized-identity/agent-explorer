@@ -7,7 +7,7 @@
     "directory": "packages/plugin"
   },
   "author": "Simonas Karuzas <simonas.karuzas@mesh.xyz>",
-  "version": "1.40.8",
+  "version": "1.40.9",
   "type": "module",
   "publishConfig": {
     "access": "public"
