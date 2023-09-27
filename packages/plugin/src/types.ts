@@ -19,7 +19,7 @@ export type IVerifiableComponentProps = {
 }
 
 export type IAgentExplorerPlugin = {
-  config: IAgentExplorerPluginConfig;
+  config?: IAgentExplorerPluginConfig;
   name: string;
   description: string;
   routes: IRouteComponent[];

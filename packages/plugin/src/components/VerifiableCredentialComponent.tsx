@@ -6,6 +6,11 @@ import { getIssuerDID, shortId } from "../utils/did.js";
 import { formatRelative } from "date-fns";
 import { usePlugins } from "../PluginProvider.js";
 import { IVerifiableComponentProps } from "../types.js";
+import { IdentifierProfile } from "./IdentifierProfile.js";
+import { useQuery } from "react-query";
+import { Avatar, Button, Col, Popover, Row, Skeleton, Space, Spin, Tag, Typography, theme } from "antd";
+import { CredentialActionsDropdown } from "./CredentialActionsDropdown.js";
+import { EllipsisOutlined } from "@ant-design/icons";
 
 export const VerifiableCredentialComponent = (
   { credential, verify = true } : { 
@@ -14,6 +19,8 @@ export const VerifiableCredentialComponent = (
 }
 ) => {
   const { agent } = useVeramo<ICredentialVerifier & IDataStore>()
+  const { token } = theme.useToken()
+
   const { plugins } = usePlugins()
   const [isVerifying, setIsVerifying] = React.useState<boolean>(false)
   const [verifyResult, setVerifyResult] = React.useState<IVerifyResult | undefined>(undefined)
@@ -42,6 +49,13 @@ export const VerifiableCredentialComponent = (
     }
   },[verify, verifyResult, isVerifying])
 
+  const did = getIssuerDID(credential.verifiableCredential)
+
+  const { data: profile, isLoading: isLoadingProfile } = useQuery(
+    ['identifierProfile', did, agent?.context.id],
+    () => (did ? agent?.getIdentifierProfile({ did }) : undefined),
+  )
+
   let Component: React.FC<IVerifiableComponentProps> | undefined = undefined
   plugins.forEach((plugin) => {
     if (Component === undefined && plugin.getCredentialComponent) {
@@ -56,31 +70,67 @@ export const VerifiableCredentialComponent = (
     Component = Generic
   }
 
+  let color = !isVerifying && verifyResult?.error ? token.colorError : token.colorSuccess
+  color = isVerifying ? token.colorBorder : color
   return (
-    <>
-    {credential && <Component credential={credential} />}
-    
-    {credential && <div className="veramo__verification_result_footer" >
-      {isVerifying && <div className="spinner"></div>}
-      {verifyResult?.error && <p>Error: {verifyResult.error.message}</p>}
-      {verifyResult?.verified && <>
-      <svg
-        className="veramo__verified_icon"
-        xmlns="http://www.w3.org/2000/svg" 
-        width="12" 
-        height="12" 
-        viewBox="0 0 1200 1200">
-        <path d="M600,1200a604.428,604.428,0,0,1-120.921-12.19,596.709,596.709,0,0,1-214.545-90.281A601.752,601.752,0,0,1,47.151,833.547,596.971,596.971,0,0,1,12.19,720.921a605.85,605.85,0,0,1,0-241.842A596.709,596.709,0,0,1,102.47,264.534,601.751,601.751,0,0,1,366.453,47.151,596.971,596.971,0,0,1,479.079,12.19a605.85,605.85,0,0,1,241.842,0A596.709,596.709,0,0,1,935.466,102.47a601.751,601.751,0,0,1,217.383,263.982,596.976,596.976,0,0,1,34.961,112.626,605.849,605.849,0,0,1,0,241.842,596.709,596.709,0,0,1-90.281,214.545,601.751,601.751,0,0,1-263.982,217.383,596.976,596.976,0,0,1-112.626,34.961A604.428,604.428,0,0,1,600,1200ZM233.818,499.972l340.917,545.086L967.272,283.377,574.734,684.509Z" fill="#73c394"/>
-      </svg>
-      {shortId(getIssuerDID(credential.verifiableCredential))}
-      <span>・</span>
-      {formatRelative(
-        new Date(credential.verifiableCredential.issuanceDate), 
-        new Date()
-        )}
-      </>}
+    <div style={{
+      padding: '16px',
+      borderRadius: '4px',
+      boxShadow: '0px 0px 2px ' + token.colorBorder,
+      borderLeft: '2px solid ' + color,
+      backgroundColor: token.colorBgElevated,
+    }}>
+
+    {credential && <div className="" >
+      
+      
+      <Row align="top" 
+        wrap={false} 
+        style={{
+          // width: '100%',
+          position: 'relative'
+        }}
+        justify={'space-between'}
+      >
+      <Col 
+        >
+        <div style={{ justifyItems: 'flex-start', display: 'flex' }}>
+          <Space direction='horizontal' wrap={true}>
+          <div>
+            {!isLoadingProfile && <Avatar src={profile?.picture} size={'small'} />}
+            {isLoadingProfile && <Skeleton.Avatar active />}
+          </div>
+          <Popover content={shortId(did)}>
+            <Typography.Text ellipsis>
+              {isLoadingProfile ? shortId(did):  profile?.name} 
+            </Typography.Text>
+          </Popover>
+
+          <Typography.Text type='secondary'>{formatRelative(
+            new Date(credential.verifiableCredential.issuanceDate),
+            new Date()
+            )}</Typography.Text>
+            {isVerifying && <Spin size="small"/>}
+
+            {verifyResult?.error && <Tag color="error">{verifyResult.error.message}</Tag>}
+          </Space>
+
+          {isLoadingProfile && <Skeleton.Input style={{ width: 100 }} active />}
+        </div>
+        
+      </Col>
+      <Col xs={1}>
+        <CredentialActionsDropdown uniqueCredential={credential}>
+          
+          <Button type="text" size="small"><EllipsisOutlined /></Button>
+        </CredentialActionsDropdown>
+      </Col>
+
+    </Row>
       </div>}
-    </>
+
+      {credential && <Component credential={credential} />}
+    </div>
   )
 
 };
@@ -89,20 +139,19 @@ export const VerifiableCredentialComponent = (
 
 
 export const Generic: React.FC<IVerifiableComponentProps> = ({ credential }) => {
-  return <div className="message-embed">
-    <div className="embed-content">
-      <div className="embed-title description">{(credential.verifiableCredential.type as string[]).join(', ')}</div>
-      <div className="embed-fields">
+  return <div>
+      <dl>
+      <dt style={{fontWeight: 'bold'}}>Type</dt>
+      <dd>{(credential.verifiableCredential.type as string[]).map((type: string) => <Tag>{type}</Tag>)}</dd>
       {Object.entries(credential.verifiableCredential.credentialSubject)
         .map(([key, value]: [string, any]): React.ReactNode => 
-        <div className="embed-field" key={key}>
-          <div className="embed-field-name">{key}</div>
-          <div className="embed-field-value">
+        <>
+          <dt style={{fontWeight: 'bold'}}>{key}</dt>
+          <dd>
             {typeof value === 'object' || Array.isArray(value) ? JSON.stringify(value) : value}
-          </div>
-        </div>
+          </dd>
+        </>
       )}
-      </div>
-    </div>
+      </dl>
   </div>;
 };

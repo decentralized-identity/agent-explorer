@@ -19,7 +19,7 @@ export const CredentialActionsDropdown: React.FC<{
 
   let menuItems: MenuProps['items'] = []
   plugins.forEach((plugin) => {
-    if (menuItems && plugin.config.enabled && plugin.getCredentialContextMenuItems) {
+    if (menuItems && plugin.config?.enabled && plugin.getCredentialContextMenuItems) {
       const items = plugin.getCredentialContextMenuItems({ hash, verifiableCredential })
       if (items) {
         menuItems = [...menuItems, ...items]

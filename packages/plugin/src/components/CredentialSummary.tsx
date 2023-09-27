@@ -33,6 +33,7 @@ export const CredentialSummary: React.FC<CredentialSummaryProps> = ({
       style={{
         width: '100%',
         borderBottom: '1px solid ' + token.colorBorderSecondary,
+        backgroundColor: token.colorBgBase,
         padding: token.paddingSM,
         position: 'relative'
       }}
