@@ -18,7 +18,7 @@ import { IAgentExplorerPlugin } from '@veramo-community/agent-explorer-plugin'
 const communityPlugins: IAgentExplorerPlugin[] = [
   {
     config: {
-      url: 'https://cdn.jsdelivr.net/gh/veramolabs/brainshare-agent-explorer-plugin/dist/plugin.js',
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-brainshare@main/dist/plugin.js',
       enabled: true,
     },
     name: 'Brain share',
