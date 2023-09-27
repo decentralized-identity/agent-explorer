@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.40.1](https://github.com/veramolabs/agent-explorer/compare/v1.40.0...v1.40.1) (2023-09-27)
+
+
+### Bug Fixes
+
+* add readmes to packages ([d401d59](https://github.com/veramolabs/agent-explorer/commit/d401d596efbf10029c110153a616b62260fcd8ac))
+* **ci:** fix registry path ([b9eeb11](https://github.com/veramolabs/agent-explorer/commit/b9eeb11cd27faeaa6289a2bdb71afb00b4b6d301))
+
+
+
+
+
 # [1.40.0](https://github.com/veramolabs/agent-explorer/compare/v1.39.2...v1.40.0) (2023-09-27)
 
 
