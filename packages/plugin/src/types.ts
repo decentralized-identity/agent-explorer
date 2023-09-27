@@ -13,8 +13,13 @@ export type IRouteComponent = {
   element: React.JSX.Element;
 }
 
+
+export type IVerifiableComponentProps = {
+  credential: UniqueVerifiableCredential
+}
+
 export type IAgentExplorerPlugin = {
-  config: IAgentExplorerPluginConfig;
+  config?: IAgentExplorerPluginConfig;
   name: string;
   description: string;
   routes: IRouteComponent[];
@@ -23,7 +28,7 @@ export type IAgentExplorerPlugin = {
   hasCss?: boolean;
   getCredentialContextMenuItems?: (credential: UniqueVerifiableCredential) => MenuProps['items'];
   identifierContextMenuItems?: MenuProps['items'];
-  getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.JSX.Element;
+  getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps>;
   agentPlugins?: IAgentPlugin[];
 }
 

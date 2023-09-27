@@ -10,11 +10,10 @@ import {
   NewIdentifierForm,
   NewIdentifierFormValues,
 } from './NewIdentifierForm'
-import { shortId } from '@veramo-community/agent-explorer-plugin'
+import { shortId, IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
 import { createMediateRequestMessage } from '@veramo/did-comm'
 import { DeleteOutlined, CopyOutlined, PlusOutlined } from '@ant-design/icons'
 import { IDataStore, IIdentifier } from '@veramo/core'
-import IdentifierProfile from '../../components/IdentifierProfile'
 
 export const ManagedIdentifiers = () => {
   const { notification } = App.useApp()

@@ -18,6 +18,17 @@ import { IAgentExplorerPlugin } from '@veramo-community/agent-explorer-plugin'
 const communityPlugins: IAgentExplorerPlugin[] = [
   {
     config: {
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/brainshare-agent-explorer-plugin/dist/plugin.js',
+      enabled: true,
+    },
+    name: 'Brain share',
+    description: 'Decentralized wiki',
+    requiredMethods: [],
+    routes: [],
+    menuItems: [],
+  },
+  {
+    config: {
       url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-social-feed/dist/plugin.js',
       enabled: true,
     },
@@ -76,16 +87,16 @@ const communityPlugins: IAgentExplorerPlugin[] = [
 const SortableItem = ({ item }: { item: IAgentExplorerPlugin}) => {
   const { notification } = App.useApp()
   const { removePluginConfig, switchPlugin } = usePlugins()
-  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: item.config.url });
+  const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: item.config?.url || '' });
   const actions: React.ReactNode[] = []
-  if (!item.config.url.startsWith('core://')) {
+  if (!item.config?.url.startsWith('core://')) {
     actions.push(<Button
       icon={<DeleteOutlined />}
       danger
       type="text"
       onClick={() => {
         if (window.confirm(`Delete ${item.name}`)) {
-          removePluginConfig(item.config.url)
+          removePluginConfig(item.config?.url || '')
           notification.success({
             message: 'Plugin removed',
           })
@@ -94,7 +105,7 @@ const SortableItem = ({ item }: { item: IAgentExplorerPlugin}) => {
     />)
   }
 
-  actions.push(<Switch checked={item.config.enabled} onChange={(checked) => switchPlugin(item.config.url, checked)} />)
+  actions.push(<Switch checked={item.config?.enabled} onChange={(checked) => switchPlugin(item.config?.url || '', checked)} />)
   actions.push(<MenuOutlined ref={setNodeRef} {...attributes} {...listeners} className="draggable-item"/>)
   return (
     <List.Item 
@@ -125,14 +136,14 @@ export const Plugins = () => {
     const { active, over } = event;
   
     if (active.id !== over.id) {
-      const activeIndex = plugins.findIndex((plugin) => plugin.config.url === active.id);
-      const overIndex = plugins.findIndex((plugin) => plugin.config.url === over.id);
+      const activeIndex = plugins.findIndex((plugin) => plugin.config?.url === active.id);
+      const overIndex = plugins.findIndex((plugin) => plugin.config?.url === over.id);
   
       if (activeIndex !== -1 && overIndex !== -1) {
         const reorderedPlugins = [...plugins];
         [reorderedPlugins[activeIndex], reorderedPlugins[overIndex]] = [reorderedPlugins[overIndex], reorderedPlugins[activeIndex]];
   
-        updatePluginConfigs(reorderedPlugins.map((plugin) => plugin.config));
+        updatePluginConfigs(reorderedPlugins.map((plugin) => plugin.config || {url: '', enabled: true}));
       }
     }
   };
@@ -158,12 +169,12 @@ export const Plugins = () => {
       >
 
         <SortableContext 
-          items={plugins.map((plugin) => plugin.config.url)} 
+          items={plugins.map((plugin) => plugin.config?.url || '')} 
           strategy={verticalListSortingStrategy}
           >
           <List
             dataSource={plugins}
-            renderItem={(item) => <SortableItem item={item} key={item.config.url}/>}
+            renderItem={(item) => <SortableItem item={item} key={item.config?.url}/>}
           />
         </SortableContext>
         <DragOverlay />
@@ -183,10 +194,10 @@ export const Plugins = () => {
                     actions={[
                       <Button 
                       type="primary"
-                      disabled={plugins.find((plugin) => plugin.config.url === item.config.url) !== undefined}
+                      disabled={plugins.find((plugin) => plugin.config?.url === item.config?.url) !== undefined}
                       onClick={() => {
                         setDrawerOpen(false)
-                        addPluginConfig({url: item.config.url, enabled: true})
+                        addPluginConfig({url: item.config?.url || '', enabled: true})
                         setUrl('')
                       }}
                       >Add</Button>

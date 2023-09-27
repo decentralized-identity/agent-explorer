@@ -1,13 +1,8 @@
 import React from 'react'
-import { Button, Row, Tabs, Card } from 'antd'
+import { Input, Tabs } from 'antd'
 import { UniqueVerifiableCredential } from '@veramo/core'
-import { VerifiableCredential } from '@veramo-community/react-components'
 import CredentialInfo from './CredentialInfo'
-import JsonBlock from './Json'
-import { getIssuerDID, CredentialActionsDropdown } from '@veramo-community/agent-explorer-plugin'
-import IdentifierProfile from './IdentifierProfile'
-import { EllipsisOutlined } from '@ant-design/icons'
-import { formatRelative } from 'date-fns'
+import { VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
 
 interface CredentialTabsProps {
   uniqueCredential: UniqueVerifiableCredential
@@ -20,28 +15,9 @@ const CredentialTabs: React.FC<CredentialTabsProps> = ({ uniqueCredential }) => 
       items={[
         {
           key: '0',
-          label: 'Pretty',
+          label: 'Credential',
           children: (
-            <Card
-              title={<IdentifierProfile did={getIssuerDID(verifiableCredential)} />}
-              extra={
-                <Row align={'middle'}>
-                  <div>
-                    {formatRelative(
-                      new Date(verifiableCredential.issuanceDate),
-                      new Date(),
-                    )}
-                  </div>{' '}
-                  <CredentialActionsDropdown uniqueCredential={uniqueCredential}>
-                    <Button type="text">
-                      <EllipsisOutlined />
-                    </Button>
-                  </CredentialActionsDropdown>
-                </Row>
-              }
-            >
-              <VerifiableCredential credential={verifiableCredential} />
-            </Card>
+            <VerifiableCredentialComponent credential={uniqueCredential} />
           ),
         },
         {
@@ -52,7 +28,13 @@ const CredentialTabs: React.FC<CredentialTabsProps> = ({ uniqueCredential }) => 
         {
           key: '2',
           label: 'Data',
-          children: <JsonBlock title="Raw JSON" data={verifiableCredential} />,
+          children: <Input.TextArea 
+            value={JSON.stringify(verifiableCredential, null, 2)} 
+            style={{
+              height: '50vh',
+              fontFamily: 'monospace',
+            }}
+            />,
         },
       ]}
     />

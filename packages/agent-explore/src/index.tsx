@@ -7,7 +7,7 @@ import * as antd from 'antd'
 import * as antdPro from '@ant-design/pro-components';
 import * as reactquery from 'react-query';
 import * as veramoreact from '@veramo-community/veramo-react'
-import * as veramoreactcomponents from '@veramo-community/react-components'
+import * as agentexplorerplugin from '@veramo-community/agent-explorer-plugin'
 import * as reactrouterdom from 'react-router-dom'
 import * as uuid from 'uuid'
 import * as datefns from 'date-fns'
@@ -20,7 +20,7 @@ declare global {
     antdPro: any
     reactquery: any
     veramoreact: any
-    veramoreactcomponents: any
+    agentexplorerplugin: any
     reactrouterdom: any
     uuid: any
     datefns: any
@@ -33,7 +33,7 @@ window.antd = antd
 window.antdPro = antdPro
 window.reactquery = reactquery
 window.veramoreact = veramoreact
-window.veramoreactcomponents = veramoreactcomponents
+window.agentexplorerplugin = agentexplorerplugin
 window.reactrouterdom = reactrouterdom
 window.uuid = uuid
 window.datefns = datefns

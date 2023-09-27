@@ -36,7 +36,7 @@ const Layout = () => {
   const mainMenuItems: MenuDataItem = []
 
   plugins.forEach((plugin) => {
-    if (plugin.config.enabled 
+    if (plugin.config?.enabled 
       && plugin.menuItems 
       && (
         !plugin.requiredMethods 
@@ -141,7 +141,7 @@ const Layout = () => {
           <Route path="/settings/web3" element={<Web3 />} />
           <Route path="/settings/version" element={<Version />} />
           {plugins.map((plugin) => {
-            if (plugin.config.enabled && plugin.routes) {
+            if (plugin.config?.enabled && plugin.routes) {
               return plugin.routes.map((route) => {
                 return (
                   <Route

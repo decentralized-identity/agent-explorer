@@ -2,15 +2,15 @@ import React from 'react'
 import { Row, Avatar, Col, Typography, theme, Skeleton } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
-import { IIdentifierProfilePlugin } from '../context/plugins/IdentifierProfile'
-import { shortId } from '@veramo-community/agent-explorer-plugin'
+import { IIdentifierProfilePlugin } from '../agent-plugins/IdentifierProfilePlugin.js'
+import { shortId } from '../utils/did.js'
 
 interface IdentifierProfileProps {
   did: string
   showShortId?: boolean
 }
 
-const IdentifierProfile: React.FC<IdentifierProfileProps> = ({
+export const IdentifierProfile: React.FC<IdentifierProfileProps> = ({
   did,
   showShortId = true,
 }) => {
@@ -49,5 +49,3 @@ const IdentifierProfile: React.FC<IdentifierProfileProps> = ({
     </Row>
   )
 }
-
-export default IdentifierProfile

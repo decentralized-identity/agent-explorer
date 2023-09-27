@@ -6,7 +6,7 @@ import { useVeramo } from '@veramo-community/veramo-react'
 import { PageContainer } from '@ant-design/pro-components'
 import { IIdentifier } from '@veramo/core'
 import { CopyOutlined } from '@ant-design/icons'
-import IdentifierProfile from '../../components/IdentifierProfile'
+import { IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
 
 const { Search } = Input
 

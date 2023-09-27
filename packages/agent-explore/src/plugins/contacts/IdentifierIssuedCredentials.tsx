@@ -5,11 +5,9 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
 import { ProList } from '@ant-design/pro-components'
-import { VerifiableCredential } from '@veramo-community/react-components'
 import { Button } from 'antd'
 import { formatRelative } from 'date-fns'
-import IdentifierProfile from '../../components/IdentifierProfile'
-import { CredentialActionsDropdown, getIssuerDID } from '@veramo-community/agent-explorer-plugin'
+import { CredentialActionsDropdown, getIssuerDID, IdentifierProfile, VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
 
 interface IdentifierCredentialsProps {
   identifier: string
@@ -80,7 +78,7 @@ const IdentifierIssuedCredentials: React.FC<IdentifierCredentialsProps> = ({
           ],
           content: (
             <div style={{ width: '100%' }}>
-              <VerifiableCredential credential={item.verifiableCredential} />
+              <VerifiableCredentialComponent credential={item} />
             </div>
           ),
           hash: item.hash,

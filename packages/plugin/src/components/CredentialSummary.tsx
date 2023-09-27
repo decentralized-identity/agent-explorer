@@ -2,7 +2,8 @@ import React from 'react'
 import { Row, Avatar, Col, Typography, theme, Skeleton, Space, Popover, Tag } from 'antd'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { useQuery } from 'react-query'
-import { getIssuerDID, shortId, CredentialActionsDropdown } from '@veramo-community/agent-explorer-plugin'
+import { getIssuerDID, shortId } from '../utils/did.js'
+import { CredentialActionsDropdown } from './CredentialActionsDropdown.js'
 import { UniqueVerifiableCredential } from '@veramo/core'
 import { EllipsisOutlined } from '@ant-design/icons'
 import { formatRelative } from 'date-fns'
@@ -32,6 +33,7 @@ export const CredentialSummary: React.FC<CredentialSummaryProps> = ({
       style={{
         width: '100%',
         borderBottom: '1px solid ' + token.colorBorderSecondary,
+        backgroundColor: token.colorBgBase,
         padding: token.paddingSM,
         position: 'relative'
       }}

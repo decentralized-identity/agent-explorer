@@ -8,7 +8,7 @@ import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { scrollMessages } from './scroll'
 import { useChat } from '../../context/ChatProvider'
-import IdentifierProfile from '../../components/IdentifierProfile'
+import { IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
 import { Button, Col, Row, theme } from 'antd'
 
 const ChatWindow: React.FC = () => {

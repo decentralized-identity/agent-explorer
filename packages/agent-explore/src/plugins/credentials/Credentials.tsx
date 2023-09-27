@@ -1,16 +1,12 @@
 import React from 'react'
-import { formatRelative } from 'date-fns'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { PageContainer, ProList } from '@ant-design/pro-components'
-import { VerifiableCredential } from '@veramo-community/react-components'
-import { IDataStore, IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
-import { AppstoreOutlined, EllipsisOutlined, UnorderedListOutlined } from '@ant-design/icons'
-import IdentifierProfile from '../../components/IdentifierProfile'
-import { CredentialActionsDropdown, getIssuerDID } from '@veramo-community/agent-explorer-plugin'
+import { PageContainer } from '@ant-design/pro-components'
+import { IDataStore, IDataStoreORM } from '@veramo/core'
+import { AppstoreOutlined, UnorderedListOutlined } from '@ant-design/icons'
+import { CredentialSummary, VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
 import { Drawer, List, Radio } from 'antd'
-import { CredentialSummary } from '../../components/CredentialSummary'
 import CredentialTabs from '../../components/CredentialTabs'
 
 const Credentials = () => {
@@ -21,7 +17,7 @@ const Credentials = () => {
   const [pageSize, setPageSize] = React.useState(10)
   const [listType, setListType] = React.useState<'table' | 'card'>('table')
 
-  const { data: credentials, isLoading } = useQuery(
+  const { data: credentials } = useQuery(
     ['credentials', {page, pageSize, agentId: agent?.context.name }],
     () =>
       agent?.dataStoreORMGetVerifiableCredentials({
@@ -60,7 +56,7 @@ const Credentials = () => {
         </Radio.Group>
       ]}
     >
-      {listType === 'table' && <List
+      <List
         itemLayout="vertical"
         size="large"
         pagination={{
@@ -76,73 +72,20 @@ const Credentials = () => {
         }}
         dataSource={credentials}
         renderItem={(item) => (
-          <CredentialSummary
+          listType === 'table' ? <CredentialSummary
             key={item.hash}
             credential={item}
             onClick = {() => {
               navigate('/credentials/' + item.hash)
             }}
-          />
+          /> 
+          : <div style={{ width: '100%', marginBottom: 20 }}>
+          <VerifiableCredentialComponent credential={item} />
+        </div>
         )}
-      />}
+      />
 
-      {listType === 'card' && <ProList
-        ghost
-        loading={isLoading}
-        pagination={{
-          //@ts-ignore
-          position: 'both',
-          pageSize: pageSize,
-          current: page,
-          total: credentialsCount,
-          onChange(page, pageSize) {
-            setPage(page)
-            setPageSize(pageSize)
-          },
-          showSizeChanger: true,
-        }}
-        grid={{ column: 1, lg: 2, xxl: 2, xl: 2 }}
-        onItem={(record: any) => {
-          return {
-            onClick: () => {
-              navigate('/credentials/' + record.hash)
-            },
-          }
-        }}
-        metas={{
-          title: {},
-          content: {},
-          actions: {
-            cardActionProps: 'extra',
-          },
-        }}
-        dataSource={credentials?.map((item: UniqueVerifiableCredential) => {
-          return {
-            title: (
-              <IdentifierProfile
-                did={getIssuerDID(item.verifiableCredential)}
-                />                
-            ),
-            actions: [
-              <div>
-                {formatRelative(
-                  new Date(item.verifiableCredential.issuanceDate),
-                  new Date(),
-                )}
-              </div>,
-              <CredentialActionsDropdown uniqueCredential={item}>
-                <EllipsisOutlined />
-              </CredentialActionsDropdown>,
-            ],
-            content: (
-              <div style={{ width: '100%' }}>
-                <VerifiableCredential credential={item.verifiableCredential} />
-              </div>
-            ),
-            hash: item.hash,
-          }
-        })}
-      />}
+      
         <Drawer
           title="Credential"
           placement={'right'}

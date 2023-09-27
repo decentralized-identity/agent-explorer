@@ -65,7 +65,7 @@ const PluginProvider = (props: PluginProviderProps) => {
       
       for (const config of pluginConfigs) {
         if (config.url.startsWith('core://')) {
-          const plugin = props.corePlugins?.find((p) => p.config.url === config.url)
+          const plugin = props.corePlugins?.find((p) => p.config?.url === config.url)
           if (plugin) {
             plugin.config = config
             result.push(plugin)

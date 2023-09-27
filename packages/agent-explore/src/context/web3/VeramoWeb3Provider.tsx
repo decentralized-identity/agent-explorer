@@ -4,7 +4,7 @@ import { createAgent, IAgentPlugin, IResolver, TAgent } from '@veramo/core'
 import { ConnectorInfo, createWeb3Agent } from './web3Agent'
 import { hooks as metamaskHooks, metaMask } from './metaMask'
 import { AgentRestClient } from '@veramo/remote-client'
-import { IdentifierProfilePlugin } from '../plugins/IdentifierProfile'
+import { IdentifierProfilePlugin } from '@veramo-community/agent-explorer-plugin'
 
 export const VeramoWeb3Provider = ({
   children,
