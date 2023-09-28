@@ -31,11 +31,15 @@
     "@types/md5": "^2.3.2",
     "@types/url-parse": "^1.4.8",
     "@veramo-community/veramo-react": "^1.1.0",
-    "@veramo/core": "5.5.2-next.8",
-    "@veramo/core-types": "5.5.2-next.8",
-    "@veramo/data-store": "5.5.2-next.8",
+    "@veramo/core": "5.5.2-next.9",
+    "@veramo/core-types": "5.5.2-next.9",
+    "@veramo/data-store": "5.5.2-next.9",
+    "@veramo/utils": "5.5.2-next.9",
     "antd": "~5.8.4",
     "date-fns": "^2.30.0",
+    "did-jwt-vc": "^3.2.10",
+    "highlight.js": "^11.8.0",
+    "markdown-it": "^13.0.2",
     "md5": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -45,6 +49,7 @@
     "url-parse": "^1.5.10"
   },
   "devDependencies": {
+    "@types/markdown-it": "^13.0.2",
     "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.8"
   }

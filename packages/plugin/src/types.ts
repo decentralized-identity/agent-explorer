@@ -2,7 +2,7 @@ import { MenuProps } from 'antd';
 import { MenuDataItem } from '@ant-design/pro-components';
 import { UniqueVerifiableCredential } from '@veramo/core-types'
 import { IAgentPlugin } from '@veramo/core'
-
+import Token from 'markdown-it/lib/token';
 export type IAgentExplorerPluginConfig = {
   url: string;
   enabled: boolean;
@@ -30,6 +30,7 @@ export type IAgentExplorerPlugin = {
   identifierContextMenuItems?: MenuProps['items'];
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps>;
   agentPlugins?: IAgentPlugin[];
+  getMarkdownComponent?: (token: Token) => React.FC;
 }
 
 export interface IPlugin {
