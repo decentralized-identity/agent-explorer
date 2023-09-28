@@ -65,9 +65,9 @@ const Identifier = () => {
     >
       <Tabs>
         <TabPane tab="Credentials" key="0">
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <IdentifierReceivedCredentials identifier={id} />
+          <Space direction="vertical" >
             <IdentifierIssuedCredentials identifier={id} />
+            <IdentifierReceivedCredentials identifier={id} />
           </Space>
         </TabPane>
 

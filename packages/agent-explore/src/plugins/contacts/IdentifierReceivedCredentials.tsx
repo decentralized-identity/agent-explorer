@@ -1,13 +1,9 @@
 import React from 'react'
-import { Button } from 'antd'
-import { EllipsisOutlined } from '@ant-design/icons'
-import { formatRelative } from 'date-fns'
-import { useNavigate } from 'react-router-dom'
+import { List } from 'antd'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
-import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/core'
-import { ProList } from '@ant-design/pro-components'
-import { CredentialActionsDropdown, getIssuerDID, IdentifierProfile, VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
+import { IDataStoreORM } from '@veramo/core'
+import { VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
 
 interface IdentifierCredentialsProps {
   identifier: string
@@ -16,9 +12,8 @@ interface IdentifierCredentialsProps {
 const IdentifierReceivedCredentials: React.FC<IdentifierCredentialsProps> = ({
   identifier,
 }) => {
-  const navigate = useNavigate()
   const { agent } = useVeramo<IDataStoreORM>()
-  const { data: credentials, isLoading } = useQuery(
+  const { data: credentials } = useQuery(
     [
       'identifierReceivedCredentials',
       identifier,
@@ -36,55 +31,17 @@ const IdentifierReceivedCredentials: React.FC<IdentifierCredentialsProps> = ({
   )
 
   return (
-    <ProList
-      ghost
-      headerTitle="Received Credentials"
-      loading={isLoading}
-      pagination={{
-        defaultPageSize: 4,
-      }}
-      grid={{ column: 1, lg: 2, xxl: 2, xl: 2 }}
-      onItem={(record: any) => {
-        return {
-          onClick: () => {
-            navigate('/credentials/' + record.hash)
-          },
-        }
-      }}
-      metas={{
-        title: {},
-        content: {},
-        actions: {
-          cardActionProps: 'extra',
-        },
-      }}
-      dataSource={credentials?.map((item: UniqueVerifiableCredential) => {
-        return {
-          title: (
-            <IdentifierProfile did={getIssuerDID(item.verifiableCredential)} />
-          ),
-          actions: [
-            <div>
-              {formatRelative(
-                new Date(item.verifiableCredential.issuanceDate),
-                new Date(),
-              )}
-            </div>,
-            <CredentialActionsDropdown uniqueCredential={item}>
-              <Button type="text">
-                <EllipsisOutlined />
-              </Button>
-            </CredentialActionsDropdown>,
-          ],
-          content: (
-            <div style={{ width: '100%' }}>
-              <VerifiableCredentialComponent credential={item} />
-            </div>
-          ),
-          hash: item.hash,
-        }
-      })}
-    />
+    <List
+    itemLayout="vertical"
+    size="large"
+    dataSource={credentials}
+    renderItem={(item) => (
+      <div style={{ width: '100%', marginBottom: 20 }}>
+      <VerifiableCredentialComponent credential={item} />
+    </div>
+    )}
+  />
+    
   )
 }
 
