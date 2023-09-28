@@ -5,7 +5,6 @@ import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 import Messages from './Messages';
 
 const Plugin: IPlugin = {
-    //@ts-ignore
     init: () => {
         return {
           config: {

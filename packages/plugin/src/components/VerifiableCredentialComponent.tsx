@@ -36,6 +36,7 @@ export const VerifiableCredentialComponent = (
         }).then((result) => {
           setVerifyResult(result)
         }).catch((error) => {
+          console.log(error)
           setVerifyResult({
             error: {
               message: error.message
@@ -72,6 +73,8 @@ export const VerifiableCredentialComponent = (
 
   let color = !isVerifying && verifyResult?.error ? token.colorError : token.colorSuccess
   color = isVerifying ? token.colorBorder : color
+
+  console.log({isLoadingProfile, isVerifying, verifyResult, profile})
   return (
     <div style={{
       padding: '16px',
@@ -139,17 +142,17 @@ export const Generic: React.FC<IVerifiableComponentProps> = ({ credential }) => 
   return <div>
       <dl>
       <dt style={{fontWeight: 'bold'}}>Type</dt>
-      <dd>{(credential.verifiableCredential.type as string[]).map((type: string) => <Tag>{type}</Tag>)}</dd>
+      <dd>{(credential.verifiableCredential.type as string[]).map((type: string, index: number) => <Tag key={index}>{type}</Tag>)}</dd>
       {Object.entries(credential.verifiableCredential.credentialSubject)
         .map(([key, value]: [string, any]): React.ReactNode => 
-        <>
+        <div key={key}>
           <dt style={{fontWeight: 'bold'}}>{key}</dt>
           <dd>
             {typeof value === 'object' || Array.isArray(value) ? JSON.stringify(value) : (
               key === 'id' ? shortId(value) : value
             )}
           </dd>
-        </>
+        </div>
       )}
       </dl>
   </div>;
