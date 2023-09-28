@@ -29,7 +29,7 @@ const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     config: {
-      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-social-feed/dist/plugin.js',
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-social-feed@main/dist/plugin.js',
       enabled: true,
     },
     name: 'Social Feed',
@@ -40,7 +40,7 @@ const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     config: {
-      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-kudos/dist/plugin.js',
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-kudos@main/dist/plugin.js',
       enabled: true,
     },
     name: 'Kudos',
@@ -51,7 +51,7 @@ const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     config: {
-      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-graph-view/dist/plugin.js',
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-graph-view@main/dist/plugin.js',
       enabled: true,
     },
     name: 'Graph View',
@@ -62,7 +62,7 @@ const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     config: {
-      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-developer-tools/dist/plugin.js',
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-developer-tools@main/dist/plugin.js',
       enabled: true,
     },
     name: 'Developer Tools',
