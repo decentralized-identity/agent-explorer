@@ -141,6 +141,9 @@ importers:
       '@veramo/did-provider-peer':
         specifier: 5.5.2-next.9
         version: 5.5.2-next.9
+      '@veramo/did-provider-pkh':
+        specifier: 5.5.2-next.9
+        version: 5.5.2-next.9
       '@veramo/did-resolver':
         specifier: 5.5.2-next.9
         version: 5.5.2-next.9
@@ -6980,6 +6983,22 @@ packages:
       - supports-color
     dev: true
 
+  /@veramo/did-provider-pkh@5.5.2-next.9:
+    resolution: {integrity: sha512-QOMXuitl/kCRDbmDt0TYBoeti7Lk2NaPUVTfEN9S9iU+uycNpwzbpmCN32NoepbCuYXSWniIPVDNVlrvUng3eA==}
+    dependencies:
+      '@ethersproject/abstract-provider': 5.7.0
+      '@ethersproject/bignumber': 5.7.0
+      '@ethersproject/signing-key': 5.7.0
+      '@ethersproject/transactions': 5.7.0
+      '@veramo/core-types': 5.5.2-next.9
+      '@veramo/did-manager': 5.5.2-next.9
+      caip: 1.1.0
+      debug: 4.3.4
+      did-resolver: 4.1.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@veramo/did-resolver@5.5.2-next.9:
     resolution: {integrity: sha512-qO7npaxDyOTc6VDK0V0r1mEQ/wwqjpfdvj5/adH4EimBLnUeDe80AogpTuvhaIiqL+XaklSRm89VYoyBy3aaRA==}
     dependencies:
@@ -9022,6 +9041,10 @@ packages:
       lowercase-keys: 2.0.0
       normalize-url: 6.1.0
       responselike: 2.0.1
+    dev: true
+
+  /caip@1.1.0:
+    resolution: {integrity: sha512-yOO3Fu4ygyKYAdznuoaqschMKIZzcdgyMpBNtrIfrUhnOeaOWG+dh0c13wcOS6B/46IGGbncoyzJlio79jU7rw==}
     dev: true
 
   /call-bind@1.0.2:
