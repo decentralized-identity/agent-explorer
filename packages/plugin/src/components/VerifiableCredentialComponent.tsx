@@ -74,7 +74,6 @@ export const VerifiableCredentialComponent = (
   let color = !isVerifying && verifyResult?.error ? token.colorError : token.colorSuccess
   color = isVerifying ? token.colorBorder : color
 
-  console.log({isLoadingProfile, isVerifying, verifyResult, profile})
   return (
     <div style={{
       padding: '16px',
