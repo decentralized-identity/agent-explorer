@@ -31,7 +31,7 @@ export const MarkDown: React.FC<{ content: string}> = ({ content }: { content: s
     return (<>
       {parsed.map((token, index) => {
 
-      let Result: React.FC | undefined = undefined
+      let Result: React.JSX.Element | undefined = undefined
       plugins.forEach((plugin) => {
         if (!Result && plugin.config?.enabled && plugin.getMarkdownComponent) {
           const Component = plugin.getMarkdownComponent(token)
@@ -42,7 +42,7 @@ export const MarkDown: React.FC<{ content: string}> = ({ content }: { content: s
       })
 
       if (Result) {
-        return Result
+        return React.cloneElement(Result, { key: index })
       }
 
       return <div key={index} dangerouslySetInnerHTML={{ __html: md.renderer.render([token], {}, {}) }} />

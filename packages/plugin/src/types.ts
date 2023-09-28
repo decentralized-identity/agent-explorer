@@ -18,19 +18,26 @@ export type IVerifiableComponentProps = {
   credential: UniqueVerifiableCredential
 }
 
+type ExtendedMenuDataItem = MenuDataItem & {
+  routes?: Array<{
+    name: string,
+    path: string,
+  }>;
+}
+
 export type IAgentExplorerPlugin = {
   config?: IAgentExplorerPluginConfig;
   name: string;
   description: string;
   routes: IRouteComponent[];
-  menuItems: MenuDataItem[];
+  menuItems: ExtendedMenuDataItem[];
   requiredMethods: string[];
   hasCss?: boolean;
   getCredentialContextMenuItems?: (credential: UniqueVerifiableCredential) => MenuProps['items'];
   identifierContextMenuItems?: MenuProps['items'];
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps>;
   agentPlugins?: IAgentPlugin[];
-  getMarkdownComponent?: (token: Token) => React.FC | undefined;
+  getMarkdownComponent?: (token: Token) => React.JSX.Element | undefined;
 }
 
 export interface IPlugin {

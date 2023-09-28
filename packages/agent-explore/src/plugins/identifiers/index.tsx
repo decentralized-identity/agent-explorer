@@ -6,7 +6,6 @@ import { ManagedIdentifiers } from './ManagedIdentifiers';
 import Identifier from './Identifier';
 
 const Plugin: IPlugin = {
-    //@ts-ignore
     init: () => {
         return {
           config: {

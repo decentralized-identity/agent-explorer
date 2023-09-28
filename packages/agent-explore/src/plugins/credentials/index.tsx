@@ -7,7 +7,6 @@ import { getCredentialContextMenuItems } from './menu';
 
 
 const Plugin: IPlugin = {
-    //@ts-ignore
     init: () => {
         return {
           config: {
