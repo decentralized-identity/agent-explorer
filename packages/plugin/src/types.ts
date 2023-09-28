@@ -30,7 +30,7 @@ export type IAgentExplorerPlugin = {
   identifierContextMenuItems?: MenuProps['items'];
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps>;
   agentPlugins?: IAgentPlugin[];
-  getMarkdownComponent?: (token: Token) => React.FC;
+  getMarkdownComponent?: (token: Token) => React.FC | undefined;
 }
 
 export interface IPlugin {
