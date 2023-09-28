@@ -168,7 +168,8 @@ export async function createWeb3Agent({
   for (const info of connectors) {
     if (info.accounts) {
       for (const account of info.accounts) {
-        for (const prefix of ['did:pkh:eip155:0x', 'did:ethr:0x']) {
+        for (const provider of ['pkh', 'ethr']) {
+          const prefix = (provider === 'pkh') ? 'did:pkh:eip155:0x' : 'did:ethr:0x'
           const did = `${prefix}${info.chainId.toString(16)}:${account}`
 
           let extraManagedKeys = []
@@ -192,7 +193,7 @@ export async function createWeb3Agent({
           const controllerKeyId = `${info.name}-${account}`
           await agent.didManagerImport({
             did,
-            provider: info.name,
+            provider: `${info.name}-${provider}`,
             controllerKeyId,
             keys: [
               {
@@ -201,7 +202,7 @@ export async function createWeb3Agent({
                 kms: 'web3',
                 privateKeyHex: '',
                 meta: {
-                  provider: info.name,
+                  provider: `${info.name}-${provider}`,
                   account: account.toLocaleLowerCase(),
                   algorithms: ['eth_signMessage', 'eth_signTypedData'],
                 },
