@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.43.0](https://github.com/veramolabs/agent-explorer/compare/v1.42.1...v1.43.0) (2023-09-29)
+
+
+### Features
+
+* add support for did:pkh to local web3 agent ([#171](https://github.com/veramolabs/agent-explorer/issues/171)) ([b35ffdd](https://github.com/veramolabs/agent-explorer/commit/b35ffdd1b7cae212a422fff81b0b1b2bd189a1e4))
+
+
+
+
+
 ## [1.42.1](https://github.com/veramolabs/agent-explorer/compare/v1.42.0...v1.42.1) (2023-09-28)
 
 
