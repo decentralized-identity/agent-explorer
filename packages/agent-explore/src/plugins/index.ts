@@ -7,8 +7,10 @@ import CredentialVerifier  from './credential-verifier'
 import Credentials  from './credentials'
 import Requests  from './requests'
 import Chats  from './chats'
+import Profile  from './profile'
 
 const corePlugins: IPlugin[] = [
+  Profile,
   Statistics,
   Identifiers,
   Credentials,

@@ -11,6 +11,7 @@ import { useQuery } from "react-query";
 import { Avatar, Button, Col, Popover, Row, Skeleton, Space, Spin, Tag, Typography, theme } from "antd";
 import { CredentialActionsDropdown } from "./CredentialActionsDropdown.js";
 import { EllipsisOutlined } from "@ant-design/icons";
+import { IdentifierPopover } from "./IdentifierPopover.js";
 
 export const VerifiableCredentialComponent = (
   { credential, verify = true } : { 
@@ -102,11 +103,11 @@ export const VerifiableCredentialComponent = (
             {!isLoadingProfile && <Avatar src={profile?.picture} size={'small'} />}
             {isLoadingProfile && <Skeleton.Avatar active />}
           </div>
-          <Popover content={shortId(did)}>
+          <IdentifierPopover did={did}>
             <Typography.Text ellipsis>
               {isLoadingProfile ? shortId(did):  profile?.name} 
             </Typography.Text>
-          </Popover>
+          </IdentifierPopover>
 
           <Typography.Text type='secondary'>{formatRelative(
             new Date(credential.verifiableCredential.issuanceDate),

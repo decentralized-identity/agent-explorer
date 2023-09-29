@@ -7,6 +7,7 @@ import { CredentialActionsDropdown } from './CredentialActionsDropdown.js'
 import { UniqueVerifiableCredential } from '@veramo/core'
 import { EllipsisOutlined } from '@ant-design/icons'
 import { formatRelative } from 'date-fns'
+import { IdentifierPopover } from './IdentifierPopover.js'
 
 interface CredentialSummaryProps {
   credential: UniqueVerifiableCredential
@@ -50,11 +51,11 @@ export const CredentialSummary: React.FC<CredentialSummaryProps> = ({
                 {!isLoading && <Avatar src={data?.picture} size={'small'} />}
                 {isLoading && <Skeleton.Avatar active />}
               </div>
-              <Popover content={shortId(did)}>
+              <IdentifierPopover did={did}>
                 <Typography.Text ellipsis>
                   {data?.name} 
                 </Typography.Text>
-              </Popover>
+              </IdentifierPopover>
 
               <Tag>{credential.verifiableCredential.type && credential.verifiableCredential.type[1]}</Tag>
               <Typography.Text type='secondary'>{formatRelative(

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { VerifiableCredentialComponent } from './VerifiableCredentialComponent.js'
+import { VerifiableCredentialComponent } from "./VerifiableCredentialComponent.js";
 import hljs from 'highlight.js';
 import MarkdownIt from 'markdown-it';
 import "highlight.js/styles/base16/solarized-dark.css";
