@@ -30,6 +30,7 @@ import { Resolver } from 'did-resolver'
 import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
+import { PkhDIDProvider, getDidPkhResolver } from '@veramo/did-provider-pkh'
 import {
   PeerDIDProvider,
   getResolver as peerDidResolver,
@@ -77,10 +78,14 @@ export async function createWeb3Agent({
   const web3Providers: Record<string, Web3Provider> = {}
 
   connectors.forEach((info) => {
-    didProviders[info.name] = new EthrDIDProvider({
+    didProviders[info.name + "-pkh"] = new PkhDIDProvider({
+      defaultKms: 'web3',
+      chainId: info.chainId + "",
+    })
+    didProviders[info.name + "-ethr"] = new EthrDIDProvider({
       defaultKms: 'web3',
       network: info.chainId,
-      web3Provider: info.provider,
+      web3Provider: info.provider
     })
     web3Providers[info.name] = info.provider
   })
@@ -107,6 +112,7 @@ export async function createWeb3Agent({
           ethr: ethrDidResolver({
             infuraProjectId,
           }).ethr,
+          pkh: getDidPkhResolver().pkh,
           web: webDidResolver().web,
           peer: peerDidResolver().peer,
         }, { cache: true }),
@@ -162,46 +168,49 @@ export async function createWeb3Agent({
   for (const info of connectors) {
     if (info.accounts) {
       for (const account of info.accounts) {
-        const did = `did:ethr:0x${info.chainId.toString(16)}:${account}`
+        for (const provider of ['pkh', 'ethr']) {
+          const prefix = (provider === 'pkh') ? 'did:pkh:eip155:0x' : 'did:ethr:0x'
+          const did = `${prefix}${info.chainId.toString(16)}:${account}`
 
-        let extraManagedKeys = []
-        for (const keyId in dataStore.keys) {
-          if (
-            dataStore.keys[keyId].meta?.did === did &&
-            dataStore.keys[keyId].kms === 'local'
-          ) {
-            extraManagedKeys.push(dataStore.keys[keyId])
+          let extraManagedKeys = []
+          for (const keyId in dataStore.keys) {
+            if (
+              dataStore.keys[keyId].meta?.did === did &&
+              dataStore.keys[keyId].kms === 'local'
+            ) {
+              extraManagedKeys.push(dataStore.keys[keyId])
+            }
           }
+          extraManagedKeys = extraManagedKeys.map((k) => {
+            const privateKeyHex = dataStore.privateKeys[k.kid].privateKeyHex
+            return {
+              ...k,
+              privateKeyHex,
+            }
+          })
+
+          // const controllerKeyId = `${did}#controller`
+          const controllerKeyId = `${info.name}-${account}`
+          await agent.didManagerImport({
+            did,
+            provider: `${info.name}-${provider}`,
+            controllerKeyId,
+            keys: [
+              {
+                kid: controllerKeyId,
+                type: 'Secp256k1',
+                kms: 'web3',
+                privateKeyHex: '',
+                meta: {
+                  provider: `${info.name}-${provider}`,
+                  account: account.toLocaleLowerCase(),
+                  algorithms: ['eth_signMessage', 'eth_signTypedData'],
+                },
+              } as MinimalImportableKey,
+              ...extraManagedKeys,
+            ],
+          })
         }
-        extraManagedKeys = extraManagedKeys.map((k) => {
-          const privateKeyHex = dataStore.privateKeys[k.kid].privateKeyHex
-          return {
-            ...k,
-            privateKeyHex,
-          }
-        })
-
-        // const controllerKeyId = `${did}#controller`
-        const controllerKeyId = `${info.name}-${account}`
-        await agent.didManagerImport({
-          did,
-          provider: info.name,
-          controllerKeyId,
-          keys: [
-            {
-              kid: controllerKeyId,
-              type: 'Secp256k1',
-              kms: 'web3',
-              privateKeyHex: '',
-              meta: {
-                provider: info.name,
-                account: account.toLocaleLowerCase(),
-                algorithms: ['eth_signMessage', 'eth_signTypedData'],
-              },
-            } as MinimalImportableKey,
-            ...extraManagedKeys,
-          ],
-        })
       }
     }
   }

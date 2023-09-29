@@ -117,6 +117,7 @@
     "@veramo/did-manager": "5.5.2-next.9",
     "@veramo/did-provider-ethr": "5.5.2-next.9",
     "@veramo/did-provider-peer": "5.5.2-next.9",
+    "@veramo/did-provider-pkh": "5.5.2-next.9",
     "@veramo/did-resolver": "5.5.2-next.9",
     "@veramo/key-manager": "5.5.2-next.9",
     "@veramo/kms-local": "5.5.2-next.9",
