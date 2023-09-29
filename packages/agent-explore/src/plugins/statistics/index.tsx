@@ -3,6 +3,7 @@ import { EyeOutlined } from '@ant-design/icons'
 import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Statistics from './Statistics';
+import { IdentifierHoverComponent } from './IdentifierHoverComponent';
 
 const Plugin: IPlugin = {
     init: () => {
@@ -27,7 +28,7 @@ const Plugin: IPlugin = {
               icon: <EyeOutlined />,
             },
           ],
-          
+          getIdentifierHoverComponent: () => IdentifierHoverComponent,
         }
     }
 };
