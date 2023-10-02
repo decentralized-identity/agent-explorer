@@ -1,20 +1,14 @@
 import React from 'react'
-import { Typography, Button } from 'antd'
-import { hooks as metamaskHooks, metaMask } from '../../context/web3/metaMask'
+import { Button } from 'antd'
 import { PageContainer } from '@ant-design/pro-components'
+import { useWeb3Modal } from '@web3modal/wagmi/react'
 
 export const Web3: React.FC = () => {
-  const metaMaskIsActive = metamaskHooks.useIsActive()
-
+  const { open } = useWeb3Modal()
   return (
     <PageContainer>
-      <Typography>Metamask</Typography>
-      {!metaMaskIsActive && (
-        <Button onClick={() => metaMask.activate()}>Connect</Button>
-      )}
-      {metaMaskIsActive && (
-        <Button onClick={() => metaMask.resetState()}>Disconnect</Button>
-      )}
+      <Button onClick={() => open()}>Open Connect Modal</Button>
+      <Button onClick={() => open({ view: 'Networks' })}>Open Network Modal</Button>
     </PageContainer>
   )
 }
