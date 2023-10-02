@@ -55,6 +55,14 @@ import { DIDDiscovery } from '@veramo/did-discovery'
 // import { DataStoreDiscoveryProvider } from '@veramo/data-store'
 import { DataStoreDiscoveryProvider } from '../plugins/did-discovery-provider'
 import { AliasDiscoveryProvider } from '../plugins/AliasDiscoveryProvider'
+import {
+  CredentialIssuerLD,
+  ICredentialIssuerLD,
+  LdDefaultContexts,
+  VeramoEcdsaSecp256k1RecoverySignature2020,
+  VeramoEd25519Signature2018,
+} from '@veramo/credential-ld'
+import { contexts as credential_contexts } from '@transmute/credentials-context'
 
 const dataStore = BrowserLocalStorageStore.fromLocalStorage('veramo-state')
 const identifierDataStore =
@@ -99,7 +107,8 @@ export async function createWeb3Agent({
       ICredentialIssuerEIP712 &
       ICredentialPlugin &
       IIdentifierProfilePlugin &
-      DIDDiscovery
+      DIDDiscovery &
+      ICredentialIssuerLD
   >({
     context: {
       id,
@@ -133,6 +142,10 @@ export async function createWeb3Agent({
       }),
       new CredentialPlugin(),
       new CredentialIssuerEIP712(),
+      new CredentialIssuerLD({
+        contextMaps: [LdDefaultContexts, credential_contexts as any],
+        suites: [new VeramoEcdsaSecp256k1RecoverySignature2020(), new VeramoEd25519Signature2018()],
+      }),
       new DataStoreJson(dataStore),
       new MessageHandler({
         messageHandlers: [
