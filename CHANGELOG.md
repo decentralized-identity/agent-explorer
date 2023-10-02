@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.45.0](https://github.com/veramolabs/agent-explorer/compare/v1.44.0...v1.45.0) (2023-10-02)
+
+
+### Features
+
+* wallet connect ([#173](https://github.com/veramolabs/agent-explorer/issues/173)) ([3fe9c17](https://github.com/veramolabs/agent-explorer/commit/3fe9c1727e1bdee96354d181f2151fdadf32950d))
+
+
+
+
+
 # [1.44.0](https://github.com/veramolabs/agent-explorer/compare/v1.43.0...v1.44.0) (2023-09-29)
 
 
