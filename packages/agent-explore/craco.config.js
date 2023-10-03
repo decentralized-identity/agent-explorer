@@ -18,6 +18,7 @@ module.exports = {
         url: require.resolve('url/'),
         zlib: require.resolve('browserify-zlib'),
         https: require.resolve('https-browserify'),
+        process: false
       }
       /* ... */
       return webpackConfig
