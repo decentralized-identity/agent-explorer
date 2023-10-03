@@ -73,7 +73,7 @@ const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     config: {
-      url: 'https://cdn.jsdelivr.net/gh/simonas-notcat/agent-explorer-plugin-codyfight/dist/plugin.js',
+      url: 'https://cdn.jsdelivr.net/gh/simonas-notcat/agent-explorer-plugin-codyfight@main/dist/plugin.js',
       enabled: true,
     },
     name: 'Codyfight',

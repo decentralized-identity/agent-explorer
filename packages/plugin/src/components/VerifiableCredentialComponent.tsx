@@ -122,7 +122,7 @@ export const VerifiableCredentialComponent = (
         </div>
         
       </Col>
-      <Col xs={1}>
+      <Col xs={1} style={{marginRight: token.padding}}>
         <CredentialActionsDropdown uniqueCredential={credential}>
           
           <Button type="text" size="small"><EllipsisOutlined /></Button>
