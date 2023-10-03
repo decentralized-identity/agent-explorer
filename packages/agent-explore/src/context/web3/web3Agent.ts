@@ -31,6 +31,8 @@ import { getResolver as ethrDidResolver } from 'ethr-did-resolver'
 import { getResolver as webDidResolver } from 'web-did-resolver'
 import { EthrDIDProvider } from '@veramo/did-provider-ethr'
 import { PkhDIDProvider, getDidPkhResolver } from '@veramo/did-provider-pkh'
+import { KeyDIDProvider, getDidKeyResolver } from '@veramo/did-provider-key'
+import { JwkDIDProvider, getDidJwkResolver } from '@veramo/did-provider-jwk'
 import {
   PeerDIDProvider,
   getResolver as peerDidResolver,
@@ -51,8 +53,9 @@ import {
   IIdentifierProfilePlugin,
 } from '@veramo-community/agent-explorer-plugin'
 import { DIDDiscovery } from '@veramo/did-discovery'
-// FIXME: This import causes an error: Module not found: Error: Can't resolve 'react-native-sqlite-storage' in '[...]/node_modules/typeorm/browser/driver/react-native'
-// import { DataStoreDiscoveryProvider } from '@veramo/data-store'
+// FIXME: This import causes an error: Module not found: Error: Can't resolve 'react-native-sqlite-storage' in
+// '[...]/node_modules/typeorm/browser/driver/react-native' import { DataStoreDiscoveryProvider } from
+// '@veramo/data-store'
 import { DataStoreDiscoveryProvider } from '../plugins/did-discovery-provider'
 import { AliasDiscoveryProvider } from '../plugins/AliasDiscoveryProvider'
 import {
@@ -77,12 +80,15 @@ export interface ConnectorInfo {
   isActive: boolean
 }
 
-export async function createWeb3Agent({
-  connectors,
-}: {
+export async function createWeb3Agent({ connectors, }: {
   connectors: ConnectorInfo[]
 }) {
-  const didProviders: Record<string, AbstractIdentifierProvider> = {}
+  const didProviders: Record<string, AbstractIdentifierProvider> = {
+    'did:peer': new PeerDIDProvider({ defaultKms: 'local' }),
+    'did:key': new KeyDIDProvider({ defaultKms: 'local' }),
+    'did:jwk': new JwkDIDProvider({ defaultKms: 'local' }),
+    // TODO: add ethr and pkh providers backed by kmsLocal here too?
+  }
   const web3Providers: Record<string, Web3Provider> = {}
 
   connectors.forEach((info) => {
@@ -97,18 +103,17 @@ export async function createWeb3Agent({
     })
     web3Providers[info.name] = info.provider
   })
-  didProviders['did:peer'] = new PeerDIDProvider({ defaultKms: 'local' })
 
   const id = 'web3Agent'
   const agent = createAgent<
     IDIDManager &
-      IKeyManager &
-      IResolver &
-      ICredentialIssuerEIP712 &
-      ICredentialPlugin &
-      IIdentifierProfilePlugin &
-      DIDDiscovery &
-      ICredentialIssuerLD
+    IKeyManager &
+    IResolver &
+    ICredentialIssuerEIP712 &
+    ICredentialPlugin &
+    IIdentifierProfilePlugin &
+    DIDDiscovery &
+    ICredentialIssuerLD
   >({
     context: {
       id,
@@ -118,12 +123,12 @@ export async function createWeb3Agent({
     plugins: [
       new DIDResolverPlugin({
         resolver: new Resolver({
-          ethr: ethrDidResolver({
-            infuraProjectId,
-          }).ethr,
-          pkh: getDidPkhResolver().pkh,
-          web: webDidResolver().web,
-          peer: peerDidResolver().peer,
+          ...ethrDidResolver({ infuraProjectId, }),
+          ...getDidPkhResolver(),
+          ...webDidResolver(),
+          ...peerDidResolver(),
+          ...getDidJwkResolver(),
+          ...getDidKeyResolver(),
         }, { cache: true }),
       }),
       new KeyManager({
