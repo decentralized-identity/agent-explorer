@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.46.0](https://github.com/veramolabs/agent-explorer/compare/v1.45.1...v1.46.0) (2023-10-03)
+
+
+### Features
+
+* add credential-ld plugin to local browser agent ([#174](https://github.com/veramolabs/agent-explorer/issues/174)) ([c79a356](https://github.com/veramolabs/agent-explorer/commit/c79a3562f620a1c38bf528dc57303520a0d5121b))
+
+
+
+
+
 ## [1.45.1](https://github.com/veramolabs/agent-explorer/compare/v1.45.0...v1.45.1) (2023-10-03)
 
 
