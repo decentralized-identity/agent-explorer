@@ -57,7 +57,12 @@ export const CredentialSummary: React.FC<CredentialSummaryProps> = ({
                 </Typography.Text>
               </IdentifierPopover>
 
-              <Tag>{credential.verifiableCredential.type && credential.verifiableCredential.type[1]}</Tag>
+              {credential.verifiableCredential.type 
+                && Array.isArray(credential.verifiableCredential.type)
+                && credential.verifiableCredential.type.map((type: string, index: number) => {
+                if (type === 'VerifiableCredential') return null
+                return <Tag key={index}>{type}</Tag>
+              })}
               <Typography.Text type='secondary'>{formatRelative(
                 new Date(credential.verifiableCredential.issuanceDate),
                 new Date()
