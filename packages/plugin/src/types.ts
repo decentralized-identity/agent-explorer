@@ -3,6 +3,7 @@ import { MenuDataItem } from '@ant-design/pro-components';
 import { UniqueVerifiableCredential } from '@veramo/core-types'
 import { IAgentPlugin } from '@veramo/core'
 import Token from 'markdown-it/lib/token';
+import { PluginSimple } from 'markdown-it';
 export type IAgentExplorerPluginConfig = {
   url: string;
   enabled: boolean;
@@ -43,6 +44,7 @@ export type IAgentExplorerPlugin = {
   getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;
   agentPlugins?: IAgentPlugin[];
   getMarkdownComponent?: (token: Token) => React.JSX.Element | undefined;
+  getMarkdownPlugins?: () => PluginSimple[];
 }
 
 export interface IPlugin {
