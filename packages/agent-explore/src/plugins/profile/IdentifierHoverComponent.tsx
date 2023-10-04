@@ -19,11 +19,10 @@ type IProfileInfo = {
 
 export const IdentifierHoverComponent: React.FC<IIdentifierHoverComponentProps> = ({did}) => {
   const { agent } = useVeramo<IDataStoreORM>()
-  const [ profile, setProfile ] = useState<IProfileInfo>({})
   
-  const { data: profileCredentials } = useQuery(
+  const { data: profileCredentials, isLoading } = useQuery(
     [
-      'identifierPrileCredentials',
+      'identifierProfileCredentials',
       did,
       { agentId: agent?.context.name },
     ],
@@ -39,27 +38,30 @@ export const IdentifierHoverComponent: React.FC<IIdentifierHoverComponentProps> 
       )
   )
 
-  useEffect(() => {
+  const profile = React.useMemo<IProfileInfo>(() => {
+    const profile: IProfileInfo = {}
     if (profileCredentials && profileCredentials.length > 0) {
-      const currentProfile = profile
       for (const credential of profileCredentials) {
         const { name, bio, email, picture, twitter, github } 
           = credential.verifiableCredential.credentialSubject
-        if (name) currentProfile.name = name
-        if (bio) currentProfile.bio = bio
-        if (email) currentProfile.email = email
-        if (picture) currentProfile.picture = picture
-        if (twitter) currentProfile.twitter = twitter
-        if (github) currentProfile.github = github
+        if (name) profile.name = name
+        if (bio) profile.bio = bio
+        if (email) profile.email = email
+        if (picture) profile.picture = picture
+        if (twitter) profile.twitter = twitter
+        if (github) profile.github = github
       }
-
-      setProfile(currentProfile)
     }
+    return profile
   }, [profileCredentials])
+
+
+  if (isLoading) return <Spin />
 
   return (
     <Space direction='vertical'>
       <Space direction='horizontal'>
+        {isLoading && <Spin />}
         {profile.picture && <Avatar src={profile.picture} size='large'/>}
         <Space direction='vertical'  style={{maxWidth: 300}}>
           {profile.name && <Typography.Text strong>{profile.name}</Typography.Text>}
