@@ -15,21 +15,24 @@ export const IdentifierPopover: React.FC<IdentifierProfileProps> = ({
 
   const { plugins } = usePlugins()
 
-  let components: React.FC<IIdentifierHoverComponentProps>[] = []
-  plugins.forEach((plugin) => {
-    if (plugin.config?.enabled && plugin.getIdentifierHoverComponent) {
-      const Component = plugin.getIdentifierHoverComponent()
-      if (Component) {
-        components.push(Component)
+  const hoverComponents = React.useMemo(() => {
+    let components: React.FC<IIdentifierHoverComponentProps>[] = []
+    plugins.forEach((plugin) => {
+      if (plugin.config?.enabled && plugin.getIdentifierHoverComponent) {
+        const Component = plugin.getIdentifierHoverComponent()
+        if (Component) {
+          components.push(Component)
+        }
       }
-    }
-  })
+    })
+    return components
+  }, [plugins])
 
   return (
     <Popover 
       content={
       <Space direction='vertical'>
-        {components.map((Component, index) => (
+        {hoverComponents.map((Component, index) => (
           React.createElement(Component, { key: index, did: did })
         ))}
         <Typography.Text type="secondary">
