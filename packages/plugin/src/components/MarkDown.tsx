@@ -26,6 +26,24 @@ const md = new MarkdownIt({
 
 export const MarkDown: React.FC<{ content: string}> = ({ content }: { content: string}) => {
     const { plugins } = usePlugins()
+
+    const markDownPlugins = React.useMemo(() => {
+      const result: MarkdownIt.PluginSimple[] = []
+      plugins.forEach((plugin) => {
+        if (plugin.config?.enabled && plugin.getMarkdownPlugins) {
+          const mPlugins = plugin.getMarkdownPlugins()
+          result.push(...mPlugins)
+        }
+      })
+      return result
+    }, [plugins])
+
+    markDownPlugins.forEach((plugin) => {
+      console.log('use', plugin)
+      // @ts-ignore
+      md.use(plugin())
+    })
+
     const parsed = md.parse(content, {})
 
     return (<>
