@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.48.0](https://github.com/veramolabs/agent-explorer/compare/v1.47.0...v1.48.0) (2023-10-05)
+
+
+### Features
+
+* save returned brainshare credential ([#179](https://github.com/veramolabs/agent-explorer/issues/179)) ([b2d51d1](https://github.com/veramolabs/agent-explorer/commit/b2d51d1f3e44e6390b34f321f3d193cc40055a25))
+
+
+
+
+
 # [1.47.0](https://github.com/veramolabs/agent-explorer/compare/v1.46.2...v1.47.0) (2023-10-04)
 
 **Note:** Version bump only for package agent-explore
