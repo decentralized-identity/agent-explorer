@@ -7,6 +7,7 @@ import { IDataStore, UniqueVerifiableCredential } from '@veramo/core-types';
 import { useVeramo } from '@veramo-community/veramo-react';
 import { Spin } from 'antd';
 import { usePlugins } from '../PluginProvider.js';
+import { v4 } from 'uuid'
 
 const md = new MarkdownIt({
   html: true,
@@ -74,14 +75,36 @@ export const CredentialLoader: React.FC<{ hash: string, did?: string}> = ({ hash
   
     useEffect(() => {
       const load = async () => {
-        const verifiableCredential = await agent?.dataStoreGetVerifiableCredential({
-          hash,
-        });
+        let verifiableCredential
+        try {
+          verifiableCredential = await agent?.dataStoreGetVerifiableCredential({
+            hash,
+          });
+        } catch (ex) {
+          console.log("credential not found locally")
+        }
   
         if (verifiableCredential) {
           setCredential({hash, verifiableCredential})
         } else {
           // TRY IPFS or DIDComm
+          const senders = await agent?.didManagerFind({ provider: "did:peer"})
+        if (senders && senders.length > 0) {
+          const requestCredMessage = {
+            type: 'https://veramo.io/didcomm/brainshare/1.0/request-credential',
+            from: senders[0].did,
+            to: did,
+            id: v4(),
+            body: {
+              hash
+            },
+            return_route: 'all'
+          }
+          const packedMessage = await agent?.packDIDCommMessage({ message: requestCredMessage, packing: 'authcrypt' })
+          await agent?.sendDIDCommMessage({ packedMessage: packedMessage!, messageId: requestCredMessage.id, recipientDidUrl: did! })
+          const localCred = await agent?.dataStoreGetVerifiableCredential({ hash })
+          setCredential({ hash, verifiableCredential: localCred! })
+        }
         }
       }
 
