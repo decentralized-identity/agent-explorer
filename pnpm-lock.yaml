@@ -369,6 +369,9 @@ importers:
       url-parse:
         specifier: ^1.5.10
         version: 1.5.10
+      uuid:
+        specifier: ^9.0.1
+        version: 9.0.1
     devDependencies:
       '@types/markdown-it':
         specifier: ^13.0.2
@@ -379,6 +382,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.8
         version: 18.2.8
+      '@types/uuid':
+        specifier: ^9.0.4
+        version: 9.0.4
 
 packages:
 
