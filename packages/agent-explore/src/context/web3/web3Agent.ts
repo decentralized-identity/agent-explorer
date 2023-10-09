@@ -45,7 +45,7 @@ import {
   CoordinateMediationRecipientMessageHandler,
   PickupRecipientMessageHandler,
 } from '@veramo/did-comm'
-import { Web3Provider } from '@ethersproject/providers'
+import { BrowserProvider } from 'ethers'
 import { KeyManagementSystem } from '@veramo/kms-local'
 import { SaveMessageHandler } from './saveMessageHandler'
 import {
@@ -73,7 +73,7 @@ const identifierDataStore =
 const infuraProjectId = '3586660d179141e3801c3895de1c2eba'
 
 export interface ConnectorInfo {
-  provider: Web3Provider
+  provider: BrowserProvider
   chainId: number
   accounts: string[]
   name: string
@@ -89,7 +89,7 @@ export async function createWeb3Agent({ connectors, }: {
     'did:jwk': new JwkDIDProvider({ defaultKms: 'local' }),
     // TODO: add ethr and pkh providers backed by kmsLocal here too?
   }
-  const web3Providers: Record<string, Web3Provider> = {}
+  const web3Providers: Record<string, BrowserProvider> = {}
 
   connectors.forEach((info) => {
     didProviders[info.name + "-pkh"] = new PkhDIDProvider({
@@ -98,8 +98,12 @@ export async function createWeb3Agent({ connectors, }: {
     })
     didProviders[info.name + "-ethr"] = new EthrDIDProvider({
       defaultKms: 'web3',
-      network: info.chainId,
-      web3Provider: info.provider
+      networks: [
+        {
+          chainId: '0x' + info.chainId,
+          provider: info.provider,
+        }
+      ]
     })
     web3Providers[info.name] = info.provider
   })

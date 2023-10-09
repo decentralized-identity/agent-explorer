@@ -3,13 +3,13 @@ import { arbitrum, mainnet, sepolia, goerli, optimism } from 'wagmi/chains'
 import { WagmiConfig } from 'wagmi'
 import React, { PropsWithChildren } from 'react'
 import { type WalletClient, useWalletClient } from 'wagmi'
-import { Web3Provider } from '@ethersproject/providers'
+import { BrowserProvider } from 'ethers'
 
 const projectId = '8923f80c7aefd6f580a1f1d630633ab5'
 
 const metadata = {
   name: 'Agent Explorer',
-  description: 'Explore data accross multiple DID agents',
+  description: 'Explore data across multiple DID agents',
   url: window.location.protocol + '//' + window.location.hostname,
   icons: ['https://explore.veramo.io/icon-192-maskable.png']
 }
@@ -30,7 +30,7 @@ export function walletClientToProvider(walletClient: WalletClient) {
     name: chain.name,
     ensAddress: chain.contracts?.ensRegistry?.address,
   }
-  const provider = new Web3Provider(transport, network)
+  const provider = new BrowserProvider(transport, network)
   // const signer = provider.getSigner(account.address)
   return provider
 }
