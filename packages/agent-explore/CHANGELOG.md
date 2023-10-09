@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.48.1](https://github.com/veramolabs/agent-explorer/compare/v1.48.0...v1.48.1) (2023-10-09)
+
+
+### Bug Fixes
+
+* **deps:** bump ethers to v6 and veramo@5.5.3-next.17 ([#180](https://github.com/veramolabs/agent-explorer/issues/180)) ([52d47db](https://github.com/veramolabs/agent-explorer/commit/52d47db397f01a22761637f77859130a9ad35ec9))
+
+
+
+
+
 # [1.48.0](https://github.com/veramolabs/agent-explorer/compare/v1.47.0...v1.48.0) (2023-10-05)
 
 
