@@ -98,8 +98,12 @@ export async function createWeb3Agent({ connectors, }: {
     })
     didProviders[info.name + "-ethr"] = new EthrDIDProvider({
       defaultKms: 'web3',
-      network: info.chainId,
-      web3Provider: info.provider
+      networks: [
+        {
+          chainId: '0x' + info.chainId,
+          provider: info.provider,
+        }
+      ]
     })
     web3Providers[info.name] = info.provider
   })
