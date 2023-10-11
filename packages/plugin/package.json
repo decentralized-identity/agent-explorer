@@ -34,13 +34,13 @@
     "antd": "~5.8.4",
     "date-fns": "^2.30.0",
     "did-jwt-vc": "^3.2.10",
-    "highlight.js": "^11.8.0",
-    "markdown-it": "^13.0.2",
     "md5": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-markdown": "^9.0.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.11.2",
+    "remark-gfm": "^4.0.0",
     "typescript": "5.2.2",
     "url-parse": "^1.5.10",
     "uuid": "^9.0.1"
@@ -54,6 +54,7 @@
     "@veramo/core": "5.5.3-next.17",
     "@veramo/core-types": "5.5.3-next.17",
     "@veramo/data-store": "5.5.3-next.17",
-    "@veramo/utils": "5.5.3-next.17"
+    "@veramo/utils": "5.5.3-next.17",
+    "unified": "^11.0.3"
   }
 }

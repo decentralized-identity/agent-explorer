@@ -2,8 +2,8 @@ import { MenuProps } from 'antd';
 import { MenuDataItem } from '@ant-design/pro-components';
 import { UniqueVerifiableCredential } from '@veramo/core-types'
 import { IAgentPlugin } from '@veramo/core'
-import Token from 'markdown-it/lib/token';
-import { PluginSimple } from 'markdown-it';
+import { Components } from 'react-markdown'
+import { PluggableList } from 'unified'
 export type IAgentExplorerPluginConfig = {
   url: string;
   enabled: boolean;
@@ -17,6 +17,7 @@ export type IRouteComponent = {
 
 export type IVerifiableComponentProps = {
   credential: UniqueVerifiableCredential
+  context?: any
 }
 
 export type IIdentifierHoverComponentProps = {
@@ -43,8 +44,8 @@ export type IAgentExplorerPlugin = {
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps> | undefined;
   getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;
   agentPlugins?: IAgentPlugin[];
-  getMarkdownComponent?: (token: Token) => React.JSX.Element | undefined;
-  getMarkdownPlugins?: () => PluginSimple[];
+  getMarkdownComponents?: () => Partial<Components> | undefined;
+  getRemarkPlugins?: () => PluggableList;
 }
 
 export interface IPlugin {
