@@ -1,74 +1,71 @@
-import React, { useEffect, useState } from 'react'
+import React, { PropsWithChildren, useEffect, useState } from 'react'
 import { VerifiableCredentialComponent } from "./VerifiableCredentialComponent.js";
-import hljs from 'highlight.js';
-import MarkdownIt from 'markdown-it';
-import "highlight.js/styles/base16/solarized-dark.css";
 import { IDataStore, UniqueVerifiableCredential } from '@veramo/core-types';
 import { useVeramo } from '@veramo-community/veramo-react';
-import { Spin } from 'antd';
+import { Button, Spin } from 'antd';
 import { usePlugins } from '../PluginProvider.js';
 import { v4 } from 'uuid'
+import Markdown, { Components } from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { PluggableList } from 'unified'
 
-const md = new MarkdownIt({
-  html: true,
-  highlight: function (str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-          try {
-              return hljs.highlight(str, { language: lang }).value;
-          } catch (e) {
-              console.error(e);
-              /* empty */
-          }
-      }
+export const MarkDown = (
+  { content, credential, context }: 
+  { content: string, credential?: UniqueVerifiableCredential, context?: any}
+) => {
 
-      return ''; // use external default escaping
-  },
-})
-
-export const MarkDown: React.FC<{ content: string}> = ({ content }: { content: string}) => {
     const { plugins } = usePlugins()
+    const [ showAll, setShowAll ] = useState<boolean>(context?.textRange ? false : true)
 
-    const markDownPlugins = React.useMemo(() => {
-      const result: MarkdownIt.PluginSimple[] = []
+    const {remarkPlugins, components} = React.useMemo(() => {
+      const remarkPlugins: PluggableList = [remarkGfm]
+      let components: Partial<Components> = {}
       plugins.forEach((plugin) => {
-        if (plugin.config?.enabled && plugin.getMarkdownPlugins) {
-          const mPlugins = plugin.getMarkdownPlugins()
-          result.push(...mPlugins)
+        if (plugin.config?.enabled && plugin.getRemarkPlugins) {
+          const rPlugins = plugin.getRemarkPlugins()
+          remarkPlugins.push(...rPlugins)
+        }
+        if (plugin.config?.enabled && plugin.getMarkdownComponents) {
+          const rComponents = plugin.getMarkdownComponents()
+          components = {...components, ...rComponents}
         }
       })
-      return result
+      return {remarkPlugins, components}
     }, [plugins])
 
-    markDownPlugins.forEach((plugin) => {
-      console.log('use', plugin)
-      // @ts-ignore
-      md.use(plugin())
-    })
+    let str = content
 
-    const parsed = md.parse(content, {})
+    if (!showAll && context?.textRange) {
+      const [ start, end ] = context.textRange.split('-')
+      str = content.substring(start, end)
+    }
 
-    return (<>
-      {parsed.map((token, index) => {
-
-      let Result: React.JSX.Element | undefined = undefined
-      plugins.forEach((plugin) => {
-        if (!Result && plugin.config?.enabled && plugin.getMarkdownComponent) {
-          const Component = plugin.getMarkdownComponent(token)
-          if (Component) {
-            Result = Component
-          }
-        }
-      })
-
-      if (Result) {
-        return React.cloneElement(Result, { key: index })
-      }
-
-      return <div key={index} dangerouslySetInnerHTML={{ __html: md.renderer.render([token], {}, {}) }} />
-    })}</>);
+    return (
+      <>
+        <Markdown 
+          remarkPlugins={remarkPlugins}
+          rehypePlugins={[[remarkCredentialPlugin, credential]]}
+          components={components}
+          >{str}</Markdown>
+        {!showAll && context?.textRange && <Button type='text' size='small' onClick={() => setShowAll(true)}>Show more</Button>}
+        {showAll && context?.textRange && <Button type='text' size='small' onClick={() => setShowAll(false)}>Show less</Button>}
+      </>
+    )
 }
 
-export const CredentialLoader: React.FC<{ hash: string, did?: string}> = ({ hash, did }) => {
+function remarkCredentialPlugin(credential: UniqueVerifiableCredential) {
+  return (tree: any) => {
+    if (Array.isArray(tree.children)) {
+      tree.children.forEach((node: any) => {
+        if (node.type === 'element' && node.tagName === 'p') {
+          node.credential = credential
+        }
+      });
+    }
+  };
+};
+
+export const CredentialLoader = ({ hash, did, context } : { hash: string, did?: string, context?: any }) => {
   
     const [credential, setCredential] = useState<UniqueVerifiableCredential>()
     const { agent } = useVeramo<IDataStore>()
@@ -89,16 +86,16 @@ export const CredentialLoader: React.FC<{ hash: string, did?: string}> = ({ hash
         } else {
           // TRY IPFS or DIDComm
           const senders = await agent?.didManagerFind({ provider: "did:peer"})
-        if (senders && senders.length > 0) {
-          const requestCredMessage = {
-            type: 'https://veramo.io/didcomm/brainshare/1.0/request-credential',
-            from: senders[0].did,
-            to: did,
-            id: v4(),
-            body: {
-              hash
-            },
-            return_route: 'all'
+          if (senders && senders.length > 0) {
+            const requestCredMessage = {
+              type: 'https://veramo.io/didcomm/brainshare/1.0/request-credential',
+              from: senders[0].did,
+              to: did,
+              id: v4(),
+              body: {
+                hash
+              },
+              return_route: 'all'
           }
           const packedMessage = await agent?.packDIDCommMessage({ message: requestCredMessage, packing: 'authcrypt' })
           await agent?.sendDIDCommMessage({ packedMessage: packedMessage!, messageId: requestCredMessage.id, recipientDidUrl: did! })
@@ -111,6 +108,6 @@ export const CredentialLoader: React.FC<{ hash: string, did?: string}> = ({ hash
       load()
     }, [agent, hash])
 
-    return credential ? <VerifiableCredentialComponent credential={credential} /> : <Spin />
+    return credential ? <VerifiableCredentialComponent credential={credential} context={context} /> : <Spin />
 }
 

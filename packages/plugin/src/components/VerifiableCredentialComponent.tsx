@@ -14,9 +14,10 @@ import { EllipsisOutlined } from "@ant-design/icons";
 import { IdentifierPopover } from "./IdentifierPopover.js";
 
 export const VerifiableCredentialComponent = (
-  { credential, verify = true } : { 
+  { credential, verify = true, context } : { 
     credential: UniqueVerifiableCredential,
     verify?: boolean
+    context?: any
 }
 ) => {
   const { agent } = useVeramo<ICredentialVerifier & IDataStore>()
@@ -132,7 +133,7 @@ export const VerifiableCredentialComponent = (
     </Row>
       </div>}
 
-      {credential && <Component credential={credential} />}
+      {credential && <Component credential={credential} context={context}/>}
     </div>
   )
 
