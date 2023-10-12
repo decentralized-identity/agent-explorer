@@ -20,8 +20,10 @@ export class SaveMessageHandler extends AbstractMessageHandler {
     // console.log('message received: ', message)
     if (message.type === 'veramo.io-chat-v1') {
       await context.agent.dataStoreSaveMessage({ message })
-    } else if (message.type === 'https://veramo.io/didcomm/brainshare/1.0/return-index' || message.type === 'https://veramo.io/didcomm/brainshare/1.0/return-credential') {
+    } else if (message.type === 'https://veramo.io/didcomm/brainshare/1.0/return-credential') {
       await context.agent.dataStoreSaveVerifiableCredential({ verifiableCredential: message.data.credential })
+    } else if (message.type === 'https://veramo.io/didcomm/brainshare/1.0/return-index') {
+      await context.agent.dataStoreSaveVerifiableCredential({ verifiableCredential: message.data.index })
     }
     return super.handle(message, context)
   }
