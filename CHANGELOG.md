@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.49.1](https://github.com/veramolabs/agent-explorer/compare/v1.49.0...v1.49.1) (2023-10-12)
+
+
+### Bug Fixes
+
+* correclty save brainshare index ([#182](https://github.com/veramolabs/agent-explorer/issues/182)) ([43cfc7d](https://github.com/veramolabs/agent-explorer/commit/43cfc7da884c67532df6ad3658394b27ef431bca))
+
+
+
+
+
 # [1.49.0](https://github.com/veramolabs/agent-explorer/compare/v1.48.1...v1.49.0) (2023-10-11)
 
 
