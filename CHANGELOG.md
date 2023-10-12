@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.50.0](https://github.com/veramolabs/agent-explorer/compare/v1.49.1...v1.50.0) (2023-10-12)
+
+
+### Features
+
+* plugins provide identifier tab components ([#183](https://github.com/veramolabs/agent-explorer/issues/183)) ([18cc501](https://github.com/veramolabs/agent-explorer/commit/18cc50131e06fd99578b41c635670b49dfde9c80))
+
+
+
+
+
 ## [1.49.1](https://github.com/veramolabs/agent-explorer/compare/v1.49.0...v1.49.1) (2023-10-12)
 
 
