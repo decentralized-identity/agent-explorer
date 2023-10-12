@@ -64,7 +64,12 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
         renderItem={(item: any, i: number) => {
           if (data?.didDocument?.id === undefined) return null
           return (
-            <IdentifierService i={i} item={item} did={data?.didDocument?.id} />
+            <IdentifierService 
+              i={i} 
+              item={item} 
+              did={data?.didDocument?.id}
+              isManaged={isManaged}
+            />
           )
         }}
       ></List>

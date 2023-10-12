@@ -8,9 +8,10 @@ interface IdentifierModuleProps {
   item: any
   i: number
   did: string
+  isManaged?: boolean
 }
 
-const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did }) => {
+const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did, isManaged }) => {
   const { agent } = useVeramo()
   const [isModalVisible, setIsModalVisible] = useState(false)
 
@@ -35,7 +36,7 @@ const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did }) => {
   return (
     <List.Item
       key={i}
-      actions={[
+      actions={isManaged ? [
         <Button
           type='text'
           icon={<DeleteOutlined />}
@@ -44,7 +45,7 @@ const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did }) => {
             showModal()
           }}
         />,
-      ]}
+      ] : []}
     >
       <List.Item.Meta
         avatar={<LockOutlined />}

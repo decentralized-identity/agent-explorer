@@ -132,7 +132,7 @@ export const ManagedIdentifiers = () => {
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
         }}
         loading={isLoading}
-        dataSource={identifiers && identifiers.map((identifier) => ({ 
+        dataSource={identifiers !== undefined ? identifiers.map((identifier) => ({ 
           id: identifier.did,
           title: identifier.alias || shortId(identifier.did),
           actions: [
@@ -150,7 +150,7 @@ export const ManagedIdentifiers = () => {
               }}
             />,
           ]
-        }))}
+        })) : []}
         metas={{
           id:{},
           title: {

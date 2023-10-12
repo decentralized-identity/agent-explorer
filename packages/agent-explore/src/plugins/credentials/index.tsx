@@ -4,6 +4,8 @@ import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Credentials from './Credentials';
 import { getCredentialContextMenuItems } from './menu';
+import IdentifierIssuedCredentials from './IdentifierIssuedCredentials';
+import IdentifierReceivedCredentials from './IdentifierReceivedCredentials';
 
 
 const Plugin: IPlugin = {
@@ -33,8 +35,19 @@ const Plugin: IPlugin = {
               icon: <SafetyOutlined />,
             },
           ],
-          getCredentialContextMenuItems
-          
+          getCredentialContextMenuItems,
+          getIdentifierTabsComponents: () => {
+            return [
+              {
+                label: 'Issued credentials',
+                component: IdentifierIssuedCredentials,
+              },
+              {
+                label: 'Received credentials',
+                component: IdentifierReceivedCredentials,
+              },
+            ]
+          },
         }
     }
 };

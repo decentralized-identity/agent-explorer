@@ -111,7 +111,7 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
           }
         }
       } catch (e) {
-        console.log(e)
+        // console.log(e)
       }
     }
 

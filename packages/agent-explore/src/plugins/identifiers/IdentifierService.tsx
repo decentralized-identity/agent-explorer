@@ -7,12 +7,14 @@ interface IdentifierModuleProps {
   i: number
   item: any
   did: string
+  isManaged?: boolean
 }
 
 const IdentifierServices: React.FC<IdentifierModuleProps> = ({
   i,
   item,
   did,
+  isManaged = false,
 }) => {
   const { agent } = useVeramo()
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -33,7 +35,7 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
   return (
     <List.Item
       key={i}
-      actions={[
+      actions={isManaged ? [
         <Button
           type='text'
           icon={<DeleteOutlined />}
@@ -43,7 +45,7 @@ const IdentifierServices: React.FC<IdentifierModuleProps> = ({
             showModal()
           }}
         />,
-      ]}
+      ] : []}
     >
       <List.Item.Meta
         avatar={<CloudServerOutlined />}
