@@ -1,30 +1,30 @@
 import React from 'react'
+import { List } from 'antd'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDataStoreORM } from '@veramo/core'
 import { VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
-import { List } from 'antd'
 
 interface IdentifierCredentialsProps {
-  identifier: string
+  did: string
 }
 
-const IdentifierIssuedCredentials: React.FC<IdentifierCredentialsProps> = ({
-  identifier,
+const IdentifierReceivedCredentials: React.FC<IdentifierCredentialsProps> = ({
+  did,
 }) => {
   const { agent } = useVeramo<IDataStoreORM>()
   const { data: credentials } = useQuery(
     [
-      'identifierIssuedCredentials',
-      identifier,
+      'identifierReceivedCredentials',
+      did,
       { agentId: agent?.context.name },
     ],
     () =>
       agent?.dataStoreORMGetVerifiableCredentials({
         where: [
           {
-            column: 'issuer',
-            value: [identifier],
+            column: 'subject',
+            value: [did],
           },
         ],
       }),
@@ -41,7 +41,8 @@ const IdentifierIssuedCredentials: React.FC<IdentifierCredentialsProps> = ({
     </div>
     )}
   />
+    
   )
 }
 
-export default IdentifierIssuedCredentials
+export default IdentifierReceivedCredentials

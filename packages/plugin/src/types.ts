@@ -23,6 +23,9 @@ export type IVerifiableComponentProps = {
 export type IIdentifierHoverComponentProps = {
   did: string
 }
+export type IIdentifierTabsComponentProps = {
+  did: string
+}
 
 type ExtendedMenuDataItem = MenuDataItem & {
   routes?: Array<{
@@ -39,11 +42,12 @@ export type IAgentExplorerPlugin = {
   menuItems?: ExtendedMenuDataItem[];
   requiredMethods: string[];
   hasCss?: boolean;
-  getCredentialContextMenuItems?: (credential: UniqueVerifiableCredential) => MenuProps['items'];
   identifierContextMenuItems?: MenuProps['items'];
+  agentPlugins?: IAgentPlugin[];
+  getCredentialContextMenuItems?: (credential: UniqueVerifiableCredential) => MenuProps['items'];
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps> | undefined;
   getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;
-  agentPlugins?: IAgentPlugin[];
+  getIdentifierTabsComponents?: () => Array<{label: string, component: React.FC<IIdentifierTabsComponentProps>}>;
   getMarkdownComponents?: () => Partial<Components> | undefined;
   getRemarkPlugins?: () => PluggableList;
 }

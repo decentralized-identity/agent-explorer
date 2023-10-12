@@ -191,8 +191,8 @@ export async function createWeb3Agent({ connectors, }: {
     if (info.accounts) {
       for (const account of info.accounts) {
         for (const provider of ['pkh', 'ethr']) {
-          const prefix = (provider === 'pkh') ? 'did:pkh:eip155:0x' : 'did:ethr:0x'
-          const did = `${prefix}${info.chainId.toString(16)}:${account}`
+          const prefix = (provider === 'pkh') ? 'did:pkh:eip155:' : 'did:ethr:0x'
+          const did = (provider === 'pkh') ? `${prefix}${info.chainId}:${account}` : `${prefix}${info.chainId.toString(16)}:${account}`
 
           let extraManagedKeys = []
           for (const keyId in dataStore.keys) {

@@ -5,5 +5,6 @@ export { CredentialActionsDropdown } from './components/CredentialActionsDropdow
 export { IdentifierProfile } from './components/IdentifierProfile.js'
 export { CredentialSummary } from './components/CredentialSummary.js'
 export { VerifiableCredentialComponent } from './components/VerifiableCredentialComponent.js'
+export { IdentifierTabs } from './components/IdentifierTabs.js'
 export * from './agent-plugins/IdentifierProfilePlugin.js'
 export * from './components/MarkDown.js'

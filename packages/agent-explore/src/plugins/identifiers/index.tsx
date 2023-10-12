@@ -4,6 +4,9 @@ import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import { ManagedIdentifiers } from './ManagedIdentifiers';
 import Identifier from './Identifier';
+import { IdentifierTabDidDoc } from './IdentifierTabDidDoc';
+import { IdentifierTabQRCode } from './IdentifierTabQRCode';
+import { IdentifierTabResolution } from './IdentifierTabResolution';
 
 const Plugin: IPlugin = {
     init: () => {
@@ -32,6 +35,22 @@ const Plugin: IPlugin = {
               icon: <UserOutlined />,
             },
           ],
+          getIdentifierTabsComponents: () => {
+            return [
+              {
+                label: 'DID Document',
+                component: IdentifierTabDidDoc,
+              },
+              {
+                label: 'Resolution result',
+                component: IdentifierTabResolution,
+              },
+              {
+                label: 'QR Code',
+                component: IdentifierTabQRCode,
+              },
+            ]
+          },
           
         }
     }

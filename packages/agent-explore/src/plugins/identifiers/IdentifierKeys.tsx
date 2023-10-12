@@ -106,6 +106,7 @@ const IdentifierKeys: React.FC<IdentifierModuleProps> = ({
               i={i}
               key={i}
               item={item}
+              isManaged={isManaged}
               did={data?.didDocument?.id}
             />
           )
