@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.52.1](https://github.com/veramolabs/agent-explorer/compare/v1.52.0...v1.52.1) (2023-10-13)
+
+
+### Bug Fixes
+
+* contacts url ([70a9dbb](https://github.com/veramolabs/agent-explorer/commit/70a9dbb8f20d7f1f3232d35ddf52a0781b07c4a1))
+
+
+
+
+
 # [1.52.0](https://github.com/veramolabs/agent-explorer/compare/v1.51.0...v1.52.0) (2023-10-13)
 
 
