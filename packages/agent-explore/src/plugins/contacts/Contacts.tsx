@@ -58,7 +58,7 @@ export const Contacts = () => {
         metas={{
           id:{},
           title: {
-            render: (text, record) =>  <Link to={'/identifiers/' + encodeURIComponent(record.id)}>
+            render: (text, record) =>  <Link to={'/contacts/' + encodeURIComponent(record.id)}>
             <IdentifierProfile did={record.id} />
           </Link>,
           },
