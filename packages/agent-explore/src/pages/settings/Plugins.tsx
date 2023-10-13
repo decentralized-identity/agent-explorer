@@ -29,6 +29,17 @@ const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     config: {
+      url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-gitcoin-passport@main/dist/plugin.js',
+      enabled: true,
+    },
+    name: 'Gitcoin passport',
+    description: 'Gitcoin passport stamps',
+    requiredMethods: [],
+    routes: [],
+    menuItems: [],
+  },
+  {
+    config: {
       url: 'https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-social-feed@main/dist/plugin.js',
       enabled: true,
     },
