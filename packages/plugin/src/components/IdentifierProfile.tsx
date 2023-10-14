@@ -19,7 +19,7 @@ export const IdentifierProfile: React.FC<IdentifierProfileProps> = ({
   const { token } = theme.useToken()
 
   const { data, isLoading } = useQuery(
-    ['identifierProfile', did, agent?.context.id],
+    ['identifierProfile', { did, agentId: agent?.context.id }],
     () => (did ? agent?.getIdentifierProfile({ did }) : undefined),
   )
 

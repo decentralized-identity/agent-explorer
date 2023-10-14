@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import { IAgentExplorerPlugin, IAgentExplorerPluginConfig, IPlugin } from './types.js'
+import { App } from 'antd'
 
 type PluginContextType = {
   plugins: IAgentExplorerPlugin[]
@@ -54,6 +55,7 @@ export type PluginProviderProps = {
 
 const PluginProvider = (props: PluginProviderProps) => {
   
+  const { notification } = App.useApp()
   const [pluginConfigs, setPluginConfigs] = useState<IAgentExplorerPluginConfig[]>(
     getStoredPluginConfigs(props.corePlugins || []),
   )
@@ -71,25 +73,32 @@ const PluginProvider = (props: PluginProviderProps) => {
             result.push(plugin)
           }
         } else {
-          const module = await import(/* webpackIgnore: true */ config.url)
-          const plugin = module.default.init() as IAgentExplorerPlugin
-          plugin.config = config
-          result.push(plugin)
-          //FIXME
-          if (plugin.hasCss && config.enabled) {
-            const cssUrl = config.url.replace('plugin.js', 'plugin.css')
-            try {
-              const cssResponse = await fetch(cssUrl)
-              if (cssResponse.ok) {
-                const css = await cssResponse.text()
-                const style = document.createElement('style')
-                style.type = 'text/css'
-                style.appendChild(document.createTextNode(css))
-                document.head.appendChild(style)
+          try {
+            const module = await import(/* webpackIgnore: true */ config.url)
+            const plugin = module.default.init() as IAgentExplorerPlugin
+            plugin.config = config
+            result.push(plugin)
+            //FIXME
+            if (plugin.hasCss && config.enabled) {
+              const cssUrl = config.url.replace('plugin.js', 'plugin.css')
+              try {
+                const cssResponse = await fetch(cssUrl)
+                if (cssResponse.ok) {
+                  const css = await cssResponse.text()
+                  const style = document.createElement('style')
+                  style.type = 'text/css'
+                  style.appendChild(document.createTextNode(css))
+                  document.head.appendChild(style)
+                }
+              } catch (e) {
+                //do nothing
               }
-            } catch (e) {
-              //do nothing
             }
+          } catch (e: any) {
+            notification.error({
+              message: `Error loading plugin ${config.url}`,
+              description: e.message,
+            })
           }
         }
       }

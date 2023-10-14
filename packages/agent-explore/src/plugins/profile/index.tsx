@@ -1,5 +1,6 @@
 import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 import { IdentifierHoverComponent } from './IdentifierHoverComponent';
+import { IdentifierTabComponent } from './IdentifierTabComponent';
 import { UniqueVerifiableCredential } from '@veramo/core-types';
 import { Profile } from './Profile';
 
@@ -20,7 +21,12 @@ const Plugin: IPlugin = {
             }
             return undefined
           },
-
+          getIdentifierTabsComponents: () => [
+            {
+              label: 'Profile',
+              component: IdentifierTabComponent,
+            },
+          ],
         }
     }
 };

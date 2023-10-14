@@ -20,7 +20,9 @@ const Identifier = () => {
     IDIDManager & IResolver & IIdentifierProfilePlugin
   >()
 
-  const { data: profile } = useQuery(['profile', id, agent?.context.id], () =>
+  const { data: profile } = useQuery(['identifierProfile', {
+    did: id, agentId: agent?.context.id
+  }], () =>
     agent?.getIdentifierProfile({ did: id }),
   )
 
