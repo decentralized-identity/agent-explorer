@@ -40,6 +40,7 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
     args: IGetIdentifierProfileArgs,
     context: IContext,
   ): Promise<IIdentifierProfile> {
+
     if (!args.did) return Promise.reject('DID Required')
 
     const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
@@ -52,21 +53,30 @@ export class IdentifierProfilePlugin implements IAgentPlugin {
         .includes('dataStoreORMGetVerifiableCredentials')
     ) {
       try {
-        const result = await context.agent.dataStoreORMGetVerifiableCredentials(
+        const profileCredentials = await context.agent.dataStoreORMGetVerifiableCredentials(
           {
             where: [
               { column: 'type', value: ['VerifiableCredential,Profile'] },
               { column: 'subject', value: [args.did] },
             ],
-            order: [{ column: 'issuanceDate', direction: 'DESC' }],
+            order: [{ column: 'issuanceDate', direction: 'ASC' }],
           },
         )
+        const profile: {
+          name?: string
+          picture?: string
+        } = {}
+        if (profileCredentials && profileCredentials.length > 0) {
+          for (const credential of profileCredentials) {
+            const { name, bio, email, picture, twitter, github } 
+              = credential.verifiableCredential.credentialSubject
+            if (name) profile.name = name
+            if (picture) profile.picture = picture
+          }
 
-        if (result.length > 0) {
-          const { name, picture } =
-            result[0].verifiableCredential.credentialSubject
-          return { did: args.did, name, picture: picture || fallBackPictureUrl }
+          return { did: args.did, name: profile.name, picture: profile.picture || fallBackPictureUrl }
         }
+
       } catch (e) {
         console.log(e)
       }

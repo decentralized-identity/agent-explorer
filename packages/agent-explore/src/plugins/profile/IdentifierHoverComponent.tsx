@@ -1,6 +1,4 @@
-/* eslint-disable */
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { IIdentifierHoverComponentProps } from "@veramo-community/agent-explorer-plugin";
 import { IDataStoreORM } from '@veramo/core-types';
 import { useVeramo } from '@veramo-community/veramo-react';
@@ -23,8 +21,7 @@ export const IdentifierHoverComponent: React.FC<IIdentifierHoverComponentProps> 
   const { data: profileCredentials, isLoading } = useQuery(
     [
       'identifierProfileCredentials',
-      did,
-      { agentId: agent?.context.name },
+      { did, agentId: agent?.context.id },
     ],
     () =>
       agent?.dataStoreORMGetVerifiableCredentials(
@@ -57,6 +54,8 @@ export const IdentifierHoverComponent: React.FC<IIdentifierHoverComponentProps> 
 
 
   if (isLoading) return <Spin />
+
+  if (Object.keys(profile).length === 0) return null
 
   return (
     <Space direction='vertical'>
