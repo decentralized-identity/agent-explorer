@@ -3,6 +3,7 @@ import { App, Col, Form, Input, Row, Upload } from 'antd'
 import { GithubOutlined, LoadingOutlined, MailOutlined, PlusOutlined, TwitterOutlined } from '@ant-design/icons'
 import type { RcFile } from 'antd/es/upload/interface';
 import { ActionButton } from '@veramo-community/agent-explorer-plugin';
+import { ICredentialIssuer, TAgent } from '@veramo/core-types';
 
 export interface ProfileFormValues {
   name?: string
@@ -14,7 +15,7 @@ export interface ProfileFormValues {
 }
 
 interface ProfileFormProps {
-  onProfileSubmit: (did: string, values: ProfileFormValues) => void
+  onProfileSubmit: (did: string, agent: TAgent<ICredentialIssuer>, values: ProfileFormValues) => void
 }
 
 const getBase64 = (img: RcFile, callback: (url: string) => void) => {
@@ -58,12 +59,12 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
     </div>
   );
 
-  const handleOk = (did: string) => {
+  const handleOk = (did: string, agent: TAgent<ICredentialIssuer>) => {
     form
       .validateFields()
       .then((values) => {
         form.resetFields()
-        onProfileSubmit(did, values)
+        onProfileSubmit(did, agent, values)
       })
       .catch((info) => {
         console.log('Validate Failed:', info)
@@ -111,7 +112,7 @@ export const ProfileForm: React.FC<ProfileFormProps> = ({
         <Form.Item name="github" label="Github">
           <Input prefix={<GithubOutlined className="site-form-item-icon" />}/>
         </Form.Item>
-        <ActionButton title='Save' onAction={(did) => handleOk(did)} />
+        <ActionButton title='Save to:' onAction={(did, agent) => handleOk(did, agent)} />
 
       </Form>
 
