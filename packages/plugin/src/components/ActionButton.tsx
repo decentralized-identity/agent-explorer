@@ -1,10 +1,11 @@
-import { Dropdown, Avatar, Row, Col, Typography, theme, Space, Divider, Button, Spin } from 'antd'
+import { Dropdown, Avatar, Row, Col, Typography, theme, Space, Divider, Button, Spin, Drawer, Menu } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { ICredentialIssuer, IDIDManager, IDataStore, IDataStoreORM, IIdentifier, TAgent } from '@veramo/core'
 import { useQueries } from 'react-query'
 import { IIdentifierProfile } from '../agent-plugins/IdentifierProfilePlugin.js'
 import { shortId } from '../utils/did.js'
+import { set } from 'date-fns'
 
 interface ActionButtonProps {
   onAction: (did: string, agent: TAgent<ICredentialIssuer>) => void
@@ -24,7 +25,7 @@ type IdentifierWithAgent = IIdentifier & {
 export const ActionButton: React.FC<ActionButtonProps> = ({ onAction, title, disabled }) => {
   const { agents, agent } = useVeramo<ICredentialIssuer & IDataStore & IDataStoreORM & IDIDManager>()
   const [issuerProfile, setIssuerProfile] = useState<IdentifierProfileWithAgent>()
-
+  const [showDrawer, setShowDrawer] = useState(false)
 
   const { token } = theme.useToken()
 
@@ -106,58 +107,61 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ onAction, title, dis
 
   const menuStyle: React.CSSProperties = {
     boxShadow: 'none',
+    backgroundColor: 'transparent',
   };
 
   return (
-      <Dropdown.Button
-        disabled={disabled}
-        placement='top'
-        dropdownRender={(menu) => (
-          <div style={{height: 300, overflowY: 'scroll'}}>
-            {React.cloneElement(menu as React.ReactElement, { style: menuStyle })}
-          </div>
-        )}
+      <>
+      <Button
+        onClick={() => onAction(defaultProfile.did, defaultProfile.agent)}
         type='primary'
-        onClick={() => onAction(
-          issuerProfile?.did || defaultProfile.did, 
-          issuerProfile?.agent || defaultProfile.agent
-        )}
-        icon={<Avatar size={'small'} src={issuerProfile?.picture || defaultProfile.picture} />}
-        menu={{
-          items: [
-            ...profilesWithAgents.map((profile) => {
-              return {
-                key: profile.did,
-                onClick: () => {
-                  setIssuerProfile(profile)
-                },
-                label: (<Row align="middle" wrap={false}>
-                <Col style={{ marginRight: token.padding }}>
-                  <Avatar src={profile.picture} />
-
-                </Col>
-                <Col>
-                    <Typography.Text ellipsis>{profile.name}</Typography.Text>
-                  {profile.name && profile.name !== shortId(profile.did) && (
-                    <div>
-                      <Typography.Text
-                        ellipsis
-                        style={{ color: token.colorTextSecondary }}
-                      >
-                        {shortId(profile.did)}
-                      </Typography.Text>
-                    </div>
-                  )}
-                </Col>
-              </Row>),
-              }
-            }),
-          ],
-          selectable: true,
-          defaultSelectedKeys: [issuerProfile?.did || defaultProfile.did],
-        }}
-      >
+        disabled={disabled}
+        >
         {title} {agent?.context.name}
-      </Dropdown.Button>
+      </Button>
+      <Button
+        onClick={() => setShowDrawer(true)}
+        type='text'
+        icon={<Avatar size={'small'} src={issuerProfile?.picture || defaultProfile.picture} />}
+        >
+      </Button>
+      <Drawer
+        title="Select issuer"
+        placement="bottom"
+        closable={true}
+        onClose={() => setShowDrawer(false)}
+        open={showDrawer}
+        height={500}
+      >
+        <Row>
+          <Col md={6}/>
+          <Col  
+            md={12}
+            xs={24}
+            style={{position: 'relative'}}
+            >
+            <Menu
+              style={menuStyle}
+              items = {profilesWithAgents.map((profile) => {
+                return (
+                  {
+                    key: profile.did,
+                    onClick: () => {
+                      setIssuerProfile(profile)
+                      setShowDrawer(false)
+                    },
+                    icon: <Avatar src={profile.picture} size={'small'}/>,
+                    label: profile.name,
+                  }
+                )
+              }
+              )}
+            />
+          </Col>
+          <Col md={6}/>
+        </Row>
+
+      </Drawer>
+      </>
   )
 }
