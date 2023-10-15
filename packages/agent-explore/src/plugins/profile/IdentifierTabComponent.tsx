@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { IIdentifierHoverComponentProps, usePlugins } from "@veramo-community/agent-explorer-plugin";
-import { IDataStoreORM } from '@veramo/core-types';
+import { ICredentialIssuer, IDataStoreORM, TAgent } from '@veramo/core-types';
 import { useVeramo } from '@veramo-community/veramo-react';
 import { Button, Col, Row, Space } from 'antd';
 import { ProfileForm } from './ProfileForm';
@@ -35,10 +35,8 @@ export const IdentifierTabComponent: React.FC<IIdentifierHoverComponentProps> = 
     return components
   }, [plugins])
 
-  const handleProfileSubmit = async (issuer: string, values: IProfileInfo) => {
-    console.log('values', values)
+  const handleProfileSubmit = async (issuer: string, issuerAgent: TAgent<ICredentialIssuer>,  values: IProfileInfo) => {
     if (values.name || values.email || values.bio || values.github || values.twitter || values.picture) {
-      console.log('submitting profile', values)
       const credentialSubject: any = {
         id: did,
       }
@@ -48,7 +46,7 @@ export const IdentifierTabComponent: React.FC<IIdentifierHoverComponentProps> = 
       if (values.github) credentialSubject['github'] = values.github
       if (values.twitter) credentialSubject['twitter'] = values.twitter
       if (values.picture) credentialSubject['picture'] = values.picture
-      const credential = await agent?.createVerifiableCredential({
+      const credential = await issuerAgent.createVerifiableCredential({
         credential: {
           issuer: { id: issuer },
           issuanceDate: new Date().toISOString(),
