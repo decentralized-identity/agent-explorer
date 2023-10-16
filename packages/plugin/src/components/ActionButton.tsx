@@ -1,11 +1,9 @@
-import { Dropdown, Avatar, Row, Col, Typography, theme, Space, Divider, Button, Spin, Drawer, Menu } from 'antd'
-import React, { useEffect, useState } from 'react'
+import { Avatar, Row, Col, theme, Button, Spin, Drawer, Menu } from 'antd'
+import React, { useState } from 'react'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { ICredentialIssuer, IDIDManager, IDataStore, IDataStoreORM, IIdentifier, TAgent } from '@veramo/core'
 import { useQueries } from 'react-query'
 import { IIdentifierProfile } from '../agent-plugins/IdentifierProfilePlugin.js'
-import { shortId } from '../utils/did.js'
-import { set } from 'date-fns'
 
 interface ActionButtonProps {
   onAction: (did: string, agent: TAgent<ICredentialIssuer>) => void
@@ -27,16 +25,15 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ onAction, title, dis
   const [issuerProfile, setIssuerProfile] = useState<IdentifierProfileWithAgent>()
   const [showDrawer, setShowDrawer] = useState(false)
 
-  const { token } = theme.useToken()
-
 
   const agentQueries = useQueries(
-    agents.map(agent => {
+    agents?.map(agent => {
       return {
         queryKey: ['identifiers', { agentId: agent?.context.id }],
         queryFn: () => agent.didManagerFind(),
       }
-    })
+    }),
+    
   )
 
   const identifiersWithAgents: IdentifierWithAgent[] = React.useMemo(() => {
