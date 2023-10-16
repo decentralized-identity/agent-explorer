@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.56.0](https://github.com/veramolabs/agent-explorer/compare/v1.55.0...v1.56.0) (2023-10-16)
+
+
+### Features
+
+* move web3 connect to the top bar ([#189](https://github.com/veramolabs/agent-explorer/issues/189)) ([73ed64a](https://github.com/veramolabs/agent-explorer/commit/73ed64aca51ada2ce754cef00f3c89dc5669e55d))
+
+
+
+
+
 # [1.55.0](https://github.com/veramolabs/agent-explorer/compare/v1.54.0...v1.55.0) (2023-10-16)
 
 
