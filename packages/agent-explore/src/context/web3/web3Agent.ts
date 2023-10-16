@@ -109,6 +109,10 @@ export async function createWeb3Agent({ connectors }: {
     web3Providers[info.name] = info.provider
   })
 
+  const keyStore = new KeyStoreJson(identifierDataStore)
+  const privateKeyStore = new PrivateKeyStoreJson(identifierDataStore)
+  const didStore = new DIDStoreJson(identifierDataStore)
+
   const id = 'web3Agent'
   const agent = createAgent<
     IDIDManager &
@@ -137,16 +141,14 @@ export async function createWeb3Agent({ connectors }: {
         }, { cache: true }),
       }),
       new KeyManager({
-        store: new KeyStoreJson(identifierDataStore),
+        store: keyStore,
         kms: {
-          local: new KeyManagementSystem(
-            new PrivateKeyStoreJson(identifierDataStore),
-          ),
+          local: new KeyManagementSystem(privateKeyStore),
           web3: new Web3KeyManagementSystem(web3Providers),
         },
       }),
       new DIDManager({
-        store: new DIDStoreJson(identifierDataStore),
+        store: didStore,
         defaultProvider: connectors[0]?.name,
         providers: didProviders,
       }),
@@ -188,6 +190,8 @@ export async function createWeb3Agent({ connectors }: {
   //   }
   // }
 
+  const existingKeys = await keyStore.listKeys()
+
   for (const info of connectors) {
     if (info.accounts) {
       console.log('nana')
@@ -196,22 +200,15 @@ export async function createWeb3Agent({ connectors }: {
           const prefix = (provider === 'pkh') ? 'did:pkh:eip155:' : 'did:ethr:0x'
           const did = (provider === 'pkh') ? `${prefix}${info.chainId}:${account}` : `${prefix}${info.chainId.toString(16)}:${account}`
 
-          let extraManagedKeys = []
-          for (const keyId in { ...identifierDataStore.keys }) {
-            if (
-              identifierDataStore.keys[keyId]?.meta?.did === did &&
-              identifierDataStore.keys[keyId].kms === 'local'
-            ) {
-              extraManagedKeys.push(identifierDataStore.keys[keyId])
+          const extraManagedKeys: MinimalImportableKey[] = []
+          for (const key of existingKeys) {
+            if (key.meta?.did === did && key.kms === 'local') {
+              const privateKeyHex = (await privateKeyStore.getKey({ alias: key.kid })).privateKeyHex
+              if (privateKeyHex) {
+                extraManagedKeys.push({ ...key, privateKeyHex })
+              }
             }
           }
-          extraManagedKeys = extraManagedKeys.map((k) => {
-            const privateKeyHex = identifierDataStore.privateKeys[k.kid].privateKeyHex
-            return {
-              ...k,
-              privateKeyHex,
-            }
-          })
 
           // const controllerKeyId = `${did}#controller`
           const controllerKeyId = `${info.name}-${account}`
