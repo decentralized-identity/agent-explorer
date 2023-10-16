@@ -7,6 +7,7 @@ import { IdentifierProfilePlugin } from '@veramo-community/agent-explorer-plugin
 
 import { useAccount, useNetwork } from 'wagmi'
 import { useEthersProvider } from './wagmi'
+import { useQueryClient } from 'react-query'
 
 export const VeramoWeb3Provider = ({
   children,
@@ -20,6 +21,7 @@ export const VeramoWeb3Provider = ({
   const [web3agent, setWeb3Agent] = useState<TAgent<IResolver>>()
   const [preConfiguredAgents, setPreConfiguredAgents] =
     useState<Array<TAgent<IResolver>>>()
+  const queryClient = useQueryClient()
 
   const { address, isConnected } = useAccount()
   const { chain } = useNetwork()
@@ -43,7 +45,13 @@ export const VeramoWeb3Provider = ({
       })
     }
     void createWeb3Agent({ connectors }).then(setWeb3Agent)
-
+    queryClient.invalidateQueries({ 
+      queryKey: [
+        'identifiers', 
+        { agentId: 'web3Agent'}
+      ] 
+    })
+    console.log('invalidateQueries')
     return () => {
       setWeb3Agent(undefined)
     }
