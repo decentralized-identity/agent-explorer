@@ -19,7 +19,7 @@ const Statistics: React.FC = () => {
     () => agent?.dataStoreORMGetIdentifiersCount(),
   )
 
-  const { data: managedIdentifiersCount, isLoading: loading3 } =  useQuery(['identifiers', { agentId: agent?.context.id }], () =>
+  const { data: managedIdentifiersCount, isLoading: loading3 } =  useQuery(['identifiersCount', { agentId: agent?.context.id }], () =>
   agent?.didManagerFind().then((identifiers) => identifiers.length),
 )
 
