@@ -96,7 +96,7 @@ const ChatWindow: React.FC = () => {
           <Button
             type="text"
             icon={<InfoCircleOutlined />}
-            onClick={() => navigate('/identifier/' + counterParty.did)}
+            onClick={() => navigate('/contacts/' + counterParty.did)}
           />
         </Col>
       </Row>
