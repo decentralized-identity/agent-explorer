@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.55.0](https://github.com/veramolabs/agent-explorer/compare/v1.54.0...v1.55.0) (2023-10-16)
+
+
+### Features
+
+* agent schema service and landing fix ([#188](https://github.com/veramolabs/agent-explorer/issues/188)) ([fa7c4af](https://github.com/veramolabs/agent-explorer/commit/fa7c4af225a00e2a58aec2c00bb61fbd594dee2c))
+
+
+
+
+
 # [1.54.0](https://github.com/veramolabs/agent-explorer/compare/v1.53.0...v1.54.0) (2023-10-15)
 
 
