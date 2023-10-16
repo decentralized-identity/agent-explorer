@@ -193,7 +193,6 @@ export async function createWeb3Agent({ connectors }: {
 
   for (const info of connectors) {
     if (info.accounts) {
-      console.log('nana')
       for (const account of info.accounts) {
         for (const provider of ['pkh', 'ethr']) {
           const prefix = (provider === 'pkh') ? 'did:pkh:eip155:' : 'did:ethr:0x'

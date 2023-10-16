@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Table, Button, Row, Space, App, Drawer } from 'antd'
 import { Link } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { PageContainer, ProList } from '@ant-design/pro-components'
 import { IDIDManager } from '@veramo/core-types'
@@ -12,13 +12,15 @@ import {
 } from './NewIdentifierForm'
 import { shortId, IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
 import { createMediateRequestMessage } from '@veramo/did-comm'
-import { DeleteOutlined, CopyOutlined, PlusOutlined } from '@ant-design/icons'
-import { IDataStore, IIdentifier } from '@veramo/core'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import { IDataStore } from '@veramo/core'
 
 export const ManagedIdentifiers = () => {
   const { notification } = App.useApp()
   const { agent } = useVeramo<IDIDManager & IDataStore>()
   const [drawerOpen, setDrawerOpen] = useState(false)
+  const [ creating, setCreating ] = useState(false)
+  const queryClient = useQueryClient()
 
   const { data: providers } = useQuery(
     ['providers', { agentId: agent?.context.id }],
@@ -31,6 +33,7 @@ export const ManagedIdentifiers = () => {
 
     const handleNewIdentifierOk = async (values: NewIdentifierFormValues) => {
       setDrawerOpen(false)
+      setCreating(true)
       const { alias, provider } = values
       let options = undefined
       if (provider === 'did:peer') {
@@ -106,8 +109,13 @@ export const ManagedIdentifiers = () => {
 
       }
   
-      
-      refetch()
+      queryClient.invalidateQueries({ 
+        queryKey: [
+          'identifiers', 
+          { agentId: 'web3Agent'}
+        ] 
+      })
+      setCreating(false)
     }
 
   return (
@@ -118,6 +126,7 @@ export const ManagedIdentifiers = () => {
             icon={<PlusOutlined />}
             type="primary"
             title="Create new identifier"
+            loading={creating}
             onClick={() => setDrawerOpen(true)}
           >New</Button>,
         ]}
