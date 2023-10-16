@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.57.0](https://github.com/veramolabs/agent-explorer/compare/v1.56.4...v1.57.0) (2023-10-16)
+
+
+### Bug Fixes
+
+* DOM duplicate entry error in new chat modal ([#195](https://github.com/veramolabs/agent-explorer/issues/195)) ([eb96119](https://github.com/veramolabs/agent-explorer/commit/eb96119996e8a264041f67bfa8675923a3507506))
+
+
+### Features
+
+* render message body as markdown ([#194](https://github.com/veramolabs/agent-explorer/issues/194)) ([8dfde66](https://github.com/veramolabs/agent-explorer/commit/8dfde66428f4da77d29d7e26a04603c35a5b2ccd))
+
+
+
+
+
 ## [1.56.4](https://github.com/veramolabs/agent-explorer/compare/v1.56.3...v1.56.4) (2023-10-16)
 
 

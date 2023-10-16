@@ -14,7 +14,7 @@
     "Jason Healy <jason.healy@mesh.xyz>",
     "Gregory Bugyis <greg.bugyis@mesh.xyz>"
   ],
-  "version": "1.56.4",
+  "version": "1.57.0",
   "publishConfig": {
     "access": "public"
   },
