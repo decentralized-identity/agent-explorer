@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.56.2](https://github.com/veramolabs/agent-explorer/compare/v1.56.1...v1.56.2) (2023-10-16)
+
+
+### Bug Fixes
+
+* remove unavailable web3 identifiers when local agent gets rebuilt ([#191](https://github.com/veramolabs/agent-explorer/issues/191)) ([559807a](https://github.com/veramolabs/agent-explorer/commit/559807a50c277aac7308186efe46a0440a78e558))
+
+
+
+
+
 ## [1.56.1](https://github.com/veramolabs/agent-explorer/compare/v1.56.0...v1.56.1) (2023-10-16)
 
 **Note:** Version bump only for package agent-explorer
