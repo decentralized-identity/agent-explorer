@@ -40,6 +40,7 @@ export const Agents = () => {
           avatar: agent?.context?.name && GRAVATAR_URI + md5(agent?.context?.name) + '?s=200&d=retro',
           title: agent.context.name || 'Empty',
           actions: [
+            agent.context.id === 'web3Agent' && <w3m-network-button />,
             agent.context.id !== 'web3Agent' && <Button
               icon={<DeleteOutlined />}
               type='text'

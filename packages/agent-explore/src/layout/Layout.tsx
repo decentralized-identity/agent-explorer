@@ -8,7 +8,6 @@ import { usePlugins } from '@veramo-community/agent-explorer-plugin'
 import { Landing } from '../pages/Landing'
 import { Appearance } from '../pages/settings/Appearance'
 import { Plugins } from '../pages/settings/Plugins'
-import { Web3 } from '../pages/settings/Web3'
 import { Version } from '../pages/settings/Version'
 import { Agents } from '../pages/settings/Agents'
 import { useTheme } from '../context/ThemeProvider'
@@ -27,7 +26,6 @@ const Layout = () => {
   const { token } = theme.useToken()
 
   const availableMethods = agent?.availableMethods() || []
-
 
   const uri =
     agent?.context?.name &&
@@ -85,6 +83,7 @@ const Layout = () => {
       <ProLayout
         contentWidth="Fixed"
         title={false}
+        actionsRender={() => [<w3m-button size='sm' balance='hide'/>]}
 
         colorPrimary={primaryColor}
         // collapsed={collapsed}
@@ -139,7 +138,6 @@ const Layout = () => {
           <Route path="/settings/agents/:schema" element={<Agents />} />
           <Route path="/settings/appearance" element={<Appearance />} />
           <Route path="/settings/plugins" element={<Plugins />} />
-          <Route path="/settings/web3" element={<Web3 />} />
           <Route path="/settings/version" element={<Version />} />
           {plugins.map((plugin) => {
             if (plugin.config?.enabled && plugin.routes) {

@@ -2,6 +2,7 @@ import { ConfigProvider, theme as antdTheme, App } from 'antd'
 import { ProConfigProvider } from '@ant-design/pro-components'
 import React, { createContext, useState, useEffect, useContext } from 'react'
 import en_US from 'antd/es/locale/en_US'
+import { useWeb3ModalTheme } from '@web3modal/wagmi/react'
 
 const ThemeContext = createContext<any>({})
 
@@ -28,6 +29,7 @@ function getStoredPrimaryColor(): string {
 }
 
 const ThemeProvider = (props: any) => {
+  const { setThemeMode } = useWeb3ModalTheme()
   const [systemTheme, setSystemTheme] = useState<'dark' | 'light'>(
     getSystemTheme(),
   )
@@ -93,6 +95,8 @@ const ThemeProvider = (props: any) => {
   if (isCompact) {
     algorithm.push(antdTheme.compactAlgorithm)
   }
+
+  setThemeMode(isDark ? 'dark' : 'light')
 
   return (
     <ThemeContext.Provider
