@@ -24,10 +24,10 @@ interface NewChatThreadModalProps {
 }
 
 const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
-  visible,
-  onCreate,
-  onCancel,
-}) => {
+                                                                 visible,
+                                                                 onCreate,
+                                                                 onCancel,
+                                                               }) => {
   const { notification } = App.useApp()
   const { agent } = useVeramo<IDIDDiscovery>()
   const [options, setOptions] = useState<SelectProps<object>['options']>([])
@@ -36,23 +36,22 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
 
   const searchResult = async (query: string) => {
     const response = await agent?.discoverDid({ query })
+    const dids = response?.results.map((r) => r.matches.map((m) => m.did)).flat() ?? []
+
     const selectOptions: Array<{ value: string; label: any }> = []
-    response?.results.forEach((r) => {
-      r.matches.forEach((m) => {
-        selectOptions.push({
-          value: m.did,
-          label: (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-              }}
-            >
-              <span>{shortId(m.did)}</span>
-              <span>{r.provider}</span>
-            </div>
-          ),
-        })
+    new Set(dids).forEach((did) => {
+      selectOptions.push({
+        value: did,
+        label: (
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span>{shortId(did)}</span>
+          </div>
+        ),
       })
     })
     return selectOptions
@@ -84,9 +83,9 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
   return (
     <Modal
       open={visible}
-      title="Start new thread"
-      okText="Create"
-      cancelText="Cancel"
+      title='Start new thread'
+      okText='Create'
+      cancelText='Cancel'
       onCancel={() => {
         setShowQrCodeScanner(false)
         onCancel()
@@ -98,7 +97,7 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
       {!showQrCodeScanner && (
         <Row>
           <AutoComplete
-            dropdownMatchSelectWidth={true}
+            popupMatchSelectWidth={true}
             options={options}
             onSelect={(e) => setDid(e)}
             onSearch={handleSearch}
@@ -106,7 +105,7 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
           >
             <Input
               value={did}
-              placeholder="Enter a DID"
+              placeholder='Enter a DID'
               onChange={(e) => setDid(e.target.value)}
               style={{
                 flex: 1,
@@ -115,7 +114,7 @@ const NewChatThreadModal: React.FC<NewChatThreadModalProps> = ({
               }}
             />
           </AutoComplete>
-          <Button onClick={() => setShowQrCodeScanner(true)} size="large">
+          <Button onClick={() => setShowQrCodeScanner(true)} size='large'>
             <QrcodeOutlined />
           </Button>
         </Row>
