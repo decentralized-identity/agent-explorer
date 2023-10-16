@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "upgrade-veramo:next": "pnpm add @veramo/core@next @veramo/core-types@next @veramo/data-store@next @veramo/utils@next"
+    "upgrade-veramo:next": "pnpm add @veramo/core@next @veramo/core-types@next @veramo/data-store@next @veramo/utils@next @veramo-community/veramo-react@latest"
   },
   "files": [
     "build",
@@ -29,11 +29,11 @@
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
     "@ant-design/pro-components": "^2.6.13",
-    "@veramo-community/veramo-react": "1.6.0",
-    "@veramo/core": "5.5.4-next.18",
-    "@veramo/core-types": "5.5.4-next.18",
-    "@veramo/data-store": "5.5.4-next.18",
-    "@veramo/utils": "5.5.4-next.18",
+    "@veramo-community/veramo-react": "1.6.1",
+    "@veramo/core": "5.5.4-next.20",
+    "@veramo/core-types": "5.5.4-next.20",
+    "@veramo/data-store": "5.5.4-next.20",
+    "@veramo/utils": "5.5.4-next.20",
     "antd": "~5.8.4",
     "date-fns": "^2.30.0",
     "did-jwt-vc": "^3.2.10",
