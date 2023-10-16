@@ -181,8 +181,6 @@ export async function createWeb3Agent({ connectors }: {
     ],
   })
 
-  // commented out in https://github.com/veramolabs/agent-explorer/pull/115/files
-  // was causing locally-managed X25519 keys to be deleted on page refresh
   const identifiers = await agent.didManagerFind()
   const markedForClearance = new Set<string>([])
   for (const identifier of identifiers) {
