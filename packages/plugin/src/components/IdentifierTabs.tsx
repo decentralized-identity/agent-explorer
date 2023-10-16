@@ -1,5 +1,5 @@
-import React from 'react'
-import { Tabs } from 'antd'
+import React, { PropsWithChildren } from 'react'
+import { Col, Row, Tabs } from 'antd'
 import { usePlugins } from '../PluginProvider.js'
 import { IIdentifierTabsComponentProps } from '../types.js'
 
@@ -33,11 +33,32 @@ export const IdentifierTabs: React.FC<IdentifierTabsProps> = ({
         tabComponents.map((component, index) => ({
           key: `${index}`,
           label: component.label,
-          children: React.createElement(component.component, { did: did })
+          children: <ResponsiveContainer>{React.createElement(component.component, { did: did })}</ResponsiveContainer>
         }))   
       }
       
     />
       
   )
+}
+
+const ResponsiveContainer: React.FC<PropsWithChildren> = ({
+  children
+}) => {
+  return (<Row>
+    <Col 
+      md={3}
+    />
+    <Col  
+      md={18}
+      sm={24}
+      xs={24}
+      style={{position: 'relative'}}
+      >
+        {children} 
+      </Col>
+      <Col 
+        md={3}
+      />
+  </Row>)
 }

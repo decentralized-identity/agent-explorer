@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IIdentifierHoverComponentProps, usePlugins } from "@veramo-community/agent-explorer-plugin";
 import { ICredentialIssuer, IDataStoreORM, TAgent } from '@veramo/core-types';
 import { useVeramo } from '@veramo-community/veramo-react';
-import { Button, Col, Row, Space } from 'antd';
+import { Button, Space } from 'antd';
 import { ProfileForm } from './ProfileForm';
 import { useQueryClient } from 'react-query'
 type IProfileInfo = {
@@ -79,28 +79,17 @@ export const IdentifierTabComponent: React.FC<IIdentifierHoverComponentProps> = 
 
   return (
     <>
-      <Row>
-        <Col md={6}/>
-        <Col  
-          md={12}
-          xs={24}
-          style={{position: 'relative'}}
-          >
-            {!showForm && <Space direction='vertical'>
-              {!showForm && hoverComponents.map((Component, index) => (
-                React.createElement(Component, { key: index, did: did })
-                ))}
-            <Button 
-              type='text' 
-              onClick={() => setShowForm(true)}
-              style={{position: 'absolute', top: 0, right: 0}}
-              >Edit</Button>
-            </Space>}
-            {showForm && <ProfileForm onProfileSubmit={handleProfileSubmit}/>}
-            
-          </Col>
-        <Col md={6}/>
-        </Row>
+      {!showForm && <Space direction='vertical'>
+        {!showForm && hoverComponents.map((Component, index) => (
+          React.createElement(Component, { key: index, did: did })
+          ))}
+      <Button 
+        type='text' 
+        onClick={() => setShowForm(true)}
+        style={{position: 'absolute', top: 0, right: 0}}
+        >Edit</Button>
+      </Space>}
+      {showForm && <ProfileForm onProfileSubmit={handleProfileSubmit}/>}
     </>
   )
 }

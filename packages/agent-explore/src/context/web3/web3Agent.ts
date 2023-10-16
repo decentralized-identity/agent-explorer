@@ -103,7 +103,8 @@ export async function createWeb3Agent({ connectors, }: {
           chainId: '0x' + info.chainId,
           provider: info.provider,
         }
-      ]
+      ],
+      ttl: 60 * 60 * 24 * 30 * 12,
     })
     web3Providers[info.name] = info.provider
   })
@@ -189,12 +190,14 @@ export async function createWeb3Agent({ connectors, }: {
 
   for (const info of connectors) {
     if (info.accounts) {
+      console.log('nana')
       for (const account of info.accounts) {
         for (const provider of ['pkh', 'ethr']) {
           const prefix = (provider === 'pkh') ? 'did:pkh:eip155:' : 'did:ethr:0x'
           const did = (provider === 'pkh') ? `${prefix}${info.chainId}:${account}` : `${prefix}${info.chainId.toString(16)}:${account}`
 
           let extraManagedKeys = []
+          console.log('heres')
           for (const keyId in dataStore.keys) {
             if (
               dataStore.keys[keyId].meta?.did === did &&

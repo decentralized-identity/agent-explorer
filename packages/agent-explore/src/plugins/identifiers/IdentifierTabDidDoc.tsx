@@ -24,19 +24,12 @@ export const IdentifierTabDidDoc: React.FC<{ did: string }> = ({
 
   const isManaged = !!managedDID?.provider
 
-  const hasDIDCommSetup =
-    !!managedDID?.services?.find((s) => s.type === 'DIDCommMessaging') &&
-    !!managedDID?.keys?.find(
-      (key) => key.type === 'X25519' || key.type === 'Ed25519',
-    )
 
   return (
     <Space direction="vertical" style={{ width: '100%' }}>
-      {isManaged && !hasDIDCommSetup && (
+      {isManaged && (
         <IdentifierQuickSetup
-          title="DIDComm mediator setup"
           identifier={did}
-          cacheKey={`identifier-quicksetup-${did}`}
         />
       )}
       <IdentifierKeys
