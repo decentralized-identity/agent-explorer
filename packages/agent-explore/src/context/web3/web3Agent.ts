@@ -183,12 +183,13 @@ export async function createWeb3Agent({ connectors }: {
 
   // commented out in https://github.com/veramolabs/agent-explorer/pull/115/files
   // was causing locally-managed X25519 keys to be deleted on page refresh
-  // const identifiers = await agent.didManagerFind()
-  // for (const identifier of identifiers) {
-  //   if (identifier.keys.filter((key) => key.kms !== 'web3').length === 0) {
-  //     await agent.didManagerDelete({ did: identifier.did })
-  //   }
-  // }
+  const identifiers = await agent.didManagerFind()
+  const markedForClearance = new Set<string>([])
+  for (const identifier of identifiers) {
+    if (identifier.keys.filter((key) => key.kms === 'web3').length !== 0) {
+      markedForClearance.add(identifier.did)
+    }
+  }
 
   const existingKeys = await keyStore.listKeys()
 
@@ -200,10 +201,12 @@ export async function createWeb3Agent({ connectors }: {
           const prefix = (provider === 'pkh') ? 'did:pkh:eip155:' : 'did:ethr:0x'
           const did = (provider === 'pkh') ? `${prefix}${info.chainId}:${account}` : `${prefix}${info.chainId.toString(16)}:${account}`
 
+          markedForClearance.delete(did)
+
           const extraManagedKeys: MinimalImportableKey[] = []
           for (const key of existingKeys) {
             if (key.meta?.did === did && key.kms === 'local') {
-              const privateKeyHex = (await privateKeyStore.getKey({ alias: key.kid })).privateKeyHex
+              const privateKeyHex = (await privateKeyStore.getKey({ alias: key.kid }))?.privateKeyHex
               if (privateKeyHex) {
                 extraManagedKeys.push({ ...key, privateKeyHex })
               }
@@ -227,13 +230,18 @@ export async function createWeb3Agent({ connectors }: {
                   account: account.toLocaleLowerCase(),
                   algorithms: ['eth_signMessage', 'eth_signTypedData'],
                 },
-              } as MinimalImportableKey,
+              },
               ...extraManagedKeys,
             ],
           })
         }
       }
     }
+  }
+
+  for (const did of Array.from(markedForClearance.values())) {
+    // didStore delete does not remove the keys, just the mapping, which can be recreated later
+    await didStore.deleteDID({ did })
   }
 
   return agent
