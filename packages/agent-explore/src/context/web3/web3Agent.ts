@@ -80,7 +80,7 @@ export interface ConnectorInfo {
   isActive: boolean
 }
 
-export async function createWeb3Agent({ connectors, }: {
+export async function createWeb3Agent({ connectors }: {
   connectors: ConnectorInfo[]
 }) {
   const didProviders: Record<string, AbstractIdentifierProvider> = {
@@ -92,18 +92,19 @@ export async function createWeb3Agent({ connectors, }: {
   const web3Providers: Record<string, BrowserProvider> = {}
 
   connectors.forEach((info) => {
-    didProviders[info.name + "-pkh"] = new PkhDIDProvider({
+    didProviders[info.name + '-pkh'] = new PkhDIDProvider({
       defaultKms: 'web3',
-      chainId: info.chainId + "",
+      chainId: info.chainId + '',
     })
-    didProviders[info.name + "-ethr"] = new EthrDIDProvider({
+    didProviders[info.name + '-ethr'] = new EthrDIDProvider({
       defaultKms: 'web3',
       networks: [
         {
           chainId: '0x' + info.chainId,
           provider: info.provider,
-        }
-      ]
+        },
+      ],
+      ttl: 60 * 60 * 24 * 30 * 12,
     })
     web3Providers[info.name] = info.provider
   })
@@ -122,12 +123,12 @@ export async function createWeb3Agent({ connectors, }: {
     context: {
       id,
       name: `Private`,
-      schema: 'Data securely stored on the device'
+      schema: 'Data securely stored on the device',
     },
     plugins: [
       new DIDResolverPlugin({
         resolver: new Resolver({
-          ...ethrDidResolver({ infuraProjectId, }),
+          ...ethrDidResolver({ infuraProjectId }),
           ...getDidPkhResolver(),
           ...webDidResolver(),
           ...peerDidResolver(),
@@ -189,22 +190,23 @@ export async function createWeb3Agent({ connectors, }: {
 
   for (const info of connectors) {
     if (info.accounts) {
+      console.log('nana')
       for (const account of info.accounts) {
         for (const provider of ['pkh', 'ethr']) {
           const prefix = (provider === 'pkh') ? 'did:pkh:eip155:' : 'did:ethr:0x'
           const did = (provider === 'pkh') ? `${prefix}${info.chainId}:${account}` : `${prefix}${info.chainId.toString(16)}:${account}`
 
           let extraManagedKeys = []
-          for (const keyId in dataStore.keys) {
+          for (const keyId in { ...identifierDataStore.keys }) {
             if (
-              dataStore.keys[keyId].meta?.did === did &&
-              dataStore.keys[keyId].kms === 'local'
+              identifierDataStore.keys[keyId]?.meta?.did === did &&
+              identifierDataStore.keys[keyId].kms === 'local'
             ) {
-              extraManagedKeys.push(dataStore.keys[keyId])
+              extraManagedKeys.push(identifierDataStore.keys[keyId])
             }
           }
           extraManagedKeys = extraManagedKeys.map((k) => {
-            const privateKeyHex = dataStore.privateKeys[k.kid].privateKeyHex
+            const privateKeyHex = identifierDataStore.privateKeys[k.kid].privateKeyHex
             return {
               ...k,
               privateKeyHex,
