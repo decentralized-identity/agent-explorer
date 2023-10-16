@@ -43,6 +43,30 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
     (s) => s.type === 'DIDCommMessaging'
   ), [data])
 
+  const sendMediationRequest = async () => {
+    const message = createMediateRequestMessage(
+      identifier,
+      'did:web:dev-didcomm-mediator.herokuapp.com',
+    )
+
+    const stored = await agent?.dataStoreSaveMessage({ message })
+    console.log('stored?: ', stored)
+
+    const packedMessage = await agent?.packDIDCommMessage({
+      packing: 'authcrypt',
+      message,
+    })
+
+    // requests mediation, and then message handler adds service to DID
+    const result = await agent?.sendDIDCommMessage({
+      packedMessage,
+      messageId: message.id,
+      recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
+    })
+
+    console.log('result?: ', result)
+  }
+
   const handleAddEncryptionKey = async () => {
     setAddingKey(true)
     try {
@@ -57,6 +81,10 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
       })
       queryClient.invalidateQueries(['managedDid', {did: identifier, agentID: localAgent?.context.id}])
       queryClient.invalidateQueries(['identifier', {did: identifier, agentID: localAgent?.context.id}])
+
+      if (hasDIDCommService) {
+        await sendMediationRequest()
+      }
   
     } catch (e: any) {
       notification.error({ message: e.message })
@@ -76,27 +104,10 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
         },
       })
 
-      const message = createMediateRequestMessage(
-        identifier,
-        'did:web:dev-didcomm-mediator.herokuapp.com',
-      )
+      if (hasDIDCommKeys) {
+        await sendMediationRequest()
+      }
 
-      const stored = await agent?.dataStoreSaveMessage({ message })
-      console.log('stored?: ', stored)
-
-      const packedMessage = await agent?.packDIDCommMessage({
-        packing: 'authcrypt',
-        message,
-      })
-
-      // requests mediation, and then message handler adds service to DID
-      const result = await agent?.sendDIDCommMessage({
-        packedMessage,
-        messageId: message.id,
-        recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
-      })
-
-      console.log('result?: ', result)
     } catch (e: any) {
       notification.error({ message: e.message })
     }
