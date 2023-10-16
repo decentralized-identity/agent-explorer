@@ -5,12 +5,13 @@ import { useQuery } from 'react-query'
 
 type Props = {
   onSuccess: () => void
+  url?: string
 }
 
-export const Connect: React.FC<Props> = ({ onSuccess }) => {
+export const Connect: React.FC<Props> = ({ onSuccess, url }) => {
   const { addAgentConfig } = useVeramo()
   const [name, setName] = useState<string>()
-  const [schemaUrl, setSchemaUrl] = useState<string>()
+  const [schemaUrl, setSchemaUrl] = useState<string | undefined>(url)
   const [agentUrl, setAgentUrl] = useState<string>('')
   const [apiKey, setApiKey] = useState<string>()
 

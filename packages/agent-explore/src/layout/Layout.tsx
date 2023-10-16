@@ -136,6 +136,7 @@ const Layout = () => {
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/settings/agents" element={<Agents />} />
+          <Route path="/settings/agents/:schema" element={<Agents />} />
           <Route path="/settings/appearance" element={<Appearance />} />
           <Route path="/settings/plugins" element={<Plugins />} />
           <Route path="/settings/web3" element={<Web3 />} />
