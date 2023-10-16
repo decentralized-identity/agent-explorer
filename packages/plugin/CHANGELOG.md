@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.58.0](https://github.com/veramolabs/agent-explorer/compare/v1.57.0...v1.58.0) (2023-10-16)
+
+
+### Features
+
+* BrainShare plugin enabled by default ([#196](https://github.com/veramolabs/agent-explorer/issues/196)) ([6754533](https://github.com/veramolabs/agent-explorer/commit/67545334be31e1e6fd9a93a96c94f621e0650af5))
+
+
+
+
+
 ## [1.56.1](https://github.com/veramolabs/agent-explorer/compare/v1.56.0...v1.56.1) (2023-10-16)
 
 **Note:** Version bump only for package @veramo-community/agent-explorer-plugin
