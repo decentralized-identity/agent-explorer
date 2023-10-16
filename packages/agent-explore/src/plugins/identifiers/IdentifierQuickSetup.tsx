@@ -73,6 +73,9 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
       const key = await localAgent?.keyManagerCreate({
         kms: 'local',
         type: 'X25519',
+        meta: {
+          did: identifier.did
+        }
       })
       await localAgent?.didManagerAddKey({
         did: identifier,
