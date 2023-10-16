@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDManager, IKeyManager, IResolver } from '@veramo/core-types'
 import { createMediateRequestMessage } from '@veramo/did-comm'
+import { shortId } from '@veramo-community/agent-explorer-plugin'
 
 interface IdentifierQuickSetupProps {
   identifier: string
@@ -34,14 +35,24 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
   )
 
 
-  console.log({managedDID})
-  const hasDIDCommKeys =  useMemo(() => !!managedDID?.keys?.find(
-    (key) => key.type === 'X25519' || key.type === 'Ed25519'
-  ), [managedDID])
 
-  const hasDIDCommService = useMemo(() => !!data?.didDocument?.service?.find(
-    (s) => s.type === 'DIDCommMessaging'
-  ), [data])
+  const {hasDIDCommKeys, key} =  useMemo(() => 
+    {
+      const key = managedDID?.keys?.find((key) => key.type === 'X25519' || key.type === 'Ed25519')
+      return {
+        hasDIDCommKeys: !!key,
+        key
+      }
+    }
+  , [managedDID])
+
+  const { hasDIDCommService, service } = useMemo(() => {
+    const service = data?.didDocument?.service?.find((s) => s.type === 'DIDCommMessaging')
+    return {
+      hasDIDCommService: !!service,
+      service
+    }
+  }, [data])
 
   const sendMediationRequest = async () => {
     const message = createMediateRequestMessage(
@@ -139,6 +150,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
           <List.Item.Meta
             avatar={hasDIDCommKeys ? '✅' : '❌'}
             title="Local encryption key"
+            description={shortId(key?.kid || '')}
           />
         </List.Item>
         <List.Item
@@ -154,6 +166,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
           <List.Item.Meta
             avatar={hasDIDCommService ? '✅' : '❌'}
             title="DIDComm messaging service"
+            description={String(service?.serviceEndpoint) || ''}
           />
         </List.Item>
       </List>

@@ -50,7 +50,7 @@ const IdentifierKey: React.FC<IdentifierModuleProps> = ({ item, i, did, isManage
       <List.Item.Meta
         avatar={<LockOutlined />}
         title={item.type}
-        description={shortId(item.controller)}
+        description={shortId(item.id)}
       />
       {/*item.publicKeyHex*/}
       <Modal
