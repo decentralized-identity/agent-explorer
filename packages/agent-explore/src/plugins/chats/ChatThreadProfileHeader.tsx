@@ -58,7 +58,7 @@ const ChatThreadProfileHeader: React.FC<ChatThreadProfileHeaderProps> = ({
         {lastMessage && lastMessage.type === 'veramo.io-chat-v1' && (
           <Text style={{ color: token.colorTextSecondary }}>
             {lastMessage.from === selectedDid && 'You: '}
-            {(lastMessage.data as any).message}
+            {String((lastMessage.data as any).message).substring(0, 10)}
           </Text>
         )}
       </Col>

@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router'
 export const Landing: React.FC = () => {
   const navigate = useNavigate()
   return (
-  <PageContainer>
+  <PageContainer title={false}>
     <Row>
         <Col md={6}/>
         <Col  
