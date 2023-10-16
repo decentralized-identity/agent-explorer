@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.56.4](https://github.com/veramolabs/agent-explorer/compare/v1.56.3...v1.56.4) (2023-10-16)
+
+
+### Bug Fixes
+
+* chat window counterparty contact link ([#193](https://github.com/veramolabs/agent-explorer/issues/193)) ([d9a5fa4](https://github.com/veramolabs/agent-explorer/commit/d9a5fa45b21c9888588c9b9c61edfb3c09a64ab5))
+
+
+
+
+
 ## [1.56.3](https://github.com/veramolabs/agent-explorer/compare/v1.56.2...v1.56.3) (2023-10-16)
 
 
