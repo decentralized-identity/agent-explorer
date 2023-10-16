@@ -1,6 +1,7 @@
 import React from 'react'
 import { Row, theme } from 'antd'
 const { useToken } = theme
+import { MarkDown } from '@veramo-community/agent-explorer-plugin'
 
 interface ChatBubbleProps {
   text: string
@@ -13,23 +14,24 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ text, isSender }) => {
     <Row
       style={{
         justifyContent: isSender ? 'flex-end' : 'flex-start',
-        paddingRight: 15,
-        paddingLeft: 15,
-        marginBottom: 10,
       }}
     >
       <div
         style={{
           background: isSender
-            ? token.colorPrimaryBorderHover
+            ? token.colorBgElevated
             : token.colorBgContainer,
-          padding: '10px 20px',
-          borderRadius: 20,
+          paddingLeft: token.padding,
+          paddingRight: token.padding,
+          marginTop: token.marginXS,
+          marginLeft: token.marginXS,
+          marginRight: token.marginXS,
+          borderRadius: token.borderRadius,
           boxShadow: '1px 1px 1px rgba(0,0,0,0.1)',
           color: token.colorText,
         }}
       >
-        {text}
+        <MarkDown content={text} />
       </div>
     </Row>
   )

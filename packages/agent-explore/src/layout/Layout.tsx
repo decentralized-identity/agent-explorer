@@ -1,5 +1,5 @@
 import { MenuDataItem, ProLayout } from '@ant-design/pro-components'
-import { SettingOutlined } from '@ant-design/icons'
+import { HomeOutlined, SettingOutlined } from '@ant-design/icons'
 import { Routes, Route, useLocation, Link } from 'react-router-dom'
 import { useVeramo } from '@veramo-community/veramo-react'
 import md5 from 'md5'
@@ -33,6 +33,12 @@ const Layout = () => {
 
   const mainMenuItems: MenuDataItem = []
 
+  mainMenuItems.push({
+    path: '/',
+    name: 'Discover',
+    icon: <HomeOutlined />,
+  })
+
   plugins.forEach((plugin) => {
     if (plugin.config?.enabled 
       && plugin.menuItems 
@@ -62,10 +68,6 @@ const Layout = () => {
       {
         name: 'Plugins',
         path: '/settings/plugins',
-      },
-      {
-        name: 'Web3',
-        path: '/settings/web3',
       },
       {
         name: 'Version',

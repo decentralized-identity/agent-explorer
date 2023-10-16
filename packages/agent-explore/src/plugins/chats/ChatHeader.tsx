@@ -52,7 +52,9 @@ const ChatHeader: React.FC = () => {
             ),
           )
           setAgentChatIdentifiers(didsWithDIDComm)
-          setSelectedDid(didsWithDIDComm[0].did)
+          if (didsWithDIDComm[0]) {
+            setSelectedDid(didsWithDIDComm[0].did)
+          }
         }
       },
     },
