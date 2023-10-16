@@ -88,7 +88,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
       if (hasDIDCommService) {
         await sendMediationRequest()
       }
-  
+
     } catch (e: any) {
       notification.error({ message: e.message })
     }
@@ -128,7 +128,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
       <List>
       <List.Item
           actions={[
-            <Button 
+            <Button
               type="primary"
               loading={addingKey}
               onClick={handleAddEncryptionKey}
@@ -138,12 +138,12 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
         >
           <List.Item.Meta
             avatar={hasDIDCommKeys ? '✅' : '❌'}
-            title="Local encryption key" 
+            title="Local encryption key"
           />
         </List.Item>
         <List.Item
           actions={[
-            <Button 
+            <Button
               type="primary"
               loading={addingService}
               disabled={!hasDIDCommKeys || hasDIDCommService}
@@ -153,7 +153,7 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
         >
           <List.Item.Meta
             avatar={hasDIDCommService ? '✅' : '❌'}
-            title="DIDComm messaging service" 
+            title="DIDComm messaging service"
           />
         </List.Item>
       </List>
