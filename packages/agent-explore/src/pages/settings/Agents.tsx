@@ -8,13 +8,15 @@ import {
 import { PageContainer, ProList } from '@ant-design/pro-components'
 import md5 from 'md5'
 import { Connect } from './Connect'
+import { useParams } from 'react-router'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
 export const Agents = () => {
+  const { schema } = useParams<{ schema: string }>()
   const { notification } = App.useApp()
   const { agents, removeAgent, activeAgentId, setActiveAgentId } = useVeramo()
-  const [isDrawerOpen, setDrawerOpen] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(schema ? true : false);
 
   return (
     <PageContainer
@@ -76,7 +78,7 @@ export const Agents = () => {
         onClose={() => setDrawerOpen(false)}
         open={isDrawerOpen}
       >
-        <Connect onSuccess={() => setDrawerOpen(false)}/>
+        <Connect onSuccess={() => setDrawerOpen(false)} url={schema}/>
       </Drawer>
     </PageContainer>
   )
