@@ -72,7 +72,6 @@ export const NewIdentifierForm: React.FC<NewIdentifierFormFormProps> = ({
       .then((values) => {
         form.resetFields()
         setStep(0)
-        console.log({values})
         onNewIdentifier(values)
       })
       .catch((info) => {

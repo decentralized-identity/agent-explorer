@@ -44,14 +44,14 @@ export const VeramoWeb3Provider = ({
         name: 'walletconnect',
       })
     }
-    void createWeb3Agent({ connectors }).then(setWeb3Agent)
-    queryClient.invalidateQueries({ 
-      queryKey: [
-        'identifiers', 
-        { agentId: 'web3Agent'}
-      ] 
+    void createWeb3Agent({ connectors }).then(setWeb3Agent).then(() => {
+      queryClient.invalidateQueries({ 
+        queryKey: [
+          'identifiers', 
+          { agentId: 'web3Agent'}
+        ] 
+      })
     })
-    console.log('invalidateQueries')
     return () => {
       setWeb3Agent(undefined)
     }

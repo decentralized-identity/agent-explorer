@@ -109,6 +109,10 @@ export async function createWeb3Agent({ connectors }: {
     web3Providers[info.name] = info.provider
   })
 
+  const keyStore = new KeyStoreJson(identifierDataStore)
+  const privateKeyStore = new PrivateKeyStoreJson(identifierDataStore)
+  const didStore = new DIDStoreJson(identifierDataStore)
+
   const id = 'web3Agent'
   const agent = createAgent<
     IDIDManager &
@@ -137,16 +141,14 @@ export async function createWeb3Agent({ connectors }: {
         }, { cache: true }),
       }),
       new KeyManager({
-        store: new KeyStoreJson(identifierDataStore),
+        store: keyStore,
         kms: {
-          local: new KeyManagementSystem(
-            new PrivateKeyStoreJson(identifierDataStore),
-          ),
+          local: new KeyManagementSystem(privateKeyStore),
           web3: new Web3KeyManagementSystem(web3Providers),
         },
       }),
       new DIDManager({
-        store: new DIDStoreJson(identifierDataStore),
+        store: didStore,
         defaultProvider: connectors[0]?.name,
         providers: didProviders,
       }),
@@ -179,39 +181,34 @@ export async function createWeb3Agent({ connectors }: {
     ],
   })
 
-  // commented out in https://github.com/veramolabs/agent-explorer/pull/115/files
-  // was causing locally-managed X25519 keys to be deleted on page refresh
-  // const identifiers = await agent.didManagerFind()
-  // for (const identifier of identifiers) {
-  //   if (identifier.keys.filter((key) => key.kms !== 'web3').length === 0) {
-  //     await agent.didManagerDelete({ did: identifier.did })
-  //   }
-  // }
+  const identifiers = await agent.didManagerFind()
+  const markedForClearance = new Set<string>([])
+  for (const identifier of identifiers) {
+    if (identifier.keys.filter((key) => key.kms === 'web3').length !== 0) {
+      markedForClearance.add(identifier.did)
+    }
+  }
+
+  const existingKeys = await keyStore.listKeys()
 
   for (const info of connectors) {
     if (info.accounts) {
-      console.log('nana')
       for (const account of info.accounts) {
         for (const provider of ['pkh', 'ethr']) {
           const prefix = (provider === 'pkh') ? 'did:pkh:eip155:' : 'did:ethr:0x'
           const did = (provider === 'pkh') ? `${prefix}${info.chainId}:${account}` : `${prefix}${info.chainId.toString(16)}:${account}`
 
-          let extraManagedKeys = []
-          for (const keyId in { ...identifierDataStore.keys }) {
-            if (
-              identifierDataStore.keys[keyId]?.meta?.did === did &&
-              identifierDataStore.keys[keyId].kms === 'local'
-            ) {
-              extraManagedKeys.push(identifierDataStore.keys[keyId])
+          markedForClearance.delete(did)
+
+          const extraManagedKeys: MinimalImportableKey[] = []
+          for (const key of existingKeys) {
+            if (key.meta?.did === did && key.kms === 'local') {
+              const privateKeyHex = (await privateKeyStore.getKey({ alias: key.kid }))?.privateKeyHex
+              if (privateKeyHex) {
+                extraManagedKeys.push({ ...key, privateKeyHex })
+              }
             }
           }
-          extraManagedKeys = extraManagedKeys.map((k) => {
-            const privateKeyHex = identifierDataStore.privateKeys[k.kid].privateKeyHex
-            return {
-              ...k,
-              privateKeyHex,
-            }
-          })
 
           // const controllerKeyId = `${did}#controller`
           const controllerKeyId = `${info.name}-${account}`
@@ -230,13 +227,18 @@ export async function createWeb3Agent({ connectors }: {
                   account: account.toLocaleLowerCase(),
                   algorithms: ['eth_signMessage', 'eth_signTypedData'],
                 },
-              } as MinimalImportableKey,
+              },
               ...extraManagedKeys,
             ],
           })
         }
       }
     }
+  }
+
+  for (const did of Array.from(markedForClearance.values())) {
+    // didStore delete does not remove the keys, just the mapping, which can be recreated later
+    await didStore.deleteDID({ did })
   }
 
   return agent
