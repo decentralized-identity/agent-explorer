@@ -50,7 +50,7 @@ export const IdentifierProfile: React.FC<IdentifierProfileProps> = ({
     </Col>
   </Row>)
 
-  if (hidePopover)
+  if (hidePopover) return content
 
   return (
     <IdentifierPopover did={did}>
