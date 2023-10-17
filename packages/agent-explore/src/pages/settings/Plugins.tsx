@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Input, List, Space, Switch, App, Drawer, Typography } from 'antd'
+import { Button, Input, List, Space, Switch, App, Drawer, Typography, Popover } from 'antd'
 import { DeleteOutlined, MenuOutlined, PlusOutlined} from '@ant-design/icons'
 import { usePlugins } from '@veramo-community/agent-explorer-plugin'
 import { PageContainer } from '@ant-design/pro-components'
@@ -46,7 +46,8 @@ const SortableItem = ({ item }: { item: IAgentExplorerPlugin}) => {
       actions={actions}
     ><List.Item.Meta
     title={item.name}
-    description={item.description}
+    description={<Popover content={`${item.config?.url}${item.config?.commitId  ? ` @  ${item.config?.commitId}` : ''}`}>{item.description}</Popover>}
+
   />
   </List.Item>
   );
@@ -136,7 +137,7 @@ export const Plugins = () => {
                     ]}
                     ><List.Item.Meta
                     title={item.name}
-                    description={item.description}
+                    description={<Popover content={`${item.config?.url}${item.config?.commitId  && ` @  ${item.config?.commitId}`}`}>{item.description}</Popover>}
                 />
               </List.Item>}
               />

@@ -74,13 +74,17 @@ const PluginProvider = (props: PluginProviderProps) => {
           }
         } else {
           try {
-            const module = await import(/* webpackIgnore: true */ config.url)
+            let url = config.url
+            if (config.url.startsWith('github://')) {
+              url = `https://cdn.jsdelivr.net/gh/${config.url.replace('github://', '')}@${config.commitId}/dist/plugin.js`
+            }
+            const module = await import(/* webpackIgnore: true */ url)
             const plugin = module.default.init() as IAgentExplorerPlugin
             plugin.config = config
             result.push(plugin)
             //FIXME
             if (plugin.hasCss && config.enabled) {
-              const cssUrl = config.url.replace('plugin.js', 'plugin.css')
+              const cssUrl = url.replace('plugin.js', 'plugin.css')
               try {
                 const cssResponse = await fetch(cssUrl)
                 if (cssResponse.ok) {

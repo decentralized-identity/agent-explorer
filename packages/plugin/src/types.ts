@@ -6,6 +6,7 @@ import { Components } from 'react-markdown'
 import { PluggableList } from 'unified'
 export type IAgentExplorerPluginConfig = {
   url: string;
+  commitId?: string;
   enabled: boolean;
 }
 
