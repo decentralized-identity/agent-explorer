@@ -7,6 +7,7 @@
   "scripts": {
     "build": "pnpm -r build",
     "test": "pnpm -r test",
+    "update-community-plugins": "node ./update-community-plugins.js",
     "upgrade-veramo:next": "pnpm -r upgrade-veramo:next",
     "publish:latest": "lerna publish --conventional-commits --include-merged-tags --create-release github --yes --dist-tag latest",
     "publish:next": "lerna publish --conventional-prerelease --force-publish --canary --no-git-tag-version --include-merged-tags --preid next --pre-dist-tag next --yes"

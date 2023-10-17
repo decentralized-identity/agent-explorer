@@ -5,7 +5,7 @@ import { useQueryClient } from 'react-query'
 import { ICredentialRequestInput, Issuer } from '@veramo/selective-disclosure'
 import { CaretDownOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { v4 as uuidv4 } from 'uuid'
-import DIDDiscoveryBar from '../../components/DIDDiscoveryBar'
+import { DIDDiscoveryBar } from '@veramo-community/agent-explorer-plugin'
 
 
 

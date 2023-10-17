@@ -1,8 +1,8 @@
 import React from 'react'
-import { Typography, Input, Space, Col, Row, Avatar } from 'antd'
-
+import { Typography, Space, Col, Row, Avatar } from 'antd'
 import { PageContainer } from '@ant-design/pro-components'
 import { useNavigate } from 'react-router'
+import { DIDDiscoveryBar } from '@veramo-community/agent-explorer-plugin'
 
 export const Landing: React.FC = () => {
   const navigate = useNavigate()
@@ -26,20 +26,16 @@ export const Landing: React.FC = () => {
                 Start by searching for a DID
               </Typography.Text>
 
-              <Input.Search
-                  // placeholder="did:web:staging.community.veramo.io"
-                  defaultValue={'did:web:staging.community.veramo.io'}
-                  onSearch={(value) => navigate('/contacts/' + value)}
-                  style={{ width: '100%', marginBottom: 20 }}
-                />
+              <DIDDiscoveryBar
+                placeholder='did:web:staging.community.veramo.io'
+                handleSelect={(value: any) => {
+                  navigate('/contacts/' + value)
+                }}
+              />
             </Space>
-            
           </Col>
         <Col md={6}/>
         </Row>
-
-
-
   </PageContainer>
 )}
 

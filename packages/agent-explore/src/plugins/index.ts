@@ -8,6 +8,7 @@ import Credentials  from './credentials'
 import Requests  from './requests'
 import Chats  from './chats'
 import Profile  from './profile'
+import { communityPlugins } from './community'
 
 const corePlugins: IPlugin[] = [
   Profile,
@@ -22,5 +23,12 @@ const corePlugins: IPlugin[] = [
 ]
 
 export function getcorePlugins(): IAgentExplorerPlugin[] {
-  return corePlugins.map(plugin => plugin.init())
+  return [
+    // FIXME: Temporary workaround
+    communityPlugins[0], 
+    communityPlugins[1], 
+    communityPlugins[2], 
+    communityPlugins[3], 
+    ...corePlugins.map(plugin => plugin.init())
+  ]
 }

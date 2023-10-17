@@ -324,6 +324,9 @@ importers:
       '@veramo/data-store':
         specifier: 5.5.4-next.20
         version: 5.5.4-next.20(ts-node@10.9.1)
+      '@veramo/did-discovery':
+        specifier: 5.5.4-next.20
+        version: 5.5.4-next.20
       '@veramo/utils':
         specifier: 5.5.4-next.20
         version: 5.5.4-next.20
