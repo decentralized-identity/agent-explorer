@@ -45,7 +45,8 @@ const pluginList = plugins.map(plugin => {
   console.log(`Size: ${size}`)
   return {
     config: {
-      url: `https://cdn.jsdelivr.net/gh/${plugin.repo}@${commitId}/dist/plugin.js`,
+      url: `github://${plugin.repo}`,
+      commitId,
       enabled: true,
     },
     name: plugin.name,

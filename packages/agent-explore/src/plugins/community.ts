@@ -3,7 +3,8 @@ import { IAgentExplorerPlugin } from "@veramo-community/agent-explorer-plugin";
 export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
-      "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-brainshare@b748d7d5ff45014a1dc6171d5f58a26eb678fa76/dist/plugin.js",
+      "url": "github://veramolabs/agent-explorer-plugin-brainshare",
+      "commitId": "0b028375c2379c8f4039f2f99a303d082b80a099",
       "enabled": true
     },
     "name": "Brain share",
@@ -14,7 +15,8 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     "config": {
-      "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-gitcoin-passport@3f6770aa1b5a85f157611e90043419869b12ab45/dist/plugin.js",
+      "url": "github://veramolabs/agent-explorer-plugin-gitcoin-passport",
+      "commitId": "3f6770aa1b5a85f157611e90043419869b12ab45",
       "enabled": true
     },
     "name": "Gitcoin passport",
@@ -25,7 +27,8 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     "config": {
-      "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-kudos@c327b6ae48d5706ec5ac413c756a7e39142e98a1/dist/plugin.js",
+      "url": "github://veramolabs/agent-explorer-plugin-kudos",
+      "commitId": "c327b6ae48d5706ec5ac413c756a7e39142e98a1",
       "enabled": true
     },
     "name": "Kudos",
@@ -36,7 +39,8 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     "config": {
-      "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-graph-view@29730b692843e73453a35b96fdd5a3bb733f01b4/dist/plugin.js",
+      "url": "github://veramolabs/agent-explorer-plugin-graph-view",
+      "commitId": "29730b692843e73453a35b96fdd5a3bb733f01b4",
       "enabled": true
     },
     "name": "Graph View",
@@ -47,7 +51,8 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     "config": {
-      "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-social-feed@7612fc916087802f0ebf1f7589879fa14d3b717c/dist/plugin.js",
+      "url": "github://veramolabs/agent-explorer-plugin-social-feed",
+      "commitId": "7612fc916087802f0ebf1f7589879fa14d3b717c",
       "enabled": true
     },
     "name": "Social Feed",
@@ -58,7 +63,8 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     "config": {
-      "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-developer-tools@439ed9160c383447b9844ed71b25ddf238d0d3ff/dist/plugin.js",
+      "url": "github://veramolabs/agent-explorer-plugin-developer-tools",
+      "commitId": "439ed9160c383447b9844ed71b25ddf238d0d3ff",
       "enabled": true
     },
     "name": "Developer Tools",
@@ -69,7 +75,8 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     "config": {
-      "url": "https://cdn.jsdelivr.net/gh/simonas-notcat/agent-explorer-plugin-codyfight@326b878ecbc2000d1d3cdd9827a51eed569408bf/dist/plugin.js",
+      "url": "github://simonas-notcat/agent-explorer-plugin-codyfight",
+      "commitId": "326b878ecbc2000d1d3cdd9827a51eed569408bf",
       "enabled": true
     },
     "name": "Codyfight",
