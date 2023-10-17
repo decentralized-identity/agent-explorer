@@ -9,3 +9,4 @@ export { VerifiableCredentialComponent } from './components/VerifiableCredential
 export { IdentifierTabs } from './components/IdentifierTabs.js'
 export * from './agent-plugins/IdentifierProfilePlugin.js'
 export * from './components/MarkDown.js'
+export * from './components/DIDDiscoveryBar.js'

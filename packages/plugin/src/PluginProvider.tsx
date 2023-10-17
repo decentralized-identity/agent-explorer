@@ -23,10 +23,7 @@ const PluginContext = createContext<PluginContextType>({
 function getStoredPluginConfigs(corePlugins: any[]): IAgentExplorerPluginConfig[] {
   let result: IAgentExplorerPluginConfig[] = []
 
-  const corePluginConfigs = ([{
-    "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-brainshare@main/dist/plugin.js",
-    "enabled": true
-  }]).concat(corePlugins.map((p) => (p.config as IAgentExplorerPluginConfig)))
+  const corePluginConfigs = corePlugins.map((p) => (p.config as IAgentExplorerPluginConfig))
 
   const str = localStorage.getItem('pluginConfigs')
   if (str) {

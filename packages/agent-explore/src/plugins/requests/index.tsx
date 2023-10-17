@@ -9,7 +9,7 @@ const Plugin: IPlugin = {
     init: () => {
         return {
           config: {
-            enabled: true,
+            enabled: false,
             url: 'core://requests',
           },
           name: 'Requests',

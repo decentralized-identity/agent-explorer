@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Input, AutoComplete } from 'antd'
-import { useChat } from '../context/ChatProvider'
+import { useChat } from '../../context/ChatProvider'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDDiscovery } from '@veramo/did-discovery'
 import { SelectProps } from 'antd/es/select'

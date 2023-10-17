@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "upgrade-veramo:next": "pnpm add @veramo/core@next @veramo/core-types@next @veramo/data-store@next @veramo/utils@next @veramo-community/veramo-react@latest"
+    "upgrade-veramo:next": "pnpm add @veramo/core@next @veramo/core-types@next @veramo/data-store@next @veramo/utils@next @veramo/did-discovery@next @veramo-community/veramo-react@latest"
   },
   "files": [
     "build",
@@ -33,6 +33,7 @@
     "@veramo/core": "5.5.4-next.20",
     "@veramo/core-types": "5.5.4-next.20",
     "@veramo/data-store": "5.5.4-next.20",
+    "@veramo/did-discovery": "5.5.4-next.20",
     "@veramo/utils": "5.5.4-next.20",
     "antd": "~5.8.4",
     "date-fns": "^2.30.0",

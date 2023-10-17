@@ -8,7 +8,7 @@ const Plugin: IPlugin = {
     init: () => {
         return {
           config: {
-            enabled: true,
+            enabled: false,
             url: 'core://log',
           },
           name: 'Audit Log',
