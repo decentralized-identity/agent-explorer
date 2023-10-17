@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.61.3](https://github.com/veramolabs/agent-explorer/compare/v1.61.2...v1.61.3) (2023-10-17)
+
+
+### Bug Fixes
+
+* did tab layout ([#202](https://github.com/veramolabs/agent-explorer/issues/202)) ([93feb2a](https://github.com/veramolabs/agent-explorer/commit/93feb2afa2fcece9bcafcb877762c705b44b86f3))
+
+
+
+
+
 ## [1.61.1](https://github.com/veramolabs/agent-explorer/compare/v1.61.0...v1.61.1) (2023-10-17)
 
 
