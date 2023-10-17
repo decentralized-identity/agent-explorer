@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.60.0](https://github.com/veramolabs/agent-explorer/compare/v1.59.0...v1.60.0) (2023-10-17)
+
+
+### Features
+
+* **plugin:** discovery bar ([#199](https://github.com/veramolabs/agent-explorer/issues/199)) ([5618086](https://github.com/veramolabs/agent-explorer/commit/561808681c680b126775cfbb2b59b6e01b0065f6))
+
+
+
+
+
 # [1.59.0](https://github.com/veramolabs/agent-explorer/compare/v1.58.0...v1.59.0) (2023-10-16)
 
 
