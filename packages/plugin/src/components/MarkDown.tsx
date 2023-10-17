@@ -68,8 +68,12 @@ function remarkCredentialPlugin(credential: UniqueVerifiableCredential) {
 export const CredentialLoader = ({ hash, did, context } : { hash: string, did?: string, context?: any }) => {
   
     const [credential, setCredential] = useState<UniqueVerifiableCredential>()
-    const { agent } = useVeramo<IDataStore>()
-  
+    const { agents } = useVeramo<IDataStore>()
+    
+    const agent = React.useMemo(() => {
+      return agents.find((agent) => agent.context.id === "web3Agent")
+    }, [agents])
+
     useEffect(() => {
       const load = async () => {
         let verifiableCredential
