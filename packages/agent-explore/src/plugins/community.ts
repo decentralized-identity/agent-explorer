@@ -25,7 +25,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   },
   {
     "config": {
-      "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-kudos@48c5797479464cad97433aa911a1c866d77b25c2/dist/plugin.js",
+      "url": "https://cdn.jsdelivr.net/gh/veramolabs/agent-explorer-plugin-kudos@c327b6ae48d5706ec5ac413c756a7e39142e98a1/dist/plugin.js",
       "enabled": true
     },
     "name": "Kudos",
