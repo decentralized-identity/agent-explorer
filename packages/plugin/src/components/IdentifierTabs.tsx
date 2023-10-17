@@ -47,10 +47,10 @@ const ResponsiveContainer: React.FC<PropsWithChildren> = ({
 }) => {
   return (<Row>
     <Col 
-      md={3}
+      lg={3}
     />
     <Col  
-      md={18}
+      lg={18}
       sm={24}
       xs={24}
       style={{position: 'relative'}}
@@ -58,7 +58,7 @@ const ResponsiveContainer: React.FC<PropsWithChildren> = ({
         {children} 
       </Col>
       <Col 
-        md={3}
+        lg={3}
       />
   </Row>)
 }
