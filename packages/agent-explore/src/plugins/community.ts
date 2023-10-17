@@ -4,7 +4,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-brainshare",
-      "commitId": "2801415737f356dac5098f8cef14a1e30ce61901",
+      "commitId": "0b028375c2379c8f4039f2f99a303d082b80a099",
       "enabled": true
     },
     "name": "Brain share",

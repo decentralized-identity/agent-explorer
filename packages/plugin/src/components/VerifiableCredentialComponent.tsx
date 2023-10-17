@@ -83,9 +83,10 @@ export const VerifiableCredentialComponent = (
       boxShadow: '0px 0px 2px ' + token.colorBorder,
       borderLeft: '2px solid ' + color,
       backgroundColor: token.colorBgElevated,
+      overflow: 'hidden'
     }}>
 
-    {credential && <div className="" >
+    {credential && <div>
       
       
       <Row align="top" 
