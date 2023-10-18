@@ -31,7 +31,7 @@ jobs:
           node-version: 18
           cache: 'pnpm'
       - run: pnpm install
-      - run: pnpm run build:js
+      - run: pnpm run -r build:js
       - run: pnpm run test
       - name: 'Setup git coordinates'
         run: |
