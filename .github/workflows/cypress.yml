@@ -46,6 +46,7 @@ jobs:
           working-directory: packages/agent-explore
           start: pnpm run -r dev
           wait-on: 'http://localhost:3000' # Waits for above
+          wait-on-timeout: 120 # Waits for above
           # Records to Cypress Cloud
           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
           record: true
