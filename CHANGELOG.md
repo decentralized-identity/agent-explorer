@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.62.0](https://github.com/veramolabs/agent-explorer/compare/v1.61.6...v1.62.0) (2023-10-18)
+
+
+### Bug Fixes
+
+* build-test-publish-on-push typo ([be7371b](https://github.com/veramolabs/agent-explorer/commit/be7371bb65da0b6c8e383e806c51d5cf31967d4c))
+
+
+### Features
+
+* cypress testing ([#206](https://github.com/veramolabs/agent-explorer/issues/206)) ([a693df2](https://github.com/veramolabs/agent-explorer/commit/a693df2b54a73652a1c620fbdc3fdf8962cee268))
+
+
+
+
+
 ## [1.61.6](https://github.com/veramolabs/agent-explorer/compare/v1.61.5...v1.61.6) (2023-10-17)
 
 
