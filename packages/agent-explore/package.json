@@ -34,6 +34,7 @@
   "scripts": {
     "dev": "craco start",
     "build": "craco build",
+    "build:js": "tsc",
     "test": "craco test --watchAll=false",
     "release": "semantic-release",
     "agent-explore": "./bin/bin.js",
