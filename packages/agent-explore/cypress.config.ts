@@ -10,5 +10,4 @@ export default defineConfig({
       // implement node event listeners here
     },
   },
-  responseTimeout: 60000,
 });
