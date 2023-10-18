@@ -24,6 +24,16 @@ jobs:
           node-version: 18
           cache: 'pnpm'
 
+      - uses: actions/cache@v3
+        id: cache-cypress-binary
+        with:
+          path: /home/runner/.cache/Cypress
+          key: ${{ runner.os }}-cypress-bin-${{ hashFiles('**/pnpm-lock.yaml') }}
+
+      - name: Install Dependencies
+        if: steps.cache-cypress-binary.outputs.cache-hit != 'true'
+        run: pnpm install --force
+
       - run: pnpm install
       - run: pnpm run -r build:js
 
