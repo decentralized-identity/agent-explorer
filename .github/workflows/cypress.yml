@@ -35,6 +35,7 @@ jobs:
           # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
           start: pnpm run -r dev
           wait-on: 'http://localhost:3000' # Waits for above
+          timeout: 300000 # 5 minutes
           # Records to Cypress Cloud
           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
           record: true
