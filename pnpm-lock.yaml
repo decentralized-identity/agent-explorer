@@ -8,9 +8,6 @@ importers:
 
   .:
     devDependencies:
-      cypress:
-        specifier: 13.3.1
-        version: 13.3.1
       lerna:
         specifier: 7.3.0
         version: 7.3.0
@@ -204,6 +201,9 @@ importers:
       crypto:
         specifier: npm:crypto-browserify@^3.12.0
         version: /crypto-browserify@3.12.0
+      cypress:
+        specifier: 13.3.1
+        version: 13.3.1
       date-fns:
         specifier: ^2.30.0
         version: 2.30.0
