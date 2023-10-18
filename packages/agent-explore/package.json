@@ -34,7 +34,9 @@
   "scripts": {
     "dev": "craco start",
     "build": "craco build",
+    "build:js": "tsc",
     "test": "craco test --watchAll=false",
+    "test:cypress": "cypress run",
     "release": "semantic-release",
     "agent-explore": "./bin/bin.js",
     "upgrade-veramo": "pnpm add -D @veramo/core @veramo/core-types @veramo/did-discovery @veramo/credential-w3c @veramo/credential-ld @veramo/credential-eip712 @veramo/data-store @veramo/did-comm @veramo/did-jwt @veramo/did-resolver @veramo/message-handler @veramo/remote-client @veramo/selective-disclosure @veramo/credential-eip712 @veramo/data-store-json @veramo/did-manager @veramo/kms-web3 @veramo/key-manager @veramo/did-provider-ethr @veramo/utils @veramo/did-provider-peer @veramo/did-provider-key @veramo/did-provider-jwk @veramo/did-provider-pkh @veramo/kms-local @veramo-community/veramo-react@latest",
@@ -137,6 +139,7 @@
     "buffer": "^6.0.3",
     "cross-env": "^7.0.3",
     "crypto": "npm:crypto-browserify@^3.12.0",
+    "cypress": "13.3.1",
     "date-fns": "^2.30.0",
     "did-resolver": "^4.1.0",
     "electron": "26.2.2",
