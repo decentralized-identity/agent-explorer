@@ -34,8 +34,8 @@ jobs:
           # Starts web server for E2E tests - replace with your own server invocation
           # https://docs.cypress.io/guides/continuous-integration/introduction#Boot-your-server
           working-directory: packages/agent-explore
-          start: pnpm run -r dev
-          wait-on: 'http://localhost:3000' # Waits for above
+          start: pnpm agent-explore serve --port 8080
+          wait-on: 'http://localhost:8000' # Waits for above
           # Records to Cypress Cloud
           # https://docs.cypress.io/guides/cloud/projects#Set-up-a-project-to-record
           record: true
