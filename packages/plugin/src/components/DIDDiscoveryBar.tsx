@@ -50,6 +50,7 @@ export const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({
       defaultValue={placeholder}
     >
       <Input.Search
+        id='did-discovery-bar'
         onSearch={handleSelect}
         style={{
           flex: 1,

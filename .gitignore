@@ -27,3 +27,4 @@ yarn-error.log*
 
 .idea/
 tsconfig.tsbuildinfo
+packages/agent-explore/cypress/videos/*
