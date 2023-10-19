@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.64.0](https://github.com/veramolabs/agent-explorer/compare/v1.63.1...v1.64.0) (2023-10-19)
+
+
+### Features
+
+* demo with gitcoin passport ([#209](https://github.com/veramolabs/agent-explorer/issues/209)) ([e207d54](https://github.com/veramolabs/agent-explorer/commit/e207d54ee7e7ca1dc687cd4115c50ee7648077c6))
+
+
+
+
+
 ## [1.63.1](https://github.com/veramolabs/agent-explorer/compare/v1.63.0...v1.63.1) (2023-10-19)
 
 
