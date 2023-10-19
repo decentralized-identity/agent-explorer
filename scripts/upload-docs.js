@@ -13,11 +13,11 @@ const destPath = path.join(__dirname, '../docs/videos');
 videos.forEach((video) => {
   console.log('Cropping video: ', video)
   const videoName = video.split('.')[0];
-  // ffmpeg -i input.mp4 -c:v libvpx -b:v 1M -c:a libopus -b:a 128k output.webm
+  // ffmpeg -i input.mp4 -c:v libvpx -b:v 1M -c:a libopus -b:a 128k output.mp4
 
-  const command = `ffmpeg -y -hide_banner -loglevel error -i ${videosPath}/${video} -ss 3 -vf "crop=960:720:(in_w-960)/2:0" ${destPath}/${videoName}.webm`;
+  const command = `ffmpeg -y -hide_banner -loglevel error -i ${videosPath}/${video} -ss 3 -vf "crop=960:720:(in_w-960)/2:0" ${destPath}/${videoName}.mp4`;
   execSync(command);
-  const size = String(execSync(`du -sh ${destPath}/${videoName}.webm`)).slice(0, -1)
+  const size = String(execSync(`du -sh ${destPath}/${videoName}.mp4`)).slice(0, -1)
   console.log(`Size: ${size}`)
 });
 
