@@ -1,5 +1,4 @@
 You have to create an identifier before creating posts
 
 
-![create-bs-posts](./videos/create-bs-posts.mp4)
-![create-bs-posts](./videos/create-bs-posts.png)
+![create-bs-posts](https://agent-explorer.s3.amazonaws.com/create-bs-posts.mp4)

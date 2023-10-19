@@ -2,7 +2,7 @@
 
 The Veramo [Agent Explorer](./Agent%20explorer.md) provides a UI for interacting with Veramo agents and other [[did:web:staging.community.veramo.io/Qmd8UQnE1JqG7bXmapxxEueECdxqGS5z1qrPUADmxstPSz|Decentralized Identifiers (DIDs)]] and [[did:web:staging.community.veramo.io/QmVFr9c2of9PRhGY6Uec8bWd7GXj87JPPAStrt7GVsCFme|W3C Verifiable Credential]] tech.
 
-![disovery](https://github.com/veramolabs/agent-explorer/raw/feat/docs/docs/videos/discovery.webm)
+![disovery](https://agent-explorer.s3.amazonaws.com/discovery.mp4)
 
 
 ## Agents
