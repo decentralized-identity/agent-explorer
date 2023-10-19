@@ -1,6 +1,6 @@
-The Veramo Agent Explorer provides a UI for interacting with Veramo agents and other [[did:web:staging.community.veramo.io/Qmd8UQnE1JqG7bXmapxxEueECdxqGS5z1qrPUADmxstPSz|Decentralized Identifiers (DIDs)]] and [[did:web:staging.community.veramo.io/QmVFr9c2of9PRhGY6Uec8bWd7GXj87JPPAStrt7GVsCFme|W3C Verifiable Credential]] tech.
+The Veramo Agent Explorer provides a UI for interacting with Veramo agents and other Decentralized Identifiers (DIDs) and W3C Verifiable Credential tech.
 
-![disovery](https://agent-explorer.s3.amazonaws.com/discovery.mp4)
+![disovery](https://agent-explorer.s3.amazonaws.com/discovery.cy.ts.mp4)
 
 ## Features
 

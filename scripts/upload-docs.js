@@ -21,5 +21,39 @@ videos.forEach((video) => {
   console.log(`Size: ${size}`)
 });
 
-
 console.log('Done cropping videos');
+
+// upload videos to S3
+const AWS = require('aws-sdk');
+
+// use API key from ENV
+
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+});
+const s3 = new AWS.S3();
+const bucketName = 'agent-explorer';
+// const bucketUrl = `https://${bucketName}.s3.amazonaws.com`;
+
+videos.forEach((video) => {
+  const videoName = video.split('.')[0];
+  const filePath = `${destPath}/${videoName}.mp4`;
+  const fileContent = fs.readFileSync(filePath);
+
+  const params = {
+    Bucket: bucketName,
+    Key: video,
+    Body: fileContent,
+    ACL: 'public-read',
+    ContentType: 'video/mp4',
+  };
+
+  s3.upload(params, (err, data) => {
+    if (err) {
+      throw err;
+    }
+    console.log(`File uploaded successfully. ${data.Location}`);
+  });
+}
+);

@@ -16,6 +16,7 @@
     "publish:next": "lerna publish --conventional-prerelease --force-publish --canary --no-git-tag-version --include-merged-tags --preid next --pre-dist-tag next --yes"
   },
   "devDependencies": {
+    "aws-sdk": "^2.1476.0",
     "lerna": "7.3.0",
     "lerna-changelog": "2.2.0"
   }
