@@ -1,7 +1,7 @@
 describe('Create identifier and BrainShare post', () => {
   it('passes', () => {
     cy.viewport('ipad-mini', 'landscape')
-    cy.visit('http://localhost:3456/')
+    cy.visit('http://localhost:3000/')
 
     cy.wait(2000)
     cy.contains('Identifiers').click()

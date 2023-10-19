@@ -39,11 +39,12 @@ const bucketName = 'agent-explorer';
 videos.forEach((video) => {
   const videoName = video.split('.')[0];
   const filePath = `${destPath}/${videoName}.mp4`;
+
   const fileContent = fs.readFileSync(filePath);
 
   const params = {
     Bucket: bucketName,
-    Key: video,
+    Key: `videos/${videoName}.mp4`,
     Body: fileContent,
     ACL: 'public-read',
     ContentType: 'video/mp4',

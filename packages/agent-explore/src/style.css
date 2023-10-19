@@ -7,3 +7,7 @@
 .ant-upload {
   overflow: hidden;
 }
+video {
+  max-height: 640px;
+  max-width: 50vw;
+}

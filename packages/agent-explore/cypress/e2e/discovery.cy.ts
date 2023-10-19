@@ -1,7 +1,7 @@
 describe('Discovery shows BrainShare home page', () => {
   it('passes', () => {
     cy.viewport('ipad-mini', 'landscape')
-    cy.visit('http://localhost:3456/')
+    cy.visit('http://localhost:3000/')
     cy.wait(2000)
 
     cy.get('#rc_select_0').click().type('{enter}')

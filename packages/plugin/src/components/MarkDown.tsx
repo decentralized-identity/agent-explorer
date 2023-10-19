@@ -7,6 +7,7 @@ import { usePlugins } from '../PluginProvider.js';
 import { v4 } from 'uuid'
 import Markdown, { Components } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
+import rehypeVideo from 'rehype-video'
 import { PluggableList } from 'unified'
 
 export const MarkDown = (
@@ -39,12 +40,11 @@ export const MarkDown = (
       const [ start, end ] = context.textRange.split('-')
       str = content.substring(start, end)
     }
-
     return (
       <>
         <Markdown 
           remarkPlugins={remarkPlugins}
-          rehypePlugins={[[remarkCredentialPlugin, credential]]}
+          rehypePlugins={[[remarkCredentialPlugin, credential], rehypeVideo]}
           components={components}
           >{str}</Markdown>
         {!showAll && context?.textRange && <Button type='text' size='small' onClick={() => setShowAll(true)}>Show more</Button>}
