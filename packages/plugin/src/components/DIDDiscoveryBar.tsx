@@ -43,13 +43,15 @@ export const DIDDiscoveryBar: React.FC<DIDDiscoveryBarProps> = ({
 
     <AutoComplete
       dropdownMatchSelectWidth={true}
-      style={{ width: '100%', paddingRight: 20 }}
+      style={{ width: '100%'}}
       options={options}
       onSelect={handleSelect}
       onSearch={handleSearch}
       defaultValue={placeholder}
+      
     >
       <Input.Search
+        enterButton="Search"
         id='did-discovery-bar'
         onSearch={handleSelect}
         style={{
