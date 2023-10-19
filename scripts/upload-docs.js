@@ -13,10 +13,13 @@ const destPath = path.join(__dirname, '../docs/videos');
 videos.forEach((video) => {
   console.log('Cropping video: ', video)
   const videoName = video.split('.')[0];
-  // ffmpeg -i input.mp4 -c:v libvpx -b:v 1M -c:a libopus -b:a 128k output.mp4
-
-  const command = `ffmpeg -y -hide_banner -loglevel error -i ${videosPath}/${video} -ss 3 -vf "crop=960:720:(in_w-960)/2:0" ${destPath}/${videoName}.mp4`;
+  const length = String(execSync(`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 ${videosPath}/${video}`))
+    .slice(0, -1)
+  console.log(`Original length: ${length} seconds`)
+  const command = `ffmpeg -y -hide_banner -loglevel error -ss 3 -to ${parseInt(length, 10) - 0.1} -i ${videosPath}/${video} -vf "crop=960:720:(in_w-960)/2:0" ${destPath}/${videoName}.mp4`;
   execSync(command);
+  const length2 = String(execSync(`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 ${destPath}/${videoName}.mp4`)).slice(0, -1)
+  console.log(`Trimmed length: ${length2}`)
   const size = String(execSync(`du -sh ${destPath}/${videoName}.mp4`)).slice(0, -1)
   console.log(`Size: ${size}`)
 });
