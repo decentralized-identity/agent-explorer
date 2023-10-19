@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.63.0](https://github.com/veramolabs/agent-explorer/compare/v1.62.0...v1.63.0) (2023-10-19)
+
+
+### Features
+
+* docs + video support ([#207](https://github.com/veramolabs/agent-explorer/issues/207)) ([37c1f18](https://github.com/veramolabs/agent-explorer/commit/37c1f189f2a89c998403a22bce5d9baa08c20829))
+
+
+
+
+
 # [1.62.0](https://github.com/veramolabs/agent-explorer/compare/v1.61.6...v1.62.0) (2023-10-18)
 
 
