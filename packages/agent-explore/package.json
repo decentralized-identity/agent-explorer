@@ -37,6 +37,7 @@
     "build:js": "tsc",
     "test": "craco test --watchAll=false",
     "test:cypress": "cypress run",
+    "test:cypress:record": "cypress run --record",
     "release": "semantic-release",
     "agent-explore": "./bin/bin.js",
     "upgrade-veramo": "pnpm add -D @veramo/core @veramo/core-types @veramo/did-discovery @veramo/credential-w3c @veramo/credential-ld @veramo/credential-eip712 @veramo/data-store @veramo/did-comm @veramo/did-jwt @veramo/did-resolver @veramo/message-handler @veramo/remote-client @veramo/selective-disclosure @veramo/credential-eip712 @veramo/data-store-json @veramo/did-manager @veramo/kms-web3 @veramo/key-manager @veramo/did-provider-ethr @veramo/utils @veramo/did-provider-peer @veramo/did-provider-key @veramo/did-provider-jwk @veramo/did-provider-pkh @veramo/kms-local @veramo-community/veramo-react@latest",

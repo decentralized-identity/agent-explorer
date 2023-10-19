@@ -45,6 +45,7 @@
     "react-markdown": "^9.0.0",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.11.2",
+    "rehype-video": "^2.0.0",
     "remark-gfm": "^4.0.0",
     "typescript": "5.2.2",
     "unified": "^11.0.3",
