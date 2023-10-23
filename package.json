@@ -1,5 +1,6 @@
 {
   "private": true,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/veramolabs/agent-explorer.git"
@@ -10,14 +11,22 @@
     "record": "pnpm cypress-record && pnpm upload-docs",
     "cypress-record": "pnpm -r test:cypress:record",
     "update-community-plugins": "node ./scripts/update-community-plugins.js",
+    "upload-videos": "node ./scripts/upload-videos.js",
     "upload-docs": "node ./scripts/upload-docs.js",
-    "upgrade-veramo:next": "pnpm -r upgrade-veramo:next",
+    "upgrade-veramo:next": "pnpm add -D -w @veramo/core@next @veramo/core-types@next @veramo/remote-client@next && pnpm -r upgrade-veramo:next",
     "publish:latest": "lerna publish --conventional-commits --include-merged-tags --create-release github --yes --dist-tag latest",
     "publish:next": "lerna publish --conventional-prerelease --force-publish --canary --no-git-tag-version --include-merged-tags --preid next --pre-dist-tag next --yes"
   },
   "devDependencies": {
+    "@veramo/core": "5.5.4-next.20",
+    "@veramo/core-types": "5.5.4-next.20",
+    "@veramo/remote-client": "5.5.4-next.20",
     "aws-sdk": "^2.1476.0",
+    "dotenv": "^16.3.1",
     "lerna": "7.3.0",
-    "lerna-changelog": "2.2.0"
+    "lerna-changelog": "2.2.0",
+    "remark-parse": "^11.0.0",
+    "remark-wiki-link": "^2.0.1",
+    "unified": "^11.0.3"
   }
 }
