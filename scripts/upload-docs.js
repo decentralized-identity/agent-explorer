@@ -131,8 +131,7 @@ const createPost = async (did, post, title) => {
 
 // create post for each file
 for (const file of updatedFiles) {
-  console.log({file})
-  // const hash = await createPost(process.env.AUTHOR_DID, file.content, file.title)
+  const hash = await createPost(process.env.AUTHOR_DID, file.content, file.title)
   // file['hash'] = hash 
 }
 
