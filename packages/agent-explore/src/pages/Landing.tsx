@@ -23,7 +23,7 @@ export const Landing: React.FC = () => {
                 </Typography.Title>
               </Space>
               <Typography.Text>
-                Start by searching for a DID
+                Start by searching for a DID 
               </Typography.Text>
 
               <DIDDiscoveryBar
