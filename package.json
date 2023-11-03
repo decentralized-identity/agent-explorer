@@ -18,15 +18,12 @@
     "publish:next": "lerna publish --conventional-prerelease --force-publish --canary --no-git-tag-version --include-merged-tags --preid next --pre-dist-tag next --yes"
   },
   "devDependencies": {
-    "@veramo/core": "5.5.4-next.20",
-    "@veramo/core-types": "5.5.4-next.20",
-    "@veramo/remote-client": "5.5.4-next.20",
+    "@veramo/core": "5.5.4-next.22",
+    "@veramo/core-types": "5.5.4-next.22",
+    "@veramo/remote-client": "5.5.4-next.22",
     "aws-sdk": "^2.1476.0",
     "dotenv": "^16.3.1",
     "lerna": "7.3.0",
-    "lerna-changelog": "2.2.0",
-    "remark-parse": "^11.0.0",
-    "remark-wiki-link": "^2.0.1",
-    "unified": "^11.0.3"
+    "lerna-changelog": "2.2.0"
   }
 }

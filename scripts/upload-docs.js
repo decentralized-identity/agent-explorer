@@ -2,10 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import { createAgent } from '@veramo/core';
 import { AgentRestClient } from '@veramo/remote-client';
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import wikiLinkPlugin from 'remark-wiki-link';
-
 import dotenv from 'dotenv';
 
 // dotenv.config();
@@ -89,7 +85,7 @@ const updatedFiles = files.map((file) => {
       const normalizedLink = link.to.replace('docs/', '')
       fileContent = fileContent.replace(
         `](./${normalizedLink})`,
-        `](${process.env.AUTHOR_DID}/${normalizedLink})`
+        `](${process.env.AUTHOR_DID}/${normalizedLink.replace('.md', '')})`
       );
     }
   });
@@ -106,7 +102,7 @@ const createPost = async (did, post, title) => {
   try {
     const credentialSubject = {
       title,
-      shouldBeIndexed: true,
+      isPublic: true,
       post
     }
 
@@ -133,60 +129,12 @@ const createPost = async (did, post, title) => {
 }
 
 
-async function createIndex(){
-  try {
-    const credentials = await agent?.dataStoreORMGetVerifiableCredentials({
-      where: [
-        { column: 'type', value: ['VerifiableCredential,BrainSharePost'] },
-        { column: 'issuer', value: [process.env.AUTHOR_DID] },
-      ],
-    })
-  
-  
-    const indexableCreds = credentials?.filter(
-      (cred) => cred.verifiableCredential.credentialSubject.shouldBeIndexed
-    )
-  
-    if (indexableCreds) {
-      const index = new Map()
-      indexableCreds.forEach((cred) => {
-        let revisions = index.get(cred.verifiableCredential.credentialSubject.title)
-        if (!revisions) {
-          revisions = []
-        }
-        revisions = [...revisions, cred.hash]
-        index.set(cred.verifiableCredential.credentialSubject.title, revisions)
-      }) 
-      const indexCred = await agent.createVerifiableCredential({
-        proofFormat: 'jwt',
-        credential: {
-          '@context': ['https://www.w3.org/2018/credentials/v1'],
-          type: ['VerifiableCredential', 'BrainShareIndex'],
-          issuer: { id: process.env.AUTHOR_DID },
-          issuanceDate: new Date().toISOString(),
-          credentialSubject: {
-            index: Object.fromEntries(index.entries())
-          },
-        },
-      })
-      console.log(indexCred)
-      if (indexCred) {
-        const hash = await agent.dataStoreSaveVerifiableCredential({verifiableCredential: indexCred})
-        console.log({hash})
-      }
-    }
-  }catch(e){
-    console.error(e)
-  }
-}
-
 // create post for each file
 for (const file of updatedFiles) {
-  const hash = await createPost(process.env.AUTHOR_DID, file.content, file.title)
-  file['hash'] = hash 
+  console.log({file})
+  // const hash = await createPost(process.env.AUTHOR_DID, file.content, file.title)
+  // file['hash'] = hash 
 }
 
 console.log(`\n\nDone creating posts`)
-createIndex()
-console.log(`\n\nCreating index`)
 
