@@ -1,13 +1,17 @@
+/* eslint-disable */
 import { Avatar, Row, Col, Button, Drawer, Menu } from 'antd'
 import React, { useState } from 'react'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { ICredentialIssuer, IDIDManager, IDataStore, IDataStoreORM, IIdentifier, TAgent } from '@veramo/core'
 import { useQueries } from 'react-query'
 import { IIdentifierProfile } from '@veramo-community/agent-explorer-plugin'
+import data from '@emoji-mart/data'
+import Picker from '@emoji-mart/react'
+import { SmileOutlined } from '@ant-design/icons'
 
 interface ReactionButtonProps {
   onAction: (did: string, emoji: string) => void
-  emoji: string
+  emoji?: string
   count?: number
 }
 
@@ -22,7 +26,9 @@ type IdentifierWithAgent = IIdentifier & {
 
 export const ReactionButton: React.FC<ReactionButtonProps> = ({ onAction, emoji, count }) => {
   const { agents } = useVeramo<ICredentialIssuer & IDataStore & IDataStoreORM & IDIDManager>()
+  const [selectedEmoji, setSelectedEmoji] = useState<string | undefined>(emoji)
   const [showDrawer, setShowDrawer] = useState(false)
+  const [showPicker, setShowPicker] = useState(false)
 
 
   const agentQueries = useQueries(
@@ -99,14 +105,22 @@ export const ReactionButton: React.FC<ReactionButtonProps> = ({ onAction, emoji,
 
   return (
       <>
-      <Button
+      {emoji && <Button
         style={{borderRadius: 20}}
         size='small'
         onClick={() => setShowDrawer(true)}
         type='text'
-        >{emoji} {count || ''}</Button>
+        >{emoji} {count || ''}</Button>}
+      {!emoji && <>
+        <Button onClick={() => setShowPicker(!showPicker)} type='text' size='small'><SmileOutlined /></Button>
+        {showPicker && <Picker data={data} onEmojiSelect={(emoji: any) => {
+          setSelectedEmoji(emoji.native)
+          setShowPicker(false)
+          setShowDrawer(true)
+        }}/>}
+      </>}
       <Drawer
-        title={`React with ${emoji}`} 
+        title={`React with ${selectedEmoji}`} 
         placement="bottom"
         closable={true}
         onClose={() => setShowDrawer(false)}
@@ -128,7 +142,9 @@ export const ReactionButton: React.FC<ReactionButtonProps> = ({ onAction, emoji,
                     key: profile.did,
                     onClick: () => {
                       setShowDrawer(false)
-                      onAction(profile.did, emoji)
+                      if(selectedEmoji) {
+                        onAction(profile.did, selectedEmoji)
+                      }
                     },
                     icon: <Avatar src={profile.picture} size={'small'}/>,
                     label: profile.name,

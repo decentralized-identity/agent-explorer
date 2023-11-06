@@ -2,8 +2,8 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDataStoreORM } from '@veramo/core'
-import { VerifiableCredentialComponent } from '@veramo-community/agent-explorer-plugin'
-import { List } from 'antd'
+import { Typography } from 'antd'
+import { SmileOutlined } from '@ant-design/icons'
 
 interface IdentifierCredentialsProps {
   did: string
@@ -35,15 +35,6 @@ export const IdentifierHoverComponent: React.FC<IdentifierCredentialsProps> = ({
   )
 
   return (
-    <List
-    itemLayout="vertical"
-    size="large"
-    dataSource={credentials}
-    renderItem={(item) => (
-      <div style={{ width: '100%', marginBottom: 20 }}>
-      <VerifiableCredentialComponent credential={item} />
-    </div>
-    )}
-  />
+    <Typography.Text><SmileOutlined /> {credentials?.length}</Typography.Text>
   )
 }

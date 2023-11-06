@@ -6,9 +6,6 @@ import { IDataStore, IDataStoreORM } from '@veramo/core'
 import { Typography, Button, theme } from 'antd'
 import { ActionButton } from '@veramo-community/agent-explorer-plugin'
 import { ReactionButton } from './ReactionButton'
-import data from '@emoji-mart/data'
-import Picker from '@emoji-mart/react'
-import { SmileOutlined } from '@ant-design/icons'
 interface Props {
   hash: string
 }
@@ -86,10 +83,10 @@ export const CredentialActionComponent: React.FC<Props> = ({
 
   return (
     <>
-      <ReactionButton emoji='👍' count={countReactions['👍']} onAction={createReaction}/>
-      <ReactionButton emoji='👎' count={countReactions['👎']} onAction={createReaction}/>
-      <Button onClick={() => setShowDrawer(true)} type='text' size='small'><SmileOutlined /></Button>
-      {showDrawer && <Picker data={data} onEmojiSelect={() => setShowDrawer(false)}/>}
+      {Object.keys(countReactions).map((emoji) => (
+        <ReactionButton key={emoji} emoji={emoji} count={countReactions[emoji]} onAction={createReaction}/>
+      ))}
+      <ReactionButton onAction={createReaction}/>
     </>
   
   )
