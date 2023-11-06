@@ -27,6 +27,9 @@ export type IIdentifierHoverComponentProps = {
 export type IIdentifierTabsComponentProps = {
   did: string
 }
+export type ICredentialActionComponentProps = {
+  hash: string
+}
 
 type ExtendedMenuDataItem = MenuDataItem & {
   routes?: Array<{
@@ -49,6 +52,7 @@ export type IAgentExplorerPlugin = {
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps> | undefined;
   getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;
   getIdentifierTabsComponents?: () => Array<{label: string, component: React.FC<IIdentifierTabsComponentProps>}>;
+  getCredentialActionComponents?: () => Array<React.FC<ICredentialActionComponentProps>>;
   getMarkdownComponents?: () => Partial<Components> | undefined;
   getRemarkPlugins?: () => PluggableList;
 }

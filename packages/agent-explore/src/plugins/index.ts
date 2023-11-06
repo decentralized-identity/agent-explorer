@@ -8,10 +8,12 @@ import Credentials  from './credentials'
 import Requests  from './requests'
 import Chats  from './chats'
 import Profile  from './profile'
+import Reactions  from './reactions'
 import { communityPlugins } from './community'
 
 const corePlugins: IPlugin[] = [
   Profile,
+  Reactions,
   Statistics,
   Identifiers,
   Credentials,
