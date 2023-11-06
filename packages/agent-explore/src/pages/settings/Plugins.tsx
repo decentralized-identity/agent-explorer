@@ -130,7 +130,7 @@ export const Plugins = () => {
                       disabled={plugins.find((plugin) => plugin.config?.url === item.config?.url) !== undefined}
                       onClick={() => {
                         setDrawerOpen(false)
-                        addPluginConfig({url: item.config?.url || '', enabled: true})
+                        addPluginConfig({url: item.config?.url || '', enabled: true, commitId: item.config?.commitId})
                         setUrl('')
                       }}
                       >Add</Button>
