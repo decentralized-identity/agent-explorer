@@ -106,7 +106,7 @@ export const ReactionButton: React.FC<ReactionButtonProps> = ({ onAction, emoji,
         type='text'
         >{emoji} {count || ''}</Button>
       <Drawer
-        title="Select issuer"
+        title={`React with ${emoji}`} 
         placement="bottom"
         closable={true}
         onClose={() => setShowDrawer(false)}
