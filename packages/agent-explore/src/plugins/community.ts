@@ -40,7 +40,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-graph-view",
-      "commitId": "29730b692843e73453a35b96fdd5a3bb733f01b4",
+      "commitId": "01dac46e7fc23d10f341699cc18796e4e08855d0",
       "enabled": true
     },
     "name": "Graph View",
@@ -64,7 +64,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-developer-tools",
-      "commitId": "439ed9160c383447b9844ed71b25ddf238d0d3ff",
+      "commitId": "9d4085ab8bfd75428fae0c980ef11b6cf89407f4",
       "enabled": true
     },
     "name": "Developer Tools",
