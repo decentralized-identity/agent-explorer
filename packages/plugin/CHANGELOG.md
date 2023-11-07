@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.68.0](https://github.com/veramolabs/agent-explorer/compare/v1.67.1...v1.68.0) (2023-11-07)
+
+
+### Features
+
+* initial reactions support ([#216](https://github.com/veramolabs/agent-explorer/issues/216)) ([42c625b](https://github.com/veramolabs/agent-explorer/commit/42c625bdcfe03c725abb2cf3db88bec2e3e90a99))
+
+
+
+
+
 # [1.65.0](https://github.com/veramolabs/agent-explorer/compare/v1.64.1...v1.65.0) (2023-11-03)
 
 
