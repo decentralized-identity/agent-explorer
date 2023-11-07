@@ -10,20 +10,20 @@ export const ReactionCredential: React.FC<{
 }> = ({ credential: { verifiableCredential } }) => {
   const { agent } = useVeramo<IDataStoreORM & IDataStore>()
   const { token } = theme.useToken()
-  const { emoji, id } = verifiableCredential.credentialSubject
+  const { emoji, hash } = verifiableCredential.credentialSubject
 
-  if (!id) return null
+  if (!hash) return null
 
   const { data: referencedCredential, isLoading: credentialLoading, isError, error } = useQuery(
-    ['credential', { id, agentId: agent?.context.id }],
-    () => agent?.dataStoreGetVerifiableCredential({ hash: id! }),
+    ['credential', { hash, agentId: agent?.context.id }],
+    () => agent?.dataStoreGetVerifiableCredential({ hash }),
   )
 
   return (
     <Space direction='horizontal' style={{marginTop: token.margin}}>
       <Typography.Title>{emoji}</Typography.Title>
       {referencedCredential && <VerifiableCredentialComponent credential={{
-        hash: id, 
+        hash, 
         verifiableCredential: referencedCredential
       }} />}
       {credentialLoading && <Spin />}
