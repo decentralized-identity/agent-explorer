@@ -14,6 +14,7 @@ const Plugin: IPlugin = {
           },
           name: 'Requests',
           description: 'Selective disclosure requests',
+          icon: <InteractionOutlined />,
           requiredMethods: ['dataStoreORMGetMessages'],
           routes: [
             {

@@ -2,33 +2,35 @@ import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 import { IdentifierHoverComponent } from './IdentifierHoverComponent';
 import { IdentifierTabComponent } from './IdentifierTabComponent';
 import { UniqueVerifiableCredential } from '@veramo/core-types';
-import { Profile } from './Profile';
-import { SolutionOutlined } from '@ant-design/icons';
+import { ReactionCredential } from './ReactionCredential';
+import { CredentialActionComponent } from './CredentialActionComponent';
+import { SmileOutlined } from '@ant-design/icons';
 
 const Plugin: IPlugin = {
     init: () => {
         return {
           config: {
             enabled: true,
-            url: 'core://profile',
+            url: 'core://reactions',
           },
-          name: 'Profile',
-          description: 'Provides support for profile credentials',
-          icon: <SolutionOutlined />,
+          name: 'Reactions',
+          description: 'Emoji reactions',
+          icon: <SmileOutlined />,
           requiredMethods: [],
           getIdentifierHoverComponent: () => IdentifierHoverComponent,
           getCredentialComponent: (credential: UniqueVerifiableCredential) => {
-            if (credential.verifiableCredential.type?.includes('Profile')) {
-              return Profile
+            if (credential.verifiableCredential.type?.includes('Reaction')) {
+              return ReactionCredential
             }
             return undefined
           },
           getIdentifierTabsComponents: () => [
             {
-              label: 'Profile',
+              label: 'Reactions',
               component: IdentifierTabComponent,
             },
           ],
+          getCredentialActionComponents: () => [CredentialActionComponent],
         }
     }
 };

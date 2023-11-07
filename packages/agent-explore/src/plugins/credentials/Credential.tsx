@@ -14,7 +14,7 @@ const Credential = () => {
   const { agent } = useVeramo<IDataStore>()
 
   const { data: credential, isLoading: credentialLoading } = useQuery(
-    ['credential', { id }],
+    ['credential', { id, agentId: agent?.context.id }],
     () => agent?.dataStoreGetVerifiableCredential({ hash: id! }),
   )
 

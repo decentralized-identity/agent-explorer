@@ -15,6 +15,7 @@ import { SortableContext, useSortable, verticalListSortingStrategy, sortableKeyb
 import {CSS} from '@dnd-kit/utilities';
 import { IAgentExplorerPlugin } from '@veramo-community/agent-explorer-plugin'
 import { communityPlugins } from '../../plugins/community'
+import { ResponsiveContainer } from '../../components/ResponsiveContainer'
 
 const SortableItem = ({ item }: { item: IAgentExplorerPlugin}) => {
   const { notification } = App.useApp()
@@ -45,6 +46,7 @@ const SortableItem = ({ item }: { item: IAgentExplorerPlugin}) => {
       style={{ transform: CSS.Transform.toString(transform), transition }}
       actions={actions}
     ><List.Item.Meta
+    avatar={<Typography.Text style={{fontSize: 26}}>{item.icon}</Typography.Text>}
     title={item.name}
     description={<Popover content={`${item.config?.url}${item.config?.commitId  ? ` @  ${item.config?.commitId}` : ''}`}>{item.description}</Popover>}
 
@@ -100,6 +102,7 @@ export const Plugins = () => {
           >Add</Button>,
         ]}
       >
+        <ResponsiveContainer>
 
         <SortableContext 
           items={plugins.map((plugin) => plugin.config?.url || '')} 
@@ -111,7 +114,7 @@ export const Plugins = () => {
           />
         </SortableContext>
         <DragOverlay />
-
+        </ResponsiveContainer>
         <Drawer
           title="Add external plugin"
           placement={'right'}

@@ -9,6 +9,7 @@ import { PageContainer, ProList } from '@ant-design/pro-components'
 import md5 from 'md5'
 import { Connect } from './Connect'
 import { useParams } from 'react-router'
+import { ResponsiveContainer } from '../../components/ResponsiveContainer'
 
 const GRAVATAR_URI = 'https://www.gravatar.com/avatar/'
 
@@ -31,6 +32,7 @@ export const Agents = () => {
         />,
       ]}
     >
+      <ResponsiveContainer>
       <ProList<{ title: string, id: string }>
         rowKey="id"
         ghost
@@ -40,7 +42,6 @@ export const Agents = () => {
           avatar: agent?.context?.name && GRAVATAR_URI + md5(agent?.context?.name) + '?s=200&d=retro',
           title: agent.context.name || 'Empty',
           actions: [
-            agent.context.id === 'web3Agent' && <w3m-network-button />,
             agent.context.id !== 'web3Agent' && <Button
               icon={<DeleteOutlined />}
               type='text'
@@ -72,6 +73,7 @@ export const Agents = () => {
           subTitle: {},
         }}
       />
+      </ResponsiveContainer>
       <Drawer
         title="Add new agent connection"
         placement={'right'}

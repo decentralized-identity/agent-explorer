@@ -13,6 +13,7 @@ const Plugin: IPlugin = {
           },
           name: 'Credential verifier',
           description: 'Verify any supported credential type',
+          icon: <FileProtectOutlined />,
           requiredMethods: ['verifyCredential'],
           routes: [
             {

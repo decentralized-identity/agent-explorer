@@ -5,10 +5,10 @@ import { useVeramo } from "@veramo-community/veramo-react";
 import { getIssuerDID, shortId } from "../utils/did.js";
 import { formatRelative } from "date-fns";
 import { usePlugins } from "../PluginProvider.js";
-import { IVerifiableComponentProps } from "../types.js";
+import { ICredentialActionComponentProps, IVerifiableComponentProps } from "../types.js";
 import { IdentifierProfile } from "./IdentifierProfile.js";
 import { useQuery } from "react-query";
-import { Avatar, Button, Col, Popover, Row, Skeleton, Space, Spin, Tag, Typography, theme } from "antd";
+import { Avatar, Button, Col, Divider, Popover, Row, Skeleton, Space, Spin, Tag, Typography, theme } from "antd";
 import { CredentialActionsDropdown } from "./CredentialActionsDropdown.js";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { IdentifierPopover } from "./IdentifierPopover.js";
@@ -26,6 +26,22 @@ export const VerifiableCredentialComponent = (
   const { plugins } = usePlugins()
   const [isVerifying, setIsVerifying] = React.useState<boolean>(false)
   const [verifyResult, setVerifyResult] = React.useState<IVerifyResult | undefined>(undefined)
+
+
+  const actionComponents = React.useMemo(() => {
+    let actionComponents: React.FC<ICredentialActionComponentProps>[] = []
+    plugins.forEach((plugin) => {
+      if (plugin.config?.enabled && plugin.getCredentialActionComponents) {
+        const components = plugin.getCredentialActionComponents()
+        if (components) {
+          actionComponents.push(...components)
+        }
+      }
+    })
+    return actionComponents
+  }, [plugins])
+
+  console.log({actionComponents})
 
   React.useEffect(() => {
     if (verify && !verifyResult && !isVerifying) {
@@ -76,7 +92,7 @@ export const VerifiableCredentialComponent = (
   let color = !isVerifying && verifyResult?.error ? token.colorError : token.colorSuccess
   color = isVerifying ? token.colorBorder : color
 
-  return (
+  return (<>
     <div style={{
       padding: '16px',
       borderRadius: '4px',
@@ -135,7 +151,15 @@ export const VerifiableCredentialComponent = (
       </div>}
 
       {credential && <Component credential={credential} context={context}/>}
+      {actionComponents.length > 0 && <>
+        <Space direction="horizontal" style={{width: '100%', marginTop: token.marginXS}}>
+          {actionComponents.map((Component, index) => (
+            React.createElement(Component, { key: index, hash: credential.hash })
+          ))}
+        </Space>
+      </>}
     </div>
+    </>
   )
 
 };

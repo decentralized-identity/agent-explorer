@@ -13,6 +13,7 @@ const Plugin: IPlugin = {
           },
           name: 'Audit Log',
           description: 'System messages',
+          icon: <BarsOutlined />,
           requiredMethods: ['dataStoreORMGetMessages'],
           routes: [
             {
