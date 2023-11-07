@@ -13,6 +13,7 @@ const Plugin: IPlugin = {
           },
           name: 'Chats',
           description: 'DIDComm Chats',
+          icon: <MessageOutlined />,
           requiredMethods: ['packDIDCommMessage', 'sendDIDCommMessage'],
           routes: [
             {

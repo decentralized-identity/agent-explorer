@@ -28,9 +28,9 @@ export function getcorePlugins(): IAgentExplorerPlugin[] {
   return [
     // FIXME: Temporary workaround
     communityPlugins[0], 
+    communityPlugins[3], 
+    ...corePlugins.map(plugin => plugin.init()),
     communityPlugins[1], 
     communityPlugins[2], 
-    communityPlugins[3], 
-    ...corePlugins.map(plugin => plugin.init())
   ]
 }

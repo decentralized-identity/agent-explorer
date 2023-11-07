@@ -15,6 +15,7 @@ const Plugin: IPlugin = {
           },
           name: 'Contacts',
           description: 'Explore contacts',
+          icon: <ContactsOutlined />,
           requiredMethods: ['dataStoreORMGetIdentifiers'],
           routes: [
             {

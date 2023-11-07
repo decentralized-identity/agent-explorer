@@ -17,6 +17,7 @@ const Plugin: IPlugin = {
           },
           name: 'Identifiers',
           description: 'Manage identifiers',
+          icon: <UserOutlined />,
           requiredMethods: ['didManagerFind'],
           routes: [
             {

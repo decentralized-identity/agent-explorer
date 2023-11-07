@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Checkbox, Radio, Space, Typography } from 'antd'
 import { useTheme } from '../../context/ThemeProvider'
 import { PageContainer } from '@ant-design/pro-components'
+import { ResponsiveContainer } from '../../components/ResponsiveContainer'
 
 const colors = [
   '#017AFF',
@@ -33,6 +34,7 @@ export const Appearance = () => {
   const { theme, switchTheme, isCompact, setIsCompact, switchPrimaryColor, primaryColor } = useTheme()
   return (
     <PageContainer>
+      <ResponsiveContainer>
       <Space direction='vertical'>
 
       <Radio.Group value={theme} onChange={(e) => switchTheme(e.target.value)}>
@@ -66,6 +68,7 @@ export const Appearance = () => {
           />)}
         </Space>
       </Space>
+      </ResponsiveContainer>
     </PageContainer>
   )
 }

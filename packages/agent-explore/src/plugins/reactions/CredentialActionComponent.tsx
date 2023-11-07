@@ -24,14 +24,18 @@ export const CredentialActionComponent: React.FC<Props> = ({
       {hash,  agentId: agent?.context.name },
     ],
     () =>
-      agent?.dataStoreORMGetVerifiableCredentials({
+      agent?.dataStoreORMGetVerifiableCredentialsByClaims({
         where: [
           {
-            column: 'subject',
+            column: 'type',
+            value: ['hash'],
+          },
+          {
+            column: 'value',
             value: [hash],
           },
           {
-            column: 'type',
+            column: 'credentialType',
             value: ['VerifiableCredential,Reaction'],
           },
         ],
@@ -46,7 +50,7 @@ export const CredentialActionComponent: React.FC<Props> = ({
         issuer: did,
         issuanceDate: new Date().toISOString(),
         credentialSubject: {
-          id: hash,
+          hash,
           emoji,
         },
       },

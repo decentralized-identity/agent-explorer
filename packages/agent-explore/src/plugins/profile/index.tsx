@@ -3,6 +3,7 @@ import { IdentifierHoverComponent } from './IdentifierHoverComponent';
 import { IdentifierTabComponent } from './IdentifierTabComponent';
 import { UniqueVerifiableCredential } from '@veramo/core-types';
 import { Profile } from './Profile';
+import { SolutionOutlined } from '@ant-design/icons';
 
 const Plugin: IPlugin = {
     init: () => {
@@ -13,6 +14,7 @@ const Plugin: IPlugin = {
           },
           name: 'Profile',
           description: 'Provides support for profile credentials',
+          icon: <SolutionOutlined />,
           requiredMethods: [],
           getIdentifierHoverComponent: () => IdentifierHoverComponent,
           getCredentialComponent: (credential: UniqueVerifiableCredential) => {

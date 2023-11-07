@@ -4,6 +4,7 @@ import { IdentifierTabComponent } from './IdentifierTabComponent';
 import { UniqueVerifiableCredential } from '@veramo/core-types';
 import { ReactionCredential } from './ReactionCredential';
 import { CredentialActionComponent } from './CredentialActionComponent';
+import { SmileOutlined } from '@ant-design/icons';
 
 const Plugin: IPlugin = {
     init: () => {
@@ -14,6 +15,7 @@ const Plugin: IPlugin = {
           },
           name: 'Reactions',
           description: 'Emoji reactions',
+          icon: <SmileOutlined />,
           requiredMethods: [],
           getIdentifierHoverComponent: () => IdentifierHoverComponent,
           getCredentialComponent: (credential: UniqueVerifiableCredential) => {

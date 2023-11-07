@@ -17,6 +17,7 @@ const Plugin: IPlugin = {
           },
           name: 'Verifiable credentials',
           description: 'Explore known verifiable credentials',
+          icon: <SafetyOutlined />,
           requiredMethods: ['dataStoreORMGetVerifiableCredentials'],
           routes: [
             {

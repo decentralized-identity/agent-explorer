@@ -35,6 +35,6 @@ export const IdentifierHoverComponent: React.FC<IdentifierCredentialsProps> = ({
   )
 
   return (
-    <Typography.Text><SmileOutlined /> {credentials?.length}</Typography.Text>
+    <Typography.Text><SmileOutlined /> reacted: {credentials?.length}</Typography.Text>
   )
 }

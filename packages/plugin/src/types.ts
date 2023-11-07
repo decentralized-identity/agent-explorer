@@ -42,6 +42,7 @@ export type IAgentExplorerPlugin = {
   config?: IAgentExplorerPluginConfig;
   name: string;
   description: string;
+  icon?: React.ReactNode;
   routes?: IRouteComponent[];
   menuItems?: ExtendedMenuDataItem[];
   requiredMethods: string[];

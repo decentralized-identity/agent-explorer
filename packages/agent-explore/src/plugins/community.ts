@@ -4,7 +4,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-brainshare",
-      "commitId": "64c28a4f84785d44d4a73305d5d0c5216af4e518",
+      "commitId": "23a729c3510ca712b4f8f7ba5d492f38303737a5",
       "enabled": true
     },
     "name": "Brain share",
@@ -16,7 +16,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-gitcoin-passport",
-      "commitId": "3f6770aa1b5a85f157611e90043419869b12ab45",
+      "commitId": "a9a67158026a0b195dcfabf476eed4a0ce7faf27",
       "enabled": true
     },
     "name": "Gitcoin passport",
@@ -28,7 +28,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-kudos",
-      "commitId": "c327b6ae48d5706ec5ac413c756a7e39142e98a1",
+      "commitId": "e2535b295ef91c6c85d3530313ec5ed5c5aefb4c",
       "enabled": true
     },
     "name": "Kudos",
@@ -40,7 +40,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-graph-view",
-      "commitId": "c9f9938329df26eaf4b6d7ab97ff8d87ae9786f0",
+      "commitId": "774792e3d43f9d76c4cdeb8bdd4ad1252b009983",
       "enabled": true
     },
     "name": "Graph View",
@@ -52,7 +52,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-social-feed",
-      "commitId": "7612fc916087802f0ebf1f7589879fa14d3b717c",
+      "commitId": "57a8c61dcb6027b54c8e467195f9bb972ba2d3be",
       "enabled": true
     },
     "name": "Social Feed",
@@ -64,7 +64,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-developer-tools",
-      "commitId": "9d4085ab8bfd75428fae0c980ef11b6cf89407f4",
+      "commitId": "ef9039787e2988c57b0c7d7a2fd0f709398c835f",
       "enabled": true
     },
     "name": "Developer Tools",
@@ -76,7 +76,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://simonas-notcat/agent-explorer-plugin-codyfight",
-      "commitId": "326b878ecbc2000d1d3cdd9827a51eed569408bf",
+      "commitId": "d62ad186abd000147b1ead404bcd3adcf57315ab",
       "enabled": true
     },
     "name": "Codyfight",

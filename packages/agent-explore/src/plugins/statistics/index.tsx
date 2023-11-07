@@ -14,6 +14,7 @@ const Plugin: IPlugin = {
           },
           name: 'Statistics',
           description: 'Data summary and statistics',
+          icon: <EyeOutlined />,
           requiredMethods: ['dataStoreORMGetVerifiableCredentials'],
           routes: [
             {
