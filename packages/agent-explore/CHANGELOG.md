@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.68.1](https://github.com/veramolabs/agent-explorer/compare/v1.68.0...v1.68.1) (2023-11-07)
+
+
+### Bug Fixes
+
+* reaction credential ([#217](https://github.com/veramolabs/agent-explorer/issues/217)) ([5b5da50](https://github.com/veramolabs/agent-explorer/commit/5b5da5068cfda76d5710ee3a31472ee989467ce8))
+
+
+
+
+
 # [1.68.0](https://github.com/veramolabs/agent-explorer/compare/v1.67.1...v1.68.0) (2023-11-07)
 
 
