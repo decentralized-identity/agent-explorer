@@ -9,9 +9,6 @@ The Veramo [Agent Explorer](./Agent%20explorer.md) provides a UI for interacting
 
 A Veramo agent can run in the cloud for "always on" capabilities or run locally within a browser instance, using either temporary DIDs or importing them from a web3 wallet like Metamask.
 
-```vc+multihash
-did:web:staging.community.veramo.io/QmaDcyNu6gXFuUGxKzR6fyitXKdPABr1ECFv8dGR6N5L1K#0-404
-```
 
 ## Agent Explorer Plugins
 

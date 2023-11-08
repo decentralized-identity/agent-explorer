@@ -1,13 +1,17 @@
-const { execSync } = require('child_process');
-const fs = require('fs');
-const path = require('path');
-const AWS = require('aws-sdk');
+import { execSync } from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import AWS from 'aws-sdk';
+import dotenv from 'dotenv';
 
-const videosPath = path.join(__dirname, '../packages/agent-explore/cypress/videos');
+// dotenv.config();
+dotenv.config({ path: `.env.local`, override: true });
+
+const videosPath = path.join('./packages/agent-explore/cypress/videos');
 // nodejs get a list of  *.mp4 files in a folder
 const videos = fs.readdirSync(videosPath).filter(file => file.endsWith('.mp4'));
 
-const destPath = path.join(__dirname, '../docs/videos');
+const destPath = path.join('./docs/videos');
 
 // crop videos using ffmpeg
 videos.forEach((video) => {
