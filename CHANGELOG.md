@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.69.0](https://github.com/veramolabs/agent-explorer/compare/v1.68.2...v1.69.0) (2023-11-09)
+
+
+### Features
+
+* plugins provide msg handlers + agent plugins ([#218](https://github.com/veramolabs/agent-explorer/issues/218)) ([0f1af59](https://github.com/veramolabs/agent-explorer/commit/0f1af59c5ea4c24ae230fef4671a235de25a44c5))
+
+
+
+
+
 ## [1.68.2](https://github.com/veramolabs/agent-explorer/compare/v1.68.1...v1.68.2) (2023-11-08)
 
 
