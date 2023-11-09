@@ -3,6 +3,7 @@ import { MessageOutlined } from '@ant-design/icons'
 import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Chats from './Chats';
+import { SaveMessageHandler } from './saveMessageHandler';
 
 const Plugin: IPlugin = {
     init: () => {
@@ -14,6 +15,7 @@ const Plugin: IPlugin = {
           name: 'Chats',
           description: 'DIDComm Chats',
           icon: <MessageOutlined />,
+          messageHandlers: [ new SaveMessageHandler()],
           requiredMethods: ['packDIDCommMessage', 'sendDIDCommMessage'],
           routes: [
             {

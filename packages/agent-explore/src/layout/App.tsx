@@ -4,10 +4,8 @@ import Layout from './Layout'
 import { ThemeProvider } from '../context/ThemeProvider'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { ChatProvider } from '../context/ChatProvider'
-import { VeramoWeb3Provider } from '../context/web3/VeramoWeb3Provider'
 import { PluginProvider } from '@veramo-community/agent-explorer-plugin'
 import { getcorePlugins } from '../plugins'
-import { WagmiProvider } from '../context/web3/wagmi'
 
 declare global {
   interface Window {
@@ -23,17 +21,13 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <WagmiProvider>
-          <VeramoWeb3Provider>
-            <PluginProvider corePlugins={corePlugins}>
-              <ChatProvider>
-                <BrowserRouter>
-                  <Layout />
-                </BrowserRouter>
-              </ChatProvider>
-            </PluginProvider>
-          </VeramoWeb3Provider>
-        </WagmiProvider>
+        <PluginProvider corePlugins={corePlugins}>
+          <ChatProvider>
+            <BrowserRouter>
+              <Layout />
+            </BrowserRouter>
+          </ChatProvider>
+        </PluginProvider>
       </ThemeProvider>
     </QueryClientProvider>
   )

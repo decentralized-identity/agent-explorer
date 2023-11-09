@@ -1,18 +1,23 @@
 import { useEffect, useState } from 'react'
 import { VeramoProvider } from '@veramo-community/veramo-react'
 import { createAgent, IAgentPlugin, IResolver, TAgent } from '@veramo/core'
-import { ConnectorInfo, createWeb3Agent } from './web3Agent'
+import { ConnectorInfo, createWeb3Agent } from './web3Agent.js'
 import { AgentRestClient } from '@veramo/remote-client'
-import { IdentifierProfilePlugin } from '@veramo-community/agent-explorer-plugin'
+import { IdentifierProfilePlugin } from '../agent-plugins/IdentifierProfilePlugin.js'
 
 import { useAccount, useNetwork } from 'wagmi'
-import { useEthersProvider } from './wagmi'
+import { useEthersProvider } from './wagmi.js'
 import { useQueryClient } from 'react-query'
+import { AbstractMessageHandler } from '@veramo/message-handler'
 
 export const VeramoWeb3Provider = ({
   children,
+  plugins = [],
+  messageHandlers = [],
 }: {
   children: JSX.Element | JSX.Element[]
+  plugins?: IAgentPlugin[]
+  messageHandlers?: AbstractMessageHandler[]
 }) => {
   //@ts-ignore
   const config = window.PRE_CONFIGURED_AGENTS
@@ -44,7 +49,7 @@ export const VeramoWeb3Provider = ({
         name: 'walletconnect',
       })
     }
-    void createWeb3Agent({ connectors }).then(setWeb3Agent).then(() => {
+    void createWeb3Agent({ connectors, messageHandlers }).then(setWeb3Agent).then(() => {
       queryClient.invalidateQueries({ 
         queryKey: [
           'identifiers', 
@@ -55,7 +60,7 @@ export const VeramoWeb3Provider = ({
     return () => {
       setWeb3Agent(undefined)
     }
-  }, [address, isConnected, provider, chain])
+  }, [messageHandlers, address, isConnected, provider, chain])
 
   useEffect(() => {
     if (config && Array.isArray(config)) {
@@ -104,7 +109,7 @@ export const VeramoWeb3Provider = ({
     }
   }, [config])
 
-  const plugins: IAgentPlugin[] = [new IdentifierProfilePlugin()]
+  plugins.push(new IdentifierProfilePlugin())
   let allAgents = []
   if (web3agent) {
     allAgents.push(web3agent)
