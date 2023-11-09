@@ -4,6 +4,8 @@ import { UniqueVerifiableCredential } from '@veramo/core-types'
 import { IAgentPlugin } from '@veramo/core'
 import { Components } from 'react-markdown'
 import { PluggableList } from 'unified'
+import { AbstractMessageHandler } from '@veramo/message-handler'
+
 export type IAgentExplorerPluginConfig = {
   url: string;
   commitId?: string;
@@ -49,6 +51,7 @@ export type IAgentExplorerPlugin = {
   hasCss?: boolean;
   identifierContextMenuItems?: MenuProps['items'];
   agentPlugins?: IAgentPlugin[];
+  messageHandlers?: AbstractMessageHandler[];
   getCredentialContextMenuItems?: (credential: UniqueVerifiableCredential) => MenuProps['items'];
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps> | undefined;
   getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;

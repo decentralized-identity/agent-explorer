@@ -17,6 +17,7 @@ import { SdrMessageHandler } from '@veramo/selective-disclosure'
 import { JwtMessageHandler } from '@veramo/did-jwt'
 import { MessageHandler } from '@veramo/message-handler'
 import { Web3KeyManagementSystem } from '@veramo/kms-web3'
+import { AbstractMessageHandler } from '@veramo/message-handler'
 
 import {
   DataStoreJson,
@@ -47,17 +48,17 @@ import {
 } from '@veramo/did-comm'
 import { BrowserProvider } from 'ethers'
 import { KeyManagementSystem } from '@veramo/kms-local'
-import { SaveMessageHandler } from './saveMessageHandler'
+
 import {
   IdentifierProfilePlugin,
   IIdentifierProfilePlugin,
-} from '@veramo-community/agent-explorer-plugin'
+} from '../agent-plugins/IdentifierProfilePlugin.js'
 import { DIDDiscovery } from '@veramo/did-discovery'
 // FIXME: This import causes an error: Module not found: Error: Can't resolve 'react-native-sqlite-storage' in
 // '[...]/node_modules/typeorm/browser/driver/react-native' import { DataStoreDiscoveryProvider } from
 // '@veramo/data-store'
-import { DataStoreDiscoveryProvider } from '../plugins/did-discovery-provider'
-import { AliasDiscoveryProvider } from '../plugins/AliasDiscoveryProvider'
+import { DataStoreDiscoveryProvider } from '../agent-plugins/did-discovery-provider.js'
+import { AliasDiscoveryProvider } from '../agent-plugins/AliasDiscoveryProvider.js'
 import {
   CredentialIssuerLD,
   ICredentialIssuerLD,
@@ -80,8 +81,9 @@ export interface ConnectorInfo {
   isActive: boolean
 }
 
-export async function createWeb3Agent({ connectors }: {
+export async function createWeb3Agent({ connectors, messageHandlers }: {
   connectors: ConnectorInfo[]
+  messageHandlers?: AbstractMessageHandler[]
 }) {
   const didProviders: Record<string, AbstractIdentifierProvider> = {
     'did:peer': new PeerDIDProvider({ defaultKms: 'local' }),
@@ -162,12 +164,13 @@ export async function createWeb3Agent({ connectors }: {
       new MessageHandler({
         messageHandlers: [
           new DIDCommMessageHandler(),
-          new SaveMessageHandler(),
+          // new SaveMessageHandler(),
           new CoordinateMediationRecipientMessageHandler(),
           new PickupRecipientMessageHandler(),
           new JwtMessageHandler(),
           new W3cMessageHandler(),
           new SdrMessageHandler(),
+          ...messageHandlers || [],
         ],
       }),
       new DIDComm([new DIDCommHttpTransport()]),

@@ -1,6 +1,11 @@
 import React, { createContext, useState, useEffect, useContext } from 'react'
-import { IAgentExplorerPlugin, IAgentExplorerPluginConfig, IPlugin } from './types.js'
+import { IAgentExplorerPlugin, IAgentExplorerPluginConfig } from './types.js'
 import { App } from 'antd'
+import { VeramoWeb3Provider } from './web3/VeramoWeb3Provider.js'
+import { WagmiProvider } from './web3/wagmi.js'
+import { IAgentPlugin } from '@veramo/core-types'
+import { AbstractMessageHandler } from '@veramo/message-handler'
+
 
 type PluginContextType = {
   plugins: IAgentExplorerPlugin[]
@@ -141,19 +146,46 @@ const PluginProvider = (props: PluginProviderProps) => {
     setPluginConfigs(configs)
   }
 
+  const agentPlugins: IAgentPlugin[] = React.useMemo(() => {
+    const agentPlugins: IAgentPlugin[] = []
+    plugins.forEach((p) => {
+      if (p.agentPlugins) {
+        agentPlugins.push(...p.agentPlugins)
+      }
+    })
+    return agentPlugins
+  }, [plugins])
+
+  const messageHandlers: AbstractMessageHandler[] = React.useMemo(() => {
+    const messageHandlers: AbstractMessageHandler[] = []
+    plugins.forEach((p) => {
+      if (p.messageHandlers) {
+        messageHandlers.push(...p.messageHandlers)
+      }
+    })
+    return messageHandlers
+  }, [plugins])
+
   return (
-    <PluginContext.Provider
-      value={{
-        plugins,
-        pluginConfigs, 
-        updatePluginConfigs,
-        addPluginConfig,
-        removePluginConfig,
-        switchPlugin,
-      }}
-    >
-        {props.children}
-    </PluginContext.Provider>
+    <WagmiProvider>
+      <VeramoWeb3Provider 
+        plugins={agentPlugins}
+        messageHandlers={messageHandlers}
+        >
+        <PluginContext.Provider
+          value={{
+            plugins,
+            pluginConfigs, 
+            updatePluginConfigs,
+            addPluginConfig,
+            removePluginConfig,
+            switchPlugin,
+          }}
+          >
+            {props.children}
+        </PluginContext.Provider>
+      </VeramoWeb3Provider>
+    </WagmiProvider>
   )
 }
 

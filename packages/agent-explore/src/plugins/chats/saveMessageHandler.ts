@@ -10,6 +10,9 @@ type IContext = IAgentContext<IDataStore>
  * @beta This API may change without a BREAKING CHANGE notice.
  */
 export class SaveMessageHandler extends AbstractMessageHandler {
+  constructor() {
+    super()
+  }
   /**
    * Handles a new packed DIDCommV2 Message (also Alpha support but soon deprecated).
    * - Tests whether raw message is a DIDCommV2 message
@@ -17,7 +20,6 @@ export class SaveMessageHandler extends AbstractMessageHandler {
    * -
    */
   async handle(message: Message, context: IContext): Promise<Message> {
-    // console.log('message received: ', message)
     if (message.type === 'veramo.io-chat-v1') {
       await context.agent.dataStoreSaveMessage({ message })
     } 

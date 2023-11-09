@@ -17,7 +17,7 @@ export interface IIdentifierProfile {
 
 type IContext = IAgentContext<IDataStoreORM & IDIDManager>
 
-interface IGetIdentifierProfileArgs {
+export interface IGetIdentifierProfileArgs {
   /**
    * Decentralized identifier
    */
