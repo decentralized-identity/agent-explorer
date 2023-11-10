@@ -36,12 +36,14 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const messageId = v4()
   const sendMessage = async (msg: string) => {
     const message = {
-      type: 'veramo.io-chat-v1',
+      type: 'https://didcomm.org/basicmessage/2.0/message',
       to: recipient as string,
       from: selectedDid as string,
+      created_time: new Date().getTime(),
+      lang: "en",
       id: messageId,
       thid: _threadId,
-      body: { message: msg },
+      body: { content: msg },
     }
     let packedMessage
     try {

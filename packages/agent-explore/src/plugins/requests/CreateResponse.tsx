@@ -76,12 +76,13 @@ const CreateResponse: React.FC = () => {
       try {
         const messageId = uuidv4()
         const didCommMessage = {
-          type: 'veramo.io-chat-v1',
+          type: 'https://didcomm.org/basicmessage/2.0/message',
           to: message?.from as string,
           from: presenter as string,
+          created_time: new Date().getTime(),
           id: messageId,
           thid: uuidv4(),
-          body: { message: 'Sent SDR Response', presentation },
+          body: { content: 'Sent SDR Response', presentation },
         }
 
         packedMessage = await agent?.packDIDCommMessage({

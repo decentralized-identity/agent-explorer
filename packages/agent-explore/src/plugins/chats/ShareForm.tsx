@@ -32,12 +32,13 @@ console.log('here')
     try {
       const threadId = v4()
       const shareMessage = {
-        type: 'veramo.io-chat-v1',
+        type: 'https://didcomm.org/basicmessage/2.0/message',
         from: did,
+        created_time: new Date().getTime(),
         to: recepient,
         id: threadId,
         thid: threadId,
-        body: { message }
+        body: { content: message }
       }
       const packedMessage = await issuerAgent.packDIDCommMessage({ 
         message: shareMessage, 
@@ -51,12 +52,12 @@ console.log('here')
       })
 
       await issuerAgent.dataStoreSaveMessage({ message: {
-        type: 'veramo.io-chat-v1',
+        type: 'https://didcomm.org/basicmessage/2.0/message',
         from: did,
         to: recepient,
         id: threadId,
         threadId: threadId,
-        data: { message }
+        data: { content: message }
       } })
 
       notification.success({

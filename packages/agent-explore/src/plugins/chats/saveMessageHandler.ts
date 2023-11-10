@@ -21,7 +21,7 @@ export class SaveMessageHandler extends AbstractMessageHandler {
   */
  async handle(message: Message, context: IContext): Promise<Message> {
     // WIP: not sure if this works
-    if (message.type === 'veramo.io-chat-v1') {
+    if (message.type === 'https://didcomm.org/basicmessage/2.0/message') {
       const localMessage = await context.agent.dataStoreGetMessage({ id: message.id })
 
       if (!localMessage) {
