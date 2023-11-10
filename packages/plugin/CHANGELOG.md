@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.70.0](https://github.com/veramolabs/agent-explorer/compare/v1.69.0...v1.70.0) (2023-11-10)
+
+
+### Features
+
+* share credentials over chat ([#219](https://github.com/veramolabs/agent-explorer/issues/219)) ([743986c](https://github.com/veramolabs/agent-explorer/commit/743986c905b30fbb25c457b417718a4244be4610))
+
+
+
+
+
 # [1.69.0](https://github.com/veramolabs/agent-explorer/compare/v1.68.2...v1.69.0) (2023-11-09)
 
 
