@@ -27,6 +27,7 @@ export const CredentialActionsDropdown: React.FC<{
 
   return (
     <Dropdown
+      trigger={['click']}
       menu={{
         items: [
           ...menuItems,

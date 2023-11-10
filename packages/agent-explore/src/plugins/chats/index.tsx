@@ -4,6 +4,8 @@ import { IPlugin } from '@veramo-community/agent-explorer-plugin';
 
 import Chats from './Chats';
 import { SaveMessageHandler } from './saveMessageHandler';
+import { getCredentialContextMenuItems } from './menu';
+import { ShareForm } from './ShareForm';
 
 const Plugin: IPlugin = {
     init: () => {
@@ -26,7 +28,12 @@ const Plugin: IPlugin = {
               path: '/chats/:threadId',
               element: <Chats />,
             },
+            {
+              path: '/chats/share',
+              element: <ShareForm />,
+            },
           ],
+          getCredentialContextMenuItems,
           menuItems: [
             {
               name: 'Chats',
