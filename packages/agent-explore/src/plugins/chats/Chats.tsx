@@ -31,7 +31,7 @@ const ChatView = () => {
     ['threads', { id: agent?.context.id, selectedDid, threadId }],
     async () => {
       const messages = await agent?.dataStoreORMGetMessages({
-        where: [{ column: 'type', value: ['veramo.io-chat-v1'] }],
+        where: [{ column: 'type', value: ['https://didcomm.org/basicmessage/2.0/message'] }],
         order: [{ column: 'createdAt', direction: 'DESC' }],
       })
       // TODO: should be able to do this filter in the query instead of here

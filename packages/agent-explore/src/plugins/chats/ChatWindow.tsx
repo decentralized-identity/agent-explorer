@@ -105,7 +105,7 @@ const ChatWindow: React.FC = () => {
           return (
             <ChatBubble
               // @ts-ignore
-              text={message?.data?.message}
+              text={message?.data?.content}
               key={message.id}
               // @ts-ignore
               isSender={message.isSender}

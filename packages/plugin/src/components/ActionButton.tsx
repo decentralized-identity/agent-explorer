@@ -6,9 +6,11 @@ import { useQueries } from 'react-query'
 import { IIdentifierProfile } from '../agent-plugins/IdentifierProfilePlugin.js'
 
 interface ActionButtonProps {
-  onAction: (did: string, agent: TAgent<ICredentialIssuer>) => void
+  onAction: (did: string, agent: TAgent<ICredentialIssuer & IDataStore>) => void
   title: string
   disabled?: boolean
+  showDefaultAgentName?: boolean
+  ifentifierFilter?: (identifier: IIdentifier) => boolean
 }
 
 type IdentifierProfileWithAgent = 
@@ -20,7 +22,13 @@ type IdentifierWithAgent = IIdentifier & {
   agent: TAgent<ICredentialIssuer & IDataStore & IDataStoreORM & IDIDManager>
 }
 
-export const ActionButton: React.FC<ActionButtonProps> = ({ onAction, title, disabled }) => {
+export const ActionButton: React.FC<ActionButtonProps> = ({ 
+  onAction, 
+  title, 
+  disabled, 
+  showDefaultAgentName = true, 
+  ifentifierFilter 
+}) => {
   const { agents, agent } = useVeramo<ICredentialIssuer & IDataStore & IDataStoreORM & IDIDManager>()
   const [issuerProfile, setIssuerProfile] = useState<IdentifierProfileWithAgent>()
   const [showDrawer, setShowDrawer] = useState(false)
@@ -44,6 +52,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ onAction, title, dis
       agentQueries.forEach((agentQuery, agentIndex) => {
         if (agentQuery.isSuccess && agentQuery.data) {
           agentQuery.data.forEach((identifier) => {
+            if (ifentifierFilter && !ifentifierFilter(identifier)) return
             identifiersWithAgents.push({
               ...identifier,
               agent: agents[agentIndex],
@@ -114,7 +123,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({ onAction, title, dis
         type='primary'
         disabled={disabled}
         >
-        {title} {agent?.context.name}
+        {title} {showDefaultAgentName && agent?.context.name}
       </Button>
       <Button
         onClick={() => setShowDrawer(true)}

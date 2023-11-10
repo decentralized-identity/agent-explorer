@@ -18,10 +18,16 @@ export class SaveMessageHandler extends AbstractMessageHandler {
    * - Tests whether raw message is a DIDCommV2 message
    * - Unpacks raw message (JWM/JWE/JWS, or plain JSON).
    * -
-   */
-  async handle(message: Message, context: IContext): Promise<Message> {
-    if (message.type === 'veramo.io-chat-v1') {
-      await context.agent.dataStoreSaveMessage({ message })
+  */
+ async handle(message: Message, context: IContext): Promise<Message> {
+    // WIP: not sure if this works
+    if (message.type === 'https://didcomm.org/basicmessage/2.0/message') {
+      const localMessage = await context.agent.dataStoreGetMessage({ id: message.id })
+
+      if (!localMessage) {
+        console.log('Saving message', message)
+        await context.agent.dataStoreSaveMessage({ message })
+      }
     } 
 
     return super.handle(message, context)
