@@ -4,7 +4,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-brainshare",
-      "commitId": "23a729c3510ca712b4f8f7ba5d492f38303737a5",
+      "commitId": "e922d4121ab3cdddc4266ecd046f452bb1cfc6b2",
       "enabled": true
     },
     "name": "Brain share",
@@ -40,7 +40,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-graph-view",
-      "commitId": "de5f8b0beec582800270fc63c27955d1dee5534a",
+      "commitId": "a382b22606e0ef716aab24476588af48aa24a8a8",
       "enabled": true
     },
     "name": "Graph View",
