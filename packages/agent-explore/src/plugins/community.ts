@@ -16,7 +16,7 @@ export const communityPlugins: IAgentExplorerPlugin[] = [
   {
     "config": {
       "url": "github://veramolabs/agent-explorer-plugin-gitcoin-passport",
-      "commitId": "a9a67158026a0b195dcfabf476eed4a0ce7faf27",
+      "commitId": "0846f7ef8547a9d0d916bba91d5f5effbf83cd63",
       "enabled": true
     },
     "name": "Gitcoin passport",
