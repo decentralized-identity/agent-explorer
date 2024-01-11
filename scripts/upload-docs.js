@@ -141,7 +141,6 @@ const createPost = async (did, post, title) => {
 
 }
 
-// console.log("updatedFiles: ", updatedFiles)
 // create post for each file
 for (const file of updatedFiles) {
   const hash = await createPost(process.env.AUTHOR_DID, file.content, file.title)
@@ -149,5 +148,3 @@ for (const file of updatedFiles) {
 }
 
 console.log(`\n\nDone creating posts`)
-
-console.log("done.")
