@@ -27,6 +27,7 @@ const agent = createAgent({
         'createVerifiableCredential',
         'dataStoreSaveVerifiableCredential',
         'dataStoreORMGetVerifiableCredentials',
+        'dataStoreORMGetVerifiableCredentialsByClaims',
         'packDIDCommMessage',
         'unpackDIDCommMessage',
         'sendDIDCommMessage',
@@ -62,15 +63,12 @@ files.forEach((file) => {
   const fileContent = fs.readFileSync(file, 'utf8');
   const lines = fileContent.split('\n');
   lines.forEach((line) => {
-    const match = line.match(/\[.*\]\((.*)\)/);
+    const match = line.match(/\[\[.*?\]\]/);
     if (match) {
-      const link = match[1];
-      if (link.startsWith('http')) {
-        return;
-      }
+      const link = match[0];
       links.push({
         from: file,
-        to: path.join(docsPath, link),
+        to: link,
       });
     }
   });  
@@ -83,9 +81,10 @@ const updatedFiles = files.map((file) => {
   links.forEach((link) => {
     if (link.from === file) {
       const normalizedLink = link.to.replace('docs/', '')
+      const replacement = normalizedLink.replace('[[', '',).replace(']]', '')
       fileContent = fileContent.replace(
-        `](./${normalizedLink})`,
-        `](${process.env.AUTHOR_DID}/${normalizedLink.replace('.md', '')})`
+        normalizedLink,
+        `[${replacement}](${process.env.AUTHOR_DID}/${encodeURIComponent(replacement)})`
       );
     }
   });
@@ -106,6 +105,20 @@ const createPost = async (did, post, title) => {
       post
     }
 
+    const getPrevious = await agent.dataStoreORMGetVerifiableCredentialsByClaims({
+      where: [{ column: 'type', value: ['title'] }],
+      where: [{ column: 'value', value: [title]}],
+      order: [{ column: 'issuanceDate', direction: 'DESC' }],
+      take: 1
+    })
+
+    if (getPrevious.length > 0) {
+      if (getPrevious[0].verifiableCredential.credentialSubject.post === post) {
+        return
+      }
+    }
+
+    console.log("create new revision for post: ", title)
     const credential = await agent.createVerifiableCredential({
       save: true,
       proofFormat: 'jwt',
@@ -128,7 +141,6 @@ const createPost = async (did, post, title) => {
 
 }
 
-
 // create post for each file
 for (const file of updatedFiles) {
   const hash = await createPost(process.env.AUTHOR_DID, file.content, file.title)
@@ -136,4 +148,3 @@ for (const file of updatedFiles) {
 }
 
 console.log(`\n\nDone creating posts`)
-
