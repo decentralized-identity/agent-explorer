@@ -41,23 +41,56 @@ type ExtendedMenuDataItem = MenuDataItem & {
 }
 
 export type IAgentExplorerPlugin = {
+  
+  /** You don't have to provide this. It is used by internal implementation */
   config?: IAgentExplorerPluginConfig;
+  
+  /** The plugin name */
   name: string;
+
+  /** A short description of the plugin */
   description: string;
+
+  /** The plugin icon */
   icon?: React.ReactNode;
+
+  /** An array of routes to be added to the explorer */
   routes?: IRouteComponent[];
+  
+  /** An array of menu items to be added to the explorer */
   menuItems?: ExtendedMenuDataItem[];
+  
+  /** An array of methods that the plugin requires to be implemented by the agent*/
   requiredMethods: string[];
+  
+  /** Does the plugin provide custom css */
   hasCss?: boolean;
-  identifierContextMenuItems?: MenuProps['items'];
+  
+  /** Veramo agent plugins accesable by all explorer plugins */
   agentPlugins?: IAgentPlugin[];
+
+  /** Veramo agent message handlers */
   messageHandlers?: AbstractMessageHandler[];
+
+  /** Menu items for the credential context menu */
   getCredentialContextMenuItems?: (credential: UniqueVerifiableCredential) => MenuProps['items'];
+
+  /** Returns a react component for a given verifiable credential */
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps> | undefined;
+
+  /** Returns a react component that will be displayed in the identifier hover component */
   getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;
-  getIdentifierTabsComponents?: () => Array<{label: string, component: React.FC<IIdentifierTabsComponentProps>}>;
+
+  /** Returns an array of react components and labels that will be displayed as tabs in the indentifier profile page */
+  getIdentifierTabsComponents?: () => Array<{ label: string, component: React.FC<IIdentifierTabsComponentProps> }>;
+  
+  /** Returns an array of react components that will be displayed as action buttons in Credential component */
   getCredentialActionComponents?: () => Array<React.FC<ICredentialActionComponentProps>>;
+
+  /** react-markdown Components for custom markdown rendering */
   getMarkdownComponents?: () => Partial<Components> | undefined;
+
+  /** remark plugins for custom markdown manipulations */
   getRemarkPlugins?: () => PluggableList;
 }
 
