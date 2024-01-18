@@ -50,7 +50,7 @@ const Plugin: IPlugin = {
 
 ```
 
-### Implementations
+### Example implementations
 
 - [veramolabs/agent-explorer-plugin-brainshare](https://github.com/veramolabs/agent-explorer-plugin-brainshare)
 - [veramolabs/agent-explorer-plugin-gitcoin-passport](https://github.com/veramolabs/agent-explorer-plugin-gitcoin-passport)
@@ -60,18 +60,55 @@ const Plugin: IPlugin = {
 - [veramolabs/agent-explorer-plugin-developer-tools](https://github.com/veramolabs/agent-explorer-plugin-developer-tools)
 - [simonas-notcat/agent-explorer-plugin-codyfight](https://github.com/simonas-notcat/agent-explorer-plugin-codyfight)
 
+All of these plugins use the same project structure.
+
+You can use any of them as a template for your own plugin.
+
+### Local development
+
+- Clone any of the above mentioned plugin repositories
+- Run `pnpm i`
+- Run `pnpm serve` to start the development server
+- Run `pnpm ngrok` to open a tunnel to your local server
+- Copy the ngrok url and paste it in the `agent-explore` plugin configuration
+
+```
+https://EXAMPLE.ngrok.app/plugin.js
+```
+
+https://github.com/veramolabs/agent-explorer/assets/16773277/0fda3289-1d71-4559-97d4-786069e3a334
+
+### Publishing
+
+- Run `pnpm build`
+- Commit changes and push to github
+- Use the github url to load the plugin in `agent-explore`
+
+```
+https://cdn.jsdelivr.net/gh/{USER}/{REPO}/dist/plugin.js
+```
 ## Plugin API
 
-### `name`, `description`, `icon`
+### `name`
+
+The plugin name 
 
 ```ts  
-/** The plugin name */
 name: string;
+```
 
-/** A short description of the plugin */
+### `description`
+
+A short description of the plugin
+
+```ts
 description: string;
+```
 
-/** The plugin icon */
+### `icon`
+
+The plugin icon
+```ts
 icon?: React.ReactNode;
 ```
 
@@ -101,8 +138,9 @@ routes: [
 
 ### `menuItems`
 
+An array of menu items to be added to the explorer
+
 ```ts
-/** An array of menu items to be added to the explorer */
 menuItems?: ExtendedMenuDataItem[];
 ```
 
@@ -121,8 +159,10 @@ menuItems: [
 
 ### `requiredMethods`
 
+An array of methods that the plugin requires to be implemented by the agent.
+
+If the agent does not implement the required methods, the plugin will be loaded but the menu item will not be shown.
 ```ts
-/** An array of methods that the plugin requires to be implemented by the agent*/
 requiredMethods: string[];
 ```
 
@@ -131,12 +171,13 @@ Example:
 requiredMethods: ['dataStoreORMGetIdentifiers'],
 ```
 
-If the agent does not implement the required methods, the plugin will be loaded but the menu item will not be shown.
+
 
 ### `hasCss`
 
+Does the plugin provide custom css
+
 ```ts
-/** Does the plugin provide custom css */
 hasCss?: boolean;
 ```
 
@@ -144,15 +185,17 @@ Example: [Brainshare](https://github.com/veramolabs/agent-explorer-plugin-graph-
 
 ### `agentPlugins`
 
+Veramo agent plugins accesable by all explorer plugins
+
 ```ts
-/** Veramo agent plugins accesable by all explorer plugins */
 agentPlugins?: IAgentPlugin[];
 ```
 
 ### `messageHandlers`
 
+Veramo agent message handlers
+
 ```ts
-/** Veramo agent message handlers */
 messageHandlers?: AbstractMessageHandler[];
 ```
 
@@ -160,17 +203,30 @@ Example: [Chats plugin](https://github.com/veramolabs/agent-explorer/blob/main/p
 
 ### `getCredentialContextMenuItems`
 
+Menu items for the credential context menu
+
 ```ts
-/** Menu items for the credential context menu */
 getCredentialContextMenuItems?: (credential: UniqueVerifiableCredential) => MenuProps['items'];
+```
+
+Example [Chats plugin](https://github.com/veramolabs/agent-explorer/blob/7614ba2a25423aa6304013738af8e67c625394cd/packages/agent-explore/src/plugins/chats/menu.tsx#L8)
+
+```ts
+{
+  key: 'sendto',
+  label: 'Share with ...',
+  icon: <MessageOutlined />,
+  onClick: handleSendTo
+}
 ```
 
 ![Credential context menu](./docs/img/credential-context-menu.png)
 
-### `getIdentifierContextMenuItems`
+### `getCredentialComponent`
+
+Returns a react component for a given verifiable credential
 
 ```ts
-/** Returns a react component for a given verifiable credential */
 getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps> | undefined;
 ```
 
@@ -178,10 +234,11 @@ Example: [Kudos plugin](https://github.com/veramolabs/agent-explorer-plugin-kudo
 
 ![Kudos credential](./docs/img/kudos.png)
 
-### `getIdentifierContextMenuItems`
+### `getIdentifierHoverComponent`
+
+Returns a react component that will be displayed in the identifier hover component
 
 ```ts
-/** Returns a react component that will be displayed in the identifier hover component */
 getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;
 ```
 Example: [Gitcoin Passport plugin](https://github.com/veramolabs/agent-explorer-plugin-gitcoin-passport/blob/main/src/index.tsx#L20)
@@ -190,8 +247,9 @@ Example: [Gitcoin Passport plugin](https://github.com/veramolabs/agent-explorer-
 
 ### `getIdentifierTabsComponents`
 
+Returns an array of react components and labels that will be displayed as tabs in the indentifier profile page
+
 ```ts
-/** Returns an array of react components and labels that will be displayed as tabs in the indentifier profile page */
 getIdentifierTabsComponents?: () => Array<{ label: string, component: React.FC<IIdentifierTabsComponentProps> }>;
 ```
 
@@ -215,21 +273,28 @@ getIdentifierTabsComponents: () => {
 
 ### `getCredentialActionComponents`
 
+Returns an array of react components that will be displayed as action buttons in Credential component
+
 ```ts
-/** Returns an array of react components that will be displayed as action buttons in Credential component */
 getCredentialActionComponents?: () => Array<React.FC<ICredentialActionComponentProps>>;
 ```
+
 Example: [Reactions plugin](https://github.com/veramolabs/agent-explorer/blob/main/packages/agent-explore/src/plugins/reactions/index.tsx#L33)
 
-![Credential actions](docs/img/kudos.png)
+![Credential actions](docs/img/reactions.png)
 
-### `getMarkdownComponents`, `getRemarkPlugins`
+### `getMarkdownComponents`
+
+`react-markdown` Components for custom markdown rendering
 
 ```ts
-/** react-markdown Components for custom markdown rendering */
 getMarkdownComponents?: () => Partial<Components> | undefined;
+```
+### `getRemarkPlugins`
 
-/** remark plugins for custom markdown manipulations */
+`remark` plugins for custom markdown manipulations
+
+```ts
 getRemarkPlugins?: () => PluggableList;
 ```
 
