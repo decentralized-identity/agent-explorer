@@ -66,17 +66,40 @@ You can use any of them as a template for your own plugin.
 
 ### Local development
 
+#### Option1: with `ngrok`
+
 - Clone any of the above mentioned plugin repositories
 - Run `pnpm i`
 - Run `pnpm serve` to start the development server
 - Run `pnpm ngrok` to open a tunnel to your local server
-- Copy the ngrok url and paste it in the `agent-explore` plugin configuration
+- Copy the ngrok url and paste it in the text field after clicking Add in https://explore.veramo.io/settings/plugins
 
 ```
 https://EXAMPLE.ngrok.app/plugin.js
 ```
 
 https://github.com/veramolabs/agent-explorer/assets/16773277/0fda3289-1d71-4559-97d4-786069e3a334
+
+#### Option 2: without `ngrok`
+
+Run local `agent-explore` instance
+  
+```bash
+git clone https://github.com/veramolabs/agent-explorer.git
+cd agent-explorer
+pnpm i
+cd packages/plugin
+pnpm build
+cd ../agent-explore
+pnpm dev
+```
+
+
+- Clone any of the above mentioned plugin repositories
+- Run `pnpm i`
+- Run `pnpm serve` to start the development server
+- Copy `http://localhost:8080/plugin.js` and paste it in the text field after clicking Add http://localhost:3000/plugins
+
 
 ### Publishing
 
