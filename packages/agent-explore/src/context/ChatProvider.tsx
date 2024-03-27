@@ -1,7 +1,9 @@
 import { useVeramo } from '@veramo-community/veramo-react'
-import { IDIDManager } from '@veramo/core'
+import { IDIDManager, IKeyManager, IResolver } from '@veramo/core'
 import React, { createContext, useState, useContext, useEffect } from 'react'
-import { pickup } from '../utils/didcomm-mediation'
+// import { pickup } from '../utils/didcomm-mediation'
+import { mapIdentifierKeysToDoc } from '@veramo/utils'
+import { resolve } from '@aviarytech/did-peer'
 
 const ChatContext = createContext<any>({})
 
@@ -11,7 +13,7 @@ const ChatProvider = (props: any) => {
   const [newRecipient, setNewRecipient] = useState()
 
   const MINUTE_MS = 6000
-  const { agent } = useVeramo<IDIDManager>()
+  const { agent } = useVeramo<IDIDManager & IKeyManager & IResolver>()
 
   useEffect(() => {
     const checkMyDIDs = async () => {
@@ -33,7 +35,20 @@ const ChatProvider = (props: any) => {
           for (const identifier of managedIdentifiers) {
             for (const service of identifier.services) {
               if (service.type === 'DIDCommMessaging') {
-                pickup(agent, identifier.did, service.serviceEndpoint as string)
+
+                  const sender = await agent.didManagerGet({ did: identifier.did })
+                  console.log("sender: ", sender)
+
+                  const resolvedSender = await agent.resolveDid({ didUrl: sender.did })
+                  console.log("resolvedSender: ", resolvedSender)
+
+                  const aviaryResolved = await resolve(sender.did)
+                  console.log("aviaryResolved: ", aviaryResolved)
+
+                  const senderKeys = await mapIdentifierKeysToDoc(identifier, 'keyAgreement', { agent })
+                  console.log("senderKeys: ", senderKeys)
+
+                // pickup(agent, identifier.did, service.serviceEndpoint as string)
               }
             }
           }
