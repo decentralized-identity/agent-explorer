@@ -2,34 +2,37 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 
 const plugins = [
-  { repo: 'veramolabs/agent-explorer-plugin-brainshare', 
+  {
+    repo: 'veramolabs/agent-explorer-plugin-brainshare',
     name: 'Brain share',
     description: 'Decentralized wiki',
   },
-  { repo: 'veramolabs/agent-explorer-plugin-gitcoin-passport', 
+  {
+    repo: 'veramolabs/agent-explorer-plugin-gitcoin-passport',
     name: 'Gitcoin passport',
     description: 'Gitcoin passport stamps',
   },
-  { repo: 'veramolabs/agent-explorer-plugin-kudos', 
+  {
+    repo: 'veramolabs/agent-explorer-plugin-kudos',
     name: 'Kudos',
     description: 'Explore and give kudos',
   },
-  { repo: 'veramolabs/agent-explorer-plugin-graph-view', 
+  {
+    repo: 'veramolabs/agent-explorer-plugin-graph-view',
     name: 'Graph View',
     description: 'Explore contacts and credentials in a graph view',
   },
-  { repo: 'veramolabs/agent-explorer-plugin-social-feed', 
+  {
+    repo: 'veramolabs/agent-explorer-plugin-social-feed',
     name: 'Social Feed',
     description: 'Decentralized reputation and social feed',
   },
-  { repo: 'veramolabs/agent-explorer-plugin-developer-tools', 
+  {
+    repo: 'veramolabs/agent-explorer-plugin-developer-tools',
     name: 'Developer Tools',
     description: 'Collection of tools for experimenting with verifiable data',
   },
-  { repo: 'simonas-notcat/agent-explorer-plugin-codyfight', 
-    name: 'Codyfight',
-    description: 'AI Bot for Codyfight.com',
-  },
+
 ]
 
 
