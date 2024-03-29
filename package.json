@@ -18,9 +18,9 @@
     "publish:next": "lerna publish --conventional-prerelease --force-publish --canary --no-git-tag-version --include-merged-tags --preid next --pre-dist-tag next --yes"
   },
   "devDependencies": {
-    "@veramo/core": "5.5.4-next.22",
-    "@veramo/core-types": "5.5.4-next.22",
-    "@veramo/remote-client": "5.5.4-next.22",
+    "@veramo/core": "5.6.1-next.61",
+    "@veramo/core-types": "5.6.1-next.61",
+    "@veramo/remote-client": "5.6.1-next.61",
     "aws-sdk": "^2.1476.0",
     "dotenv": "^16.3.1",
     "lerna": "7.3.0",

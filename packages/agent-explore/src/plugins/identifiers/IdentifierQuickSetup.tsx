@@ -3,8 +3,10 @@ import { App, Button, Card, List } from 'antd'
 import { useQuery, useQueryClient } from 'react-query'
 import { useVeramo } from '@veramo-community/veramo-react'
 import { IDIDManager, IKeyManager, IResolver } from '@veramo/core-types'
-import { createMediateRequestMessage } from '@veramo/did-comm'
+import { createV3MediateRequestMessage, createV3RecipientUpdateMessage, Update, UpdateAction } from '@veramo/did-comm'
 import { shortId } from '@veramo-community/agent-explorer-plugin'
+
+const mediatorDID = 'did:web:dev-didcomm-mediator.herokuapp.com'
 
 interface IdentifierQuickSetupProps {
   identifier: string
@@ -55,9 +57,9 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
   }, [data])
 
   const sendMediationRequest = async () => {
-    const message = createMediateRequestMessage(
+    const message = createV3MediateRequestMessage(
       identifier,
-      'did:web:dev-didcomm-mediator.herokuapp.com',
+      mediatorDID,
     )
 
     const stored = await agent?.dataStoreSaveMessage({ message })
@@ -72,10 +74,20 @@ const IdentifierQuickSetup: React.FC<IdentifierQuickSetupProps> = ({
     const result = await agent?.sendDIDCommMessage({
       packedMessage,
       messageId: message.id,
-      recipientDidUrl: 'did:web:dev-didcomm-mediator.herokuapp.com',
+      recipientDidUrl: mediatorDID,
     })
 
     console.log('result?: ', result)
+
+    const update: Update = { recipient_did: identifier, action: UpdateAction.ADD }
+    const updateMessage = createV3RecipientUpdateMessage(identifier, mediatorDID, [update])
+    const updateMessageContents = { packing: 'authcrypt', message: updateMessage } as const
+    const packedUpdateMessage = await agent?.packDIDCommMessage(updateMessageContents)
+    await agent?.sendDIDCommMessage({
+      messageId: updateMessage.id,
+      packedMessage: packedUpdateMessage,
+      recipientDidUrl: identifier,
+    })
   }
 
   const handleAddEncryptionKey = async () => {
