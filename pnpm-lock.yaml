@@ -9,14 +9,14 @@ importers:
   .:
     devDependencies:
       '@veramo/core':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/core-types':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/remote-client':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       aws-sdk:
         specifier: ^2.1476.0
         version: 2.1476.0
@@ -130,77 +130,77 @@ importers:
         specifier: 1.6.7
         version: 1.6.7
       '@veramo/core':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/core-types':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/credential-eip712':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/credential-ld':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
+        specifier: 6.0.0
+        version: 6.0.0(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
       '@veramo/credential-w3c':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
+        specifier: 6.0.0
+        version: 6.0.0(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
       '@veramo/data-store':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61(ts-node@10.9.1)
+        specifier: 6.0.0
+        version: 6.0.0(ts-node@10.9.1)
       '@veramo/data-store-json':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-comm':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61(expo@49.0.13)(react-native@0.72.6)(ts-node@10.9.1)
+        specifier: 6.0.0
+        version: 6.0.0(expo@49.0.13)(react-native@0.72.6)(ts-node@10.9.1)
       '@veramo/did-discovery':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-jwt':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-manager':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-ethr':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-jwk':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-key':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-peer':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-pkh':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-resolver':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/key-manager':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/kms-local':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/kms-web3':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/message-handler':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/remote-client':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/selective-disclosure':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/utils':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@web3modal/wagmi':
         specifier: ^3.0.2
         version: 3.1.0(@types/react@18.2.28)(@wagmi/core@1.4.4)(viem@1.16.6)
@@ -346,77 +346,77 @@ importers:
         specifier: 1.6.7
         version: 1.6.7
       '@veramo/core':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/core-types':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/credential-eip712':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/credential-ld':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
+        specifier: 6.0.0
+        version: 6.0.0(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
       '@veramo/credential-w3c':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
+        specifier: 6.0.0
+        version: 6.0.0(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
       '@veramo/data-store':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61(ts-node@10.9.1)
+        specifier: 6.0.0
+        version: 6.0.0(ts-node@10.9.1)
       '@veramo/data-store-json':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-comm':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61(expo@49.0.13)(react-native@0.72.6)(ts-node@10.9.1)
+        specifier: 6.0.0
+        version: 6.0.0(expo@49.0.13)(react-native@0.72.6)(ts-node@10.9.1)
       '@veramo/did-discovery':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-jwt':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-manager':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-ethr':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-jwk':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-key':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-peer':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-provider-pkh':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/did-resolver':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/key-manager':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/kms-local':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/kms-web3':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/message-handler':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/remote-client':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/selective-disclosure':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@veramo/utils':
-        specifier: 5.6.1-next.61
-        version: 5.6.1-next.61
+        specifier: 6.0.0
+        version: 6.0.0
       '@web3modal/wagmi':
         specifier: ^3.0.2
         version: 3.1.0(@types/react@18.2.28)(@wagmi/core@1.4.4)(viem@1.16.6)
@@ -485,7 +485,7 @@ importers:
         specifier: ^13.0.2
         version: 13.0.2
       '@types/md5':
-        specifier: ^2.3.3
+        specifier: 2.3.3
         version: 2.3.3
       '@types/react':
         specifier: ^18.2.23
@@ -6971,20 +6971,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@veramo/core-types@5.6.1-next.61:
-    resolution: {integrity: sha512-CWTwcMr2LRS78F4PpSD3MDneWOAKPlUuN7XK/OGbEr98PI3LUxbiWQ/LasKKTbBr2YbvOoCeozTyZNTOxy/HXA==}
+  /@veramo/core-types@6.0.0:
+    resolution: {integrity: sha512-Gdjo45veUT2DXhPmhD2hy1X9jem7IuZNjUvPIC5+qRVBT1yvWsJjOL7D+YWhbeA6LHIbNpO1a9GR2iaSL/FebA==}
     dependencies:
       credential-status: 3.0.4
-      debug: 4.3.4(supports-color@8.1.1)
-      did-jwt-vc: 4.0.4
-      did-resolver: 4.1.0
-    transitivePeerDependencies:
-      - supports-color
-
-  /@veramo/core-types@5.6.1-unstable.36:
-    resolution: {integrity: sha512-TzZA0nxJJYXKtj/fukhAvtyaA2tQoWSaJT7+j+M8Bf3UDXutYVH4INpNUE/oNFllTPnqDMRBgVTX9K5HBoSYbg==}
-    dependencies:
-      credential-status: 2.0.6
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt-vc: 4.0.4
       did-resolver: 4.1.0
@@ -7001,22 +6991,22 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /@veramo/core@5.6.1-next.61:
-    resolution: {integrity: sha512-Wond5xSg1Wh1gN56QXeCQskuYhxqlPan71+f7TaRIAVatyDtnSmqRlX8xjp+BgRHK5ECsE+YvfZarZO7PMH7xw==}
+  /@veramo/core@6.0.0:
+    resolution: {integrity: sha512-AcEjtvmPqBQpR7sA07GVAca9LNQGqLb68eZy24gp8fCWfeddXf5TDFUT1XhJ9K6U2q/nxI0lJKfd39vMl59oIA==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       events: 3.3.0
       z-schema: 6.0.1
     transitivePeerDependencies:
       - supports-color
 
-  /@veramo/credential-eip712@5.6.1-next.61:
-    resolution: {integrity: sha512-afXB+u08ZL2OUf1VMSy/h7RTOPJ5+GLCoTr136yfko6rwM42QM6zO5WuEP2de40WHertjVGHDZBQ76dePKuuHA==}
+  /@veramo/credential-eip712@6.0.0:
+    resolution: {integrity: sha512-quIzOkbv1oBq9qk6T3q5pr7pI8JHWGZnn575nNiJdzwhD2RPJHEPxoP9p9vdgKMvQlmMSsBpHj1LyewiLsx8bA==}
     dependencies:
       '@metamask/eth-sig-util': 7.0.0
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       eip-712-types-generation: 0.1.6
     transitivePeerDependencies:
@@ -7025,8 +7015,8 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/credential-ld@5.6.1-next.61(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6):
-    resolution: {integrity: sha512-1NVPIsrMXBZLApbBG3KUNdK5JT/BLERyfKCMmWUqlkfH6DKeM1hpb3/99i2+CA/OGCb5KBYeR7kY1bmwJpXD0g==}
+  /@veramo/credential-ld@6.0.0(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6):
+    resolution: {integrity: sha512-YKJ8o6SgG/xYPrMbRTkhiwxdLbeRSyFha+5o6kWBDu/VbgEhGF1bWFq2pWKYc6/zRYAz6q4kol45ryfY76mH2g==}
     dependencies:
       '@digitalcredentials/ed25519-signature-2020': 4.0.0(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)
       '@digitalcredentials/ed25519-verification-key-2020': 4.0.0
@@ -7037,8 +7027,8 @@ packages:
       '@transmute/ed25519-signature-2018': 0.7.0-unstable.81
       '@transmute/json-web-signature': 0.7.0-unstable.81
       '@veramo-community/lds-ecdsa-secp256k1-recovery2020': github.com/uport-project/EcdsaSecp256k1RecoverySignature2020/ab0db52de6f4e6663ef271a48009ba26e688ef9b(expo@49.0.13)(react-native@0.72.6)
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/utils': 6.0.0
       cross-fetch: 4.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-resolver: 4.1.0
@@ -7055,12 +7045,12 @@ packages:
       - utf-8-validate
       - web-streams-polyfill
 
-  /@veramo/credential-w3c@5.6.1-next.61(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6):
-    resolution: {integrity: sha512-wMLJfbxNjgrzKCCp4rRPj9ssrMIY8uMFpuKL92mTLt9Q7pW99hdx5u9xsmZvGVFG/w60wwtZrgtwvyIeZveZ7Q==}
+  /@veramo/credential-w3c@6.0.0(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6):
+    resolution: {integrity: sha512-FViDNh51/TJgUW3O+hkNPiLDVaLlnvuU/fq7VuHuWdEsjmI+MHjXjEuLelRVMj2xmEL6Zmw4Kip+3/3YIDtGwQ==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/message-handler': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/message-handler': 6.0.0
+      '@veramo/utils': 6.0.0
       canonicalize: 2.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt: 8.0.4
@@ -7068,7 +7058,7 @@ packages:
       did-resolver: 4.1.0
       uuid: 9.0.1
     optionalDependencies:
-      '@veramo/credential-ld': 5.6.1-next.61(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
+      '@veramo/credential-ld': 6.0.0(expo-crypto@12.8.1)(expo@49.0.13)(msrcrypto@1.5.8)(react-native-securerandom@1.0.1)(react-native@0.72.6)
     transitivePeerDependencies:
       - bufferutil
       - domexception
@@ -7082,14 +7072,14 @@ packages:
       - utf-8-validate
       - web-streams-polyfill
 
-  /@veramo/data-store-json@5.6.1-next.61:
-    resolution: {integrity: sha512-MO7Tw6msl6W/SOKylnLabSQKTdpjcFx1kygXI3i6XNdBNdM0vvudSCmjV6MrpR699UwpwkmwiTyTTE9Qe6aMjw==}
+  /@veramo/data-store-json@6.0.0:
+    resolution: {integrity: sha512-EBVlIsDwWsBdHYI0HyJ5FndYkChBJrtRrSwPG4jic1ABKZqczLMEgfGmJrjQmDNJ4aviQm0JFeFFMAX3KN+dAQ==}
     dependencies:
       '@ungap/structured-clone': 1.2.0
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/did-manager': 5.6.1-next.61
-      '@veramo/key-manager': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/did-manager': 6.0.0
+      '@veramo/key-manager': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt-vc: 4.0.4
       uuid: 9.0.1
@@ -7099,14 +7089,14 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/data-store@5.6.1-next.61(ts-node@10.9.1):
-    resolution: {integrity: sha512-m5cd2v2AnZTp1RksVaZWoFoWJQ5Z7fr40rpiVDqsvw8l0Gbkc7lFiNzKpSkK2ZiY/B4jmNj5Ehmy0N9YsRD6dA==}
+  /@veramo/data-store@6.0.0(ts-node@10.9.1):
+    resolution: {integrity: sha512-lnvh4s/9zvv8/qCyqKzAwWhpr0NEN03sz7klvCuj+1fFcvrnN7ehKl9DONDPvpjDrQWjuMOgv1w3o+sUAV87Fw==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/did-discovery': 5.6.1-next.61
-      '@veramo/did-manager': 5.6.1-next.61
-      '@veramo/key-manager': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/did-discovery': 6.0.0
+      '@veramo/did-manager': 6.0.0
+      '@veramo/key-manager': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt-vc: 4.0.4
       typeorm: 0.3.17(ts-node@10.9.1)
@@ -7134,19 +7124,19 @@ packages:
       - typeorm-aurora-data-api-driver
       - utf-8-validate
 
-  /@veramo/did-comm@5.6.1-next.61(expo@49.0.13)(react-native@0.72.6)(ts-node@10.9.1):
-    resolution: {integrity: sha512-9gTGr/tskoeV5ZBw5nM94e35Yx0reOgWIV35M0nfoMqGLlZXDurl/zh280NSRlqkP9ve9tEblK8JqBCUMTPDxQ==}
+  /@veramo/did-comm@6.0.0(expo@49.0.13)(react-native@0.72.6)(ts-node@10.9.1):
+    resolution: {integrity: sha512-k+JVG94X38EMQFr3TzUUSQlAWj0M7iCtT776D5FXYgVUY9HLl+oT9uwNhQrq3f4vUd6LvTyYfsm1UvPqUNDS5w==}
     dependencies:
       '@noble/curves': 1.2.0
       '@stablelib/aes': 1.0.1
       '@stablelib/aes-kw': 1.0.1
       '@stablelib/gcm': 1.0.2
       '@stablelib/xchacha20poly1305': 1.0.1
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/kv-store': 5.6.1-unstable.36(ts-node@10.9.1)
-      '@veramo/mediation-manager': 5.6.1-unstable.36(ts-node@10.9.1)
-      '@veramo/message-handler': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/kv-store': 6.0.0(ts-node@10.9.1)
+      '@veramo/mediation-manager': 6.0.0(ts-node@10.9.1)
+      '@veramo/message-handler': 6.0.0
+      '@veramo/utils': 6.0.0
       cross-fetch: 4.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt: 8.0.4
@@ -7178,38 +7168,38 @@ packages:
       - typeorm-aurora-data-api-driver
       - utf-8-validate
 
-  /@veramo/did-discovery@5.6.1-next.61:
-    resolution: {integrity: sha512-WfmhsXiESD2i+qdOZeIbgR/w65zJK01z6cyNZA5V3d8AT+UO71GDNUnNy7OKayrbCOWZ3Mx0FZHZEPkrvMynVQ==}
+  /@veramo/did-discovery@6.0.0:
+    resolution: {integrity: sha512-S/r0MWAVQZSe9SGb7XfWDhdsLfsSqkzMIweOiLTjZjHndkkDJ+qX3s5gblSNcTTvOvZRsXDI3fa4IbsjhDc1PQ==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
 
-  /@veramo/did-jwt@5.6.1-next.61:
-    resolution: {integrity: sha512-gbyLa+Cm4CZc33hV4dNs9oIGrD3AEJTvN58C9xkgUG7RtyyhLDKreEzBxAFB1IByKDXhfBiYK/7UFYMDc/ozBQ==}
+  /@veramo/did-jwt@6.0.0:
+    resolution: {integrity: sha512-ku6FLfPW6WVBEl8h/WyEZogI0S0+727KkA4KjX4ZHnWH6h+FC6q/5Sr0nP6WU8QAX0DE6v2eMEWdFL73GoV8kQ==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/message-handler': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/message-handler': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt: 8.0.4
       did-resolver: 4.1.0
     transitivePeerDependencies:
       - supports-color
 
-  /@veramo/did-manager@5.6.1-next.61:
-    resolution: {integrity: sha512-df2kBaIWKmGDd6prQquTMt6Z++0ioKXXZUhNm+oB+VhFkMY+mq7vsKOpAIrr6BYYmkbW2vnGjI8sy5wmMSx1sg==}
+  /@veramo/did-manager@6.0.0:
+    resolution: {integrity: sha512-sjF0d0ZE+h7Jw7WwGtyRhjT5MhKBwGLx2AsR2Ao0qqyloVAxVS9jDcl2DP1ZdCKC+7BR4X30E1ja99N7q3INDg==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/did-discovery': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/did-discovery': 6.0.0
     transitivePeerDependencies:
       - supports-color
 
-  /@veramo/did-provider-ethr@5.6.1-next.61:
-    resolution: {integrity: sha512-1QE6RPkAFLKoCl4SZ68mw1e9zguAlX6e6XiQen1megDjRTF7XcdXKmBKDatrE7trn6/gk4xJZsrqCg3mleU4kQ==}
+  /@veramo/did-provider-ethr@6.0.0:
+    resolution: {integrity: sha512-m+cFD0ZwfGYlGvoKIMgQmEBhHvi+tqV1FsaLVjxAWCgRJMq/TjAi0Eqbcm2dgxb6Eu2vrapoe7BXzVPMNhCt0A==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/did-manager': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/did-manager': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       ethers: 6.11.1
       ethr-did: 3.0.21
@@ -7218,13 +7208,13 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/did-provider-jwk@5.6.1-next.61:
-    resolution: {integrity: sha512-3rNK6ZK3Rj6icLaPQDv+OF6TyF2VUJgzK/cyOP4TA69/T5zi6x1TxUQ9JbglG2HT2dpG9XSNJf1U/gFenzVm4g==}
+  /@veramo/did-provider-jwk@6.0.0:
+    resolution: {integrity: sha512-aBQGpB6Rqi36hL0lAvrAQFhFGLKebWynYq1xf81KI4IPUfPXNeMoa5nzSCX7mlRDuORN0oh7deSUSsYdqmzjUg==}
     dependencies:
       '@noble/curves': 1.2.0
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/did-manager': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/did-manager': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-resolver: 4.1.0
     transitivePeerDependencies:
@@ -7233,12 +7223,12 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/did-provider-key@5.6.1-next.61:
-    resolution: {integrity: sha512-JEQ5QMzYR6YxHxbQLAC6kSZAeOTFhPphJGCi06NmMlgeVDkYHXYnMM6qo7zwg1N2jzJ8S57J7Z9m64zXGNYuRw==}
+  /@veramo/did-provider-key@6.0.0:
+    resolution: {integrity: sha512-vEA1CpaGUWzGqTk0s5mhyaSgt1o09mjMWm/HAS0RR7Z+FTorlx7Kc7rhINBUmylzVKTsZQqeRlx0aSJhUxdUUw==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/did-manager': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/did-manager': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-resolver: 4.1.0
       ethers: 6.11.1
@@ -7248,13 +7238,13 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/did-provider-peer@5.6.1-next.61:
-    resolution: {integrity: sha512-duaMBNuXDWOD3mc3tAwfeGMi/NUVxojJt0uVcPfDN7EmIN735+vf5a57My+9eOg8QZdjnRvs1CjbMfsn22pGgQ==}
+  /@veramo/did-provider-peer@6.0.0:
+    resolution: {integrity: sha512-U58pm/KaVtnQ15xLdJxtGDG2QhsPZgFxR0qE6X1S+p/zbI33K12nnUSvts6xrPUzoLXAETjPa1V1MA8SnXrJIg==}
     dependencies:
       '@aviarytech/did-peer': 0.0.22
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/did-manager': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/did-manager': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-resolver: 4.1.0
     transitivePeerDependencies:
@@ -7263,11 +7253,11 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/did-provider-pkh@5.6.1-next.61:
-    resolution: {integrity: sha512-nFAt4uMTlMAl9BoyEyz3Iknjm4gkCjs9kMZ3AYkYP+A7yGbo1Yz6nk8flo1HtMrLY9NSv+o7La8cQj/3Ckq/fw==}
+  /@veramo/did-provider-pkh@6.0.0:
+    resolution: {integrity: sha512-JskE9gYsokWidDcltgjIcETwi4VwMe0xjJmX+yO8cvkunSS5KxZ3o1+8Am31Dh/fzPGEYkyWGlDT63e11EglPw==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/did-manager': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/did-manager': 6.0.0
       caip: 1.1.0
       debug: 4.3.4(supports-color@8.1.1)
       did-resolver: 4.1.0
@@ -7277,11 +7267,11 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/did-resolver@5.6.1-next.61:
-    resolution: {integrity: sha512-pGUvIeTXuz+1/Q66v+RtBcHVNFAg7UyX9z55JqTSv6pRQmcXCqkKAB6XdjNB80JIgLn15Ac0M8pKMIkKdhxwnw==}
+  /@veramo/did-resolver@6.0.0:
+    resolution: {integrity: sha512-qhbS7r2NLsSJzBrDT8ZmD9Bf8SGibM2+Z32h43X7fXb5mVnPY+wcEoaO4uGSpNzI7WTdDBqXIqnBXmLWsZqWDA==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/utils': 6.0.0
       cross-fetch: 4.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-resolver: 4.1.0
@@ -7291,12 +7281,12 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/key-manager@5.6.1-next.61:
-    resolution: {integrity: sha512-9V27H930t0JAh7/UcqesoDAgqxL5p4vVNcmtcJnUKioH9iyBfKsX1IskHTviIQRGJObLWFUqaW+p3s/PEtiimg==}
+  /@veramo/key-manager@6.0.0:
+    resolution: {integrity: sha512-YFvE6SQs1SOMvgQ38KZOeS64jV8B6a6vMz6yA2FEABANA3rdJJnZe9QVo5V6VQ+1yQ5pmzub+NbBytIUvgJRMQ==}
     dependencies:
       '@noble/curves': 1.2.0
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt: 8.0.4
       ethers: 6.11.1
@@ -7308,15 +7298,15 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/kms-local@5.6.1-next.61:
-    resolution: {integrity: sha512-tihpGfM0Hh/0irE6jLex8J+6ZUdaTpuEedJDwTknvQRnZrbBE5T/U919fy5KBNW1pR2LyY7CyQdg70FZ7Aotgg==}
+  /@veramo/kms-local@6.0.0:
+    resolution: {integrity: sha512-8Wm1GeT2QljngsSG/SA+p0WIMYANqb9diMgk5cRyGYJ+/BhCxt4DAt/gVSO1JiWu4vb3W1aVBaBHXqJOjb1n9A==}
     dependencies:
       '@noble/curves': 1.2.0
       '@stablelib/nacl': 1.0.4
       '@stablelib/random': 1.0.2
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/key-manager': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/key-manager': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt: 8.0.4
       ethers: 6.11.1
@@ -7326,11 +7316,11 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/kms-web3@5.6.1-next.61:
-    resolution: {integrity: sha512-U/qfd4onN4DhM8mllA46tBGLSM88PIwJWfjsCuIsIVFZQuSTwRyYg6+HCLKdVAhk4Ok/R8d5tybuZA1kXZm+vg==}
+  /@veramo/kms-web3@6.0.0:
+    resolution: {integrity: sha512-mZpJrSnhQPoY3c4qWQRA5uhib0PD2AS4M9nybph+uvkH3lhtIygzSU4vYLAol7sPgn+DgtrUNoRuzJcSqYIecw==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/key-manager': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/key-manager': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       ethers: 6.11.1
     transitivePeerDependencies:
@@ -7339,11 +7329,11 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/kv-store@5.6.1-unstable.36(ts-node@10.9.1):
-    resolution: {integrity: sha512-wVlayVpib+rg637CPaMtsDOB7vlFj+88Je2d0Vy/iQccGfdcvW3jCuUWu+dEobmQaLrfoV8k1ZsIg9QC/RYzrw==}
+  /@veramo/kv-store@6.0.0(ts-node@10.9.1):
+    resolution: {integrity: sha512-lHplklobUN3U2W2TItmR87jAG07oPEcDahbRRzlyVTZjVakg1/WWUNOXDjLXeSZJ2yKlzotOHcmCN4itnaEjBg==}
     dependencies:
-      '@veramo/core-types': 5.6.1-unstable.36
-      '@veramo/utils': 5.6.1-unstable.36
+      '@veramo/core-types': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       events: 3.3.0
       json-buffer: 3.0.1
@@ -7372,11 +7362,11 @@ packages:
       - typeorm-aurora-data-api-driver
       - utf-8-validate
 
-  /@veramo/mediation-manager@5.6.1-unstable.36(ts-node@10.9.1):
-    resolution: {integrity: sha512-RkvdWhHKoc2BaRTVJzLu6HF5cqyR6RLzGUMLXStgQN6gpT1q8OUcM4dGv7HPkU+5+glyUeROdXacTd+NKz/VGw==}
+  /@veramo/mediation-manager@6.0.0(ts-node@10.9.1):
+    resolution: {integrity: sha512-SGocEGcoX3i9UvI/Ob9Bz+ZQDn/+Ijovk9yXKYvuUy+mcB07doJ966qCUHk1RJDkRoj7vs8X+kgVrqcfCXfycg==}
     dependencies:
-      '@veramo/core-types': 5.6.1-unstable.36
-      '@veramo/kv-store': 5.6.1-unstable.36(ts-node@10.9.1)
+      '@veramo/core-types': 6.0.0
+      '@veramo/kv-store': 6.0.0(ts-node@10.9.1)
       debug: 4.3.4(supports-color@8.1.1)
       uuid: 9.0.1
     transitivePeerDependencies:
@@ -7402,10 +7392,10 @@ packages:
       - typeorm-aurora-data-api-driver
       - utf-8-validate
 
-  /@veramo/message-handler@5.6.1-next.61:
-    resolution: {integrity: sha512-ZRKTeJNIEAbYA+4IpdA42qpY6jJJNRLzfIZmSFHalFiJQaD57NXVLtQW8NAr/sU0ZV4copue66JIjCz5E2c3Qg==}
+  /@veramo/message-handler@6.0.0:
+    resolution: {integrity: sha512-xC7Yh0Bu15+QNBqxlY6k0E54X3u+oQwCeTNsMELl5sSdKDmPCVPmR2UepJ1R3aYCR0H5E9bduBbt+3w9Rkhy2Q==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
@@ -7421,10 +7411,10 @@ packages:
       - encoding
       - supports-color
 
-  /@veramo/remote-client@5.6.1-next.61:
-    resolution: {integrity: sha512-5WDhUzCZPqmEZb4IDMQ3dppHZYBXA32opj1YyBvELdo0RpXX/n2895950Tj2TmzELKt3pSBqqteirMl+TfH6pg==}
+  /@veramo/remote-client@6.0.0:
+    resolution: {integrity: sha512-wJgjVep/P67UaR8P/SEiMKMzxpHBSaabQxPwFU/xcXGihyGjy5dmVMaxEqiznviIWyjAWpzjQrNBn09StZ2SiQ==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
       cross-fetch: 4.0.0
       debug: 4.3.4(supports-color@8.1.1)
       openapi-types: 12.1.3
@@ -7432,12 +7422,12 @@ packages:
       - encoding
       - supports-color
 
-  /@veramo/selective-disclosure@5.6.1-next.61:
-    resolution: {integrity: sha512-ZBbmQRr2NHbFdaBgPzw2AGrqvhQKGcdoJGsXo+IfEQBHfe+AeFKBXNtPAEyFNfdryR2+AtHpmq+LMgnbpihjww==}
+  /@veramo/selective-disclosure@6.0.0:
+    resolution: {integrity: sha512-Ja5zWqCHQtWicH84CuCZxf4Ys6cq8JsL1gFdvLhhSHypSH+1VGoxKocu507lz4ByH27XYu0ngD2FwYB2bk3QQg==}
     dependencies:
-      '@veramo/core-types': 5.6.1-next.61
-      '@veramo/message-handler': 5.6.1-next.61
-      '@veramo/utils': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
+      '@veramo/message-handler': 6.0.0
+      '@veramo/utils': 6.0.0
       debug: 4.3.4(supports-color@8.1.1)
       did-jwt: 8.0.4
       uuid: 9.0.1
@@ -7447,12 +7437,12 @@ packages:
       - supports-color
       - utf-8-validate
 
-  /@veramo/utils@5.6.1-next.61:
-    resolution: {integrity: sha512-oaLg1+9wwfb+lZLdY2riP0tFthXDqUpXjPOuHncxGpOuWX53DlWjlDzgG8gG8jpgr2nJ8oK0c44qOACn3+GclA==}
+  /@veramo/utils@6.0.0:
+    resolution: {integrity: sha512-IvX0QqjLfamfD6s/qUVtfWFtdb1Idd5Dvfm7RzMKSvT+D5cstFQw3v/sySKoEY8du/ruy8ZUe7v9VpCAYlngPQ==}
     dependencies:
       '@ipld/dag-pb': 4.0.6
       '@noble/curves': 1.2.0
-      '@veramo/core-types': 5.6.1-next.61
+      '@veramo/core-types': 6.0.0
       credential-status: 3.0.4
       cross-fetch: 4.0.0
       debug: 4.3.4(supports-color@8.1.1)
@@ -7462,28 +7452,6 @@ packages:
       ethers: 6.11.1
       ipfs-unixfs: 11.1.0
       multiformats: 13.1.0
-      uint8arrays: 4.0.6
-    transitivePeerDependencies:
-      - bufferutil
-      - encoding
-      - supports-color
-      - utf-8-validate
-
-  /@veramo/utils@5.6.1-unstable.36:
-    resolution: {integrity: sha512-67fhvZPDD/zK6aCcXthjX/h1XLbAJ9SiWT5qDKoF5pl5QcVmlBSfH4HG7TvFyqOmF/gZZPTzO3H2ohOtN/WlbA==}
-    dependencies:
-      '@ipld/dag-pb': 4.0.6
-      '@noble/curves': 1.2.0
-      '@veramo/core-types': 5.6.1-unstable.36
-      credential-status: 2.0.6
-      cross-fetch: 4.0.0
-      debug: 4.3.4(supports-color@8.1.1)
-      did-jwt: 8.0.4
-      did-jwt-vc: 4.0.4
-      did-resolver: 4.1.0
-      ethers: 6.11.1
-      ipfs-unixfs: 11.1.0
-      multiformats: 12.1.2
       uint8arrays: 4.0.6
     transitivePeerDependencies:
       - bufferutil
