@@ -22,8 +22,15 @@ export class SaveMessageHandler extends AbstractMessageHandler {
  async handle(message: Message, context: IContext): Promise<Message> {
     // WIP: not sure if this works
     if (message.type === 'https://didcomm.org/basicmessage/2.0/message') {
-      const localMessage = await context.agent.dataStoreGetMessage({ id: message.id })
 
+      let localMessage
+
+      // function throws an error if message not found
+      try {
+        localMessage = await context.agent.dataStoreGetMessage({ id: message.id })
+      } catch(ex) {
+        console.log("incoming message not already saved.")
+      }
       if (!localMessage) {
         console.log('Saving message', message)
         await context.agent.dataStoreSaveMessage({ message })

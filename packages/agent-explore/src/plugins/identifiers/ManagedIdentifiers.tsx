@@ -11,9 +11,11 @@ import {
   NewIdentifierFormValues,
 } from './NewIdentifierForm'
 import { shortId, IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
-import { createMediateRequestMessage } from '@veramo/did-comm'
+import { CoordinateMediation, createV3MediateRequestMessage, createV3RecipientUpdateMessage, Update, UpdateAction } from '@veramo/did-comm'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { IDataStore } from '@veramo/core'
+import { v4 } from 'uuid'
+
 
 export const ManagedIdentifiers = () => {
   const { notification } = App.useApp()
@@ -60,12 +62,12 @@ export const ManagedIdentifiers = () => {
       if (!identifier) return
   
       if (provider === 'did:peer' && values.mediator) {
-        const message = createMediateRequestMessage(
+        const message = createV3MediateRequestMessage(
           identifier.did,
           values.mediator,
         )
   
-        const stored = await agent?.dataStoreSaveMessage({ message })
+        const stored = await agent?.dataStoreSaveMessage({ message: { ...message, to: message.to![0] } })
         console.log('stored?: ', stored)
   
         const packedMessage = await agent?.packDIDCommMessage({
@@ -74,12 +76,22 @@ export const ManagedIdentifiers = () => {
         })
   
         // requests mediation, and then message handler adds service to DID
-        const result = await agent?.sendDIDCommMessage({
+        await agent?.sendDIDCommMessage({
           packedMessage,
           messageId: message.id,
           recipientDidUrl: values.mediator,
         })
-        console.log('result: ', result)
+
+        const update: Update = { recipient_did: identifier.did, action: UpdateAction.ADD }
+        const updateMessage = createV3RecipientUpdateMessage(identifier.did, values.mediator, [update])
+        const updateMessageContents = { packing: 'authcrypt', message: updateMessage } as const
+        const packedUpdateMessage = await agent?.packDIDCommMessage(updateMessageContents)
+        await agent?.sendDIDCommMessage({
+          messageId: updateMessage.id,
+          packedMessage: packedUpdateMessage,
+          recipientDidUrl: values.mediator,
+        })
+    
       }
 
       if (values.name || values.email || values.bio || values.github || values.twitter || values.picture) {

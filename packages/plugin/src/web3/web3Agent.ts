@@ -103,6 +103,7 @@ export async function createWeb3Agent({ connectors, messageHandlers }: {
       networks: [
         {
           chainId: '0x' + info.chainId,
+          // @ts-ignore
           provider: info.provider,
         },
       ],
@@ -146,6 +147,7 @@ export async function createWeb3Agent({ connectors, messageHandlers }: {
         store: keyStore,
         kms: {
           local: new KeyManagementSystem(privateKeyStore),
+          // @ts-ignore
           web3: new Web3KeyManagementSystem(web3Providers),
         },
       }),
@@ -173,7 +175,7 @@ export async function createWeb3Agent({ connectors, messageHandlers }: {
           ...messageHandlers || [],
         ],
       }),
-      new DIDComm([new DIDCommHttpTransport()]),
+      new DIDComm({ transports: [new DIDCommHttpTransport()] }),
       new IdentifierProfilePlugin(),
       new DIDDiscovery({
         providers: [

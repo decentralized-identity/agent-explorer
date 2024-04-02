@@ -37,7 +37,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
   const sendMessage = async (msg: string) => {
     const message = {
       type: 'https://didcomm.org/basicmessage/2.0/message',
-      to: recipient as string,
+      to: [recipient as string],
       from: selectedDid as string,
       created_time: new Date().getTime(),
       lang: "en",
@@ -65,7 +65,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
 
         const msgToSave = {
           type: message.type,
-          to: message.to,
+          to: message.to[0],
           from: message.from,
           id: message.id,
           threadId: message.thid,
