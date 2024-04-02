@@ -34,6 +34,15 @@ export class SaveMessageHandler extends AbstractMessageHandler {
       if (!localMessage) {
         console.log('Saving message', message)
         await context.agent.dataStoreSaveMessage({ message })
+        if (message.attachments && message.attachments.length > 0) {
+          console.log("attachments found")
+          for (const attachment of message.attachments) {
+            if (attachment.media_type === 'credential+ld+json') {
+              const credential = await context.agent.dataStoreSaveVerifiableCredential({ verifiableCredential: attachment.data.json})
+              console.log("saved attached credential: ", credential)
+            }
+          }
+      }
       }
     } 
 
