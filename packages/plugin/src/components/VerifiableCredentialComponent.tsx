@@ -43,6 +43,24 @@ export const VerifiableCredentialComponent = (
 
   console.log({actionComponents})
 
+  
+  const headerComponents = React.useMemo(() => {
+    let headerComponents: React.FC<IVerifiableComponentProps>[] = []
+    plugins.forEach((plugin) => {
+      if (plugin.config?.enabled && plugin.getCredentialHeaderComponent) {
+        const components = plugin.getCredentialHeaderComponent(credential)
+        if (components) {
+          headerComponents.push(components)
+        }
+      }
+    })
+    return headerComponents
+  }, [plugins])
+
+  console.log({headerComponents})
+
+  console.log("verifiableCredentail: ", credential)
+
   React.useEffect(() => {
     if (verify && !verifyResult && !isVerifying) {
       setIsVerifying(true)
@@ -117,25 +135,29 @@ export const VerifiableCredentialComponent = (
         >
         <div style={{ justifyItems: 'flex-start', display: 'flex' }}>
           <Space direction='horizontal' wrap={true}>
-          <div>
-            {!isLoadingProfile && <Avatar src={profile?.picture} size={'small'} />}
-            {isLoadingProfile && <Skeleton.Avatar active />}
-          </div>
-          <IdentifierPopover did={did}>
-            <Typography.Text ellipsis>
-              {isLoadingProfile ? shortId(did):  profile?.name} 
-            </Typography.Text>
-          </IdentifierPopover>
+            <div>
+              {!isLoadingProfile && <Avatar src={profile?.picture} size={'small'} />}
+              {isLoadingProfile && <Skeleton.Avatar active />}
+            </div>
+            <IdentifierPopover did={did}>
+              <Typography.Text ellipsis>
+                {isLoadingProfile ? shortId(did):  profile?.name} 
+              </Typography.Text>
+            </IdentifierPopover>
 
-          <Typography.Text type='secondary'>{formatRelative(
-            new Date(credential.verifiableCredential.issuanceDate),
-            new Date()
-            )}</Typography.Text>
-            {isVerifying && <Spin size="small"/>}
+            <Typography.Text type='secondary'>{formatRelative(
+              new Date(credential.verifiableCredential.issuanceDate),
+              new Date()
+              )}</Typography.Text>
+              {isVerifying && <Spin size="small"/>}
 
             {verifyResult?.error && <Tag color="error">{verifyResult.error.message}</Tag>}
+            {headerComponents.length > 0 && <>
+                {headerComponents.map((Component, index) => (
+                  React.createElement(Component, { credential })
+                ))}
+            </>}
           </Space>
-
           {isLoadingProfile && <Skeleton.Input style={{ width: 100 }} active />}
         </div>
         

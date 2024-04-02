@@ -78,6 +78,9 @@ export type IAgentExplorerPlugin = {
   /** Returns a react component for a given verifiable credential */
   getCredentialComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps> | undefined;
 
+  /** Returns a react header component for a given verifiable credential */
+  getCredentialHeaderComponent?: (credential: UniqueVerifiableCredential) => React.FC<IVerifiableComponentProps> | undefined;
+
   /** Returns a react component that will be displayed in the identifier hover component */
   getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;
 
