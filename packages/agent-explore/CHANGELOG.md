@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.72.0](https://github.com/veramolabs/agent-explorer/compare/v1.71.5...v1.72.0) (2024-04-03)
+
+
+### Features
+
+* add header components and attachment sharing ([#224](https://github.com/veramolabs/agent-explorer/issues/224)) ([7433c4b](https://github.com/veramolabs/agent-explorer/commit/7433c4b3942ada25c0c5a4878d4109b9c481f415))
+
+
+
+
+
 ## [1.71.5](https://github.com/veramolabs/agent-explorer/compare/v1.71.4...v1.71.5) (2024-04-02)
 
 **Note:** Version bump only for package agent-explore
