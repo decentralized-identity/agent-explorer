@@ -8,6 +8,7 @@ import Editor from '@monaco-editor/react';
 import { ResponsiveContainer } from '../../components/ResponsiveContainer'
 import { v4 } from 'uuid'
 import { useNavigate } from 'react-router'
+import { computeEntryHash } from '@veramo/utils'
 
 
 export const ShareForm: React.FC = () => {
@@ -15,6 +16,7 @@ export const ShareForm: React.FC = () => {
 
 console.log('here')
   const [message, setMessage] = useState<string>(window.localStorage.getItem('bs-post') || '')
+  const attachment = window.localStorage.getItem('attachment')
   const { notification } = App.useApp()
   const navigate = useNavigate()
 
@@ -26,19 +28,31 @@ console.log('here')
     window.localStorage.setItem('bs-post', message)
   }, [message])
 
+  console.log("attachment: ", attachment)
 
   const handleSend = async (did: string, issuerAgent: TAgent<ICredentialIssuer & IDataStore>) => {
     setIsSending(true)
     try {
-      const threadId = v4()
+      const messageId = v4()
+
+      const parsedAttachment = JSON.parse(attachment!)!
+      const canonicalCredential = parsedAttachment?.proof?.type === 'JwtProof2020' &&
+      typeof parsedAttachment?.proof?.jwt === 'string'
+        ? parsedAttachment?.proof?.jwt
+        : parsedAttachment
+      const threadId = computeEntryHash(canonicalCredential)
       const shareMessage = {
         type: 'https://didcomm.org/basicmessage/2.0/message',
         from: did,
         created_time: new Date().getTime(),
         to: recepient,
-        id: threadId,
+        id: messageId,
         thid: threadId,
-        body: { content: message }
+        body: { content: message },
+        attachments: [{
+          media_type: 'credential+ld+json',
+          data: { json: JSON.parse(attachment!) }
+        }]
       }
       const packedMessage = await issuerAgent.packDIDCommMessage({ 
         message: shareMessage, 

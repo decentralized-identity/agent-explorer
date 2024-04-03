@@ -17,6 +17,7 @@ export const getCredentialContextMenuItems = (credential: UniqueVerifiableCreden
     }
 
     window.localStorage.setItem('bs-post', embed)
+    window.localStorage.setItem('attachment', JSON.stringify(credential.verifiableCredential))
     navigate(`/chats/share`)
   }
   
