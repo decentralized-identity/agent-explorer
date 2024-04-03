@@ -34,7 +34,7 @@ const Credentials = () => {
   )
 
   const { data: credential, isLoading: isLoadingCredential } = useQuery(
-    ['credential', { hash,  agentId: agent?.context.name }],
+    ['credentials-credential', { hash,  agentId: agent?.context.name }],
     () =>agent?.dataStoreGetVerifiableCredential({ hash: hash as string }),
     {
       enabled: !!hash,
@@ -93,7 +93,7 @@ const Credentials = () => {
           onClose={() => navigate('/credentials')}
           open={!!hash}
         >
-          {!isLoadingCredential && hash && credential && <CredentialTabs uniqueCredential={{hash, verifiableCredential: credential}} />}
+          {!isLoadingCredential && hash && credential && <CredentialTabs uniqueCredential={{ hash, verifiableCredential: credential }} />}
         </Drawer>
     </PageContainer>
   )
