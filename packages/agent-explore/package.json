@@ -4,7 +4,7 @@
   "homepage": "https://explore.veramo.dev",
   "repository": {
     "type": "git",
-    "url": "https://github.com/veramolabs/agent-explorer.git",
+    "url": "https://github.com/decentralized-identity/agent-explorer.git",
     "directory": "packages/agent-explore"
   },
   "author": "Simonas Karuzas <simonas.karuzas@mesh.xyz>",

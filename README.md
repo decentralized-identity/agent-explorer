@@ -36,7 +36,7 @@ The list of community plugins is hardcoded in `./packages/agent-explore/src/plug
 ```bash
 mkdir veramolabs
 cd veramolabs
-git clone https://github.com/veramolabs/agent-explorer.git
+git clone https://github.com/decentralized-identity/agent-explorer.git
 git clone https://github.com/veramolabs/agent-explorer-plugin-brainshare.git
 git clone https://github.com/veramolabs/agent-explorer-plugin-gitcoin-passport.git
 git clone https://github.com/veramolabs/agent-explorer-plugin-kudos.git

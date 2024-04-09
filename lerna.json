@@ -2,7 +2,7 @@
   "version": "1.72.0",
   "npmClient": "pnpm",
   "changelog": {
-    "repo": "veramolabs/agent-explorer",
+    "repo": "decentralized-identity/agent-explorer",
     "cacheDir": ".changelog"
   },
   "command": {
