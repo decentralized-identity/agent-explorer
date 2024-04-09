@@ -48,7 +48,7 @@ jobs:
       - name: Build Electron app
         uses: paneron/action-electron-builder@v1.8.1
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           package_root: "./packages/agent-explore"
           build_script_name: build-electron
           package_manager: pnpm
