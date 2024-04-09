@@ -33,7 +33,7 @@ jobs:
       - run: pnpm run test
       - name: 'Setup git coordinates'
         run: |
-          git remote set-url origin https://${{secrets.GH_USER}}:${{secrets.GH_TOKEN}}@github.com/veramolabs/agent-explorer.git
+          git remote set-url origin https://${{secrets.GH_USER}}:${{secrets.GITHUB_TOKEN}}@github.com/decentralized-identity/agent-explorer.git
           git config user.name $GH_USER
           git config user.email $GH_EMAIL
 
