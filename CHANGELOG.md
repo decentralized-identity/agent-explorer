@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.72.2](https://github.com/veramolabs/agent-explorer/compare/v1.72.0...v1.72.2) (2024-04-10)
+
+
+### Bug Fixes
+
+* fix gh_user and gh_email vars ([#234](https://github.com/veramolabs/agent-explorer/issues/234)) ([7d008a1](https://github.com/veramolabs/agent-explorer/commit/7d008a1c46171b23edd93692f616e62b6b5fc8b6))
+* provide secret to publish job ([#233](https://github.com/veramolabs/agent-explorer/issues/233)) ([d7839f6](https://github.com/veramolabs/agent-explorer/commit/d7839f60234087b79a9d7b6c29deeb768d39865a))
+* remove unnecessary git coords ([#232](https://github.com/veramolabs/agent-explorer/issues/232)) ([97d50cb](https://github.com/veramolabs/agent-explorer/commit/97d50cbee76b4fd04d7912f3c5b8a3437e43f275))
+* set git coords ([#235](https://github.com/veramolabs/agent-explorer/issues/235)) ([e7b4b23](https://github.com/veramolabs/agent-explorer/commit/e7b4b23e6e03b79663c11ca49bed0617999ab5e5))
+* update github repo URLs ([#230](https://github.com/veramolabs/agent-explorer/issues/230)) ([0c8bc06](https://github.com/veramolabs/agent-explorer/commit/0c8bc06e4eef67ecf203f72d94ceb390ddb40d34))
+* update github user secret ([#231](https://github.com/veramolabs/agent-explorer/issues/231)) ([3bc9bcd](https://github.com/veramolabs/agent-explorer/commit/3bc9bcd19a999683f8e05ea5fc6abf93a496bfaf))
+* update token env vars ([#228](https://github.com/veramolabs/agent-explorer/issues/228)) ([8569608](https://github.com/veramolabs/agent-explorer/commit/8569608e5ddf72242abe9df6fded979a422fb6d7))
+* update token env vars in push workflow ([#229](https://github.com/veramolabs/agent-explorer/issues/229)) ([9444543](https://github.com/veramolabs/agent-explorer/commit/9444543c1f5decaad7e09f09ec85b5025f7e66f1))
+* use distinct query key when loading credentials ([#225](https://github.com/veramolabs/agent-explorer/issues/225)) ([5640be0](https://github.com/veramolabs/agent-explorer/commit/5640be058a1cc5e5751f02a558e37919ec5f08e2))
+* use gh_token again ([#236](https://github.com/veramolabs/agent-explorer/issues/236)) ([a1bf788](https://github.com/veramolabs/agent-explorer/commit/a1bf788b32ccbb3f91f2522985e2d18a291d03ca))
+
+
+### Features
+
+* create brainshare posts for canvas files ([#221](https://github.com/veramolabs/agent-explorer/issues/221)) ([3df70da](https://github.com/veramolabs/agent-explorer/commit/3df70da23c813cbb95ac24b2d0068fb3c836fb55))
+
+
+
+
+
 # [1.72.0](https://github.com/veramolabs/agent-explorer/compare/v1.71.5...v1.72.0) (2024-04-03)
 
 

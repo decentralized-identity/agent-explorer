@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.72.2](https://github.com/decentralized-identity/agent-explorer/compare/v1.72.0...v1.72.2) (2024-04-10)
+
+
+### Bug Fixes
+
+* update github repo URLs ([#230](https://github.com/decentralized-identity/agent-explorer/issues/230)) ([0c8bc06](https://github.com/decentralized-identity/agent-explorer/commit/0c8bc06e4eef67ecf203f72d94ceb390ddb40d34))
+* use distinct query key when loading credentials ([#225](https://github.com/decentralized-identity/agent-explorer/issues/225)) ([5640be0](https://github.com/decentralized-identity/agent-explorer/commit/5640be058a1cc5e5751f02a558e37919ec5f08e2))
+
+
+
+
+
 # [1.72.0](https://github.com/veramolabs/agent-explorer/compare/v1.71.5...v1.72.0) (2024-04-03)
 
 
