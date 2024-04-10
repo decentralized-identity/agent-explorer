@@ -33,6 +33,11 @@ jobs:
       - run: pnpm run -r build
       - run: pnpm run test
 
+      - name: 'Setup git coordinates'
+        run: |
+          git config user.name $GH_USER
+          git config user.email $GH_EMAIL
+
       - name: 'Setup npm registry'
         run: |
           echo "registry=https://registry.npmjs.org" > .npmrc
