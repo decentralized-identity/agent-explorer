@@ -1,15 +1,33 @@
 import React from 'react'
 import { Row, theme } from 'antd'
 const { useToken } = theme
-import { MarkDown } from '@veramo-community/agent-explorer-plugin'
+import { usePlugins } from '@veramo-community/agent-explorer-plugin'
+import { IMessage } from '@veramo/core-types'
+import { ChatMarkdown } from './ChatMarkdown'
 
-interface ChatBubbleProps {
-  text: string
-  isSender?: boolean
+export interface ChatBubbleProps {
+  message: IMessage & { isSender: boolean }
 }
 
-const ChatBubble: React.FC<ChatBubbleProps> = ({ text, isSender }) => {
+const ChatBubble: React.FC<ChatBubbleProps> = ({ message }) => {
+  const { isSender } = message
+  const { plugins }  = usePlugins()
   const { token } = useToken()
+
+  let Component: React.FC<ChatBubbleProps> | undefined = undefined
+  plugins.forEach((plugin) => {
+    if (Component === undefined && plugin.getMessageComponent) {
+      const Obj = plugin.getMessageComponent(message)
+      if (Obj) {
+        Component = Obj
+      }
+    }
+  })
+
+  if (Component === undefined) {
+    Component = ChatMarkdown
+  }
+
   return (
     <Row
       style={{
@@ -31,7 +49,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ text, isSender }) => {
           color: token.colorText,
         }}
       >
-        <MarkDown content={text} />
+        <Component message={message} />
       </div>
     </Row>
   )
