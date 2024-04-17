@@ -87,7 +87,7 @@ export type IAgentExplorerPlugin = {
   /** Returns an array of supported chat message types */
   supportedChatMessages?: string[];
 
-  /** Returns a react component for a given DIDComm message
+  /** Returns a react component for a given DIDComm message */
   getMessageComponent?: (message: IMessage) => React.FC | undefined;
 
   /** Returns an array of react components and labels that will be displayed as tabs in the indentifier profile page */
