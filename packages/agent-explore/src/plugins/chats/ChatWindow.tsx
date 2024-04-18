@@ -10,12 +10,13 @@ import { scrollMessages } from './scroll'
 import { useChat } from '../../context/ChatProvider'
 import { IdentifierProfile } from '@veramo-community/agent-explorer-plugin'
 import { Button, Col, Row, theme } from 'antd'
+import { IDataStoreORM } from '@veramo/core-types'
 
 const ChatWindow: React.FC = () => {
   const { threadId } = useParams<{ threadId: string }>()
   const { selectedDid, newRecipient } = useChat()
   const newThread = threadId === 'new-thread'
-  const { agent } = useVeramo()
+  const { agent } = useVeramo<IDataStoreORM>()
   const { token } = theme.useToken()
   const navigate = useNavigate()
 
@@ -23,7 +24,7 @@ const ChatWindow: React.FC = () => {
     ['chats', { id: agent?.context.id, threadId: threadId }],
     async () => {
       const _messages = await agent?.dataStoreORMGetMessages({
-        where: [{ column: 'threadId', value: [threadId] }],
+        where: [{ column: 'threadId', value: [threadId!] }],
         order: [{ column: 'createdAt', direction: 'ASC' }],
       })
       return _messages?.map((_msg: any) => {
@@ -104,11 +105,8 @@ const ChatWindow: React.FC = () => {
         {messages?.map((message: any) => {
           return (
             <ChatBubble
-              // @ts-ignore
-              text={message?.data?.content}
+              message={message}
               key={message.id}
-              // @ts-ignore
-              isSender={message.isSender}
             />
           )
         })}

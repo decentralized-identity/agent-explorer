@@ -9,6 +9,7 @@ import { useChat } from '../../context/ChatProvider'
 import { IDataStoreORM, IMessage } from '@veramo/core'
 import { useEffect } from 'react'
 import { Col, Row, theme } from 'antd'
+import { usePlugins } from '@veramo-community/agent-explorer-plugin'
 const { useToken } = theme
 
 const groupBy = (arr: any[], property: string) => {
@@ -25,13 +26,17 @@ interface IsSenderTaggedMessage extends IMessage {
 const ChatView = () => {
   const { token } = useToken()
   const { agent } = useVeramo<IDataStoreORM>()
+  const { plugins } = usePlugins()
+  const allChats: string[] = ['https://didcomm.org/basicmessage/2.0/message']
+  // find all supported message types in plugins
+  plugins.forEach((plugin) => plugin.supportedChatMessages && allChats.push(...(plugin.supportedChatMessages)))
   const { selectedDid } = useChat()
   const { threadId } = useParams<{ threadId: string }>()
   const { data: threads, refetch } = useQuery(
     ['threads', { id: agent?.context.id, selectedDid, threadId }],
     async () => {
       const messages = await agent?.dataStoreORMGetMessages({
-        where: [{ column: 'type', value: ['https://didcomm.org/basicmessage/2.0/message'] }],
+        where: [{ column: 'type', value: allChats }],
         order: [{ column: 'createdAt', direction: 'DESC' }],
       })
       // TODO: should be able to do this filter in the query instead of here

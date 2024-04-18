@@ -1,6 +1,6 @@
 import { MenuProps } from 'antd';
 import { MenuDataItem } from '@ant-design/pro-components';
-import { UniqueVerifiableCredential } from '@veramo/core-types'
+import { IMessage, UniqueVerifiableCredential } from '@veramo/core-types'
 import { IAgentPlugin } from '@veramo/core'
 import { Components } from 'react-markdown'
 import { PluggableList } from 'unified'
@@ -83,6 +83,12 @@ export type IAgentExplorerPlugin = {
 
   /** Returns a react component that will be displayed in the identifier hover component */
   getIdentifierHoverComponent?: () => React.FC<IIdentifierHoverComponentProps>;
+
+  /** Returns an array of supported chat message types */
+  supportedChatMessages?: string[];
+
+  /** Returns a react component for a given DIDComm message */
+  getMessageComponent?: (message: IMessage) => React.FC | undefined;
 
   /** Returns an array of react components and labels that will be displayed as tabs in the indentifier profile page */
   getIdentifierTabsComponents?: () => Array<{ label: string, component: React.FC<IIdentifierTabsComponentProps> }>;
